@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class CardFeedViewController: UIViewController {
+class CardFeedViewController: UIViewController, UICollectionViewDataSource {
     var hashtag: String!
     
     override func viewDidLoad() {
@@ -46,7 +46,38 @@ class CardFeedViewController: UIViewController {
         didSet {
             nothingHere.hidden = cards == nil || cards!.count > 0
             loader.hidden = cards != nil
-            // TODO: reload collection
+            collectionView.reloadData()
+            collectionView.hidden = cards == nil || cards!.count == 0
         }
     }
+    
+    @IBOutlet var collectionView: UICollectionView!
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return cards?.count ?? 0
+    }
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CardCell
+        cell.cardInfo = cards![indexPath.item]
+        return cell
+    }
+}
+
+class CardCell: UICollectionViewCell {
+    @IBOutlet var cardView: CardView!
+    var cardInfo: [String: AnyObject]? {
+        didSet {
+            if let h = _fbHandle {
+                Data.firebase.removeObserverWithHandle(h)
+            }
+            _fbHandle = nil
+            if let id = cardInfo?["cardID"] as? String {
+                _fbHandle = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id).observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot) -> Void in
+                    if let json = snapshot.value as? [String: AnyObject] {
+                        self?.cardView.importJson(json)
+                    }
+                })
+            }
+        }
+    }
+    var _fbHandle: UInt?
 }

@@ -21,10 +21,16 @@ class CardView: UIView {
         j["items"] = items.map({ $0.toJson() })
         return j
     }
+    
     func importJson(j: [String: AnyObject]) {
-        if let w = j["width"] as? String, let h = j["height"] as? String, let wf = Float(w), let hf = Float(h) {
+        /*if let w = j["width"] as? String, let h = j["height"] as? String, let wf = Float(w), let hf = Float(h) {
             bounds = CGRectMake(0, 0, CGFloat(wf), CGFloat(hf))
+        }*/
+        
+        for item in items {
+            item.removeFromSuperview()
         }
+        
         if let items = j["items"] as? [[String: AnyObject]] {
             for item in items {
                 if let itemView = CardItemView.FromJson(item) {
@@ -33,4 +39,6 @@ class CardView: UIView {
             }
         }
     }
+    
+    static let CardSize = CGSize(width: 300, height: 400)
 }
