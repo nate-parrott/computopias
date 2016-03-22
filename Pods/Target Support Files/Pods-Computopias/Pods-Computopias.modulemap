@@ -1,0 +1,6 @@
+framework module Pods_Computopias {
+  umbrella header "Pods-Computopias-umbrella.h"
+
+  export *
+  module * { export * }
+}
