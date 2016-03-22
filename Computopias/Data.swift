@@ -6,6 +6,23 @@
 //  Copyright © 2016 Nate Parrott. All rights reserved.
 //
 
+/*
+FIREBASE STRUCTURE
+
+/hashtags/<hashtag>/
+- cards / [date, cardID, negativeDate]
+
+/cards/<cardID>/
+- items/<item>/
+- type
+- more props
+- width
+- height
+
+dates are unix timestamps
+
+*/
+
 import Foundation
 import Firebase
 
@@ -47,4 +64,18 @@ struct Data {
     static func profileJson() -> [String: AnyObject] {
         return ["name": getName() ?? "", "bio": getBio() ?? "", "uid": getUID()]
     }
+    static let firebase = Firebase(url: "https://computopias.firebaseio.com")
 }
+
+extension FDataSnapshot {
+    var childDictionaries: [[String: AnyObject]] {
+        var childDicts = [[String: AnyObject]]()
+        for child in children {
+            if let c = child as? FDataSnapshot, let d = c.value as? [String: AnyObject] {
+                childDicts.append(d)
+            }
+        }
+        return childDicts
+    }
+}
+

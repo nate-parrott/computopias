@@ -22,6 +22,8 @@
 		5F70983C1CA11C5C00B499BC /* CGMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F70983B1CA11C5C00B499BC /* CGMath.swift */; };
 		5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */; };
 		5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE531CA1BEB3006A7191 /* Queues.swift */; };
+		5FD8FE561CA1C313006A7191 /* NavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE551CA1C313006A7191 /* NavViewController.swift */; };
+		5FD8FE581CA1C9AA006A7191 /* HashtagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		5F70983B1CA11C5C00B499BC /* CGMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMath.swift; sourceTree = "<group>"; };
 		5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5FD8FE531CA1BEB3006A7191 /* Queues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queues.swift; sourceTree = "<group>"; };
+		5FD8FE551CA1C313006A7191 /* NavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavViewController.swift; sourceTree = "<group>"; };
+		5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagListViewController.swift; sourceTree = "<group>"; };
 		73F1389C7F54711D4F1B4F21 /* Pods_Computopias.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Computopias.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB81142E41C3E331744B4FE /* Pods-Computopias.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Computopias.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Computopias/Pods-Computopias.debug.xcconfig"; sourceTree = "<group>"; };
 		B11492F87339131CB8E639D5 /* Pods-Computopias.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Computopias.release.xcconfig"; path = "Pods/Target Support Files/Pods-Computopias/Pods-Computopias.release.xcconfig"; sourceTree = "<group>"; };
@@ -89,14 +93,16 @@
 			children = (
 				5F70981B1CA0EDF600B499BC /* AppDelegate.swift */,
 				5F70981D1CA0EDF600B499BC /* ViewController.swift */,
+				5FD8FE551CA1C313006A7191 /* NavViewController.swift */,
 				5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */,
+				5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */,
+				5F7098331CA0EF7E00B499BC /* CardFeed.swift */,
 				5F70982D1CA0EEA600B499BC /* CardEditor.swift */,
 				5F70982F1CA0EEB000B499BC /* CardView.swift */,
 				5F7098351CA115E800B499BC /* CardItemView.swift */,
 				5F7098371CA1167500B499BC /* TextCardItemView.swift */,
 				5F7098311CA0EEE200B499BC /* Data.swift */,
 				5FD8FE531CA1BEB3006A7191 /* Queues.swift */,
-				5F7098331CA0EF7E00B499BC /* CardFeed.swift */,
 				5F70983B1CA11C5C00B499BC /* CGMath.swift */,
 				5F70981F1CA0EDF600B499BC /* Main.storyboard */,
 				5F7098221CA0EDF600B499BC /* Assets.xcassets */,
@@ -237,6 +243,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FD8FE581CA1C9AA006A7191 /* HashtagListViewController.swift in Sources */,
 				5F70981E1CA0EDF600B499BC /* ViewController.swift in Sources */,
 				5F7098361CA115E800B499BC /* CardItemView.swift in Sources */,
 				5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */,
@@ -247,6 +254,7 @@
 				5F7098301CA0EEB000B499BC /* CardView.swift in Sources */,
 				5F7098381CA1167500B499BC /* TextCardItemView.swift in Sources */,
 				5F70982E1CA0EEA600B499BC /* CardEditor.swift in Sources */,
+				5FD8FE561CA1C313006A7191 /* NavViewController.swift in Sources */,
 				5F70983C1CA11C5C00B499BC /* CGMath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

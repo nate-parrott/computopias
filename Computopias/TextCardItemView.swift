@@ -52,7 +52,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
             if large {
                 return CGSizeMake(-1, 2)
             } else {
-                return CGSizeMake(2, 1)
+                return CGSizeMake(-1, 1)
             }
         }
     }
@@ -67,6 +67,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     override func toJson() -> [String : AnyObject] {
         var j = super.toJson()
         j["type"] = "text"
+        j["text"] = field.text ?? ""
         return j
     }
     

@@ -38,6 +38,7 @@ class CardItemView: UIView {
     }
     
     var editMode = true
+    var templateEditMode = true
     
     // MARK: Gesture recs
     var gestureRecs: [UIGestureRecognizer]!

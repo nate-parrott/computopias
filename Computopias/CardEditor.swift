@@ -9,6 +9,8 @@
 import UIKit
 
 class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    var hashtag: String!
+    
     @IBOutlet var cardView: CardView!
     @IBOutlet var collectionView: UICollectionView!
     
@@ -41,6 +43,12 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         Item(title: "Button", callback: { () -> CardItemView! in
             return nil
         }),
+        Item(title: "Upvote", callback: { () -> CardItemView! in
+            return nil
+        }),
+        Item(title: "Sound", callback: { () -> CardItemView! in
+            return nil
+        }),
         Item(title: "Counter", callback: { () -> CardItemView! in
             return nil
         })
@@ -65,11 +73,30 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let itemView = items[indexPath.item].callback() {
             cardView.addSubview(itemView)
-            itemView.frame = CGRectMake(0, 0, itemView.defaultSize.width * gridCellSize.width, itemView.defaultSize.height * gridCellSize.height)
+            var frame = CGRectMake(0, 0, itemView.defaultSize.width * gridCellSize.width, itemView.defaultSize.height * gridCellSize.height)
+            if frame.size.width < 0 { frame.size.width = cardView.bounds.size.width }
+            if frame.size.height < 0 { frame.size.height = cardView.bounds.size.height }
+            itemView.frame = frame
         }
+    }
+    
+    @IBAction func send() {
+        let cardJson = cardView.toJson()
+        let card = Data.firebase.childByAppendingPath("cards").childByAutoId()
+        card.setValue(cardJson)
+        
+        let cardInfo: [String: AnyObject] = ["date": NSDate().timeIntervalSince1970, "negativeDate": NSDate().timeIntervalSince1970, "cardID": card.key]
+        Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").childByAutoId().setValue(cardInfo)
+        
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func cancel() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
 class CardEditorItemCell: UICollectionViewCell {
     @IBOutlet var label: UILabel!
 }
+
