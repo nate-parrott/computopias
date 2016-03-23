@@ -14,7 +14,7 @@ class CardItemView: UIView {
         setup()
         panRec = UIPanGestureRecognizer(target: self, action: "panned:")
         let tapRec = UITapGestureRecognizer(target: self, action: "tapped:")
-        let pinchRec = UIPinchGestureRecognizer(target: self, action: "pinched:")
+        pinchRec = UIPinchGestureRecognizer(target: self, action: "pinched:")
         gestureRecs = [panRec, tapRec, pinchRec]
         for r in gestureRecs {
             addGestureRecognizer(r)
@@ -22,9 +22,10 @@ class CardItemView: UIView {
     }
     
     var panRec: UIPanGestureRecognizer!
+    var pinchRec: UIPinchGestureRecognizer!
     
     func setup() {
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "_windowTouchedEnded:", name: CMWindowGlobalTouchesEndedNotification, object: nil)
     }
     
     func tapped() {
@@ -35,6 +36,10 @@ class CardItemView: UIView {
         return CGSizeMake(2, 1)
     }
     
+    func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
+        return defaultSize
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -43,6 +48,12 @@ class CardItemView: UIView {
     var templateEditMode = true {
         didSet {
             panRec.enabled = templateEditMode
+        }
+    }
+    
+    var card: CardView? {
+        get {
+            return superview as? CardView
         }
     }
     
@@ -64,6 +75,7 @@ class CardItemView: UIView {
         }
         _prevTranslation = translation
         if sender.state == .Ended { _prevTranslation = nil }
+        _updateDragging()
     }
     
     func tapped(sender: UITapGestureRecognizer) {
@@ -84,6 +96,27 @@ class CardItemView: UIView {
         }
         if sender.state == .Ended {
             _prevArea = nil
+        }
+        _updateDragging()
+    }
+    
+    func _updateDragging() {
+        self.dragging = self.pinchRec.numberOfTouches() + self.panRec.numberOfTouches() > 0
+    }
+    
+    func _windowTouchedEnded(notif: NSNotification) {
+        if dragging { dragging = false }
+    }
+    
+    var dragging = false {
+        willSet(newVal) {
+            if newVal {
+                card?.showProposalRectForView(self)
+            } else if !newVal && dragging {
+                // we're done dragging:
+                card?.showProposalRectForView(nil)
+                frame = card!.proposedFrameForView(self)
+            }
         }
     }
     

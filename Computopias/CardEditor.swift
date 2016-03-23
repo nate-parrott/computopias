@@ -90,16 +90,10 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         return cell
     }
     
-    var gridCellSize: CGSize {
-        get {
-            return CGSizeMake(44, 44)
-        }
-    }
-    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let itemView = items[indexPath.item].callback() {
             cardView.addSubview(itemView)
-            var frame = CGRectMake(0, 0, itemView.defaultSize.width * gridCellSize.width, itemView.defaultSize.height * gridCellSize.height)
+            var frame = CGRectMake(0, 0, itemView.defaultSize.width * cardView.gridCellSize.width, itemView.defaultSize.height * cardView.gridCellSize.height)
             if frame.size.width < 0 { frame.size.width = cardView.bounds.size.width }
             if frame.size.height < 0 { frame.size.height = cardView.bounds.size.height }
             itemView.frame = frame

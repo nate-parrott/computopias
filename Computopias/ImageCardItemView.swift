@@ -29,6 +29,12 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         imageView.frame = bounds
     }
     
+    override var defaultSize: GridSize {
+        get {
+            return CGSizeMake(7, 6)
+        }
+    }
+    
     override func importJson(json: [String : AnyObject]) {
         super.importJson(json)
         url = json["url"] as? String
@@ -73,7 +79,6 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         picker.dismissViewControllerAnimated(true, completion: nil)
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             insertImage(image)
-            
         }
     }
     
@@ -99,5 +104,9 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
                 }
             })
         }
+    }
+    
+    override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
+        return size
     }
 }

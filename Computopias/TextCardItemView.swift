@@ -33,6 +33,10 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         field.userInteractionEnabled = false
     }
     
+    override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
+        return size
+    }
+    
     override func tapped() {
         super.tapped()
         if templateEditMode || (editMode && !staticLabel) {
@@ -46,6 +50,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
             field.layer.borderColor = UIColor(white: 1, alpha: staticLabel ? 0 : 0.5).CGColor
             field.alpha = staticLabel ? 0.5 : 1
             field.layer.borderWidth = 1
+            field.layer.cornerRadius = CardView.rounding
         }
     }
     var large = false

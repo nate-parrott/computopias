@@ -11,8 +11,18 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-
+    var _window: CMWindow?
+    var window: UIWindow? {
+        get {
+            if _window == nil {
+                _window = CMWindow(frame: UIScreen.mainScreen().bounds)
+            }
+            return _window
+        }
+        set(val) {
+            // do nothing
+        }
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -41,6 +51,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    /*
+    - (UIWindow *)window {
+    if (!_window) {
+    _window = [[CMWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _window.windowLevel = UIWindowLevelNormal;
+    }
+    return _window;
+    }
+    
+    - (void)setWindow:(UIWindow *)window {
+    // DO NOTHING (???)
+    }
+*/
 
 }
 

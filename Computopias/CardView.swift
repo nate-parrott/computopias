@@ -44,6 +44,57 @@ class CardView: UIView {
     
     override func willMoveToWindow(newWindow: UIWindow?) {
         super.willMoveToWindow(newWindow)
-        layer.cornerRadius = 5
+        layer.cornerRadius = CardView.rounding
+    }
+    
+    static let rounding: CGFloat = 5
+    
+    // MARK: Grid
+    
+    var gridCellSize: CGSize {
+        get {
+            let hCells = Int(floor(CardView.CardSize.width/42))
+            let vCells = Int(floor(CardView.CardSize.height/42))
+            return CGSizeMake(floor(CardView.CardSize.width / CGFloat(hCells)), floor(CardView.CardSize.height / CGFloat(vCells)))
+        }
+    }
+    
+    func proposedFrameForView(view: CardItemView) -> CGRect {
+        let cellsWide = bounds.size.width / gridCellSize.width;
+        let cellsHigh = bounds.size.height / gridCellSize.height
+        
+        var gridSize = CGSizeMake(round(view.frame.size.width / gridCellSize.width), round(view.frame.size.height / gridCellSize.height))
+        gridSize = view.constrainedSizeForProposedSize(gridSize)
+        var gridOrigin = CGPointMake(round(view.frame.origin.x / gridCellSize.width), round(view.frame.origin.y / gridCellSize.height))
+        while gridOrigin.x + gridSize.width > cellsWide {
+            gridOrigin.x -= 1
+        }
+        while gridOrigin.y + gridSize.height > cellsHigh {
+            gridOrigin.y -= 1
+        }
+        while gridOrigin.x < 0 {
+            gridOrigin.x += 1
+        }
+        while gridOrigin.y < 0 {
+            gridOrigin.y += 1
+        }
+        
+        return CGRectMake(gridOrigin.x * gridCellSize.width, gridOrigin.y * gridCellSize.height, gridSize.width * gridCellSize.width, gridSize.height * gridCellSize.height)
+    }
+    
+    var _proposalRect: UIView?
+    func showProposalRectForView(view: CardItemView?) {
+        if let v = view {
+            if _proposalRect == nil {
+                _proposalRect = UIView()
+                insertSubview(_proposalRect!, atIndex: 0)
+                _proposalRect!.backgroundColor = UIColor(white: 1, alpha: 0.5)
+                _proposalRect!.layer.cornerRadius = CardView.rounding
+            }
+            _proposalRect!.frame = proposedFrameForView(v)
+        } else {
+            _proposalRect?.removeFromSuperview()
+            _proposalRect = nil
+        }
     }
 }
