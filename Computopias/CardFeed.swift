@@ -31,14 +31,16 @@ class CardFeedViewController: UIViewController, UICollectionViewDataSource {
     @IBOutlet var nothingHere: UIView!
     @IBOutlet var loader: UIActivityIndicatorView!
     
-    @IBAction func sendInitialMessage() {
-        let editor = storyboard!.instantiateViewControllerWithIdentifier("Editor") as! CardEditor
-        editor.hashtag = hashtag
-        presentViewController(editor, animated: true, completion: nil)
-    }
-    
-    @IBAction func sendAdditionalMessage() {
-        
+    @IBAction func addPost() {
+        // get the template:
+        Data.firebase.childByAppendingPath("templates").childByAppendingPath(hashtag).observeSingleEventOfType(FEventType.Value) { (let snapshot: FDataSnapshot!) -> Void in
+            let editor = self.storyboard!.instantiateViewControllerWithIdentifier("Editor") as! CardEditor
+            editor.hashtag = self.hashtag
+            if let template = snapshot.value as? [String: AnyObject] {
+                editor.template = template
+            }
+            self.presentViewController(editor, animated: true, completion: nil)
+        }
     }
     
     // /hashtags/<hashtag>/cards; each contains {id: id, date: date}
@@ -74,6 +76,10 @@ class CardCell: UICollectionViewCell {
                 _fbHandle = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id).observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot) -> Void in
                     if let json = snapshot.value as? [String: AnyObject] {
                         self?.cardView.importJson(json)
+                        for item in self?.cardView.items ?? [] {
+                            item.editMode = false
+                            item.templateEditMode = false
+                        }
                     }
                 })
             }

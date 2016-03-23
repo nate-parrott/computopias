@@ -10,12 +10,21 @@ import UIKit
 
 class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var hashtag: String!
+    var template: [String: AnyObject]?
     
     @IBOutlet var cardView: CardView!
     @IBOutlet var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let t = template {
+            // we already have a template, so don't allow editing it:
+            collectionView.hidden = true
+            cardView.importJson(t)
+            for item in cardView.items {
+                item.templateEditMode = false
+            }
+        }
     }
     
     struct Item {
@@ -85,8 +94,16 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         let card = Data.firebase.childByAppendingPath("cards").childByAutoId()
         card.setValue(cardJson)
         
-        let cardInfo: [String: AnyObject] = ["date": NSDate().timeIntervalSince1970, "negativeDate": NSDate().timeIntervalSince1970, "cardID": card.key]
+        let cardInfo: [String: AnyObject] = ["date": NSDate().timeIntervalSince1970, "negativeDate": -NSDate().timeIntervalSince1970, "cardID": card.key]
         Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").childByAutoId().setValue(cardInfo)
+        
+        Data.firebase.childByAppendingPath("all_hashtags").childByAppendingPath(hashtag).childByAppendingPath("hashtag").setValue(hashtag)
+        Data.firebase.childByAppendingPath("all_hashtags").childByAppendingPath(hashtag).childByAppendingPath("negativeDate").setValue(-NSDate().timeIntervalSince1970)
+        
+        if template == nil {
+            // save this as a template:
+            Data.firebase.childByAppendingPath("templates").childByAppendingPath(hashtag).setValue(cardJson)
+        }
         
         dismissViewControllerAnimated(true, completion: nil)
     }

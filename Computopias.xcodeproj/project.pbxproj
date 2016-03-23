@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		21141B7977D28E67D62F6732 /* Pods_Computopias.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F1389C7F54711D4F1B4F21 /* Pods_Computopias.framework */; };
 		5F70981C1CA0EDF600B499BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F70981B1CA0EDF600B499BC /* AppDelegate.swift */; };
-		5F70981E1CA0EDF600B499BC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F70981D1CA0EDF600B499BC /* ViewController.swift */; };
 		5F7098211CA0EDF600B499BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F70981F1CA0EDF600B499BC /* Main.storyboard */; };
 		5F7098231CA0EDF600B499BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7098221CA0EDF600B499BC /* Assets.xcassets */; };
 		5F7098261CA0EDF600B499BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F7098241CA0EDF600B499BC /* LaunchScreen.storyboard */; };
@@ -29,7 +28,6 @@
 /* Begin PBXFileReference section */
 		5F7098181CA0EDF600B499BC /* Computopias.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Computopias.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F70981B1CA0EDF600B499BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5F70981D1CA0EDF600B499BC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5F7098201CA0EDF600B499BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5F7098221CA0EDF600B499BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F7098251CA0EDF600B499BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -92,24 +90,47 @@
 			isa = PBXGroup;
 			children = (
 				5F70981B1CA0EDF600B499BC /* AppDelegate.swift */,
-				5F70981D1CA0EDF600B499BC /* ViewController.swift */,
-				5FD8FE551CA1C313006A7191 /* NavViewController.swift */,
-				5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */,
-				5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */,
-				5F7098331CA0EF7E00B499BC /* CardFeed.swift */,
-				5F70982D1CA0EEA600B499BC /* CardEditor.swift */,
-				5F70982F1CA0EEB000B499BC /* CardView.swift */,
-				5F7098351CA115E800B499BC /* CardItemView.swift */,
-				5F7098371CA1167500B499BC /* TextCardItemView.swift */,
-				5F7098311CA0EEE200B499BC /* Data.swift */,
-				5FD8FE531CA1BEB3006A7191 /* Queues.swift */,
-				5F70983B1CA11C5C00B499BC /* CGMath.swift */,
+				5FB2F2451CA20FB8001863C4 /* Screens */,
+				5FB2F2461CA20FC4001863C4 /* Card Items */,
+				5FB2F2471CA20FCB001863C4 /* Utils */,
 				5F70981F1CA0EDF600B499BC /* Main.storyboard */,
 				5F7098221CA0EDF600B499BC /* Assets.xcassets */,
 				5F7098241CA0EDF600B499BC /* LaunchScreen.storyboard */,
 				5F7098271CA0EDF600B499BC /* Info.plist */,
 			);
 			path = Computopias;
+			sourceTree = "<group>";
+		};
+		5FB2F2451CA20FB8001863C4 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				5FD8FE551CA1C313006A7191 /* NavViewController.swift */,
+				5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */,
+				5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */,
+				5F7098331CA0EF7E00B499BC /* CardFeed.swift */,
+				5F70982D1CA0EEA600B499BC /* CardEditor.swift */,
+			);
+			name = Screens;
+			sourceTree = "<group>";
+		};
+		5FB2F2461CA20FC4001863C4 /* Card Items */ = {
+			isa = PBXGroup;
+			children = (
+				5F70982F1CA0EEB000B499BC /* CardView.swift */,
+				5F7098351CA115E800B499BC /* CardItemView.swift */,
+				5F7098371CA1167500B499BC /* TextCardItemView.swift */,
+			);
+			name = "Card Items";
+			sourceTree = "<group>";
+		};
+		5FB2F2471CA20FCB001863C4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5F7098311CA0EEE200B499BC /* Data.swift */,
+				5FD8FE531CA1BEB3006A7191 /* Queues.swift */,
+				5F70983B1CA11C5C00B499BC /* CGMath.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		F826A03134E2FA1475D7E722 /* Pods */ = {
@@ -244,7 +265,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FD8FE581CA1C9AA006A7191 /* HashtagListViewController.swift in Sources */,
-				5F70981E1CA0EDF600B499BC /* ViewController.swift in Sources */,
 				5F7098361CA115E800B499BC /* CardItemView.swift in Sources */,
 				5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */,
 				5F7098341CA0EF7E00B499BC /* CardFeed.swift in Sources */,

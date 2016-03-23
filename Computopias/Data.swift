@@ -9,15 +9,23 @@
 /*
 FIREBASE STRUCTURE
 
+/all_hashtags/<hashtag>
+  - negativeDate
+  - hashtag
+
 /hashtags/<hashtag>/
-- cards / [date, cardID, negativeDate]
+  - cards/<card>
+    -date, cardID, negativeDate
+
+/templates/<hashtag>
+  - card object
 
 /cards/<cardID>/
-- items/<item>/
-- type
-- more props
-- width
-- height
+  - items/<item>/
+    - type
+    - more props
+  - width
+  - height
 
 dates are unix timestamps
 

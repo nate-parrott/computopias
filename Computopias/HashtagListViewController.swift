@@ -7,12 +7,21 @@
 //
 
 import UIKit
+import Firebase
 
 class HashtagListViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var hashtags = ["turndown", "forwhat"] {
+    var hashtags = [String]() {
         didSet {
             collectionView?.reloadData()
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let q = Data.firebase.childByAppendingPath("all_hashtags").queryOrderedByChild("negativeDate")
+        q.observeEventType(FEventType.Value) { [weak self] (let snapshot) -> Void in
+            self?.hashtags = snapshot.childDictionaries.map({ $0["hashtag"] as! String })
         }
     }
     

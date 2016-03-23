@@ -12,7 +12,7 @@ class CardItemView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        let panRec = UIPanGestureRecognizer(target: self, action: "panned:")
+        panRec = UIPanGestureRecognizer(target: self, action: "panned:")
         let tapRec = UITapGestureRecognizer(target: self, action: "tapped:")
         let pinchRec = UIPinchGestureRecognizer(target: self, action: "pinched:")
         gestureRecs = [panRec, tapRec, pinchRec]
@@ -20,6 +20,8 @@ class CardItemView: UIView {
             addGestureRecognizer(r)
         }
     }
+    
+    var panRec: UIPanGestureRecognizer!
     
     func setup() {
         
@@ -38,13 +40,18 @@ class CardItemView: UIView {
     }
     
     var editMode = true
-    var templateEditMode = true
+    var templateEditMode = true {
+        didSet {
+            panRec.enabled = templateEditMode
+        }
+    }
     
     // MARK: Gesture recs
     var gestureRecs: [UIGestureRecognizer]!
     
     var _prevTranslation: CGPoint?
     func panned(sender: UIPanGestureRecognizer) {
+        if !templateEditMode { return }
         let translation = sender.translationInView(superview!)
         if let prev = _prevTranslation {
             frame = frame + (translation - prev)
@@ -59,6 +66,7 @@ class CardItemView: UIView {
     
     var _prevArea: CGRect?
     func pinched(sender: UIPinchGestureRecognizer) {
+        if !templateEditMode { return }
         if sender.state == .Changed {
             let area = sender.boundingRectOfTouchesInView(superview!)
             if let prev = _prevArea {

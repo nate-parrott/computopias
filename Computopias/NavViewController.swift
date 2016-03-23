@@ -28,6 +28,8 @@ class NavViewController: UIViewController, UITextFieldDelegate {
     var currentQuery: String = "" {
         didSet {
             queryField.text = currentQuery
+            plus.hidden = true
+            back.hidden = true
             if currentQuery == "" {
                 let list = storyboard!.instantiateViewControllerWithIdentifier("HashtagList") as! HashtagListViewController
                 list.onPickQuery = {
@@ -39,6 +41,8 @@ class NavViewController: UIViewController, UITextFieldDelegate {
                 let feed = storyboard!.instantiateViewControllerWithIdentifier("CardFeed") as! CardFeedViewController
                 feed.hashtag = currentQuery
                 childVC = feed
+                back.hidden = false
+                plus.hidden = false
             }
         }
     }
@@ -70,6 +74,17 @@ class NavViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLayoutSubviews()
         if let v = childVC?.view {
             v.frame = childContainer.bounds
+        }
+    }
+    
+    @IBOutlet var back: UIButton!
+    @IBOutlet var plus: UIButton!
+    @IBAction func goBack() {
+        currentQuery = ""
+    }
+    @IBAction func addPost() {
+        if let feed = childVC as? CardFeedViewController {
+            feed.addPost()
         }
     }
 }

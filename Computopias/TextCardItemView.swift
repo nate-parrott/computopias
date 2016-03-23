@@ -34,8 +34,10 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     
     override func tapped() {
         super.tapped()
-        field.userInteractionEnabled = true
-        field.becomeFirstResponder()
+        if templateEditMode || (editMode && !staticLabel) {
+            field.userInteractionEnabled = true
+            field.becomeFirstResponder()
+        }
     }
     
     var staticLabel = false {
@@ -68,11 +70,13 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         var j = super.toJson()
         j["type"] = "text"
         j["text"] = field.text ?? ""
+        j["staticLabel"] = staticLabel
         return j
     }
     
     override func importJson(json: [String : AnyObject]) {
         super.importJson(json)
         field.text = json["text"] as? String ?? ""
+        staticLabel = json["staticLabel"] as? Bool ?? false
     }
 }
