@@ -32,7 +32,7 @@ class CountdownCardItemView: CardItemView {
     override func toJson() -> [String : AnyObject] {
         var j = super.toJson()
         j["type"] = "countdown"
-        j["seconds"] = "seconds"
+        j["seconds"] = seconds
         return j
     }
     override func importJson(json: [String : AnyObject]) {

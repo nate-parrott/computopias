@@ -16,8 +16,7 @@ class CounterCardItemView: CardItemView {
             _update()
         }
     }
-    
-    static let someEmoji = "🌟 🔥 👌 💸 🌀 📣 🍃 👍 😀 😈 👻 👀 🎅 💋 🌎 🎃 🌴 🐳 🍔 🍺 ☕️ ⚽️ 🎯 🚀 🎉 🎁 💯".componentsSeparatedByString(" ")
+    static let someEmoji = "🌟 🔥 👌 💸 🌀 📣 🍃 👍 😀 😈 👻 👀 🎅 💋 👍 🌎 😉 🎃 🌴 🐳 🍔 🌶 🍺 ☕️ ⚽️ 🎯 🚀 🎉 🎁 💯".componentsSeparatedByString(" ")
     class func randomEmoji() -> String {
         return CounterCardItemView.someEmoji[abs(random()) % CounterCardItemView.someEmoji.count]
     }
@@ -29,6 +28,10 @@ class CounterCardItemView: CardItemView {
         addSubview(label)
         label.font = TextCardItemView.font
         label.textAlignment = .Center
+    }
+    
+    override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
+        return size
     }
     
     override func importJson(json: [String : AnyObject]) {
@@ -115,6 +118,11 @@ class CounterCardItemView: CardItemView {
     override func layoutSubviews() {
         super.layoutSubviews()
         label.frame = bounds
+        if let gridSize = card?.gridCellSize, let proposedSize = card?.proposedFrameForView(self) {
+            let minDim = min(proposedSize.width / gridSize.width, proposedSize.height / gridSize.height)
+            let pointSize = minDim * TextCardItemView.font.pointSize
+            label.font = TextCardItemView.font.fontWithSize(pointSize)
+        }
     }
     
     func pathToObserve() -> Firebase {
