@@ -61,9 +61,6 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }),
         Item(title: "Image", image: UIImage(named: "image"), callback: { () -> CardItemView! in
             let m = ImageCardItemView()
-            delay(0, closure: { () -> () in
-                m.insertMedia()
-            })
             return m
         }),
         Item(title: "Profile", image: UIImage(named: "profile"), callback: { () -> CardItemView! in
@@ -80,6 +77,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }),
         Item(title: "Sound", image: UIImage(named: "audio"), callback: { () -> CardItemView! in
             return nil
+        }),
+        Item(title: "MessageMe", image: UIImage(named: "comment"), callback: { () -> CardItemView! in
+            return MessageMeCardItemView()
         }),
         Item(title: "Timer", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
             return nil
@@ -118,6 +118,10 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         if frame.size.width < 0 { frame.size.width = cardView.bounds.size.width }
         if frame.size.height < 0 { frame.size.height = cardView.bounds.size.height }
         itemView.frame = frame
+        
+        delay(0, closure: { () -> () in
+            itemView.onInsert()
+        })
     }
     
     @IBAction func send() {

@@ -22,7 +22,6 @@ class SingleCardViewController: UIViewController {
         cardView.backgroundColor = Appearance.colorForHashtag(hashtag)
         cardView.hashtag = hashtag
         _fbHandle = cardFirebase.observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot) -> Void in
-            print("value: \(snapshot.value)")
             if let json = snapshot.value as? [String: AnyObject] {
                 self?.cardView.importJson(json)
                 for item in self?.cardView.items ?? [] {

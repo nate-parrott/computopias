@@ -147,6 +147,8 @@ class CardItemView: UIView {
             item = LikeCounterCardItemView()
         case "button":
             item = ButtonCardItemView()
+        case "messageMe":
+            item = MessageMeCardItemView()
         default: ()
         }
         item?.importJson(j)
@@ -163,6 +165,10 @@ class CardItemView: UIView {
         return j
     }
     func detachFromTemplate() {
+        
+    }
+    
+    func onInsert() {
         
     }
 }

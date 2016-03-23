@@ -71,6 +71,12 @@ struct Data {
         // TODO: set bio in firebase
         NSUserDefaults.standardUserDefaults().setValue(bio, forKey: "ProfileBio")
     }
+    static func getPhone() -> String? {
+        return NSUserDefaults.standardUserDefaults().valueForKey("Phone") as? String
+    }
+    static func setPhone(phone: String) {
+        NSUserDefaults.standardUserDefaults().setValue(phone, forKey: "Phone")
+    }
     static func profileJson() -> [String: AnyObject] {
         return ["name": getName() ?? "", "bio": getBio() ?? "", "uid": getUID()]
     }

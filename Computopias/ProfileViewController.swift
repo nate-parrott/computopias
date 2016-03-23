@@ -14,6 +14,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDe
         super.viewDidLoad()
         name.text = Data.getName()
         bio.text = Data.getBio()
+        phone.text = Data.getPhone()
         bio.layer.borderColor = UIColor.blackColor().CGColor
         bio.layer.borderWidth = 1
         update()
@@ -21,6 +22,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     @IBOutlet var name: UITextField!
     @IBOutlet var bio: UITextView!
+    @IBOutlet var phone: UITextField!
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         bio.becomeFirstResponder()
@@ -55,6 +57,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     @IBAction func done() {
         Data.setName(name.text ?? "")
         Data.setBio(bio.text ?? "")
+        Data.setPhone(phone.text ?? "")
         navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
 }

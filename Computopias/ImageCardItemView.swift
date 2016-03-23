@@ -26,6 +26,11 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         }
     }
     
+    override func onInsert() {
+        super.onInsert()
+        insertMedia()
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         imageView.frame = bounds
