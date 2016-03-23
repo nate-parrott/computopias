@@ -9,21 +9,23 @@
 import UIKit
 import Firebase
 
-class CardItemView: UIView {
+class CardItemView: UIView, UIGestureRecognizerDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
         panRec = UIPanGestureRecognizer(target: self, action: #selector(CardItemView.panned(_:)))
-        let tapRec = UITapGestureRecognizer(target: self, action: #selector(CardItemView.tapped(_:)))
+        tapRec = UITapGestureRecognizer(target: self, action: #selector(CardItemView.tapped(_:)))
         pinchRec = UIPinchGestureRecognizer(target: self, action: #selector(CardItemView.pinched(_:)))
         gestureRecs = [panRec, tapRec, pinchRec]
         for r in gestureRecs {
             addGestureRecognizer(r)
+            r.delegate = self
         }
     }
     
     var cardPath: Firebase?
     
+    var tapRec: UITapGestureRecognizer!
     var panRec: UIPanGestureRecognizer!
     var pinchRec: UIPinchGestureRecognizer!
     
@@ -106,12 +108,29 @@ class CardItemView: UIView {
         _updateDragging()
     }
     
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == panRec && otherGestureRecognizer == pinchRec || gestureRecognizer == pinchRec && otherGestureRecognizer == panRec {
+            return true
+        }
+        return false
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        if panRec.numberOfTouches() > 0 {
+            return true
+        }
+        return CGRectContainsPoint(bounds, touch.locationInView(self))
+    }
+    
     func _updateDragging() {
-        self.dragging = self.pinchRec.numberOfTouches() + self.panRec.numberOfTouches() > 0
+        self.dragging = self.pinchRec.numberOfTouches() + self.panRec.numberOfTouches() + self.tapRec.numberOfTouches() > 0
     }
     
     func _windowTouchedEnded(notif: NSNotification) {
         if dragging { dragging = false }
+        delay(0.01) { 
+            if self.dragging { self.dragging = false }
+        }
     }
     
     var dragging = false {
@@ -128,6 +147,14 @@ class CardItemView: UIView {
                 }
             }
         }
+    }
+    
+    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+        _updateDragging()
+        if dragging {
+            return true
+        }
+        return super.pointInside(point, withEvent: event)
     }
     
     // MARK: Json

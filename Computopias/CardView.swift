@@ -80,6 +80,7 @@ class CardView: UIView {
         
         var gridSize = CGSizeMake(round(view.frame.size.width / gridCellSize.width), round(view.frame.size.height / gridCellSize.height))
         gridSize = view.constrainedSizeForProposedSize(gridSize)
+        gridSize = CGSizeMake(max(1, gridSize.width), max(1, gridSize.height))
         var gridOrigin = CGPointMake(round(view.frame.origin.x / gridCellSize.width), round(view.frame.origin.y / gridCellSize.height))
         while gridOrigin.x + gridSize.width > cellsWide {
             gridOrigin.x -= 1
