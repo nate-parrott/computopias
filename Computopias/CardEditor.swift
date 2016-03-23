@@ -81,11 +81,11 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         Item(title: "MessageMe", image: UIImage(named: "comment"), callback: { () -> CardItemView! in
             return MessageMeCardItemView()
         }),
-        Item(title: "Timer", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
+        /*Item(title: "Timer", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
             return nil
-        }),
+        }),*/
         Item(title: "Destruct", image: UIImage(named: "destruct"), callback: { () -> CardItemView! in
-            return nil
+            return CountdownCardItemView()
         })
     ]
     

@@ -149,6 +149,8 @@ class CardItemView: UIView {
             item = ButtonCardItemView()
         case "messageMe":
             item = MessageMeCardItemView()
+            case "countdown":
+            item = CountdownCardItemView()
         default: ()
         }
         item?.importJson(j)
@@ -169,6 +171,9 @@ class CardItemView: UIView {
     }
     
     func onInsert() {
+        
+    }
+    func onPresent() {
         
     }
 }

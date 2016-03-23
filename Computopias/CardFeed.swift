@@ -100,6 +100,7 @@ class CardCell: UICollectionViewCell {
                         for item in self?.cardView.items ?? [] {
                             item.editMode = false
                             item.templateEditMode = false
+                            item.onPresent()
                         }
                     }
                 })

@@ -144,4 +144,12 @@ class CardView: UIView {
         }))
         NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(actions, animated: true, completion: nil)
     }
+    
+    func blackOut() {
+        UIView.animateWithDuration(0.2, delay: 0, options: [.AllowUserInteraction], animations: { 
+            for item in self.items {
+                item.alpha = 0
+            }
+            }, completion: nil)
+    }
 }
