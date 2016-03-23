@@ -29,6 +29,9 @@
 		5FB2F2591CA21E1C001863C4 /* String+Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2581CA21E1C001863C4 /* String+Substring.swift */; };
 		5FB2F25B1CA223C0001863C4 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F25A1CA223C0001863C4 /* Appearance.swift */; };
 		5FB2F25F1CA242FD001863C4 /* CMWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F25E1CA242FD001863C4 /* CMWindow.m */; };
+		5FB2F2611CA254D7001863C4 /* ProfileCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2601CA254D7001863C4 /* ProfileCardItemView.swift */; };
+		5FB2F2631CA257D2001863C4 /* CounterCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */; };
+		5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */; };
 		5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */; };
 		5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE531CA1BEB3006A7191 /* Queues.swift */; };
 		5FD8FE561CA1C313006A7191 /* NavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE551CA1C313006A7191 /* NavViewController.swift */; };
@@ -61,6 +64,9 @@
 		5FB2F25C1CA242FC001863C4 /* Computopias-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Computopias-Bridging-Header.h"; sourceTree = "<group>"; };
 		5FB2F25D1CA242FD001863C4 /* CMWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMWindow.h; sourceTree = "<group>"; };
 		5FB2F25E1CA242FD001863C4 /* CMWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMWindow.m; sourceTree = "<group>"; };
+		5FB2F2601CA254D7001863C4 /* ProfileCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCardItemView.swift; sourceTree = "<group>"; };
+		5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterCardItemView.swift; sourceTree = "<group>"; };
+		5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeCounterCardItemView.swift; sourceTree = "<group>"; };
 		5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5FD8FE531CA1BEB3006A7191 /* Queues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queues.swift; sourceTree = "<group>"; };
 		5FD8FE551CA1C313006A7191 /* NavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +149,9 @@
 				5F7098351CA115E800B499BC /* CardItemView.swift */,
 				5F7098371CA1167500B499BC /* TextCardItemView.swift */,
 				5FB2F2521CA2181C001863C4 /* ImageCardItemView.swift */,
+				5FB2F2601CA254D7001863C4 /* ProfileCardItemView.swift */,
+				5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */,
+				5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */,
 			);
 			name = "Card Items";
 			sourceTree = "<group>";
@@ -306,9 +315,12 @@
 				5FB2F25B1CA223C0001863C4 /* Appearance.swift in Sources */,
 				5F7098341CA0EF7E00B499BC /* CardFeed.swift in Sources */,
 				5F7098321CA0EEE200B499BC /* Data.swift in Sources */,
+				5FB2F2631CA257D2001863C4 /* CounterCardItemView.swift in Sources */,
 				5FB2F2531CA2181C001863C4 /* ImageCardItemView.swift in Sources */,
 				5F70981C1CA0EDF600B499BC /* AppDelegate.swift in Sources */,
+				5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */,
 				5FB2F2591CA21E1C001863C4 /* String+Substring.swift in Sources */,
+				5FB2F2611CA254D7001863C4 /* ProfileCardItemView.swift in Sources */,
 				5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */,
 				5FB2F24F1CA217A2001863C4 /* UIImage+Resize.swift in Sources */,
 				5F7098301CA0EEB000B499BC /* CardView.swift in Sources */,

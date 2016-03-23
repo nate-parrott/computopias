@@ -17,10 +17,12 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         field.userInteractionEnabled = false
         field.backgroundColor = UIColor.clearColor()
         field.scrollEnabled = false
-        field.font = UIFont(name: "Futura-Medium", size: 15)
+        field.font = TextCardItemView.font
         self.staticLabel = false
         field.tintColor = UIColor.whiteColor()
     }
+    
+    static let font = UIFont(name: "Futura-Medium", size: 15)!
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {

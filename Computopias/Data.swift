@@ -15,7 +15,7 @@ FIREBASE STRUCTURE
 
 /hashtags/<hashtag>/
   - cards/<card>
-    -date, cardID, negativeDate
+    -date, cardID, negativeDate, likes, negativeLikes
 
 /templates/<hashtag>
   - card object
@@ -26,6 +26,8 @@ FIREBASE STRUCTURE
     - more props
   - width
   - height
+
+/counters/uuid/<uid>
 
 dates are unix timestamps
 

@@ -12,6 +12,6 @@ struct Appearance {
     static let colors = "#EB7DCA #E4E4E4 #679FFF #67FFAA #F0FF67 #FF6767 #EDD061 #905FFF".componentsSeparatedByString(" ").map({ UIColor(hex: $0)! })
     
     static func colorForHashtag(hashtag: String) -> UIColor {
-        return colors[abs(hashtag.hash) % colors.count-1]
+        return colors[abs(hashtag.hash) % colors.count]
     }
 }

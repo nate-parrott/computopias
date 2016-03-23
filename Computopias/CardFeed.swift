@@ -61,7 +61,9 @@ class CardFeedViewController: UIViewController, UICollectionViewDataSource {
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CardCell
-        cell.cardInfo = cards![indexPath.item]
+        var cardInfo = cards![indexPath.item]
+        cardInfo["hashtag"] = hashtag
+        cell.cardInfo = cardInfo
         cell.cardView.backgroundColor = Appearance.colorForHashtag(hashtag)
         return cell
     }
@@ -87,8 +89,12 @@ class CardCell: UICollectionViewCell {
                 Data.firebase.removeObserverWithHandle(h)
             }
             _fbHandle = nil
+            
             if let id = cardInfo?["cardID"] as? String {
-                _fbHandle = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id).observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot) -> Void in
+                let cardFirebase = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id)
+                cardView.cardFirebase = cardFirebase
+                cardView.hashtag = cardInfo?["hashtag"] as? String
+                _fbHandle = cardFirebase.observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot) -> Void in
                     if let json = snapshot.value as? [String: AnyObject] {
                         self?.cardView.importJson(json)
                         for item in self?.cardView.items ?? [] {

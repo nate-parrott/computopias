@@ -7,13 +7,18 @@
 //
 
 import UIKit
+import Firebase
 
 class CardView: UIView {
+    var cardFirebase: Firebase?
+    var hashtag: String?
+    
     var items: [CardItemView] {
         get {
             return subviews.filter({ ($0 as? CardItemView) != nil }).map({ $0 as! CardItemView })
         }
     }
+    
     func toJson() -> [String: AnyObject] {
         var j = [String: AnyObject]()
         j["width"] = "\(bounds.size.width)"
@@ -55,7 +60,7 @@ class CardView: UIView {
         get {
             let hCells = Int(floor(CardView.CardSize.width/42))
             let vCells = Int(floor(CardView.CardSize.height/42))
-            return CGSizeMake(floor(CardView.CardSize.width / CGFloat(hCells)), floor(CardView.CardSize.height / CGFloat(vCells)))
+            return CGSizeMake(CardView.CardSize.width / CGFloat(hCells), CardView.CardSize.height / CGFloat(vCells))
         }
     }
     
@@ -83,7 +88,8 @@ class CardView: UIView {
             gridOrigin.y += 1
         }
         
-        return CGRectMake(gridOrigin.x * gridCellSize.width, gridOrigin.y * gridCellSize.height, gridSize.width * gridCellSize.width, gridSize.height * gridCellSize.height)
+        let rect = CGRectMake(gridOrigin.x * gridCellSize.width, gridOrigin.y * gridCellSize.height, gridSize.width * gridCellSize.width, gridSize.height * gridCellSize.height)
+        return CGRectIntegral(rect)
     }
     
     var _proposalRect: UIView?

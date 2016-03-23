@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class CardItemView: UIView {
     override init(frame: CGRect) {
@@ -20,6 +21,8 @@ class CardItemView: UIView {
             addGestureRecognizer(r)
         }
     }
+    
+    var cardPath: Firebase?
     
     var panRec: UIPanGestureRecognizer!
     var pinchRec: UIPinchGestureRecognizer!
@@ -136,6 +139,12 @@ class CardItemView: UIView {
             item = TextCardItemView()
         case "image":
             item = ImageCardItemView()
+        case "profile":
+            item = ProfileCardItemView()
+        case "counter":
+            item = CounterCardItemView()
+        case "likes":
+            item = LikeCounterCardItemView()
         default: ()
         }
         item?.importJson(j)
@@ -150,6 +159,9 @@ class CardItemView: UIView {
         var j = [String: AnyObject]()
         j["frame"] = NSStringFromCGRect(frame)
         return j
+    }
+    func detachFromTemplate() {
+        
     }
 }
 

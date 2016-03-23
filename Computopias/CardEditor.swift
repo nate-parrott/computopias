@@ -25,6 +25,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             cardView.importJson(t)
             for item in cardView.items {
                 item.templateEditMode = false
+                item.detachFromTemplate()
             }
         }
     }
@@ -56,19 +57,25 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             })
             return m
         }),
+        Item(title: "Profile", image: UIImage(named: "profile"), callback: { () -> CardItemView! in
+            return ProfileCardItemView()
+        }),
         Item(title: "Button", image: UIImage(named: "link"), callback: { () -> CardItemView! in
             return nil
         }),
-        Item(title: "Upvote", image: nil, callback: { () -> CardItemView! in
-            return nil
+        Item(title: "Counter", image: nil, callback: { () -> CardItemView! in
+            return CounterCardItemView()
+        }),
+        Item(title: "Likes", image: nil, callback: { () -> CardItemView! in
+            return LikeCounterCardItemView()
         }),
         Item(title: "Sound", image: UIImage(named: "audio"), callback: { () -> CardItemView! in
             return nil
         }),
-        Item(title: "Counter", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
+        Item(title: "Timer", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
             return nil
         }),
-        Item(title: "Counter", image: UIImage(named: "destruct"), callback: { () -> CardItemView! in
+        Item(title: "Destruct", image: UIImage(named: "destruct"), callback: { () -> CardItemView! in
             return nil
         })
     ]
