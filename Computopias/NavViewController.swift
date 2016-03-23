@@ -49,6 +49,11 @@ class NavViewController: UIViewController, UITextFieldDelegate {
                 feed.hashtag = hashtag.sanitizedForFirebase
                 childVC = feed
                 plus.hidden = false
+            case .Card(hashtag: let hashtag, id: let id):
+                let vc = storyboard!.instantiateViewControllerWithIdentifier("SingleCard") as! SingleCardViewController
+                vc.hashtag = hashtag
+                vc.cardFirebase = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id)
+                childVC = vc
             case .Profile(name: let _):
                 () // TODO
             case .Home:

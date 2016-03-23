@@ -387,6 +387,41 @@
             </objects>
             <point key="canvasLocation" x="147" y="330"/>
         </scene>
+        <!--Single Card View Controller-->
+        <scene sceneID="Jm8-ll-QeU">
+            <objects>
+                <viewController storyboardIdentifier="SingleCard" id="V19-U4-Tcf" customClass="SingleCardViewController" customModule="Computopias" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hVN-Kr-2Ka"/>
+                        <viewControllerLayoutGuide type="bottom" id="fGJ-MU-DVf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SpP-cd-73t">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n95-2a-fu1" customClass="CardView" customModule="Computopias" customModuleProvider="target">
+                                <rect key="frame" x="10" y="84" width="300" height="400"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="400" id="llU-qb-Zw7"/>
+                                    <constraint firstAttribute="width" constant="300" id="yq0-Lf-QnJ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="n95-2a-fu1" firstAttribute="centerX" secondItem="SpP-cd-73t" secondAttribute="centerX" id="ACf-ys-3eb"/>
+                            <constraint firstItem="n95-2a-fu1" firstAttribute="centerY" secondItem="SpP-cd-73t" secondAttribute="centerY" id="NhC-pp-CNv"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cardView" destination="n95-2a-fu1" id="TuG-B3-PYR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L0A-tK-iQQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="147" y="974"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="NVy-xp-Z2r">
             <objects>
