@@ -96,6 +96,9 @@ class CardItemView: UIView {
         }
         if sender.state == .Ended {
             _prevArea = nil
+            if frame.size.width <= 0 || frame.size.height <= 0 {
+                removeFromSuperview()
+            }
         }
         _updateDragging()
     }
@@ -116,6 +119,10 @@ class CardItemView: UIView {
                 // we're done dragging:
                 card?.showProposalRectForView(nil)
                 frame = card!.proposedFrameForView(self)
+                
+                if !CGRectIntersectsRect(card!.bounds, frame) || CGRectEqualToRect(frame, CGRectZero) {
+                    removeFromSuperview()
+                }
             }
         }
     }

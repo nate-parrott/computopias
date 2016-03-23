@@ -60,6 +60,10 @@ class CardView: UIView {
     }
     
     func proposedFrameForView(view: CardItemView) -> CGRect {
+        if !CGRectIntersectsRect(bounds, view.frame) {
+            return CGRectZero
+        }
+        
         let cellsWide = bounds.size.width / gridCellSize.width;
         let cellsHigh = bounds.size.height / gridCellSize.height
         
