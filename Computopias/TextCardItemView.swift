@@ -17,6 +17,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         field.userInteractionEnabled = false
         field.backgroundColor = UIColor.clearColor()
         field.scrollEnabled = false
+        field.font = UIFont(name: "Futura-Medium", size: 15)
         self.staticLabel = false
         field.tintColor = UIColor.whiteColor()
     }
@@ -47,22 +48,31 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     
     var staticLabel = false {
         didSet {
-            field.layer.borderColor = UIColor(white: 1, alpha: staticLabel ? 0 : 0.5).CGColor
-            field.alpha = staticLabel ? 0.5 : 1
-            field.layer.borderWidth = 1
-            field.layer.cornerRadius = CardView.rounding
+            _updateAppearance()
         }
     }
-    var large = false
+    
+    override var editMode: Bool {
+        didSet {
+            _updateAppearance()
+        }
+    }
+    
+    func _updateAppearance() {
+        field.layer.borderColor = UIColor(white: 1, alpha: staticLabel ? 0 : 0.5).CGColor
+        field.alpha = staticLabel ? 0.5 : 1
+        field.layer.borderWidth = editMode ? 1 : 0
+        field.layer.cornerRadius = CardView.rounding
+    }
     
     override var defaultSize: GridSize {
         get {
-            if large {
-                return CGSizeMake(-1, 2)
-            } else {
-                return CGSizeMake(-1, 1)
-            }
+            return CGSizeMake(-1, 1)
         }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        scrollView.contentOffset = CGPointZero
     }
     
     let field = UITextView()
@@ -70,6 +80,9 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         field.frame = bounds
+        var inset = field.textContainerInset
+        inset.top = (card!.gridCellSize.height - field.font!.pointSize)/2 - 4
+        field.textContainerInset = inset
     }
     
     override func toJson() -> [String : AnyObject] {

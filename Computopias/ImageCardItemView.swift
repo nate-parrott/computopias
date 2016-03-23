@@ -15,6 +15,8 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         super.setup()
         addSubview(imageView)
         imageView.backgroundColor = UIColor(white: 0.1, alpha: 0.7)
+        imageView.contentMode = .ScaleAspectFill
+        imageView.clipsToBounds = true
     }
     
     override func tapped() {
