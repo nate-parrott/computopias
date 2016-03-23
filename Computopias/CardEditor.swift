@@ -18,6 +18,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         cardView.backgroundColor = Appearance.colorForHashtag(hashtag)
+        view.tintColor = cardView.backgroundColor
         if let t = template {
             // we already have a template, so don't allow editing it:
             collectionView.hidden = true
@@ -64,7 +65,10 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         Item(title: "Sound", image: UIImage(named: "audio"), callback: { () -> CardItemView! in
             return nil
         }),
-        Item(title: "Counter", image: nil, callback: { () -> CardItemView! in
+        Item(title: "Counter", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
+            return nil
+        }),
+        Item(title: "Counter", image: UIImage(named: "destruct"), callback: { () -> CardItemView! in
             return nil
         })
     ]
@@ -77,7 +81,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CardEditorItemCell
         if let image = items[indexPath.item].image {
             cell.label.text = ""
-            cell.imageView.image = image
+            cell.imageView.image = image.imageWithRenderingMode(.AlwaysTemplate)
         } else {
             cell.imageView.image = nil
             cell.label.text = items[indexPath.item].title
@@ -124,6 +128,24 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     @IBAction func cancel() {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let padding = (collectionView.bounds.size.height - flowLayout.itemSize.height * 2) / 3
+        flowLayout.minimumLineSpacing = padding
+        flowLayout.minimumInteritemSpacing = padding
+        
+        let nCols = Int(ceil(Float(items.count) / 2.0))
+        let contentWidth = CGFloat(nCols + 1) * padding + CGFloat(nCols) * flowLayout.itemSize.width
+        let leftPadding = padding + max(0, (collectionView.bounds.size.width - contentWidth)/2)
+        
+        collectionView.contentInset = UIEdgeInsetsMake(padding, leftPadding, padding, padding)
+    }
 }
 
 class CardEditorItemCell: UICollectionViewCell {
@@ -133,6 +155,7 @@ class CardEditorItemCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         label.layer.cornerRadius = label.bounds.size.height/2
+        label.clipsToBounds = true
     }
 }
 

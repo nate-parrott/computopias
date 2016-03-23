@@ -91,11 +91,13 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         let resized = image.resizedWithMaxDimension(600)
         _uploadInProgress = true
         Assets.uploadAsset(UIImageJPEGRepresentation(resized, 0.5)!, contentType: "image/jpeg") { (url, error) -> () in
-            self._uploadInProgress = false
-            if let u = url {
-                self.url = u.absoluteString
-                self.imageView.image = resized
-            }
+            mainThread({ () -> Void in
+                self._uploadInProgress = false
+                if let u = url {
+                    self.url = u.absoluteString
+                    self.imageView.image = resized
+                }
+            })
         }
     }
 }

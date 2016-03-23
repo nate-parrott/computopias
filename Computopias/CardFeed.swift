@@ -20,6 +20,8 @@ class CardFeedViewController: UIViewController, UICollectionViewDataSource {
         _fbHandle = q.observeEventType(FEventType.Value) { [weak self] (let snapshot: FDataSnapshot!) -> Void in
             self?.cards = snapshot.childDictionaries
         }
+        navBackdropView.backgroundColor = Appearance.colorForHashtag(hashtag)
+        view.tintColor = navBackdropView.backgroundColor
     }
     var _fbHandle: UInt?
     deinit {
@@ -63,6 +65,18 @@ class CardFeedViewController: UIViewController, UICollectionViewDataSource {
         cell.cardView.backgroundColor = Appearance.colorForHashtag(hashtag)
         return cell
     }
+    
+    // MARK: Layout
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let padding = (collectionView.bounds.size.width - CardView.CardSize.width) / 2
+        collectionView.contentInset = UIEdgeInsetsMake(padding, padding, padding, padding)
+        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.minimumLineSpacing = padding
+    }
+    
+    @IBOutlet var navBackdropView: UIView!
 }
 
 class CardCell: UICollectionViewCell {

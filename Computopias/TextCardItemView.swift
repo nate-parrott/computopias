@@ -18,6 +18,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         field.backgroundColor = UIColor.clearColor()
         field.scrollEnabled = false
         self.staticLabel = false
+        field.tintColor = UIColor.whiteColor()
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -42,7 +43,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     
     var staticLabel = false {
         didSet {
-            field.layer.borderColor = UIColor(white: 0.5, alpha: staticLabel ? 0 : 0.5).CGColor
+            field.layer.borderColor = UIColor(white: 1, alpha: staticLabel ? 0 : 0.5).CGColor
             field.alpha = staticLabel ? 0.5 : 1
             field.layer.borderWidth = 1
         }

@@ -49,7 +49,7 @@ class CardItemView: UIView {
     // MARK: VCs
     
     func presentViewController(vc: UIViewController) {
-        NPSoftModalPresentationController.presentViewController(vc)
+        NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(vc, animated: true, completion: nil)
     }
     
     // MARK: Gesture recs
