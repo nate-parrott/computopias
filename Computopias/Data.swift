@@ -87,3 +87,12 @@ extension FDataSnapshot {
     }
 }
 
+extension String {
+    private static let _allowedCharactersForFirebase = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+    var sanitizedForFirebase: String {
+        get {
+            return componentsSeparatedByCharactersInSet(String._allowedCharactersForFirebase.invertedSet).joinWithSeparator("")
+        }
+    }
+}
+

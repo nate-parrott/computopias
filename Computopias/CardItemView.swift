@@ -46,6 +46,12 @@ class CardItemView: UIView {
         }
     }
     
+    // MARK: VCs
+    
+    func presentViewController(vc: UIViewController) {
+        NPSoftModalPresentationController.presentViewController(vc)
+    }
+    
     // MARK: Gesture recs
     var gestureRecs: [UIGestureRecognizer]!
     
@@ -86,8 +92,10 @@ class CardItemView: UIView {
         let type = j["type"] as? String ?? ""
         var item: CardItemView?
         switch type {
-            case "text":
+        case "text":
             item = TextCardItemView()
+        case "image":
+            item = ImageCardItemView()
         default: ()
         }
         item?.importJson(j)

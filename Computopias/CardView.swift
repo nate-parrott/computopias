@@ -41,4 +41,9 @@ class CardView: UIView {
     }
     
     static let CardSize = CGSize(width: 300, height: 400)
+    
+    override func willMoveToWindow(newWindow: UIWindow?) {
+        super.willMoveToWindow(newWindow)
+        layer.cornerRadius = 5
+    }
 }

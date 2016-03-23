@@ -17,6 +17,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        cardView.backgroundColor = Appearance.colorForHashtag(hashtag)
         if let t = template {
             // we already have a template, so don't allow editing it:
             collectionView.hidden = true
@@ -29,36 +30,41 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     struct Item {
         var title: String
+        var image: UIImage?
         var callback: () -> CardItemView!
     }
     
     let items: [Item] = [
-        Item(title: "Label", callback: { () -> CardItemView! in
+        Item(title: "Label", image: UIImage(named: "label"), callback: { () -> CardItemView! in
             let l = TextCardItemView()
             l.staticLabel = true
             return l
         }),
-        Item(title: "Text", callback: { () -> CardItemView! in
+        Item(title: "Text", image: UIImage(named: "editable_text"), callback: { () -> CardItemView! in
             let l = TextCardItemView()
             l.staticLabel = false
             return l
         }),
-        Item(title: "Long text", callback: { () -> CardItemView! in
+        Item(title: "Long text", image: nil, callback: { () -> CardItemView! in
             return nil
         }),
-        Item(title: "Image", callback: { () -> CardItemView! in
+        Item(title: "Image", image: UIImage(named: "image"), callback: { () -> CardItemView! in
+            let m = ImageCardItemView()
+            delay(0, closure: { () -> () in
+                m.insertMedia()
+            })
+            return m
+        }),
+        Item(title: "Button", image: UIImage(named: "link"), callback: { () -> CardItemView! in
             return nil
         }),
-        Item(title: "Button", callback: { () -> CardItemView! in
+        Item(title: "Upvote", image: nil, callback: { () -> CardItemView! in
             return nil
         }),
-        Item(title: "Upvote", callback: { () -> CardItemView! in
+        Item(title: "Sound", image: UIImage(named: "audio"), callback: { () -> CardItemView! in
             return nil
         }),
-        Item(title: "Sound", callback: { () -> CardItemView! in
-            return nil
-        }),
-        Item(title: "Counter", callback: { () -> CardItemView! in
+        Item(title: "Counter", image: nil, callback: { () -> CardItemView! in
             return nil
         })
     ]
@@ -69,7 +75,14 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CardEditorItemCell
-        cell.label.text = items[indexPath.item].title
+        if let image = items[indexPath.item].image {
+            cell.label.text = ""
+            cell.imageView.image = image
+        } else {
+            cell.imageView.image = nil
+            cell.label.text = items[indexPath.item].title
+        }
+        cell.label.backgroundColor = Appearance.colors[indexPath.item % Appearance.colors.count]
         return cell
     }
     
@@ -115,5 +128,11 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
 
 class CardEditorItemCell: UICollectionViewCell {
     @IBOutlet var label: UILabel!
+    @IBOutlet var imageView: UIImageView!
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        label.layer.cornerRadius = label.bounds.size.height/2
+    }
 }
 

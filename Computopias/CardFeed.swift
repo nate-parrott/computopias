@@ -60,6 +60,7 @@ class CardFeedViewController: UIViewController, UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CardCell
         cell.cardInfo = cards![indexPath.item]
+        cell.cardView.backgroundColor = Appearance.colorForHashtag(hashtag)
         return cell
     }
 }

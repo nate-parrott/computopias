@@ -35,7 +35,7 @@ class HashtagListViewController: UICollectionViewController, UICollectionViewDel
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! HashtagCell
-        cell.label.text = hashtags[indexPath.item]
+        cell.label.text = "#" + hashtags[indexPath.item]
         return cell
     }
     
@@ -45,7 +45,7 @@ class HashtagListViewController: UICollectionViewController, UICollectionViewDel
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let cb = onPickQuery {
-            cb(hashtags[indexPath.item])
+            cb("#" + hashtags[indexPath.item])
         }
     }
 }

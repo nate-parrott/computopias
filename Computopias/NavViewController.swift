@@ -39,7 +39,7 @@ class NavViewController: UIViewController, UITextFieldDelegate {
                 childVC = list
             } else {
                 let feed = storyboard!.instantiateViewControllerWithIdentifier("CardFeed") as! CardFeedViewController
-                feed.hashtag = currentQuery
+                feed.hashtag = currentQuery.sanitizedForFirebase
                 childVC = feed
                 back.hidden = false
                 plus.hidden = false
