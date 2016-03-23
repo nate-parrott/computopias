@@ -32,6 +32,12 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         return true
     }
     
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.text == "Tap to edit" {
+            textView.text = ""
+        }
+    }
+    
     func textViewDidEndEditing(textView: UITextView) {
         field.userInteractionEnabled = false
     }

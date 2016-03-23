@@ -9,9 +9,21 @@
 import UIKit
 
 class NavViewController: UIViewController, UITextFieldDelegate {
+    static var shared: NavViewController! {
+        get {
+            return UIApplication.sharedApplication().delegate?.window!!.rootViewController! as! NavViewController
+        }
+    }
+    
+    func navigate(address: String) {
+        backStack.append(address)
+        currentQuery = address
+    }
+    var backStack = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentQuery = ""
+        navigate("")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -25,32 +37,37 @@ class NavViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    var currentQuery: String = "" {
+    private var currentQuery: String = "" {
         didSet {
-            queryField.text = currentQuery
+            let route = Route.fromString(currentQuery)
+            queryField.text = route.string
             plus.hidden = true
-            back.hidden = true
-            if currentQuery == "" {
+            
+            switch route {
+            case .Hashtag(name: let hashtag):
+                let feed = storyboard!.instantiateViewControllerWithIdentifier("CardFeed") as! CardFeedViewController
+                feed.hashtag = hashtag.sanitizedForFirebase
+                childVC = feed
+                plus.hidden = false
+            case .Profile(name: let _):
+                () // TODO
+            case .Home:
                 let list = storyboard!.instantiateViewControllerWithIdentifier("HashtagList") as! HashtagListViewController
                 list.onPickQuery = {
                     [weak self] (query) in
-                    self?.currentQuery = query
+                    self?.navigate(query)
                 }
                 childVC = list
-            } else {
-                let feed = storyboard!.instantiateViewControllerWithIdentifier("CardFeed") as! CardFeedViewController
-                feed.hashtag = currentQuery.sanitizedForFirebase
-                childVC = feed
-                back.hidden = false
-                plus.hidden = false
+            default: ()
             }
+            back.hidden = backStack.count <= 1
         }
     }
     
     @IBOutlet var queryField: UITextField!
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        currentQuery = queryField.text ?? ""
+        navigate(queryField.text ?? "")
         textField.resignFirstResponder()
         return true
     }
@@ -80,7 +97,8 @@ class NavViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var back: UIButton!
     @IBOutlet var plus: UIButton!
     @IBAction func goBack() {
-        currentQuery = ""
+        backStack.removeLast()
+        currentQuery = backStack.last!
     }
     @IBAction func addPost() {
         if let feed = childVC as? CardFeedViewController {

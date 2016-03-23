@@ -64,7 +64,7 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
         _dimView.backgroundColor = UIColor.blackColor()
         _dimView.alpha = 0
         
-        _tapRec = UITapGestureRecognizer(target: self, action: "_tappedDimView:")
+        _tapRec = UITapGestureRecognizer(target: self, action: #selector(NPSoftModalPresentationController._tappedDimView(_:)))
         _dimView.addGestureRecognizer(_tapRec)
         
         containerView!.addSubview(_dimView)

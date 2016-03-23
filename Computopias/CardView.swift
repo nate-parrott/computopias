@@ -50,6 +50,12 @@ class CardView: UIView {
     override func willMoveToWindow(newWindow: UIWindow?) {
         super.willMoveToWindow(newWindow)
         layer.cornerRadius = CardView.rounding
+        
+        addSubview(ellipsesButton)
+        ellipsesButton.setImage(UIImage(named: "ellipses"), forState: .Normal)
+        ellipsesButton.addTarget(self, action: #selector(CardView._cardActions(_:)), forControlEvents: .TouchUpInside)
+        ellipsesButton.tintColor = UIColor.blackColor()
+        ellipsesButton.alpha = 0.7
     }
     
     static let rounding: CGFloat = 5
@@ -106,5 +112,36 @@ class CardView: UIView {
             _proposalRect?.removeFromSuperview()
             _proposalRect = nil
         }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        ellipsesButton.frame = CGRectMake(bounds.size.width - gridCellSize.width, bounds.size.height - gridCellSize.height, gridCellSize.width, gridCellSize.height)
+        if ellipsesButton.superview != nil {
+            bringSubviewToFront(ellipsesButton)
+        }
+    }
+    
+    // MARK: Card actions
+    let ellipsesButton = UIButton()
+    func _cardActions(sender: UIButton) {
+        if cardFirebase == nil { return }
+        let actions = UIAlertController(title: "Card Actions", message: nil, preferredStyle: .ActionSheet)
+        actions.addAction(UIAlertAction(title: "Delete card", style: .Destructive, handler: { (_) in
+            // TODO
+        }))
+        actions.addAction(UIAlertAction(title: "Copy direct link", style: .Default, handler: { (let _) in
+            if let hashtag = self.hashtag, let key = self.cardFirebase?.key {
+                let link = "#\(hashtag)/\(key)"
+                UIPasteboard.generalPasteboard().string = link
+            }
+        }))
+        actions.addAction(UIAlertAction(title: "Edit card", style: .Default, handler: { (_) in
+            // TODO
+        }))
+        actions.addAction(UIAlertAction(title: "Never mind", style: .Cancel, handler: { (_) in
+            
+        }))
+        NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(actions, animated: true, completion: nil)
     }
 }

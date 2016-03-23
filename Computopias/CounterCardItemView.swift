@@ -86,6 +86,24 @@ class CounterCardItemView: CardItemView {
                 path.setValue(NSDate().timeIntervalSince1970)
             }
         }
+        if templateEditMode {
+            rotateEmoji()
+        }
+    }
+    
+    func rotateEmoji() {
+        // emoji = CounterCardItemView.randomEmoji()
+        if templateEditMode {
+            let editor = UIAlertController(title: "Choose caption for voter", message: "Choose a title and a link", preferredStyle: .Alert)
+            editor.addTextFieldWithConfigurationHandler({ (let field) in
+                field.placeholder = "An emoji or a word"
+                field.text = self.emoji
+            })
+            editor.addAction(UIAlertAction(title: "Done", style: .Default, handler: { (_) in
+                self.emoji = editor.textFields![0].text ?? "🐳"
+            }))
+            presentViewController(editor)
+        }
     }
     
     func willModifyCount(add: Int) {

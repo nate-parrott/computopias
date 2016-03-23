@@ -51,4 +51,11 @@ class ProfileCardItemView: CardItemView {
         super.detachFromTemplate()
         profileDict = Data.profileJson()
     }
+    
+    override func tapped() {
+        super.tapped()
+        if !editMode {
+            NavViewController.shared.navigate("@" + (profileDict["uid"] as? String ?? ""))
+        }
+    }
 }

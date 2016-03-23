@@ -26,4 +26,12 @@ class LikeCounterCardItemView: CounterCardItemView {
         j["type"] = "likes"
         return j
     }
+    
+    override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
+        return CGSizeMake(max(size.width, 2), size.height)
+    }
+    
+    override func rotateEmoji() {
+        
+    }
 }

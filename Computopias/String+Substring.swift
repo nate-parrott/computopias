@@ -13,7 +13,8 @@ extension String {
         get {
             let rangeStartIndex = startIndex.advancedBy(r.startIndex)
             let rangeEndIndex = rangeStartIndex.advancedBy(r.endIndex - r.startIndex)
-            return self[Range(start: rangeStartIndex, end: rangeEndIndex)]
+            return self[rangeStartIndex..<rangeEndIndex]
+            // return self[Range(start: rangeStartIndex, end: rangeEndIndex)]
         }
     }
 }

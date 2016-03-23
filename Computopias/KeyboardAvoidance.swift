@@ -12,7 +12,7 @@ class _KeyboardTracker: NSObject {
     static let Shared = _KeyboardTracker()
     override init() {
         super.init()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "_frameChanged:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(_KeyboardTracker._frameChanged(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
         UIApplicationDidChangeStatusBarOrientationNotification
     }
     
@@ -32,7 +32,7 @@ class KeyboardProxyView: UIView {
         willSet(newVal) {
             if _notifications != newVal {
                 if newVal {
-                    NSNotificationCenter.defaultCenter().addObserver(self, selector: "_frameChanged:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+                    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(_KeyboardTracker._frameChanged(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
                 } else {
                     NSNotificationCenter.defaultCenter().removeObserver(self)
                 }

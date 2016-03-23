@@ -13,9 +13,9 @@ class CardItemView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        panRec = UIPanGestureRecognizer(target: self, action: "panned:")
-        let tapRec = UITapGestureRecognizer(target: self, action: "tapped:")
-        pinchRec = UIPinchGestureRecognizer(target: self, action: "pinched:")
+        panRec = UIPanGestureRecognizer(target: self, action: #selector(CardItemView.panned(_:)))
+        let tapRec = UITapGestureRecognizer(target: self, action: #selector(CardItemView.tapped(_:)))
+        pinchRec = UIPinchGestureRecognizer(target: self, action: #selector(CardItemView.pinched(_:)))
         gestureRecs = [panRec, tapRec, pinchRec]
         for r in gestureRecs {
             addGestureRecognizer(r)
@@ -28,7 +28,7 @@ class CardItemView: UIView {
     var pinchRec: UIPinchGestureRecognizer!
     
     func setup() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "_windowTouchedEnded:", name: CMWindowGlobalTouchesEndedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardItemView._windowTouchedEnded(_:)), name: CMWindowGlobalTouchesEndedNotification, object: nil)
     }
     
     func tapped() {
@@ -88,7 +88,7 @@ class CardItemView: UIView {
     var _prevArea: CGRect?
     func pinched(sender: UIPinchGestureRecognizer) {
         if !templateEditMode { return }
-        if sender.state == .Changed {
+        if sender.state == .Changed && sender.numberOfTouches() == 2 {
             let area = sender.boundingRectOfTouchesInView(superview!)
             if let prev = _prevArea {
                 let dp = area.origin - prev.origin
@@ -145,6 +145,8 @@ class CardItemView: UIView {
             item = CounterCardItemView()
         case "likes":
             item = LikeCounterCardItemView()
+        case "button":
+            item = ButtonCardItemView()
         default: ()
         }
         item?.importJson(j)

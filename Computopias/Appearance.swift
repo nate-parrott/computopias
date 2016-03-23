@@ -9,7 +9,7 @@
 import UIKit
 
 struct Appearance {
-    static let colors = "#EB7DCA #E4E4E4 #679FFF #67FFAA #F0FF67 #FF6767 #EDD061 #905FFF".componentsSeparatedByString(" ").map({ UIColor(hex: $0)! })
+    static let colors = "#905FFF #EB7DCA #FFD122 #E65050 #EAE865 #5AE095 #679FFF #D9D9D9 #FF5F85".componentsSeparatedByString(" ").map({ UIColor(hex: $0)! })
     
     static func colorForHashtag(hashtag: String) -> UIColor {
         return colors[abs(hashtag.hash) % colors.count]

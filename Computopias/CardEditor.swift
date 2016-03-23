@@ -12,6 +12,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var hashtag: String!
     var template: [String: AnyObject]?
     
+    var existingID: String?
+    var existingContent: [String: AnyObject]?
+    
     @IBOutlet var cardView: CardView!
     @IBOutlet var collectionView: UICollectionView!
     
@@ -19,14 +22,23 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         super.viewDidLoad()
         cardView.backgroundColor = Appearance.colorForHashtag(hashtag)
         view.tintColor = cardView.backgroundColor
+        collectionView.hidden = true
         if let t = template {
             // we already have a template, so don't allow editing it:
-            collectionView.hidden = true
             cardView.importJson(t)
             for item in cardView.items {
                 item.templateEditMode = false
                 item.detachFromTemplate()
             }
+        } else if let existing = existingContent {
+            cardView.importJson(existing)
+            for item in cardView.items {
+                item.templateEditMode = false
+            }
+        } else {
+            // we're building a new template; add initial content:
+            addItemView(ProfileCardItemView())
+            collectionView.hidden = false
         }
     }
     
@@ -47,9 +59,6 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             l.staticLabel = false
             return l
         }),
-        Item(title: "Long text", image: nil, callback: { () -> CardItemView! in
-            return nil
-        }),
         Item(title: "Image", image: UIImage(named: "image"), callback: { () -> CardItemView! in
             let m = ImageCardItemView()
             delay(0, closure: { () -> () in
@@ -61,12 +70,12 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             return ProfileCardItemView()
         }),
         Item(title: "Button", image: UIImage(named: "link"), callback: { () -> CardItemView! in
-            return nil
+            return ButtonCardItemView()
         }),
-        Item(title: "Counter", image: nil, callback: { () -> CardItemView! in
+        Item(title: "Counter", image: UIImage(named: "vote"), callback: { () -> CardItemView! in
             return CounterCardItemView()
         }),
-        Item(title: "Likes", image: nil, callback: { () -> CardItemView! in
+        Item(title: "Likes", image: UIImage(named: "like"), callback: { () -> CardItemView! in
             return LikeCounterCardItemView()
         }),
         Item(title: "Sound", image: UIImage(named: "audio"), callback: { () -> CardItemView! in
@@ -99,17 +108,21 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let itemView = items[indexPath.item].callback() {
-            cardView.addSubview(itemView)
-            var frame = CGRectMake(0, 0, itemView.defaultSize.width * cardView.gridCellSize.width, itemView.defaultSize.height * cardView.gridCellSize.height)
-            if frame.size.width < 0 { frame.size.width = cardView.bounds.size.width }
-            if frame.size.height < 0 { frame.size.height = cardView.bounds.size.height }
-            itemView.frame = frame
+            addItemView(itemView)
         }
+    }
+    
+    func addItemView(itemView: CardItemView) {
+        cardView.addSubview(itemView)
+        var frame = CGRectMake(0, 0, itemView.defaultSize.width * cardView.gridCellSize.width, itemView.defaultSize.height * cardView.gridCellSize.height)
+        if frame.size.width < 0 { frame.size.width = cardView.bounds.size.width }
+        if frame.size.height < 0 { frame.size.height = cardView.bounds.size.height }
+        itemView.frame = frame
     }
     
     @IBAction func send() {
         let cardJson = cardView.toJson()
-        let card = Data.firebase.childByAppendingPath("cards").childByAutoId()
+        let card = existingID != nil ? Data.firebase.childByAppendingPath("cards").childByAppendingPath(existingID!) : Data.firebase.childByAppendingPath("cards").childByAutoId()
         card.setValue(cardJson)
         
         let cardInfo: [String: AnyObject] = ["date": NSDate().timeIntervalSince1970, "negativeDate": -NSDate().timeIntervalSince1970, "cardID": card.key]
