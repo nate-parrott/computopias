@@ -21,6 +21,7 @@ class CountdownCardItemView: CardItemView {
         addSubview(imageView)
         imageView.contentMode = .ScaleAspectFit
         imageView.tintColor = UIColor.blackColor()
+        imageView.alpha = 0.5
     }
     
     override func layoutSubviews() {
@@ -54,8 +55,8 @@ class CountdownCardItemView: CardItemView {
             return CGSize(width: 1, height: 1)
         }
     }
-    override func onPresent() {
-        super.onPresent()
+    override func prepareToPresent() {
+        super.prepareToPresent()
         delay(1) { 
             self.countdown()
         }

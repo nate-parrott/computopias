@@ -26,6 +26,10 @@ class ButtonCardItemView: CardItemView {
         return GridSize(width: 3, height: 1)
     }
     
+    override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
+        return size
+    }
+    
     var link = ""
     
     override func tapped() {

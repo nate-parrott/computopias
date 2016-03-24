@@ -27,13 +27,13 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             // we already have a template, so don't allow editing it:
             cardView.importJson(t)
             for item in cardView.items {
-                item.templateEditMode = false
                 item.detachFromTemplate()
+                item.prepareToEditWithExistingTemplate()
             }
         } else if let existing = existingContent {
             cardView.importJson(existing)
             for item in cardView.items {
-                item.templateEditMode = false
+                item.prepareToEditWithExistingTemplate()
             }
         } else {
             // we're building a new template; add initial content:
@@ -76,7 +76,10 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             return LikeCounterCardItemView()
         }),
         Item(title: "Sound", image: UIImage(named: "audio"), callback: { () -> CardItemView! in
-            return nil
+            return SoundCardItemView()
+        }),
+        Item(title: "Location", image: UIImage(named: "location"), callback: { () -> CardItemView! in
+            return MapCardItemView()
         }),
         Item(title: "MessageMe", image: UIImage(named: "comment"), callback: { () -> CardItemView! in
             return MessageMeCardItemView()
@@ -108,6 +111,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let itemView = items[indexPath.item].callback() {
+            itemView.prepareToEditTemplate()
             addItemView(itemView)
         }
     }

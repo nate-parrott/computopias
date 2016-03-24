@@ -98,9 +98,7 @@ class CardCell: UICollectionViewCell {
                     if let json = snapshot.value as? [String: AnyObject] {
                         self?.cardView.importJson(json)
                         for item in self?.cardView.items ?? [] {
-                            item.editMode = false
-                            item.templateEditMode = false
-                            item.onPresent()
+                            item.prepareToPresent()
                         }
                     }
                 })

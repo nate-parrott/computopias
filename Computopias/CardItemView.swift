@@ -176,8 +176,12 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
             item = ButtonCardItemView()
         case "messageMe":
             item = MessageMeCardItemView()
-            case "countdown":
+        case "countdown":
             item = CountdownCardItemView()
+        case "map":
+            item = MapCardItemView()
+        case "sound":
+            item = SoundCardItemView()
         default: ()
         }
         item?.importJson(j)
@@ -197,10 +201,22 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
         
     }
     
-    func onInsert() {
-        
+    func prepareToPresent() {
+        editMode = false
+        templateEditMode = false
     }
-    func onPresent() {
+    
+    func prepareToEditWithExistingTemplate() {
+        editMode = true
+        templateEditMode = false
+    }
+    
+    func prepareToEditTemplate() {
+        editMode = true
+        templateEditMode = true
+    }
+    
+    func onInsert() {
         
     }
 }
