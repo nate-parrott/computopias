@@ -72,6 +72,11 @@
       "idiom" : "car",
       "filename" : "Icon@2x.png",
       "scale" : "2x"
+    },
+    {
+      "idiom" : "car",
+      "size" : "60x60",
+      "scale" : "3x"
     }
   ],
   "info" : {

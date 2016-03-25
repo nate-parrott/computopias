@@ -27,7 +27,8 @@ class CounterCardItemView: CardItemView {
         count = 0
         addSubview(label)
         label.font = TextCardItemView.font
-        label.textAlignment = .Center
+        label.layer.cornerRadius = CardView.rounding
+        label.clipsToBounds = true
     }
     
     override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
@@ -64,7 +65,7 @@ class CounterCardItemView: CardItemView {
     
     var selectedByMe = false {
         didSet {
-            label.backgroundColor = selectedByMe ? Appearance.transparentWhite : nil
+            label.backgroundColor = selectedByMe ? Appearance.transparentWhite : UIColor.clearColor()
         }
     }
     var count: Int = 0 {
@@ -118,7 +119,6 @@ class CounterCardItemView: CardItemView {
     override func layoutSubviews() {
         super.layoutSubviews()
         label.frame = textInsetBounds
-        label.layer.cornerRadius = CardView.rounding
         label.font = TextCardItemView.font.fontWithSize(generousFontSize)
     }
     

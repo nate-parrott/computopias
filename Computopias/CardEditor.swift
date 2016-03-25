@@ -84,6 +84,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         Item(title: "MessageMe", image: UIImage(named: "comment"), callback: { () -> CardItemView! in
             return MessageMeCardItemView()
         }),
+        Item(title: "Drawing", image: UIImage(named: "drawing"), callback: { () -> CardItemView! in
+            return DrawingCardItemView()
+        }),
         /*Item(title: "Timer", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
             return nil
         }),*/

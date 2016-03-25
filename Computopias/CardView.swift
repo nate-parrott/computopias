@@ -43,6 +43,7 @@ class CardView: UIView {
                 }
             }
         }
+        drawingView.item = drawingItem
     }
     
     static let CardSize = CGSize(width: 300, height: 400)
@@ -56,6 +57,10 @@ class CardView: UIView {
         ellipsesButton.addTarget(self, action: #selector(CardView._cardActions(_:)), forControlEvents: .TouchUpInside)
         ellipsesButton.tintColor = UIColor.blackColor()
         ellipsesButton.alpha = 0.7
+        
+        if drawingView.superview == nil {
+            addSubview(drawingView)
+        }
     }
     
     static let rounding: CGFloat = 5
@@ -121,6 +126,8 @@ class CardView: UIView {
         if ellipsesButton.superview != nil {
             bringSubviewToFront(ellipsesButton)
         }
+        drawingView.frame = bounds
+        bringSubviewToFront(drawingView)
     }
     
     // MARK: Card actions
@@ -152,5 +159,26 @@ class CardView: UIView {
                 item.alpha = 0
             }
             }, completion: nil)
+    }
+    
+    // MARK: Drawing mode
+    func startDrawing() {
+        drawingView.item = drawingItem // make sure it's set
+        drawingView.drawingModeActive = true
+        drawingView.onDone = {
+            (drawingView) in
+            drawingView.drawingModeActive = false
+        }
+    }
+    let drawingView = DrawingView()
+    var drawingItem: DrawingCardItemView? {
+        get {
+            for item in items {
+                if let d = item as? DrawingCardItemView {
+                    return d
+                }
+            }
+            return nil
+        }
     }
 }
