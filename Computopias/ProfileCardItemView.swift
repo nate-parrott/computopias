@@ -14,11 +14,11 @@ class ProfileCardItemView: CardItemView {
         profileDict = Data.profileJson()
         addSubview(label)
         label.font = TextCardItemView.font
-        label.alpha = 0.5
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.frame = bounds
+        label.frame = textInsetBounds
+        label.font = TextCardItemView.font.fontWithSize(generousFontSize)
     }
     override func importJson(json: [String : AnyObject]) {
         super.importJson(json)
@@ -28,7 +28,7 @@ class ProfileCardItemView: CardItemView {
     var profileDict: [String: AnyObject]! {
         didSet {
             if let name = profileDict["name"] as? String {
-                label.text = "  👤 " + name
+                label.text = "👤 " + name
             }
         }
     }

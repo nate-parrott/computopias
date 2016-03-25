@@ -118,7 +118,7 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        map.frame = bounds
+        map.frame = insetBounds
         pin.center = bounds.center
     }
     

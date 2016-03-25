@@ -14,4 +14,6 @@ struct Appearance {
     static func colorForHashtag(hashtag: String) -> UIColor {
         return colors[abs(hashtag.hash) % colors.count]
     }
+    
+    static let transparentWhite = UIColor(white: 1, alpha: 0.3)
 }

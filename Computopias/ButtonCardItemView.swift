@@ -15,7 +15,7 @@ class ButtonCardItemView: CardItemView {
         super.setup()
         addSubview(button)
         button.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        button.backgroundColor = UIColor(white: 1, alpha: 0.5)
+        button.backgroundColor = Appearance.transparentWhite
         button.layer.cornerRadius = CardView.rounding
         button.userInteractionEnabled = false
         button.setTitle("Tap to edit...", forState: .Normal)
@@ -126,6 +126,6 @@ class ButtonCardItemView: CardItemView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        button.frame = CGRectInset(bounds, 2, 2)
+        button.frame = insetBounds
     }
 }

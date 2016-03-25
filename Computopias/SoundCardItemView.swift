@@ -14,11 +14,13 @@ class SoundCardItemView: CardItemView {
         label.font = TextCardItemView.font
         addSubview(label)
         label.textAlignment = .Center
+        label.layer.cornerRadius = CardView.rounding
         _updateText()
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.frame = bounds
+        label.frame = textInsetBounds
+        label.font = TextCardItemView.font.fontWithSize(generousFontSize)
     }
     
     var url: String? {
@@ -54,15 +56,14 @@ class SoundCardItemView: CardItemView {
         }
     }
     func _updateText() {
-        label.alpha = 1
         if nowPlaying {
             label.text = "🔊"
         } else if url != nil {
             label.text = "🔈"
         } else {
-            label.text = "🔈"
-            label.alpha = 0.5
+            label.text = "🔇"
         }
+        backgroundColor = nowPlaying ? Appearance.transparentWhite : nil
     }
     override func tapped() {
         super.tapped()

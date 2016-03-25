@@ -18,6 +18,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         field.backgroundColor = UIColor.clearColor()
         field.scrollEnabled = false
         field.font = TextCardItemView.font
+        field.textContainer.lineFragmentPadding = 0
         self.staticLabel = false
         field.tintColor = UIColor.whiteColor()
     }
@@ -67,10 +68,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     }
     
     func _updateAppearance() {
-        field.layer.borderColor = UIColor(white: 1, alpha: staticLabel ? 0 : 0.5).CGColor
-        field.alpha = staticLabel ? 0.5 : 1
-        field.layer.borderWidth = editMode ? 1 : 0
-        field.layer.cornerRadius = CardView.rounding
+        field.backgroundColor = staticLabel ? nil : Appearance.transparentWhite
     }
     
     override var defaultSize: GridSize {
@@ -87,10 +85,11 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        field.frame = bounds
-        var inset = field.textContainerInset
+        field.frame = insetBounds
+        var inset = UIEdgeInsetsMake(textMargin - margin, textMargin - margin, textMargin - margin, textMargin - margin)
         inset.top = (card!.gridCellSize.height - field.font!.pointSize)/2 - 4
         field.textContainerInset = inset
+        field.layer.cornerRadius = CardView.rounding
     }
     
     override func toJson() -> [String : AnyObject] {

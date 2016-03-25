@@ -29,7 +29,7 @@ enum Route {
         if string == "" {
             return Route.Home
         } else if string.characters.first! == "@".characters.first! {
-            return Route.Profile(name: string[1...string.characters.count])
+            return Route.Profile(name: string[1..<string.characters.count])
         } else if string.characters.first! == "#".characters.first! {
             let parts = string.componentsSeparatedByString("/")
             if parts.count == 2 {

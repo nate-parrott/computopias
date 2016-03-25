@@ -64,7 +64,7 @@ class CounterCardItemView: CardItemView {
     
     var selectedByMe = false {
         didSet {
-            label.alpha = selectedByMe ? 1 : 0.5
+            label.backgroundColor = selectedByMe ? Appearance.transparentWhite : nil
         }
     }
     var count: Int = 0 {
@@ -117,12 +117,9 @@ class CounterCardItemView: CardItemView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        label.frame = bounds
-        if let gridSize = card?.gridCellSize, let proposedSize = card?.proposedFrameForView(self) {
-            let minDim = min(proposedSize.width / gridSize.width, proposedSize.height / gridSize.height)
-            let pointSize = minDim * TextCardItemView.font.pointSize
-            label.font = TextCardItemView.font.fontWithSize(pointSize)
-        }
+        label.frame = textInsetBounds
+        label.layer.cornerRadius = CardView.rounding
+        label.font = TextCardItemView.font.fontWithSize(generousFontSize)
     }
     
     func pathToObserve() -> Firebase {

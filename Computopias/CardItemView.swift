@@ -68,6 +68,40 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
         NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(vc, animated: true, completion: nil)
     }
     
+    // MARK: Layout
+    var margin: CGFloat {
+        get {
+            return 2
+        }
+    }
+    
+    var insetBounds: CGRect {
+        get {
+            return CGRectInset(bounds, margin, margin)
+        }
+    }
+    
+    var textMargin: CGFloat {
+        get {
+            return margin + 3
+        }
+    }
+    
+    var textInsetBounds: CGRect {
+        get {
+            return CGRectInset(bounds, textMargin, textMargin)
+        }
+    }
+    
+    var generousFontSize: CGFloat {
+        if let gridSize = card?.gridCellSize, let proposedSize = card?.proposedFrameForView(self) {
+            let minDim = min(proposedSize.width / gridSize.width, proposedSize.height / gridSize.height)
+            return minDim * TextCardItemView.font.pointSize
+        } else {
+            return TextCardItemView.font.pointSize
+        }
+    }
+    
     // MARK: Gesture recs
     var gestureRecs: [UIGestureRecognizer]!
     
@@ -197,6 +231,7 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
         j["frame"] = NSStringFromCGRect(frame)
         return j
     }
+    // MARK: Events
     func detachFromTemplate() {
         
     }
