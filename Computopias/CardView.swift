@@ -69,8 +69,8 @@ class CardView: UIView {
     
     var gridCellSize: CGSize {
         get {
-            let hCells = Int(floor(CardView.CardSize.width/42))
-            let vCells = Int(floor(CardView.CardSize.height/42))
+            let hCells = Int(floor(CardView.CardSize.width/50))
+            let vCells = Int(floor(CardView.CardSize.height/50))
             return CGSizeMake(CardView.CardSize.width / CGFloat(hCells), CardView.CardSize.height / CGFloat(vCells))
         }
     }
@@ -117,6 +117,17 @@ class CardView: UIView {
         } else {
             _proposalRect?.removeFromSuperview()
             _proposalRect = nil
+        }
+    }
+    
+    func frameForHorizontalExpansionOfView(view: CardItemView!) -> CGRect? {
+        let fudge: CGFloat = 2
+        if view.frame.right + gridCellSize.width <= bounds.size.width + fudge {
+            var f = view.frame
+            f.size.width += gridCellSize.height
+            return f
+        } else {
+            return nil
         }
     }
     

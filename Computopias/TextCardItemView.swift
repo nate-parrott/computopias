@@ -39,6 +39,17 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         }
     }
     
+    func textViewDidChange(textView: UITextView) {
+        delay(0) { 
+            if self.staticLabel && textView.numberOfLines > 0 {
+                // can we extend this horizontally?
+                if let newFrame = self.card?.frameForHorizontalExpansionOfView(self) {
+                    self.frame = newFrame
+                }
+            }
+        }
+    }
+    
     func textViewDidEndEditing(textView: UITextView) {
         field.userInteractionEnabled = false
     }
@@ -73,7 +84,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     
     override var defaultSize: GridSize {
         get {
-            return CGSizeMake(-1, 1)
+            return CGSizeMake(staticLabel ? 2 : -1, 1)
         }
     }
     
@@ -104,5 +115,17 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         super.importJson(json)
         field.text = json["text"] as? String ?? ""
         staticLabel = json["staticLabel"] as? Bool ?? false
+    }
+}
+
+extension UITextView {
+    var numberOfLines: Int {
+        get {
+            var i = 0
+            layoutManager.enumerateLineFragmentsForGlyphRange(NSRange(location: 0, length: layoutManager.numberOfGlyphs)) { (_, _, _, _, _) in
+                i += 1
+            }
+            return i
+        }
     }
 }

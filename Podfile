@@ -6,6 +6,7 @@ use_frameworks!
 target 'Computopias' do
 
 pod 'Firebase'
+pod 'IQAudioRecorderController'
 
 end
 

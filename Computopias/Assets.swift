@@ -25,9 +25,13 @@ struct Assets {
                 responseDict = response as? [String: AnyObject],
                 urlString = responseDict["url"] as? String,
                 url = NSURL(string: urlString) {
+                mainThread({ 
                     callback(url: url, error: nil)
+                })
             } else {
-                callback(url: nil, error: errorOpt)
+                mainThread({ 
+                    callback(url: nil, error: errorOpt)
+                })
             }
         }
         task.resume()
@@ -39,5 +43,14 @@ struct Assets {
         let h = w * 3
         comps.queryItems = [NSURLQueryItem(name: "url", value: url), NSURLQueryItem(name: "resize", value: "\(w),\(h)")]
         return comps.URL!
+    }
+    
+    static func fetch(url: NSURL, callback: (data: NSData?, error: NSError?) -> ()) -> NSURLSessionDataTask {
+        let req = NSURLRequest(URL: url)
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(req) { (let dataOpt, let respOpt, let errorOpt) in
+            callback(data: dataOpt, error: errorOpt)
+        }
+        task.resume()
+        return task
     }
 }

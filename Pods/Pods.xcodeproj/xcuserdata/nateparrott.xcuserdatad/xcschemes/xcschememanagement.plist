@@ -9,7 +9,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>IQAudioRecorderController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Computopias.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SCSiriWaveformView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -17,12 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>A0A612AC5D673B0999B580CB94C37208</key>
+		<key>38B2474207004164BABDA2224ECB3965</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B7AC9326D819482593FE118E915409D7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E1A10459CF41967D18E2C1AEE2296DC0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FE03691571293C8A3FDC781D257400B0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

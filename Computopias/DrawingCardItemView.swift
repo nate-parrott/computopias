@@ -56,4 +56,3 @@ class DrawingCardItemView: CardItemView {
         }
     }
 }
-
