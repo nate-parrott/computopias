@@ -7,6 +7,7 @@ target 'Computopias' do
 
 pod 'Firebase'
 pod 'IQAudioRecorderController'
+pod 'JSQMessagesViewController'
 
 end
 

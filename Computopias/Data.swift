@@ -28,6 +28,12 @@ FIREBASE STRUCTURE
   - height
 
 /counters/uuid/<uid>
+ 
+/chats/<id>
+    - count
+    /messages/<id>
+        - text: string
+        - sender: userJson
 
 dates are unix timestamps
 
@@ -35,17 +41,6 @@ dates are unix timestamps
 
 import Foundation
 import Firebase
-
-typealias Card = Firebase
-
-extension Card {
-    
-}
-
-typealias Item = Firebase
-
-typealias Poster = Firebase
-
 
 typealias GridSize = CGSize
 

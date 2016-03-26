@@ -2,15 +2,21 @@ PODS:
   - Firebase (2.5.1)
   - IQAudioRecorderController (1.1.0):
     - SCSiriWaveformView
+  - JSQMessagesViewController (7.2.0):
+    - JSQSystemSoundPlayer (~> 2.0.1)
+  - JSQSystemSoundPlayer (2.0.1)
   - SCSiriWaveformView (1.0.3)
 
 DEPENDENCIES:
   - Firebase
   - IQAudioRecorderController
+  - JSQMessagesViewController
 
 SPEC CHECKSUMS:
   Firebase: 3565ea88b830f28f2c77ecc524622bc71a20d085
   IQAudioRecorderController: 3a39f09c589c420b0bad09297b8294af08089f5c
+  JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
+  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
 
 COCOAPODS: 0.39.0

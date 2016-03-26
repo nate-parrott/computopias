@@ -34,9 +34,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        if textView.text == "Tap to edit" {
-            textView.text = ""
-        }
+        textView.selectedRange = NSMakeRange(0, (textView.text as NSString).length)
     }
     
     func textViewDidChange(textView: UITextView) {

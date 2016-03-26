@@ -218,6 +218,8 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
             item = SoundCardItemView()
         case "drawing":
             item = DrawingCardItemView()
+        case "comments":
+            item = CommentsCardItemView()
         default: ()
         }
         item?.importJson(j)

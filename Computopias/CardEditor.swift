@@ -81,7 +81,10 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         Item(title: "Location", image: UIImage(named: "location"), callback: { () -> CardItemView! in
             return MapCardItemView()
         }),
-        Item(title: "MessageMe", image: UIImage(named: "comment"), callback: { () -> CardItemView! in
+        Item(title: "Comment", image: UIImage(named: "comment"), callback: { () -> CardItemView! in
+            return CommentsCardItemView()
+        }),
+        Item(title: "MessageMe", image: UIImage(named: "sms"), callback: { () -> CardItemView! in
             return MessageMeCardItemView()
         }),
         Item(title: "Drawing", image: UIImage(named: "drawing"), callback: { () -> CardItemView! in

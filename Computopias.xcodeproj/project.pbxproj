@@ -39,10 +39,10 @@
 		5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */; };
 		5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602C1CA331E60016D837 /* MapCardItemView.swift */; };
 		5FD360311CA355700016D837 /* SoundCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360301CA355700016D837 /* SoundCardItemView.swift */; };
-		5FD360331CA3B36D0016D837 /* SketchCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360321CA3B36D0016D837 /* SketchCardItemView.swift */; };
 		5FD360351CA3B5590016D837 /* GivePointsCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360341CA3B5590016D837 /* GivePointsCardItemView.swift */; };
 		5FD3603A1CA4D1490016D837 /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360391CA4D1490016D837 /* DrawingView.swift */; };
 		5FD3603C1CA4D5550016D837 /* DrawingCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3603B1CA4D5550016D837 /* DrawingCardItemView.swift */; };
+		5FD360401CA72BED0016D837 /* CommentsCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3603F1CA72BED0016D837 /* CommentsCardItemView.swift */; };
 		5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */; };
 		5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE531CA1BEB3006A7191 /* Queues.swift */; };
 		5FD8FE561CA1C313006A7191 /* NavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE551CA1C313006A7191 /* NavViewController.swift */; };
@@ -85,10 +85,10 @@
 		5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602C1CA331E60016D837 /* MapCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCardItemView.swift; sourceTree = "<group>"; };
 		5FD360301CA355700016D837 /* SoundCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundCardItemView.swift; sourceTree = "<group>"; };
-		5FD360321CA3B36D0016D837 /* SketchCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SketchCardItemView.swift; sourceTree = "<group>"; };
 		5FD360341CA3B5590016D837 /* GivePointsCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GivePointsCardItemView.swift; sourceTree = "<group>"; };
 		5FD360391CA4D1490016D837 /* DrawingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
 		5FD3603B1CA4D5550016D837 /* DrawingCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingCardItemView.swift; sourceTree = "<group>"; };
+		5FD3603F1CA72BED0016D837 /* CommentsCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsCardItemView.swift; sourceTree = "<group>"; };
 		5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5FD8FE531CA1BEB3006A7191 /* Queues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queues.swift; sourceTree = "<group>"; };
 		5FD8FE551CA1C313006A7191 /* NavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				5F70981B1CA0EDF600B499BC /* AppDelegate.swift */,
+				5F7098311CA0EEE200B499BC /* Data.swift */,
 				5FB2F2451CA20FB8001863C4 /* Screens */,
 				5FB2F2461CA20FC4001863C4 /* Card Items */,
 				5FB2F2471CA20FCB001863C4 /* Utils */,
@@ -176,13 +177,13 @@
 				5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */,
 				5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */,
 				5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */,
-				5FD360321CA3B36D0016D837 /* SketchCardItemView.swift */,
 				5FD360341CA3B5590016D837 /* GivePointsCardItemView.swift */,
 				5FD360281CA319940016D837 /* MessageMeCardItemView.swift */,
 				5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */,
 				5FD3602C1CA331E60016D837 /* MapCardItemView.swift */,
 				5FD360301CA355700016D837 /* SoundCardItemView.swift */,
 				5FD3603B1CA4D5550016D837 /* DrawingCardItemView.swift */,
+				5FD3603F1CA72BED0016D837 /* CommentsCardItemView.swift */,
 			);
 			name = "Card Items";
 			sourceTree = "<group>";
@@ -190,7 +191,6 @@
 		5FB2F2471CA20FCB001863C4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				5F7098311CA0EEE200B499BC /* Data.swift */,
 				5FD8FE531CA1BEB3006A7191 /* Queues.swift */,
 				5FD360391CA4D1490016D837 /* DrawingView.swift */,
 				5FB2F25A1CA223C0001863C4 /* Appearance.swift */,
@@ -345,7 +345,6 @@
 				5FB2F25F1CA242FD001863C4 /* CMWindow.m in Sources */,
 				5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */,
 				5FD8FE581CA1C9AA006A7191 /* HashtagListViewController.swift in Sources */,
-				5FD360331CA3B36D0016D837 /* SketchCardItemView.swift in Sources */,
 				5F7098361CA115E800B499BC /* CardItemView.swift in Sources */,
 				5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */,
 				5FD3603A1CA4D1490016D837 /* DrawingView.swift in Sources */,
@@ -361,6 +360,7 @@
 				5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */,
 				5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */,
 				5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */,
+				5FD360401CA72BED0016D837 /* CommentsCardItemView.swift in Sources */,
 				5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */,
 				5FC84B7F1CA3143400E6F5F7 /* SingleCardViewController.swift in Sources */,
 				5FB2F24F1CA217A2001863C4 /* UIImage+Resize.swift in Sources */,
@@ -500,6 +500,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Computopias/Computopias-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -517,6 +518,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Computopias/Computopias-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
