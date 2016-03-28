@@ -55,7 +55,7 @@ class ProfileCardItemView: CardItemView {
     override func tapped() {
         super.tapped()
         if !editMode {
-            NavViewController.shared.navigate("@" + (profileDict["uid"] as? String ?? ""))
+            // NavViewController.shared.navigate("@" + (profileDict["uid"] as? String ?? ""))
         }
     }
 }

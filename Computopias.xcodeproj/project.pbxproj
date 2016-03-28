@@ -45,9 +45,10 @@
 		5FD360401CA72BED0016D837 /* CommentsCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3603F1CA72BED0016D837 /* CommentsCardItemView.swift */; };
 		5FD360421CA8A5A80016D837 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360411CA8A5A80016D837 /* CommentsViewController.swift */; };
 		5FD360441CA9457A0016D837 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360431CA9457A0016D837 /* OnboardingViewController.swift */; };
+		5FD360461CA9CA0D0016D837 /* HashtagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360451CA9CA0D0016D837 /* HashtagViewController.swift */; };
+		5FD360481CA9CF8D0016D837 /* NavigableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360471CA9CF8D0016D837 /* NavigableViewController.swift */; };
 		5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */; };
 		5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE531CA1BEB3006A7191 /* Queues.swift */; };
-		5FD8FE561CA1C313006A7191 /* NavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE551CA1C313006A7191 /* NavViewController.swift */; };
 		5FD8FE581CA1C9AA006A7191 /* HashtagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -93,9 +94,10 @@
 		5FD3603F1CA72BED0016D837 /* CommentsCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsCardItemView.swift; sourceTree = "<group>"; };
 		5FD360411CA8A5A80016D837 /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		5FD360431CA9457A0016D837 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		5FD360451CA9CA0D0016D837 /* HashtagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagViewController.swift; sourceTree = "<group>"; };
+		5FD360471CA9CF8D0016D837 /* NavigableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigableViewController.swift; sourceTree = "<group>"; };
 		5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5FD8FE531CA1BEB3006A7191 /* Queues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queues.swift; sourceTree = "<group>"; };
-		5FD8FE551CA1C313006A7191 /* NavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavViewController.swift; sourceTree = "<group>"; };
 		5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagListViewController.swift; sourceTree = "<group>"; };
 		73F1389C7F54711D4F1B4F21 /* Pods_Computopias.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Computopias.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB81142E41C3E331744B4FE /* Pods-Computopias.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Computopias.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Computopias/Pods-Computopias.debug.xcconfig"; sourceTree = "<group>"; };
@@ -160,11 +162,12 @@
 		5FB2F2451CA20FB8001863C4 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				5FD8FE551CA1C313006A7191 /* NavViewController.swift */,
 				5F70982D1CA0EEA600B499BC /* CardEditor.swift */,
 				5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */,
+				5FD360471CA9CF8D0016D837 /* NavigableViewController.swift */,
 				5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */,
 				5F7098331CA0EF7E00B499BC /* CardFeed.swift */,
+				5FD360451CA9CA0D0016D837 /* HashtagViewController.swift */,
 				5FC84B7E1CA3143400E6F5F7 /* SingleCardViewController.swift */,
 				5FD360431CA9457A0016D837 /* OnboardingViewController.swift */,
 			);
@@ -355,6 +358,7 @@
 				5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */,
 				5FD3603A1CA4D1490016D837 /* DrawingView.swift in Sources */,
 				5FB2F25B1CA223C0001863C4 /* Appearance.swift in Sources */,
+				5FD360481CA9CF8D0016D837 /* NavigableViewController.swift in Sources */,
 				5F7098341CA0EF7E00B499BC /* CardFeed.swift in Sources */,
 				5F7098321CA0EEE200B499BC /* Data.swift in Sources */,
 				5FB2F2631CA257D2001863C4 /* CounterCardItemView.swift in Sources */,
@@ -376,13 +380,13 @@
 				5FD360351CA3B5590016D837 /* GivePointsCardItemView.swift in Sources */,
 				5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */,
 				5FB2F2551CA21847001863C4 /* NPSoftModalPresentationController.swift in Sources */,
+				5FD360461CA9CA0D0016D837 /* HashtagViewController.swift in Sources */,
 				5FB2F24B1CA216B4001863C4 /* Assets.swift in Sources */,
 				5F7098381CA1167500B499BC /* TextCardItemView.swift in Sources */,
 				5FD360421CA8A5A80016D837 /* CommentsViewController.swift in Sources */,
 				5FB2F2571CA2184E001863C4 /* UIColor+Hex.swift in Sources */,
 				5F70982E1CA0EEA600B499BC /* CardEditor.swift in Sources */,
 				5FB2F2511CA217CF001863C4 /* KeyboardAvoidance.swift in Sources */,
-				5FD8FE561CA1C313006A7191 /* NavViewController.swift in Sources */,
 				5F70983C1CA11C5C00B499BC /* CGMath.swift in Sources */,
 				5FD360311CA355700016D837 /* SoundCardItemView.swift in Sources */,
 			);

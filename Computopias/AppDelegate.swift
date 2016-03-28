@@ -11,6 +11,19 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        srandom(UInt32(time(nil)))
+        // Override point for customization after application launch.
+        let nav = window!.rootViewController as! UINavigationController
+        nav.viewControllers = [NavigableViewController.FromRoute(Route.HashtagsList)]
+        if Data.getPhone() == nil {
+            delay(0.5, closure: { 
+                NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Onboarding"))
+            })
+        }
+        return true
+    }
+    
     var _window: CMWindow?
     var window: UIWindow? {
         get {
@@ -26,37 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         if url.scheme == "computopias" {
-            var path = url.path ?? ""
-            path = path.stringByReplacingOccurrencesOfString("/hashtag/", withString: "/#")
-            if let f = path.characters.first where f == "/".characters.first! {
-                path = path[1...path.characters.count]
-            }
-            let nav = NavViewController.shared
-            // dismiss all modals:
-            var modals = [UIViewController]()
-            var vc: UIViewController = nav
-            while let child = vc.presentingViewController {
-                modals.append(child)
-                vc = child
-            }
-            while let v = modals.last {
-                v.dismissViewControllerAnimated(false, completion: nil)
-                modals.removeLast()
-            }
-            
-            NavViewController.shared.navigate(path)
-            return true
+            // TODO
         }
         return false
-    }
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        srandom(UInt32(time(nil)))
-        // Override point for customization after application launch.
-        delay(1) { 
-            NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Onboarding"))
-        }
-        return true
     }
 
     func applicationWillResignActive(application: UIApplication) {

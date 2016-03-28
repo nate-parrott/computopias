@@ -9,91 +9,80 @@
 import UIKit
 import Firebase
 
-class CardFeedViewController: UIViewController, UICollectionViewDataSource {
-    var hashtag: String!
-    
+class CardFeedViewController: NavigableViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     override func viewDidLoad() {
         super.viewDidLoad()
-        cards = nil
-        // start observing:
-        let q = Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").queryOrderedByChild("negativeDate")
-        _fbHandle = q.observeEventType(FEventType.Value) { [weak self] (let snapshot: FDataSnapshot!) -> Void in
-            self?.cards = snapshot.childDictionaries
-        }
-        navBackdropView.backgroundColor = Appearance.colorForHashtag(hashtag)
-        view.tintColor = navBackdropView.backgroundColor
-    }
-    var _fbHandle: UInt?
-    deinit {
-        if let h = _fbHandle {
-            Data.firebase.removeObserverWithHandle(h)
-        }
+        collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: "Card")
     }
     
-    @IBOutlet var nothingHere: UIView!
-    @IBOutlet var loader: UIActivityIndicatorView!
-    
-    @IBAction func addPost() {
-        // get the template:
-        Data.firebase.childByAppendingPath("templates").childByAppendingPath(hashtag).observeSingleEventOfType(FEventType.Value) { (let snapshot: FDataSnapshot!) -> Void in
-            let editor = self.storyboard!.instantiateViewControllerWithIdentifier("Editor") as! CardEditor
-            editor.hashtag = self.hashtag
-            if let template = snapshot.value as? [String: AnyObject] {
-                editor.template = template
-            }
-            self.presentViewController(editor, animated: true, completion: nil)
-        }
-    }
-    
-    // /hashtags/<hashtag>/cards; each contains {id: id, date: date}
-    var cards: [[String: AnyObject]]? {
+    var rows = [RowModel]() {
         didSet {
-            nothingHere.hidden = cards == nil || cards!.count > 0
-            loader.hidden = cards != nil
             collectionView.reloadData()
-            collectionView.hidden = cards == nil || cards!.count == 0
+        }
+    }
+    
+    enum RowModel {
+        case Card(id: String, hashtag: String?)
+        
+        func sizeForWidth(width: CGFloat) -> CGSize {
+            switch self {
+            case .Card(id: _, hashtag: _):
+                return CardView.CardSize
+            }
         }
     }
     
     @IBOutlet var collectionView: UICollectionView!
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cards?.count ?? 0
+        return rows.count
     }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let width = collectionView.bounds.size.width
+        return rows[indexPath.item].sizeForWidth(width)
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CardCell
-        var cardInfo = cards![indexPath.item]
-        cardInfo["hashtag"] = hashtag
-        cell.cardInfo = cardInfo
-        cell.cardView.backgroundColor = Appearance.colorForHashtag(hashtag)
-        return cell
+        switch rows[indexPath.item] {
+        case .Card(id: let id, hashtag: let hashtag):
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Card", forIndexPath: indexPath) as! CardCell
+            cell.card = (id: id, hashtag: hashtag)
+            return cell
+        }
     }
-    
-    // MARK: Layout
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let padding = (collectionView.bounds.size.width - CardView.CardSize.width) / 2
-        collectionView.contentInset = UIEdgeInsetsMake(padding, padding, padding, padding)
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.minimumLineSpacing = padding
-    }
-    
-    @IBOutlet var navBackdropView: UIView!
 }
 
 class CardCell: UICollectionViewCell {
-    @IBOutlet var cardView: CardView!
-    var cardInfo: [String: AnyObject]? {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(cardView)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    let cardView = CardView()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        cardView.bounds = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
+        cardView.center = bounds.center
+    }
+    
+    var card: (id: String, hashtag: String?)? {
         didSet {
             if let h = _fbHandle {
                 Data.firebase.removeObserverWithHandle(h)
             }
             _fbHandle = nil
             
-            if let id = cardInfo?["cardID"] as? String {
+            if let (id, hashtag) = card {
                 let cardFirebase = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id)
                 cardView.cardFirebase = cardFirebase
-                cardView.hashtag = cardInfo?["hashtag"] as? String
+                cardView.hashtag = hashtag
+                cardView.backgroundColor = Appearance.colorForHashtag(hashtag ?? "")
                 _fbHandle = cardFirebase.observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot) -> Void in
                     if let json = snapshot.value as? [String: AnyObject] {
                         self?.cardView.importJson(json)
@@ -101,7 +90,7 @@ class CardCell: UICollectionViewCell {
                             item.prepareToPresent()
                         }
                     }
-                })
+                    })
             }
         }
     }

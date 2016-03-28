@@ -66,8 +66,8 @@ class ButtonCardItemView: CardItemView {
     func openLink(){
         print("opening link: \(link)")
         if let firstChar = link.characters.first {
-            if firstChar == "#".characters.first! || firstChar == "@".characters.first! {
-                NavViewController.shared.navigate(link)
+            if firstChar == "#".characters.first! {
+                // NavViewController.shared.navigate(link) TODO
             } else {
                 var isURL = false
                 if link.componentsSeparatedByString(" ").count > 1 {

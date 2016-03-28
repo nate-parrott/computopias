@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class HashtagListViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class HashtagListViewController: NavigableViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var hashtags = [String]() {
         didSet {
@@ -25,15 +25,15 @@ class HashtagListViewController: UICollectionViewController, UICollectionViewDel
         }
     }
     
-    var onPickQuery: (String -> ())?
-
     // MARK: UICollectionViewDataSource
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    @IBOutlet var collectionView: UICollectionView!
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return hashtags.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! HashtagCell
         cell.label.text = "#" + hashtags[indexPath.item]
         return cell
@@ -43,10 +43,8 @@ class HashtagListViewController: UICollectionViewController, UICollectionViewDel
         return CGSizeMake(collectionView.bounds.size.width, 44)
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if let cb = onPickQuery {
-            cb("#" + hashtags[indexPath.item])
-        }
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        navigate(Route.Hashtag(name: hashtags[indexPath.item]))
     }
 }
 

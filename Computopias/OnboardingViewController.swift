@@ -32,6 +32,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func done(sender: AnyObject) {
+        Data.setPhone(phoneState.number!)
+        Data.setName(nameField.text!)
         dismissViewControllerAnimated(true, completion: nil)
     }
     
