@@ -53,6 +53,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         srandom(UInt32(time(nil)))
         // Override point for customization after application launch.
+        delay(1) { 
+            NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Onboarding"))
+        }
         return true
     }
 

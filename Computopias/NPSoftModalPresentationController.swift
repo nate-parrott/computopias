@@ -44,7 +44,7 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
         let toVC = transitionContext!.viewControllerForKey(UITransitionContextToViewControllerKey)!
         if toVC === self.presentedViewController {
             // we're presenting a modal:
-            return 0.3
+            return 0.7
         } else {
             // we're dismissing:
             return 0.3
@@ -77,12 +77,26 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
     }
     
     @objc private func _tappedDimView(sender: UITapGestureRecognizer) {
-        presentedViewController.dismissViewControllerAnimated(true, completion: nil)
+        if presentedViewController.allowUserToDismissSoftModal() {
+            presentedViewController.dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            UIView.animateWithDuration(0.05, delay: 0, options: .CurveEaseOut, animations: {
+                self.presentedView()!.transform = CGAffineTransformMakeScale(1.1, 1.1)
+                }, completion: { (_) in
+                    UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+                        self.presentedView()!.transform = CGAffineTransformIdentity
+                        }, completion: nil)
+            })
+        }
     }
     
     private func _animatePresentation(transitionContext: UIViewControllerContextTransitioning) {
         let vc = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!
         let view = vc.view
+        
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        
         view.frame = transitionContext.finalFrameForViewController(vc)
         let container = transitionContext.containerView()!
         container.addSubview(view)
@@ -90,10 +104,10 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
         view.alpha = 0
         view.transform = CGAffineTransformMakeTranslation(0, translation + 20)
         let duration = transitionDuration(transitionContext)
-        UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+        UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.2, options: [], animations: {
             view.transform = CGAffineTransformIdentity
             view.alpha = 1
-            }) { (completed) -> Void in
+            }) { (completed) in
                 transitionContext.completeTransition(true)
         }
     }
@@ -108,13 +122,8 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
     }
     override func frameOfPresentedViewInContainerView() -> CGRect {
         let bounds = containerView!.bounds
-        /*let contentWidth = bounds.size.width - 40
-        let contentHeight = min(contentWidth, bounds.size.height)*/
-        let widthInset: CGFloat = traitCollection.horizontalSizeClass == .Compact ? 20 : 40
-        let heightInset: CGFloat = traitCollection.verticalSizeClass == .Compact ? 0 : 50
-        let contentWidth = bounds.size.width - widthInset * 2
-        let contentHeight = bounds.size.height - heightInset * 2
-        return CGRectIntegral(CGRectMake((bounds.size.width - contentWidth)/2, (bounds.size.height - contentHeight)/2, contentWidth, contentHeight))
+        let size = presentedViewController.preferredSizeForSoftModalInBounds(bounds)
+        return CGRectIntegral(CGRectMake((bounds.size.width - size.width)/2, (bounds.size.height - size.height)/2, size.width, size.height))
     }
     override func shouldRemovePresentersView() -> Bool {
         return false
@@ -157,5 +166,19 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
     
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return dismissed.presentationController as? NPSoftModalPresentationController
+    }
+}
+
+extension UIViewController {
+    func preferredSizeForSoftModalInBounds(bounds: CGRect) -> CGSize {
+        /*let contentWidth = bounds.size.width - 40
+         let contentHeight = min(contentWidth, bounds.size.height)*/
+        let widthInset: CGFloat = traitCollection.horizontalSizeClass == .Compact ? 40 : 60
+        let heightInset: CGFloat = traitCollection.verticalSizeClass == .Compact ? 10 : 70
+        let contentSize = CGSizeMake(bounds.size.width - widthInset * 2, bounds.size.height - heightInset * 2)
+        return contentSize
+    }
+    func allowUserToDismissSoftModal() -> Bool {
+        return true
     }
 }
