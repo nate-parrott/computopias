@@ -19,7 +19,7 @@ class CommentsCardItemView: CardItemView {
             if let id = chatID {
                 let firebase = Data.firebase.childByAppendingPath("chats").childByAppendingPath(id).childByAppendingPath("count")
                 _fbHandle = firebase.observeEventType(.Value, withBlock: { [weak self] (let snapshot) in
-                    self?._count = snapshot?.value as? Int
+                    self?._count = snapshot?.value as? Int ?? 0
                 })
             }
         }
@@ -72,13 +72,22 @@ class CommentsCardItemView: CardItemView {
     }
     
     override func tapped() {
-        // TODO: open chat thread
+        let chat = CommentsViewController()
+        chat.chat = Data.firebase.childByAppendingPath("chats").childByAppendingPath(chatID!)
+        let nav = UINavigationController(rootViewController: chat)
+        NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(nav, animated: true, completion: nil)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         label.frame = textInsetBounds
-        label.font = TextCardItemView.font.fontWithSize(generousFontSize)
+        label.font = TextCardItemView.font.fontWithSize(12)
+    }
+    
+    override var defaultSize: GridSize{
+        get {
+            return GridSize(width: 3, height: 1)
+        }
     }
     
     override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {

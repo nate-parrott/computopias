@@ -19,6 +19,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         field.scrollEnabled = false
         field.font = TextCardItemView.font
         field.textContainer.lineFragmentPadding = 0
+        field.dataDetectorTypes = .All
         self.staticLabel = false
         field.tintColor = UIColor.whiteColor()
     }

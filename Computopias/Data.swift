@@ -34,6 +34,7 @@ FIREBASE STRUCTURE
     /messages/<id>
         - text: string
         - sender: userJson
+        - date: timestamp
 
 dates are unix timestamps
 
