@@ -142,13 +142,20 @@ class CardView: UIView {
     }
     
     // MARK: Card actions
+    
+    func canDelete() -> Bool {
+        return hashtag != "profiles"
+    }
+    
     let ellipsesButton = UIButton()
     func _cardActions(sender: UIButton) {
         if cardFirebase == nil { return }
         let actions = UIAlertController(title: "Card Actions", message: nil, preferredStyle: .ActionSheet)
-        actions.addAction(UIAlertAction(title: "Delete card", style: .Destructive, handler: { (_) in
-            // TODO
-        }))
+        if self.canDelete() {
+            actions.addAction(UIAlertAction(title: "Delete card", style: .Destructive, handler: { (_) in
+                self.cardFirebase?.setValue(nil)
+            }))
+        }
         actions.addAction(UIAlertAction(title: "Copy direct link", style: .Default, handler: { (let _) in
             if let hashtag = self.hashtag, let key = self.cardFirebase?.key {
                 let link = "#\(hashtag)/\(key)"
@@ -156,7 +163,16 @@ class CardView: UIView {
             }
         }))
         actions.addAction(UIAlertAction(title: "Edit card", style: .Default, handler: { (_) in
-            // TODO
+            // fetch this card:
+            self.cardFirebase?.observeSingleEventOfType(.Value, withBlock: { (let snapshotOpt) in
+                if let snapshot = snapshotOpt, let value = snapshot.value as? [String: AnyObject] {
+                    let editor = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Editor") as! CardEditor
+                    editor.hashtag = self.hashtag
+                    editor.existingContent = value
+                    editor.existingID = self.cardFirebase!.key
+                    NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(editor, animated: true, completion: nil)
+                }
+            })
         }))
         actions.addAction(UIAlertAction(title: "Never mind", style: .Cancel, handler: { (_) in
             

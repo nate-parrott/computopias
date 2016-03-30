@@ -37,5 +37,117 @@
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Computopias/Data.swift"
+            timestampString = "480993150.005679"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "authCreatingUserIfNecessary(_:password:callback:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(extension in Computopias):__ObjC.Firebase.authCreatingUserIfNecessary (Swift.String, password : Swift.String, callback : (Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.FAuthData&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Computopias"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nateparrott/Documents/SW/Computopias/Computopias/Data.swift"
+                  timestampString = "480993150.012451"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "132"
+                  endingLineNumber = "132"
+                  offsetFromSymbolStart = "229">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(extension in Computopias):__ObjC.Firebase.(authCreatingUserIfNecessary (Swift.String, password : Swift.String, callback : (Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.FAuthData&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  moduleName = "Computopias"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nateparrott/Documents/SW/Computopias/Computopias/Data.swift"
+                  timestampString = "480993150.012633"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "133"
+                  endingLineNumber = "133"
+                  offsetFromSymbolStart = "78">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Computopias/Data.swift"
+            timestampString = "480993151.157141"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "authCreatingUserIfNecessary(_:password:callback:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Computopias/Data.swift"
+            timestampString = "480993152.888742"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "authCreatingUserIfNecessary(_:password:callback:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(extension in Computopias):__ObjC.Firebase.(authCreatingUserIfNecessary (Swift.String, password : Swift.String, callback : (Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.FAuthData&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  moduleName = "Computopias"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nateparrott/Documents/SW/Computopias/Computopias/Data.swift"
+                  timestampString = "480993152.894293"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "136"
+                  endingLineNumber = "136"
+                  offsetFromSymbolStart = "318">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(extension in Computopias):__ObjC.Firebase.(authCreatingUserIfNecessary (Swift.String, password : Swift.String, callback : (Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.FAuthData&gt;) -&gt; ()) -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "Computopias"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nateparrott/Documents/SW/Computopias/Computopias/Data.swift"
+                  timestampString = "480993152.894794"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "70">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

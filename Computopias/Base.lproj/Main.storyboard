@@ -6,6 +6,49 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Friend Feed View Controller-->
+        <scene sceneID="mVO-tg-ebY">
+            <objects>
+                <viewController storyboardIdentifier="FriendFeedViewController" id="rbG-1r-qgO" customClass="FriendFeedViewController" customModule="Computopias" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KCT-i3-Dqf"/>
+                        <viewControllerLayoutGuide type="bottom" id="eKN-qi-2YF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fTr-ts-80f">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dCY-fp-RpM">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="z3I-68-8PE">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="rbG-1r-qgO" id="dm3-Cz-Jr3"/>
+                                    <outlet property="delegate" destination="rbG-1r-qgO" id="T60-j3-eH3"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eKN-qi-2YF" firstAttribute="top" secondItem="dCY-fp-RpM" secondAttribute="bottom" id="9bX-hw-mnz"/>
+                            <constraint firstItem="dCY-fp-RpM" firstAttribute="leading" secondItem="fTr-ts-80f" secondAttribute="leading" id="IWE-OB-Gqk"/>
+                            <constraint firstItem="dCY-fp-RpM" firstAttribute="top" secondItem="fTr-ts-80f" secondAttribute="top" id="aOV-QW-hUy"/>
+                            <constraint firstAttribute="trailing" secondItem="dCY-fp-RpM" secondAttribute="trailing" id="abc-hO-Pbc"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="dCY-fp-RpM" id="cnS-jI-HVM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sGI-It-Ldo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-642" y="-1075"/>
+        </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="TRP-nH-ctF">
             <objects>
@@ -76,11 +119,15 @@
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Zay-Nt-2df">
                                 <rect key="frame" x="237" y="52" width="20" height="20"/>
                             </activityIndicatorView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="FEV-JL-owh">
+                                <rect key="frame" x="244" y="227" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="yF8-DY-bxH" firstAttribute="top" secondItem="2Ol-mI-kkK" secondAttribute="bottom" constant="6" id="1Nt-28-SyX"/>
                             <constraint firstAttribute="leadingMargin" secondItem="yF8-DY-bxH" secondAttribute="leading" id="2Vu-vX-2fs"/>
+                            <constraint firstItem="FEV-JL-owh" firstAttribute="centerY" secondItem="hvX-Pv-3tE" secondAttribute="centerY" id="3CB-jC-vJq"/>
                             <constraint firstItem="2Ol-mI-kkK" firstAttribute="top" secondItem="E6o-UR-DkM" secondAttribute="bottom" constant="16" id="5lI-m8-Fha"/>
                             <constraint firstItem="CfR-Hi-r8P" firstAttribute="leading" secondItem="EqX-34-JFV" secondAttribute="leading" id="6G1-Jw-EQ3"/>
                             <constraint firstItem="yF8-DY-bxH" firstAttribute="leading" secondItem="2Ol-mI-kkK" secondAttribute="leading" id="6VB-KO-7sM"/>
@@ -93,6 +140,7 @@
                             <constraint firstAttribute="trailing" secondItem="hvX-Pv-3tE" secondAttribute="trailing" id="ZtV-gq-ShM"/>
                             <constraint firstItem="Uf9-cP-qFd" firstAttribute="top" secondItem="hvX-Pv-3tE" secondAttribute="bottom" id="elv-s6-eyD"/>
                             <constraint firstItem="CfR-Hi-r8P" firstAttribute="top" secondItem="EqX-34-JFV" secondAttribute="bottom" constant="8" id="hop-hS-pjU"/>
+                            <constraint firstItem="FEV-JL-owh" firstAttribute="trailing" secondItem="2Px-go-h2A" secondAttribute="trailingMargin" id="ipD-3q-ysp"/>
                             <constraint firstItem="Zay-Nt-2df" firstAttribute="centerY" secondItem="yF8-DY-bxH" secondAttribute="centerY" id="l1d-zk-lwG"/>
                         </constraints>
                     </view>
@@ -102,6 +150,7 @@
                     <connections>
                         <outlet property="doneButton" destination="hvX-Pv-3tE" id="jAX-gW-q39"/>
                         <outlet property="loader" destination="Zay-Nt-2df" id="dBk-HD-y4e"/>
+                        <outlet property="loginLoader" destination="FEV-JL-owh" id="2ix-WW-PBR"/>
                         <outlet property="nameField" destination="CfR-Hi-r8P" id="YXr-da-IkM"/>
                         <outlet property="phoneButton" destination="yF8-DY-bxH" id="VRl-bF-b2T"/>
                     </connections>
@@ -520,8 +569,8 @@
                                     <constraint firstItem="XL0-9R-GEC" firstAttribute="top" secondItem="Dab-ut-TSm" secondAttribute="top" id="jza-bw-u3s"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nTN-IX-lZm">
-                                <rect key="frame" x="149" y="274" width="20" height="20"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nTN-IX-lZm">
+                                <rect key="frame" x="150" y="274" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>

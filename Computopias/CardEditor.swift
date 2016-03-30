@@ -32,9 +32,11 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             }
         } else if let existing = existingContent {
             cardView.importJson(existing)
+            let allowTemplateEditing = hashtag == "profiles"
             for item in cardView.items {
-                item.prepareToEditWithExistingTemplate()
+                item.prepareToEditInPlace(allowTemplateEditing)
             }
+            collectionView.hidden = !allowTemplateEditing
         } else {
             // we're building a new template; add initial content:
             addItemView(ProfileCardItemView())

@@ -15,7 +15,7 @@
 		5F70982E1CA0EEA600B499BC /* CardEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F70982D1CA0EEA600B499BC /* CardEditor.swift */; };
 		5F7098301CA0EEB000B499BC /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F70982F1CA0EEB000B499BC /* CardView.swift */; };
 		5F7098321CA0EEE200B499BC /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7098311CA0EEE200B499BC /* Data.swift */; };
-		5F7098341CA0EF7E00B499BC /* CardFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7098331CA0EF7E00B499BC /* CardFeed.swift */; };
+		5F7098341CA0EF7E00B499BC /* CardFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7098331CA0EF7E00B499BC /* CardFeedViewController.swift */; };
 		5F7098361CA115E800B499BC /* CardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7098351CA115E800B499BC /* CardItemView.swift */; };
 		5F7098381CA1167500B499BC /* TextCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7098371CA1167500B499BC /* TextCardItemView.swift */; };
 		5F70983C1CA11C5C00B499BC /* CGMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F70983B1CA11C5C00B499BC /* CGMath.swift */; };
@@ -47,6 +47,9 @@
 		5FD360441CA9457A0016D837 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360431CA9457A0016D837 /* OnboardingViewController.swift */; };
 		5FD360461CA9CA0D0016D837 /* HashtagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360451CA9CA0D0016D837 /* HashtagViewController.swift */; };
 		5FD360481CA9CF8D0016D837 /* NavigableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360471CA9CF8D0016D837 /* NavigableViewController.swift */; };
+		5FD3604A1CAB4FF10016D837 /* FriendFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360491CAB4FF10016D837 /* FriendFeedViewController.swift */; };
+		5FD3604C1CAB7A850016D837 /* RandomContentCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3604B1CAB7A850016D837 /* RandomContentCardItemView.swift */; };
+		5FD3604E1CAB7A9A0016D837 /* FlipbookCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3604D1CAB7A9A0016D837 /* FlipbookCardItemView.swift */; };
 		5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */; };
 		5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE531CA1BEB3006A7191 /* Queues.swift */; };
 		5FD8FE581CA1C9AA006A7191 /* HashtagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */; };
@@ -62,7 +65,7 @@
 		5F70982D1CA0EEA600B499BC /* CardEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardEditor.swift; sourceTree = "<group>"; };
 		5F70982F1CA0EEB000B499BC /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		5F7098311CA0EEE200B499BC /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
-		5F7098331CA0EF7E00B499BC /* CardFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFeed.swift; sourceTree = "<group>"; };
+		5F7098331CA0EF7E00B499BC /* CardFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFeedViewController.swift; sourceTree = "<group>"; };
 		5F7098351CA115E800B499BC /* CardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardItemView.swift; sourceTree = "<group>"; };
 		5F7098371CA1167500B499BC /* TextCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCardItemView.swift; sourceTree = "<group>"; };
 		5F70983B1CA11C5C00B499BC /* CGMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGMath.swift; sourceTree = "<group>"; };
@@ -96,6 +99,9 @@
 		5FD360431CA9457A0016D837 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		5FD360451CA9CA0D0016D837 /* HashtagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagViewController.swift; sourceTree = "<group>"; };
 		5FD360471CA9CF8D0016D837 /* NavigableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigableViewController.swift; sourceTree = "<group>"; };
+		5FD360491CAB4FF10016D837 /* FriendFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendFeedViewController.swift; sourceTree = "<group>"; };
+		5FD3604B1CAB7A850016D837 /* RandomContentCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomContentCardItemView.swift; sourceTree = "<group>"; };
+		5FD3604D1CAB7A9A0016D837 /* FlipbookCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlipbookCardItemView.swift; sourceTree = "<group>"; };
 		5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5FD8FE531CA1BEB3006A7191 /* Queues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queues.swift; sourceTree = "<group>"; };
 		5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagListViewController.swift; sourceTree = "<group>"; };
@@ -165,9 +171,10 @@
 				5F70982D1CA0EEA600B499BC /* CardEditor.swift */,
 				5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */,
 				5FD360471CA9CF8D0016D837 /* NavigableViewController.swift */,
-				5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */,
-				5F7098331CA0EF7E00B499BC /* CardFeed.swift */,
+				5F7098331CA0EF7E00B499BC /* CardFeedViewController.swift */,
+				5FD360491CAB4FF10016D837 /* FriendFeedViewController.swift */,
 				5FD360451CA9CA0D0016D837 /* HashtagViewController.swift */,
+				5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */,
 				5FC84B7E1CA3143400E6F5F7 /* SingleCardViewController.swift */,
 				5FD360431CA9457A0016D837 /* OnboardingViewController.swift */,
 			);
@@ -192,6 +199,8 @@
 				5FD360301CA355700016D837 /* SoundCardItemView.swift */,
 				5FD3603B1CA4D5550016D837 /* DrawingCardItemView.swift */,
 				5FD3603F1CA72BED0016D837 /* CommentsCardItemView.swift */,
+				5FD3604B1CAB7A850016D837 /* RandomContentCardItemView.swift */,
+				5FD3604D1CAB7A9A0016D837 /* FlipbookCardItemView.swift */,
 			);
 			name = "Card Items";
 			sourceTree = "<group>";
@@ -359,9 +368,11 @@
 				5FD3603A1CA4D1490016D837 /* DrawingView.swift in Sources */,
 				5FB2F25B1CA223C0001863C4 /* Appearance.swift in Sources */,
 				5FD360481CA9CF8D0016D837 /* NavigableViewController.swift in Sources */,
-				5F7098341CA0EF7E00B499BC /* CardFeed.swift in Sources */,
+				5F7098341CA0EF7E00B499BC /* CardFeedViewController.swift in Sources */,
 				5F7098321CA0EEE200B499BC /* Data.swift in Sources */,
 				5FB2F2631CA257D2001863C4 /* CounterCardItemView.swift in Sources */,
+				5FD3604A1CAB4FF10016D837 /* FriendFeedViewController.swift in Sources */,
+				5FD3604C1CAB7A850016D837 /* RandomContentCardItemView.swift in Sources */,
 				5FB2F2531CA2181C001863C4 /* ImageCardItemView.swift in Sources */,
 				5F70981C1CA0EDF600B499BC /* AppDelegate.swift in Sources */,
 				5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */,
@@ -387,6 +398,7 @@
 				5FB2F2571CA2184E001863C4 /* UIColor+Hex.swift in Sources */,
 				5F70982E1CA0EEA600B499BC /* CardEditor.swift in Sources */,
 				5FB2F2511CA217CF001863C4 /* KeyboardAvoidance.swift in Sources */,
+				5FD3604E1CAB7A9A0016D837 /* FlipbookCardItemView.swift in Sources */,
 				5F70983C1CA11C5C00B499BC /* CGMath.swift in Sources */,
 				5FD360311CA355700016D837 /* SoundCardItemView.swift in Sources */,
 			);

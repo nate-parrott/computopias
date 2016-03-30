@@ -13,14 +13,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         srandom(UInt32(time(nil)))
-        // Override point for customization after application launch.
+        
         let nav = window!.rootViewController as! UINavigationController
-        nav.viewControllers = [NavigableViewController.FromRoute(Route.HashtagsList)]
+        var defaultRoute = Data.lastHomeScreenShownWasFriendsList ? Route.ProfilesList : Route.HashtagsList
         if Data.getPhone() == nil {
-            delay(0.5, closure: { 
+            defaultRoute = Route.ProfilesList
+            delay(0.5, closure: {
                 NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Onboarding"))
             })
         }
+        nav.viewControllers = [NavigableViewController.FromRoute(defaultRoute)]
+        
         return true
     }
     

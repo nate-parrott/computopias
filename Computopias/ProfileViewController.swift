@@ -13,7 +13,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         name.text = Data.getName()
-        bio.text = Data.getBio()
         phone.text = Data.getPhone()
         bio.layer.borderColor = UIColor.blackColor().CGColor
         bio.layer.borderWidth = 1
@@ -56,8 +55,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDe
     
     @IBAction func done() {
         Data.setName(name.text ?? "")
-        Data.setBio(bio.text ?? "")
-        Data.setPhone(phone.text ?? "")
         navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
 }

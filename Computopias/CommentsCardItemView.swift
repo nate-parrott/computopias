@@ -49,6 +49,11 @@ class CommentsCardItemView: CardItemView {
         chatID = json["chatID"] as? String ?? chatID
     }
     
+    override func detachFromTemplate() {
+        super.detachFromTemplate()
+        chatID = NSUUID().UUIDString
+    }
+    
     // MARK: Lifecycle
     override func setup() {
         super.setup()

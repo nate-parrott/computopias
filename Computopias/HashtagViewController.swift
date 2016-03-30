@@ -14,7 +14,9 @@ class HashtagViewController: CardFeedViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        createToolbar()
         // start observing:
+        nothingHere.hidden = true
         let q = Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").queryOrderedByChild("negativeDate")
         _fbHandle = q.observeEventType(FEventType.Value) { [weak self] (let snapshot: FDataSnapshot!) -> Void in
             self?.rows = snapshot.childDictionaries.map({ CardFeedViewController.RowModel.Card(id: $0["cardID"] as! String, hashtag: self!.hashtag) })
@@ -33,6 +35,13 @@ class HashtagViewController: CardFeedViewController {
     @IBOutlet var nothingHere: UIView!
     @IBOutlet var loader: UIActivityIndicatorView!
     
+    func createToolbar() {
+        let addPost = UIBarButtonItem(title: "Add Post", style: .Plain, target: self, action: #selector(HashtagViewController.addPost))
+        followButton = UIBarButtonItem(title: "Follow", style: .Plain, target: self, action: #selector(HashtagViewController.toggleFollowing))
+        toolbarItems = [addPost, followButton]
+    }
+    var followButton: UIBarButtonItem!
+    
     @IBAction func addPost() {
         // get the template:
         Data.firebase.childByAppendingPath("templates").childByAppendingPath(hashtag).observeSingleEventOfType(FEventType.Value) { (let snapshot: FDataSnapshot!) -> Void in
@@ -43,5 +52,14 @@ class HashtagViewController: CardFeedViewController {
             }
             self.presentViewController(editor, animated: true, completion: nil)
         }
+    }
+    
+    func toggleFollowing() {
+        // TODO
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(false, animated: animated)
     }
 }

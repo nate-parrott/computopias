@@ -46,37 +46,63 @@ import Firebase
 typealias GridSize = CGSize
 
 struct Data {
-    static func getUID() -> String {
-        let key = "UID"
-        if (NSUserDefaults.standardUserDefaults().valueForKey(key) as? String) == nil {
-            NSUserDefaults.standardUserDefaults().setValue(NSUUID().UUIDString, forKey: key)
+    static func getUID() -> String! {
+        return firebase.authData?.uid
+    }
+    static func profileFirebase() -> Firebase! {
+        if let uid = getUID() {
+            return firebase.childByAppendingPath("cards").childByAppendingPath("profile-" + uid)
         }
-        return NSUserDefaults.standardUserDefaults().valueForKey(key) as! String
+        return nil
     }
+    
     static func getName() -> String? {
-        return NSUserDefaults.standardUserDefaults().valueForKey("ProfileName") as? String
+        return NSUserDefaults.standardUserDefaults().valueForKey("Name") as? String
     }
+    
     static func setName(name: String) {
-        // TODO: set name in firebase
-        NSUserDefaults.standardUserDefaults().setValue(name, forKey: "ProfileName")
+        NSUserDefaults.standardUserDefaults().setValue(name, forKey: "Name")
     }
-    static func getBio() -> String? {
-        return NSUserDefaults.standardUserDefaults().valueForKey("ProfileBio") as? String
-    }
-    static func setBio(bio: String) {
-        // TODO: set bio in firebase
-        NSUserDefaults.standardUserDefaults().setValue(bio, forKey: "ProfileBio")
-    }
+    
     static func getPhone() -> String? {
         return NSUserDefaults.standardUserDefaults().valueForKey("Phone") as? String
     }
-    static func setPhone(phone: String) {
-        NSUserDefaults.standardUserDefaults().setValue(phone, forKey: "Phone")
-    }
     static func profileJson() -> [String: AnyObject] {
-        return ["name": getName() ?? "", "bio": getBio() ?? "", "uid": getUID()]
+        return ["name": getName() ?? "", "uid": getUID()]
     }
+    
     static let firebase = Firebase(url: "https://computopias.firebaseio.com")
+    
+    static func logIn(phone: String, callback: Bool -> ()) {
+        firebase.authCreatingUserIfNecessary(phone, password: "password") { (let authDataOpt) in
+            if authDataOpt != nil {
+                NSUserDefaults.standardUserDefaults().setValue(phone, forKey: "Phone")
+                
+                profileFirebase().observeSingleEventOfType(.Value, withBlock: { (let snapshot) in
+                    if snapshot.value === NSNull() {
+                        // initialize the default card:
+                        let defaultCard = ["width": CardView.CardSize.width, "height": CardView.CardSize.height, "items": []]
+                        profileFirebase().setValue(defaultCard)
+                    }
+                    NSNotificationCenter.defaultCenter().postNotificationName(LoginDidCompleteNotification, object: nil)
+                    callback(true)
+                })
+            } else {
+                callback(false)
+            }
+        }
+    }
+    
+    static var lastHomeScreenShownWasFriendsList: Bool {
+        get {
+            return NSUserDefaults.standardUserDefaults().boolForKey("LastHomeScreenShownWasFriendsList") ?? true
+        }
+        set(val) {
+            NSUserDefaults.standardUserDefaults().setBool(val, forKey: "LastHomeScreenShownWasFriendsList")
+        }
+    }
+    
+    static let LoginDidCompleteNotification = "LoginDidCompleteNotification"
 }
 
 extension FDataSnapshot {
@@ -96,6 +122,23 @@ extension String {
     var sanitizedForFirebase: String {
         get {
             return componentsSeparatedByCharactersInSet(String._allowedCharactersForFirebase.invertedSet).joinWithSeparator("")
+        }
+    }
+}
+
+extension Firebase {
+    func authCreatingUserIfNecessary(username: String, password: String, callback: FAuthData! -> ()) {
+        let email = username + "@nateparrott.com"
+        authUser(email, password: password) { (_, let authData) in
+            if authData != nil {
+                callback(authData)
+            } else {
+                self.createUser(email, password: password, withCompletionBlock: { (_) in
+                    self.authUser(email, password: password, withCompletionBlock: { (_, let authData) in
+                        callback(authData)
+                    })
+                })
+            }
         }
     }
 }

@@ -250,6 +250,11 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
         templateEditMode = false
     }
     
+    func prepareToEditInPlace(canEditTemplate: Bool) {
+        editMode = true
+        templateEditMode = canEditTemplate
+    }
+    
     func prepareToEditTemplate() {
         editMode = true
         templateEditMode = true

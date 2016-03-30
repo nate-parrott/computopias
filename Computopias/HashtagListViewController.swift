@@ -25,6 +25,15 @@ class HashtagListViewController: NavigableViewController, UICollectionViewDelega
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        Data.lastHomeScreenShownWasFriendsList = false
+    }
+    
+    override func getTabs() -> [(String, Route)]? {
+        return NavigableViewController.homeTabs()
+    }
+    
     // MARK: UICollectionViewDataSource
 
     @IBOutlet var collectionView: UICollectionView!

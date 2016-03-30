@@ -14,6 +14,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var doneButton: UIButton!
     @IBOutlet var nameField: UITextField!
     @IBOutlet var phoneButton: UIButton!
+    @IBOutlet var loginLoader: UIActivityIndicatorView!
     
     @IBAction func verifyPhone(sender: AnyObject) {
         phoneState = .InProgress
@@ -32,9 +33,15 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func done(sender: AnyObject) {
-        Data.setPhone(phoneState.number!)
-        Data.setName(nameField.text!)
-        dismissViewControllerAnimated(true, completion: nil)
+        loginInProgress = true
+        Data.logIn(phoneState.number!) { (let success) in
+            if success {
+                Data.setName(self.nameField.text!)
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                self.loginInProgress = false
+            }
+        }
     }
     
     override func preferredSizeForSoftModalInBounds(bounds: CGRect) -> CGSize {
@@ -55,6 +62,12 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     override func allowUserToDismissSoftModal() -> Bool {
         return false
+    }
+    
+    var loginInProgress = false {
+        didSet {
+            _updateUI()
+        }
     }
     
     // MARK: Phone verification
@@ -83,7 +96,18 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     }
     
     func _updateUI() {
-        doneButton.enabled = phoneState.number != nil && (nameField.text ?? "") != ""
+        doneButton.enabled = phoneState.number != nil && (nameField.text ?? "") != "" && !loginInProgress
+        
+        for element in [phoneButton, nameField] {
+            element.alpha = loginInProgress ? 0.5 : 1
+        }
+        view.userInteractionEnabled = !loginInProgress
+        if loginInProgress {
+            loginLoader.startAnimating()
+        } else {
+            loginLoader.stopAnimating()
+        }
+        
         
         loader.stopAnimating()
         var phoneButtonText = "Verify your phone number…"
