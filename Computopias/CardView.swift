@@ -168,7 +168,7 @@ class CardView: UIView {
         let actions = UIAlertController(title: "Card Actions", message: nil, preferredStyle: .ActionSheet)
         if self.canDelete() {
             actions.addAction(UIAlertAction(title: "Delete card", style: .Destructive, handler: { (_) in
-                self.cardFirebase?.setValue(nil)
+                Data.DeleteCard(self.cardFirebase!.key)
             }))
         }
         actions.addAction(UIAlertAction(title: "Copy direct link", style: .Default, handler: { (let _) in
@@ -178,16 +178,7 @@ class CardView: UIView {
             }
         }))
         actions.addAction(UIAlertAction(title: "Edit card", style: .Default, handler: { (_) in
-            // fetch this card:
-            self.cardFirebase?.observeSingleEventOfType(.Value, withBlock: { (let snapshotOpt) in
-                if let snapshot = snapshotOpt, let value = snapshot.value as? [String: AnyObject] {
-                    let editor = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Editor") as! CardEditor
-                    editor.hashtag = self.hashtag
-                    editor.existingContent = value
-                    editor.existingID = self.cardFirebase!.key
-                    NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(editor, animated: true, completion: nil)
-                }
-            })
+            self.editCard()
         }))
         actions.addAction(UIAlertAction(title: "Never mind", style: .Cancel, handler: { (_) in
             
@@ -201,6 +192,19 @@ class CardView: UIView {
                 item.alpha = 0
             }
             }, completion: nil)
+    }
+    
+    func editCard() {
+        // fetch this card:
+        self.cardFirebase?.observeSingleEventOfType(.Value, withBlock: { (let snapshotOpt) in
+            if let snapshot = snapshotOpt, let value = snapshot.value as? [String: AnyObject] {
+                let editor = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Editor") as! CardEditor
+                editor.hashtag = self.hashtag
+                editor.existingContent = value
+                editor.existingID = self.cardFirebase!.key
+                NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(editor, animated: true, completion: nil)
+            }
+        })
     }
     
     // MARK: Drawing mode

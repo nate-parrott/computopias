@@ -19,9 +19,9 @@ class HashtagViewController: CardFeedViewController {
         nothingHere.hidden = true
         let q = Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").queryOrderedByChild("negativeDate")
         _fbHandle = q.observeEventType(FEventType.Value) { [weak self] (let snapshot: FDataSnapshot!) -> Void in
-            self?.rows = snapshot.childDictionaries.map({ CardFeedViewController.RowModel.Card(id: $0["cardID"] as! String, hashtag: self!.hashtag) })
-            if let rows = self?.rows {
-                self?.nothingHere.hidden = rows.count > 0
+            if let s = self {
+                s.rows = s.createRowsForCardDicts(snapshot.childDictionaries)
+                s.nothingHere.hidden = (s.rows.count > 0)
             }
         }
     }

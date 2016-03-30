@@ -228,123 +228,6 @@
             </objects>
             <point key="canvasLocation" x="-275" y="-544"/>
         </scene>
-        <!--Card Feed View Controller-->
-        <scene sceneID="PVD-y6-1fV">
-            <objects>
-                <viewController storyboardIdentifier="CardFeed" id="D3l-7E-br5" customClass="CardFeedViewController" customModule="Computopias" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="EGa-nC-ACW"/>
-                        <viewControllerLayoutGuide type="bottom" id="bEg-ez-blE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="irf-4D-w4W">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w5f-ej-09v">
-                                <rect key="frame" x="0.0" y="-43" width="320" height="43"/>
-                                <color key="backgroundColor" red="0.78078012299999999" green="0.356694964" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="uRr-xU-fKh"/>
-                                </constraints>
-                            </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pXA-5m-6P8">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="10" id="5Nn-gg-9O7">
-                                    <size key="itemSize" width="300" height="400"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Ahv-kG-BnB" customClass="CardCell" customModule="Computopias" customModuleProvider="target">
-                                        <rect key="frame" x="10" y="0.0" width="300" height="400"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nfT-65-ceK" userLabel="CardView" customClass="CardView" customModule="Computopias" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
-                                                    <color key="backgroundColor" red="0.78078012299999999" green="0.356694964" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </view>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="nfT-65-ceK" firstAttribute="leading" secondItem="Ahv-kG-BnB" secondAttribute="leading" id="79E-Sm-Btc"/>
-                                            <constraint firstItem="nfT-65-ceK" firstAttribute="top" secondItem="Ahv-kG-BnB" secondAttribute="top" id="9nX-cb-rfE"/>
-                                            <constraint firstAttribute="bottom" secondItem="nfT-65-ceK" secondAttribute="bottom" id="dFb-Tk-zaL"/>
-                                            <constraint firstAttribute="trailing" secondItem="nfT-65-ceK" secondAttribute="trailing" id="txR-nj-kcf"/>
-                                        </constraints>
-                                        <connections>
-                                            <outlet property="cardView" destination="nfT-65-ceK" id="CYb-bJ-Ogx"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="D3l-7E-br5" id="Gea-ls-4Cr"/>
-                                </connections>
-                            </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qxj-t0-lny" userLabel="NothingHere">
-                                <rect key="frame" x="29.5" y="236.5" width="260" height="95"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No messages yet for this hashtag" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYa-8f-YZo">
-                                        <rect key="frame" x="0.0" y="0.0" width="260" height="55"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="21"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eT8-01-7ji">
-                                        <rect key="frame" x="57.5" y="63" width="145" height="32"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                        <state key="normal" title="Post the first message"/>
-                                        <connections>
-                                            <action selector="addPost" destination="D3l-7E-br5" eventType="touchUpInside" id="fiW-gp-ECE"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="uYa-8f-YZo" firstAttribute="top" secondItem="qxj-t0-lny" secondAttribute="top" id="I0L-kp-Gwv"/>
-                                    <constraint firstAttribute="trailing" secondItem="uYa-8f-YZo" secondAttribute="trailing" id="NHo-r2-ncn"/>
-                                    <constraint firstAttribute="bottom" secondItem="eT8-01-7ji" secondAttribute="bottom" id="Wwu-Am-8Dq"/>
-                                    <constraint firstItem="uYa-8f-YZo" firstAttribute="leading" secondItem="qxj-t0-lny" secondAttribute="leading" id="XDi-36-89i"/>
-                                    <constraint firstAttribute="width" constant="260" id="lzY-Ma-t1y"/>
-                                    <constraint firstItem="eT8-01-7ji" firstAttribute="top" secondItem="uYa-8f-YZo" secondAttribute="bottom" constant="8" id="osC-uC-rpl"/>
-                                    <constraint firstItem="eT8-01-7ji" firstAttribute="centerX" secondItem="uYa-8f-YZo" secondAttribute="centerX" id="qul-On-PZ1"/>
-                                </constraints>
-                            </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="KBg-d1-bvj">
-                                <rect key="frame" x="150" y="274" width="20" height="20"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="KBg-d1-bvj" firstAttribute="centerX" secondItem="irf-4D-w4W" secondAttribute="centerX" id="5eO-Bl-Hxu"/>
-                            <constraint firstItem="KBg-d1-bvj" firstAttribute="centerY" secondItem="irf-4D-w4W" secondAttribute="centerY" id="FWl-hR-xGr"/>
-                            <constraint firstItem="qxj-t0-lny" firstAttribute="centerY" secondItem="irf-4D-w4W" secondAttribute="centerY" id="G3R-R7-ebt"/>
-                            <constraint firstAttribute="trailing" secondItem="pXA-5m-6P8" secondAttribute="trailing" id="JJe-Ta-h4e"/>
-                            <constraint firstItem="w5f-ej-09v" firstAttribute="leading" secondItem="irf-4D-w4W" secondAttribute="leading" id="M3A-IS-Hw0"/>
-                            <constraint firstItem="bEg-ez-blE" firstAttribute="top" secondItem="pXA-5m-6P8" secondAttribute="bottom" id="M8H-Vr-N82"/>
-                            <constraint firstItem="pXA-5m-6P8" firstAttribute="leading" secondItem="irf-4D-w4W" secondAttribute="leading" id="QGP-yP-yPP"/>
-                            <constraint firstItem="qxj-t0-lny" firstAttribute="centerX" secondItem="irf-4D-w4W" secondAttribute="centerX" id="ZS7-AS-XL4"/>
-                            <constraint firstItem="pXA-5m-6P8" firstAttribute="top" secondItem="irf-4D-w4W" secondAttribute="top" id="dWG-q9-ek3"/>
-                            <constraint firstAttribute="trailing" secondItem="w5f-ej-09v" secondAttribute="trailing" id="f9W-nN-Mc2"/>
-                            <constraint firstItem="pXA-5m-6P8" firstAttribute="top" secondItem="w5f-ej-09v" secondAttribute="bottom" id="tua-Ml-UpG"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="collectionView" destination="pXA-5m-6P8" id="e72-UE-ILU"/>
-                        <outlet property="loader" destination="KBg-d1-bvj" id="a3a-Eh-NT8"/>
-                        <outlet property="navBackdropView" destination="w5f-ej-09v" id="VHU-Eq-Gud"/>
-                        <outlet property="nothingHere" destination="qxj-t0-lny" id="WUc-sn-fWe"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h3E-iI-Usn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="111" y="-349"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="IR8-FZ-Qzd">
             <objects>
@@ -554,7 +437,6 @@
                                         <state key="normal" title="Post the first message"/>
                                         <connections>
                                             <action selector="addPost" destination="kY3-NS-Pcy" eventType="touchUpInside" id="1kz-Zb-6J6"/>
-                                            <action selector="addPost" destination="D3l-7E-br5" eventType="touchUpInside" id="qmJ-Rp-77l"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -632,7 +514,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="collectionView" destination="Ibx-m8-YDm" id="NTU-4X-WaL"/>
+                        <outlet property="collectionView" destination="Ibx-m8-YDm" id="Tft-gJ-qbW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o6j-Ji-nHh" userLabel="First Responder" sceneMemberID="firstResponder"/>

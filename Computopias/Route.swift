@@ -44,4 +44,7 @@ enum Route {
             return Route.Nothing
         }
     }
+    static func forProfile(uid: String) -> Route {
+        return Route.Card(hashtag: "profiles", id: uid)
+    }
 }

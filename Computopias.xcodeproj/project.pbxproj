@@ -34,7 +34,6 @@
 		5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */; };
 		5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7A1CA2795100E6F5F7 /* Route.swift */; };
 		5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */; };
-		5FC84B7F1CA3143400E6F5F7 /* SingleCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7E1CA3143400E6F5F7 /* SingleCardViewController.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
 		5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */; };
 		5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602C1CA331E60016D837 /* MapCardItemView.swift */; };
@@ -50,6 +49,8 @@
 		5FD3604A1CAB4FF10016D837 /* FriendFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360491CAB4FF10016D837 /* FriendFeedViewController.swift */; };
 		5FD3604C1CAB7A850016D837 /* RandomContentCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3604B1CAB7A850016D837 /* RandomContentCardItemView.swift */; };
 		5FD3604E1CAB7A9A0016D837 /* FlipbookCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3604D1CAB7A9A0016D837 /* FlipbookCardItemView.swift */; };
+		5FD360501CABA1DB0016D837 /* NSAttributedStringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3604F1CABA1DB0016D837 /* NSAttributedStringExtensions.swift */; };
+		5FD360531CABB1690016D837 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360521CABB1690016D837 /* NSString+MD5.m */; };
 		5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */; };
 		5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE531CA1BEB3006A7191 /* Queues.swift */; };
 		5FD8FE581CA1C9AA006A7191 /* HashtagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */; };
@@ -86,7 +87,6 @@
 		5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeCounterCardItemView.swift; sourceTree = "<group>"; };
 		5FC84B7A1CA2795100E6F5F7 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCardItemView.swift; sourceTree = "<group>"; };
-		5FC84B7E1CA3143400E6F5F7 /* SingleCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleCardViewController.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602C1CA331E60016D837 /* MapCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCardItemView.swift; sourceTree = "<group>"; };
@@ -102,6 +102,9 @@
 		5FD360491CAB4FF10016D837 /* FriendFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendFeedViewController.swift; sourceTree = "<group>"; };
 		5FD3604B1CAB7A850016D837 /* RandomContentCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomContentCardItemView.swift; sourceTree = "<group>"; };
 		5FD3604D1CAB7A9A0016D837 /* FlipbookCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlipbookCardItemView.swift; sourceTree = "<group>"; };
+		5FD3604F1CABA1DB0016D837 /* NSAttributedStringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAttributedStringExtensions.swift; sourceTree = "<group>"; };
+		5FD360511CABB1690016D837 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		5FD360521CABB1690016D837 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		5FD8FE511CA1BD0D006A7191 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5FD8FE531CA1BEB3006A7191 /* Queues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queues.swift; sourceTree = "<group>"; };
 		5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagListViewController.swift; sourceTree = "<group>"; };
@@ -175,7 +178,6 @@
 				5FD360491CAB4FF10016D837 /* FriendFeedViewController.swift */,
 				5FD360451CA9CA0D0016D837 /* HashtagViewController.swift */,
 				5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */,
-				5FC84B7E1CA3143400E6F5F7 /* SingleCardViewController.swift */,
 				5FD360431CA9457A0016D837 /* OnboardingViewController.swift */,
 			);
 			name = Screens;
@@ -223,6 +225,9 @@
 				5FB2F25D1CA242FD001863C4 /* CMWindow.h */,
 				5FB2F25E1CA242FD001863C4 /* CMWindow.m */,
 				5FD360411CA8A5A80016D837 /* CommentsViewController.swift */,
+				5FD3604F1CABA1DB0016D837 /* NSAttributedStringExtensions.swift */,
+				5FD360511CABB1690016D837 /* NSString+MD5.h */,
+				5FD360521CABB1690016D837 /* NSString+MD5.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -366,6 +371,7 @@
 				5F7098361CA115E800B499BC /* CardItemView.swift in Sources */,
 				5FD8FE521CA1BD0D006A7191 /* ProfileViewController.swift in Sources */,
 				5FD3603A1CA4D1490016D837 /* DrawingView.swift in Sources */,
+				5FD360501CABA1DB0016D837 /* NSAttributedStringExtensions.swift in Sources */,
 				5FB2F25B1CA223C0001863C4 /* Appearance.swift in Sources */,
 				5FD360481CA9CF8D0016D837 /* NavigableViewController.swift in Sources */,
 				5F7098341CA0EF7E00B499BC /* CardFeedViewController.swift in Sources */,
@@ -383,7 +389,7 @@
 				5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */,
 				5FD360401CA72BED0016D837 /* CommentsCardItemView.swift in Sources */,
 				5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */,
-				5FC84B7F1CA3143400E6F5F7 /* SingleCardViewController.swift in Sources */,
+				5FD360531CABB1690016D837 /* NSString+MD5.m in Sources */,
 				5FB2F24F1CA217A2001863C4 /* UIImage+Resize.swift in Sources */,
 				5FD360441CA9457A0016D837 /* OnboardingViewController.swift in Sources */,
 				5F7098301CA0EEB000B499BC /* CardView.swift in Sources */,

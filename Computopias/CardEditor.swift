@@ -39,7 +39,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             collectionView.hidden = !allowTemplateEditing
         } else {
             // we're building a new template; add initial content:
-            addItemView(ProfileCardItemView())
+            // addItemView(ProfileCardItemView())
             collectionView.hidden = false
         }
     }
@@ -137,12 +137,14 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
     
     @IBAction func send() {
-        let cardJson = cardView.toJson()
+        var cardJson = cardView.toJson()
+        cardJson["hashtag"] = hashtag
+        cardJson["poster"] = Data.profileJson()
         let card = existingID != nil ? Data.firebase.childByAppendingPath("cards").childByAppendingPath(existingID!) : Data.firebase.childByAppendingPath("cards").childByAutoId()
         card.setValue(cardJson)
         
-        let cardInfo: [String: AnyObject] = ["date": NSDate().timeIntervalSince1970, "negativeDate": -NSDate().timeIntervalSince1970, "cardID": card.key]
-        Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").childByAutoId().setValue(cardInfo)
+        let cardInfo: [String: AnyObject] = ["date": NSDate().timeIntervalSince1970, "negativeDate": -NSDate().timeIntervalSince1970, "cardID": card.key, "poster": Data.profileJson(), "hashtag": hashtag]
+        Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").childByAppendingPath(card.key).setValue(cardInfo)
         
         Data.firebase.childByAppendingPath("all_hashtags").childByAppendingPath(hashtag).childByAppendingPath("hashtag").setValue(hashtag)
         Data.firebase.childByAppendingPath("all_hashtags").childByAppendingPath(hashtag).childByAppendingPath("negativeDate").setValue(-NSDate().timeIntervalSince1970)

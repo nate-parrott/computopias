@@ -16,11 +16,16 @@ class FriendFeedViewController: CardFeedViewController {
     }
     
     func _update(sender: AnyObject!) {
+        var rows = [RowModel]()
         if let profile = Data.profileFirebase() {
-            rows = [RowModel.Card(id: profile.key, hashtag: "profiles")]
-        } else {
-            rows = []
+            let text = NSAttributedString.defaultText("This is your profile. Try ") + NSAttributedString.defaultUnderlinedText("editing it") + NSAttributedString.defaultText(".")
+            rows.append(RowModel.Caption(text: text, action: {
+                [weak self] in
+                self?.cellForCardWithID(profile.key)?.cardView.editCard()
+            }))
+            rows.append(RowModel.Card(id: profile.key, hashtag: "profiles"))
         }
+        self.rows = rows
     }
     
     override func viewDidAppear(animated: Bool) {

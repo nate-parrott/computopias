@@ -15,7 +15,7 @@ FIREBASE STRUCTURE
 
 /hashtags/<hashtag>/
   - cards/<card>
-    -date, cardID, negativeDate, likes, negativeLikes
+    -date, cardID, negativeDate, likes, negativeLikes, poster
 
 /templates/<hashtag>
   - card object
@@ -26,8 +26,20 @@ FIREBASE STRUCTURE
     - more props
   - width
   - height
-
+  - poster: userJson
+ 
 /counters/uuid/<uid>
+ 
+/users/<uid>/
+  - name
+  - phone (hashed)
+  /following/<uid>
+  /hashtags/<hashtag>
+  /posts/
+    - negativeDate
+    - cardID
+    - hashtag
+    - sender: userJson
  
 /chats/<id>
     - count
@@ -51,7 +63,7 @@ struct Data {
     }
     static func profileFirebase() -> Firebase! {
         if let uid = getUID() {
-            return firebase.childByAppendingPath("cards").childByAppendingPath("profile-" + uid)
+            return firebase.childByAppendingPath("cards").childByAppendingPath(uid)
         }
         return nil
     }
@@ -62,6 +74,8 @@ struct Data {
     
     static func setName(name: String) {
         NSUserDefaults.standardUserDefaults().setValue(name, forKey: "Name")
+        let userLocation = self.firebase.childByAppendingPath("users").childByAppendingPath(self.getUID())
+        userLocation.childByAppendingPath("name").setValue(name)
     }
     
     static func getPhone() -> String? {
@@ -73,15 +87,23 @@ struct Data {
     
     static let firebase = Firebase(url: "https://computopias.firebaseio.com")
     
+    static func hashPhoneNumber(n: String) -> String {
+        let salt = "igrh0e8whr0e3j4rw0j4" // yeah yeah, insecure, yeah yeah
+        return (salt + n).MD5String()
+    }
+    
     static func logIn(phone: String, callback: Bool -> ()) {
         firebase.authCreatingUserIfNecessary(phone, password: "password") { (let authDataOpt) in
             if authDataOpt != nil {
                 NSUserDefaults.standardUserDefaults().setValue(phone, forKey: "Phone")
                 
+                let userLocation = self.firebase.childByAppendingPath("users").childByAppendingPath(self.getUID())
+                userLocation.childByAppendingPath("phoneHash").setValue(Data.hashPhoneNumber(phone))
+                
                 profileFirebase().observeSingleEventOfType(.Value, withBlock: { (let snapshot) in
                     if snapshot.value === NSNull() {
                         // initialize the default card:
-                        let defaultCard = ["width": CardView.CardSize.width, "height": CardView.CardSize.height, "items": []]
+                        let defaultCard = ["width": CardView.CardSize.width, "height": CardView.CardSize.height, "items": [], "hashtag": "profiles", "poster": profileJson()]
                         profileFirebase().setValue(defaultCard)
                     }
                     NSNotificationCenter.defaultCenter().postNotificationName(LoginDidCompleteNotification, object: nil)
@@ -103,6 +125,15 @@ struct Data {
     }
     
     static let LoginDidCompleteNotification = "LoginDidCompleteNotification"
+    
+    static func DeleteCard(id: String) {
+        firebase.childByAppendingPath("cards").childByAppendingPath(id).observeSingleEventOfType(.Value) { (let snapshot: FDataSnapshot!) in
+            if let s = snapshot, let dict = s.value as? [String: AnyObject], let hashtag = dict["hashtag"] as? String {
+                firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath(id).setValue(nil)
+            }
+            firebase.childByAppendingPath("cards").childByAppendingPath(id).setValue(nil)
+        }
+    }
 }
 
 extension FDataSnapshot {
