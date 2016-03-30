@@ -177,7 +177,11 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
                 frame = card!.proposedFrameForView(self)
                 
                 if !CGRectIntersectsRect(card!.bounds, frame) || CGRectEqualToRect(frame, CGRectZero) {
+                    let oldCard = card!
                     removeFromSuperview()
+                    delay(0, closure: { 
+                        oldCard.showProposalRectForView(nil)
+                    })
                 }
             }
         }
@@ -263,6 +267,24 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
     func onInsert() {
         
     }
+    // MARK: CardView alignment
+    enum Alignment {
+        case Leading
+        case Middle
+        case Trailing
+        case Full
+        static func fromValues(containerMin: CGFloat, itemMin: CGFloat, itemMax: CGFloat, containerMax: CGFloat) -> Alignment {
+            let leading = itemMin <= containerMin
+            let trailing = itemMax >= containerMax
+            switch (leading, trailing) {
+            case (true, true): return .Full
+            case (true, false): return .Leading
+            case (false, true): return .Trailing
+            case (false, false): return .Middle
+            }
+        }
+    }
+    var alignment = (x: Alignment.Middle, y: Alignment.Middle)
 }
 
 extension UIGestureRecognizer {

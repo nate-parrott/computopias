@@ -13,7 +13,7 @@ class CounterCardItemView: CardItemView {
     var counterID = NSUUID().UUIDString
     var emoji: String = CounterCardItemView.randomEmoji() {
         didSet {
-            _update()
+            _updateText()
         }
     }
     static let someEmoji = "🌟 🔥 👌 💸 🌀 📣 🍃 👍 😀 😈 👻 👀 🎅 💋 👍 🌎 😉 🎃 🌴 🐳 🍔 🌶 🍺 ☕️ ⚽️ 🎯 🚀 🎉 🎁 💯".componentsSeparatedByString(" ")
@@ -65,17 +65,28 @@ class CounterCardItemView: CardItemView {
     
     var selectedByMe = false {
         didSet {
-            label.backgroundColor = selectedByMe ? Appearance.transparentWhite : UIColor.clearColor()
+            _updateText()
         }
     }
     var count: Int = 0 {
         didSet {
-            _update()
+            _updateText()
         }
     }
     
-    func _update() {
-        label.text = " \(emoji) \(count)"
+    func _updateText() {
+        var attributes = [String: AnyObject]()
+        attributes[NSForegroundColorAttributeName] = UIColor.blackColor()
+        attributes[NSFontAttributeName] = TextCardItemView.font.fontWithSize(generousFontSize)
+        if selectedByMe {
+            let shadow = NSShadow()
+            shadow.shadowBlurRadius = 8
+            shadow.shadowOffset = CGSizeMake(0, 1)
+            shadow.shadowColor = UIColor.whiteColor()
+            attributes[NSShadowAttributeName] = shadow
+        }
+        let text = " \(emoji) \(count)"
+        label.attributedText = NSAttributedString(string: text, attributes: attributes)
     }
     
     override func tapped() {
@@ -119,7 +130,7 @@ class CounterCardItemView: CardItemView {
     override func layoutSubviews() {
         super.layoutSubviews()
         label.frame = textInsetBounds
-        label.font = TextCardItemView.font.fontWithSize(generousFontSize)
+        _updateText()
     }
     
     func pathToObserve() -> Firebase {
@@ -140,5 +151,20 @@ class CounterCardItemView: CardItemView {
     override func detachFromTemplate() {
         super.detachFromTemplate()
         counterID = NSUUID().UUIDString
+    }
+    
+    override var alignment: (x: CardItemView.Alignment, y: CardItemView.Alignment) {
+        didSet {
+            switch alignment.x {
+            case .Middle:
+                label.textAlignment = .Center
+            case .Full:
+                label.textAlignment = .Center
+            case .Trailing:
+                label.textAlignment = .Right
+            case .Leading:
+                label.textAlignment = .Left
+            }
+        }
     }
 }

@@ -115,6 +115,18 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         field.text = json["text"] as? String ?? ""
         staticLabel = json["staticLabel"] as? Bool ?? false
     }
+    
+    override var alignment: (x: CardItemView.Alignment, y: CardItemView.Alignment) {
+        didSet {
+            switch alignment.x {
+            case .Middle:
+                field.textAlignment = .Center
+            case .Trailing:
+                field.textAlignment = .Right
+            default: field.textAlignment = .Left
+            }
+        }
+    }
 }
 
 extension UITextView {

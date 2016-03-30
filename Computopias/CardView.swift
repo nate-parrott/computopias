@@ -48,18 +48,25 @@ class CardView: UIView {
     
     static let CardSize = CGSize(width: 300, height: 400)
     
+    var _setupYet = false
     override func willMoveToWindow(newWindow: UIWindow?) {
         super.willMoveToWindow(newWindow)
-        layer.cornerRadius = CardView.rounding
-        
-        addSubview(ellipsesButton)
-        ellipsesButton.setImage(UIImage(named: "ellipses"), forState: .Normal)
-        ellipsesButton.addTarget(self, action: #selector(CardView._cardActions(_:)), forControlEvents: .TouchUpInside)
-        ellipsesButton.tintColor = UIColor.blackColor()
-        ellipsesButton.alpha = 0.7
-        
-        if drawingView.superview == nil {
-            addSubview(drawingView)
+        if !_setupYet {
+            _setupYet = true
+            
+            layer.cornerRadius = CardView.rounding
+            
+            addSubview(ellipsesButton)
+            ellipsesButton.setImage(UIImage(named: "ellipses"), forState: .Normal)
+            ellipsesButton.addTarget(self, action: #selector(CardView._cardActions(_:)), forControlEvents: .TouchUpInside)
+            ellipsesButton.tintColor = UIColor.blackColor()
+            ellipsesButton.alpha = 0.7
+            
+            if drawingView.superview == nil {
+                addSubview(drawingView)
+            }
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardView.setNeedsLayout), name: CMWindowGlobalTouchesEndedNotification, object: nil)
         }
     }
     
@@ -139,6 +146,12 @@ class CardView: UIView {
         }
         drawingView.frame = bounds
         bringSubviewToFront(drawingView)
+        
+        for item in items {
+            let x = CardItemView.Alignment.fromValues(0, itemMin: item.frame.origin.x, itemMax: item.frame.right, containerMax: bounds.width)
+            let y = CardItemView.Alignment.fromValues(0, itemMin: item.frame.origin.y, itemMax: item.frame.bottom, containerMax: bounds.height)
+            item.alignment = (x: x, y: y)
+        }
     }
     
     // MARK: Card actions
