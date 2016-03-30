@@ -40,7 +40,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     
     func textViewDidChange(textView: UITextView) {
         delay(0) { 
-            if self.staticLabel && textView.numberOfLines > 0 {
+            if self.staticLabel && textView.numberOfLines > 1 {
                 // can we extend this horizontally?
                 if let newFrame = self.card?.frameForHorizontalExpansionOfView(self) {
                     self.frame = newFrame

@@ -52,8 +52,9 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
     func navigateInPlace(route: Route) -> NavigableViewController {
         let vc =  NavigableViewController.FromRoute(route)
         let nav = navigationController!
-        nav.popViewControllerAnimated(false)
-        nav.pushViewController(vc, animated: false)
+        var vcs = nav.viewControllers
+        vcs[vcs.count-1] = vc
+        nav.viewControllers = vcs
         return vc
     }
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {

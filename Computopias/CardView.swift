@@ -148,9 +148,11 @@ class CardView: UIView {
         bringSubviewToFront(drawingView)
         
         for item in items {
-            let x = CardItemView.Alignment.fromValues(0, itemMin: item.frame.origin.x, itemMax: item.frame.right, containerMax: bounds.width)
-            let y = CardItemView.Alignment.fromValues(0, itemMin: item.frame.origin.y, itemMax: item.frame.bottom, containerMax: bounds.height)
-            item.alignment = (x: x, y: y)
+            if !item.dragging {
+                let x = CardItemView.Alignment.fromValues(0, itemMin: item.frame.origin.x, itemMax: item.frame.right, containerMax: bounds.width)
+                let y = CardItemView.Alignment.fromValues(0, itemMin: item.frame.origin.y, itemMax: item.frame.bottom, containerMax: bounds.height)
+                item.alignment = (x: x, y: y)
+            }
         }
     }
     
