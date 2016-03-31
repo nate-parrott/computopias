@@ -18,9 +18,19 @@ class DrawingView: UIView {
         imageView.contentMode = .ScaleAspectFit
         toolbar.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
         toolbar.tintColor = UIColor.whiteColor()
+        
         toolbar.addSubview(doneButton)
         doneButton.setImage(UIImage(named: "Checkmark"), forState: .Normal)
         doneButton.addTarget(self, action: #selector(DrawingView.done(_:)), forControlEvents: .TouchUpInside)
+        
+        toolbar.addSubview(clearButton)
+        clearButton.setTitle("Clear", forState: .Normal)
+        clearButton.addTarget(self, action: #selector(DrawingView.clear), forControlEvents: .TouchUpInside)
+        
+        toolbar.addSubview(undoButton)
+        undoButton.setTitle("Undo", forState: .Normal)
+        undoButton.addTarget(self, action: #selector(DrawingView.undo), forControlEvents: .TouchUpInside)
+        
         strokeLayer.fillColor = nil
         strokeLayer.strokeColor = UIColor.blackColor().CGColor
         strokeLayer.lineWidth = 2
@@ -38,6 +48,8 @@ class DrawingView: UIView {
     let strokeLayer = CAShapeLayer()
     let toolbar = UIView()
     let doneButton = UIButton()
+    let undoButton = UIButton()
+    let clearButton = UIButton()
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -46,6 +58,13 @@ class DrawingView: UIView {
         snapshotContainer.frame = bounds
         strokeLayer.frame = snapshotContainer.bounds
         imageView.frame = bounds
+        
+        var x: CGFloat = 0
+        for btn in [clearButton, undoButton] {
+            btn.sizeToFit()
+            btn.frame = CGRectMake(x, 0, btn.frame.size.width + 20, 44)
+            x = btn.frame.right
+        }
     }
     
     func getImage() -> UIImage {
@@ -70,12 +89,33 @@ class DrawingView: UIView {
     
     var onDone: (DrawingView -> ())?
     
-    var _path = UIBezierPath() {
+    var _prevPaths = [UIBezierPath]() {
         didSet {
+            undoButton.enabled = _prevPaths.count > 0
+            if _prevPaths.count > 20 {
+                _prevPaths.removeAtIndex(0)
+            }
+        }
+    }
+    var _path = UIBezierPath() {
+        didSet(oldVal) {
             strokeLayer.path = _path.CGPath
         }
     }
+    
+    func undo() {
+        if let p = _prevPaths.last {
+            _path = p
+            _prevPaths.removeLast()
+        }
+    }
+    func clear() {
+        _prevPaths.append(_path)
+        _path = UIBezierPath()
+    }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        _prevPaths.append(_path.copy() as! UIBezierPath)
         _path.moveToPoint(touches.first!.locationInView(self))
     }
     

@@ -121,7 +121,7 @@ class CardView: UIView {
         if let v = view {
             if _proposalRect == nil {
                 _proposalRect = UIView()
-                insertSubview(_proposalRect!, atIndex: 0)
+                insertSubview(_proposalRect!, aboveSubview: backgroundImageView)
                 _proposalRect!.backgroundColor = UIColor(white: 1, alpha: 0.5)
                 _proposalRect!.layer.cornerRadius = CardView.rounding
             }
