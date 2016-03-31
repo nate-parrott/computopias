@@ -40,11 +40,22 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.text = route.string
+        if !isHome {
+            searchBar.text = route.string
+        }
+        searchBar.placeholder = "Search…"
         navigationItem.titleView = searchBar
         searchBar.frame = CGRectMake(0, 0, searchBar.bounds.size.height, 200)
         searchBar.delegate = self
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Home", style: .Plain, target: self, action: #selector(NavigableViewController.home))
+        searchBar.setImage(UIImage(), forSearchBarIcon: .Clear, state: .Normal)
+        searchBar.barTintColor = UIColor.clearColor()
+        searchBar.searchBarStyle = .Minimal
+        searchBar.autocapitalizationType = .None
+        searchBar.autocorrectionType = .No
+        
+        if !isHome {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "home"), style: .Plain, target: self, action: #selector(NavigableViewController.home))
+        }
     }
     let searchBar = UISearchBar()
     func home(sender: AnyObject) {
@@ -67,9 +78,25 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
         if let text = searchBar.text where text != "" {
             navigate(Route.fromString(text))
         }
+        searchBar.resignFirstResponder()
     }
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchBar.text = isHome ? "" : route.string
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        navigationController?.toolbar.barStyle = .Black
+        
         let hasToolbar = getTabs() != nil
         if let tabs = getTabs() {
             let flex1 = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
@@ -82,6 +109,12 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
             toolbarItems = [flex1] + _tabBarButtonItems! + [flex2]
         }
         navigationController?.setToolbarHidden(!hasToolbar, animated: animated)
+    }
+    
+    var isHome: Bool {
+        get {
+            return false
+        }
     }
     
     // MARK: Tabs

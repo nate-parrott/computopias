@@ -13,6 +13,8 @@ class CardView: UIView {
     var cardFirebase: Firebase?
     var hashtag: String?
     
+    let backgroundImageView = UIImageView()
+    
     var items: [CardItemView] {
         get {
             return subviews.filter({ ($0 as? CardItemView) != nil }).map({ $0 as! CardItemView })
@@ -54,7 +56,10 @@ class CardView: UIView {
         if !_setupYet {
             _setupYet = true
             
+            insertSubview(backgroundImageView, atIndex: 0)
+            
             layer.cornerRadius = CardView.rounding
+            clipsToBounds = true
             
             addSubview(ellipsesButton)
             ellipsesButton.setImage(UIImage(named: "ellipses"), forState: .Normal)
@@ -140,6 +145,9 @@ class CardView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        backgroundImageView.frame = bounds
+        
         ellipsesButton.frame = CGRectMake(bounds.size.width - gridCellSize.width, bounds.size.height - gridCellSize.height, gridCellSize.width, gridCellSize.height)
         if ellipsesButton.superview != nil {
             bringSubviewToFront(ellipsesButton)

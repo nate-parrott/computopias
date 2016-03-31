@@ -12,9 +12,14 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
         srandom(UInt32(time(nil)))
         
+        Appearance.setup()
+        
         let nav = window!.rootViewController as! UINavigationController
+        nav.view.tintColor = Appearance.tint
+        
         var defaultRoute = Data.lastHomeScreenShownWasFriendsList ? Route.ProfilesList : Route.HashtagsList
         if Data.getPhone() == nil {
             defaultRoute = Route.ProfilesList

@@ -31,9 +31,8 @@ extension Data {
         // fetch followers:
         firebase.childByAppendingPath("followers").childByAppendingPath(ofItem).observeSingleEventOfType(.Value) { (let snapshot: FDataSnapshot!) in
             for child in snapshot.children {
-                if let inboxID = child as? String {
-                    firebase.childByAppendingPath("inboxes").childByAppendingPath(inboxID).childByAutoId().setValue(d)
-                }
+                let inboxID = (child as! FDataSnapshot).key
+                firebase.childByAppendingPath("inboxes").childByAppendingPath(inboxID).childByAutoId().setValue(d)
             }
         }
     }

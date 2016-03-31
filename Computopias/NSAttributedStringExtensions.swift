@@ -14,7 +14,7 @@ extension NSAttributedString {
     }
     
     class func defaultFontAtSize(size: CGFloat) -> UIFont {
-        return UIFont(name: "Futura-Medium", size: 16)!
+        return UIFont.systemFontOfSize(size)
     }
     
     class func defaultText(text: String) -> NSAttributedString {

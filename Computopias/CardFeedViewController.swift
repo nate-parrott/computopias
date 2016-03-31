@@ -12,9 +12,12 @@ import Firebase
 class CardFeedViewController: NavigableViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.blackColor()
+        
         collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: "Card")
         collectionView.registerClass(TextCell.self, forCellWithReuseIdentifier: "Text")
-        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInset = UIEdgeInsetsMake(40, 0, 0, 0)
+        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInset = UIEdgeInsetsMake(20, 0, 0, 0)
     }
     
     var rows = [RowModel]() {
@@ -134,7 +137,7 @@ class CardCell: UICollectionViewCell {
                 let cardFirebase = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id)
                 cardView.cardFirebase = cardFirebase
                 cardView.hashtag = hashtag
-                cardView.backgroundColor = Appearance.colorForHashtag(hashtag ?? "")
+                cardView.backgroundImageView.image = Appearance.gradientForHashtag(hashtag ?? "")
                 _fbHandle = cardFirebase.observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot) -> Void in
                     if let json = snapshot.value as? [String: AnyObject] {
                         self?.cardView.importJson(json)
@@ -157,6 +160,7 @@ class TextCell: UICollectionViewCell {
             contentView.addSubview(label)
             label.textAlignment = NSTextAlignment.Center
             label.textColor = UIColor.whiteColor()
+            label.alpha = 0.8
         }
     }
     override func layoutSubviews() {

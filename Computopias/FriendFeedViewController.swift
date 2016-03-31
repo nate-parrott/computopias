@@ -72,4 +72,10 @@ class FriendFeedViewController: CardFeedViewController {
     override func getTabs() -> [(String, Route)]? {
         return NavigableViewController.homeTabs()
     }
+    
+    override var isHome: Bool {
+        get {
+            return true
+        }
+    }
 }

@@ -232,7 +232,7 @@
         <scene sceneID="IR8-FZ-Qzd">
             <objects>
                 <navigationController id="f2p-0E-Ekx" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QvF-e1-MCA">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="QvF-e1-MCA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -255,7 +255,7 @@
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HAc-pr-0xo">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kSi-kT-6LD">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -604,9 +604,10 @@
         <scene sceneID="NVy-xp-Z2r">
             <objects>
                 <navigationController storyboardIdentifier="Profile" id="MRS-8J-EZQ" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WjU-DH-l27">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="WjU-DH-l27">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.98090088367462158" green="0.0" blue="0.33053958415985107" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="IML-5g-Y7x" kind="relationship" relationship="rootViewController" id="Bgs-9a-qtW"/>

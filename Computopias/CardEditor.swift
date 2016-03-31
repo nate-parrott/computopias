@@ -20,7 +20,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cardView.backgroundColor = Appearance.colorForHashtag(hashtag)
+        cardView.backgroundImageView.image = Appearance.gradientForHashtag(hashtag)
         view.tintColor = cardView.backgroundColor
         collectionView.hidden = true
         if let t = template {
@@ -143,12 +143,12 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         let card = existingID != nil ? Data.firebase.childByAppendingPath("cards").childByAppendingPath(existingID!) : Data.firebase.childByAppendingPath("cards").childByAutoId()
         card.setValue(cardJson)
         
-        let cardInfo: [String: AnyObject] = ["date": NSDate().timeIntervalSince1970, "negativeDate": -NSDate().timeIntervalSince1970, "cardID": card.key, "poster": Data.profileJson(), "hashtag": hashtag]
-        Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").childByAppendingPath(card.key).setValue(cardInfo)
-        
+        Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").childByAppendingPath(card.key).setValue(Data.cardJson(card.key, hashtag: hashtag))
         Data.firebase.childByAppendingPath("all_hashtags").childByAppendingPath(hashtag).childByAppendingPath("hashtag").setValue(hashtag)
         Data.firebase.childByAppendingPath("all_hashtags").childByAppendingPath(hashtag).childByAppendingPath("negativeDate").setValue(-NSDate().timeIntervalSince1970)
         
+        Data.broadcastCardUpdate(card.key, hashtag: hashtag)
+    
         if template == nil {
             // save this as a template:
             Data.firebase.childByAppendingPath("templates").childByAppendingPath(hashtag).setValue(cardJson)

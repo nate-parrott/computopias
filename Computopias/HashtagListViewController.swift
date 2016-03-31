@@ -34,6 +34,12 @@ class HashtagListViewController: NavigableViewController, UICollectionViewDelega
         return NavigableViewController.homeTabs()
     }
     
+    override var isHome: Bool {
+        get {
+            return true
+        }
+    }
+    
     // MARK: UICollectionViewDataSource
 
     @IBOutlet var collectionView: UICollectionView!
