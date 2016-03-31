@@ -79,7 +79,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         var number: String? {
             get {
                 switch self {
-                case .Success(number: let n): return n
+                case .Success(number: let n): return n.normalizedPhone
                 default: return nil
                 }
             }

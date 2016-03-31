@@ -14,7 +14,12 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
         var vc: NavigableViewController!
         switch route {
         case .Card(hashtag: let hashtag, id: let id):
-            vc = storyboard.instantiateViewControllerWithIdentifier("CardFeedViewController") as! CardFeedViewController
+            if hashtag == "profiles" {
+                vc = storyboard.instantiateViewControllerWithIdentifier("UserCardViewController") as! UserCardViewController
+                (vc as! UserCardViewController).userID = id
+            } else {
+                vc = storyboard.instantiateViewControllerWithIdentifier("CardFeedViewController") as! CardFeedViewController
+            }
             vc!.route = route
             (vc as! CardFeedViewController).rows = [CardFeedViewController.RowModel.Card(id: id, hashtag: hashtag)]
         case .Hashtag(name: let hashtag):

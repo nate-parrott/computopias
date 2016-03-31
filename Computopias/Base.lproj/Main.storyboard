@@ -241,6 +241,50 @@
             </objects>
             <point key="canvasLocation" x="-648" y="117"/>
         </scene>
+        <!--User Card View Controller-->
+        <scene sceneID="30J-6k-WKB">
+            <objects>
+                <viewController storyboardIdentifier="UserCardViewController" id="T3n-ZB-fBO" customClass="UserCardViewController" customModule="Computopias" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yl9-J4-n7e"/>
+                        <viewControllerLayoutGuide type="bottom" id="bbO-Kc-xfO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mKG-6E-RAe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HAc-pr-0xo">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kSi-kT-6LD">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="T3n-ZB-fBO" id="F6x-Y8-Xfm"/>
+                                    <outlet property="delegate" destination="T3n-ZB-fBO" id="B1F-Wx-eS4"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="HAc-pr-0xo" secondAttribute="trailing" id="76X-Ai-dYB"/>
+                            <constraint firstItem="HAc-pr-0xo" firstAttribute="leading" secondItem="mKG-6E-RAe" secondAttribute="leading" id="FWt-X9-680"/>
+                            <constraint firstItem="HAc-pr-0xo" firstAttribute="top" secondItem="mKG-6E-RAe" secondAttribute="top" id="KHH-dq-SMy"/>
+                            <constraint firstItem="bbO-Kc-xfO" firstAttribute="top" secondItem="HAc-pr-0xo" secondAttribute="bottom" id="XaG-xN-vc4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="HAc-pr-0xo" id="kWC-Ss-Dmy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ujf-Mf-ims" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-243" y="188"/>
+        </scene>
         <!--Card Editor-->
         <scene sceneID="tne-QT-ifu">
             <objects>
