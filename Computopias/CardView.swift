@@ -181,8 +181,8 @@ class CardView: UIView {
         }
         actions.addAction(UIAlertAction(title: "Copy direct link", style: .Default, handler: { (let _) in
             if let hashtag = self.hashtag, let key = self.cardFirebase?.key {
-                let link = "#\(hashtag)/\(key)"
-                UIPasteboard.generalPasteboard().string = link
+                let link = Route.Card(hashtag: hashtag, id: key)
+                UIPasteboard.generalPasteboard().string = link.url.absoluteString
             }
         }))
         actions.addAction(UIAlertAction(title: "Edit card", style: .Default, handler: { (_) in

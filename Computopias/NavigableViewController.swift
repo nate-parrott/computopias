@@ -76,7 +76,7 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
     }
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         if let text = searchBar.text where text != "" {
-            navigate(Route.fromString(text))
+            navigate(Route.fromString(text) ?? Route.Nothing)
         }
         searchBar.resignFirstResponder()
     }

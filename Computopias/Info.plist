@@ -28,10 +28,10 @@
 			<key>CFBundleURLIconFile</key>
 			<string></string>
 			<key>CFBundleURLName</key>
-			<string>com.nateparrott.Computopias.url.computopias</string>
+			<string>com.nateparrott.Computopias.url.bubble</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>computopias</string>
+				<string>bubble</string>
 			</array>
 		</dict>
 	</array>

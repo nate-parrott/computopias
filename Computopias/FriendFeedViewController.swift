@@ -13,6 +13,7 @@ class FriendFeedViewController: CardFeedViewController {
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FriendFeedViewController._loginChanged), name: Data.LoginDidCompleteNotification, object: nil)
         _loginChanged(nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "addFriends"), style: .Plain, target: self, action: #selector(FriendFeedViewController.addFriends))
     }
     
     func _loginChanged(sender: AnyObject!) {
@@ -32,6 +33,43 @@ class FriendFeedViewController: CardFeedViewController {
         _friendsListSub = Data.friendFeed().subscribe({ [weak self] (let friendIDs) in
             self?.friendRows = friendIDs.map({ CardFeedViewController.RowModel.Card(id: $0, hashtag: "profiles") })
         })
+    }
+    
+    func addFriends() {
+        let alert = UIAlertController(title: "Follow Friends", message: nil, preferredStyle: .ActionSheet)
+        alert.addAction(UIAlertAction(title: "📲 Add by phone number", style: .Default, handler: { (_) in
+            let q = UIAlertController(title: "Add by phone number", message: nil, preferredStyle: .Alert)
+            q.addTextFieldWithConfigurationHandler({ (let field) in
+                field.placeholder = "Phone number"
+                field.keyboardType = .PhonePad
+            })
+            q.addAction(UIAlertAction(title: "Never mind", style: .Cancel, handler: nil))
+            q.addAction(UIAlertAction(title: "Add", style: .Default, handler: { (_) in
+                if let phone = q.textFields?.first?.text?.normalizedPhone where phone != "" {
+                    Data.findUserByPhone(phone, callback: { (let snapshot) in
+                        if let s = snapshot {
+                            self.navigate(Route.forProfile(s.key))
+                            Data.setFollowing(s.key, following: true, isUser: true)
+                        } else {
+                            let a = UIAlertController(title: nil, message: "😯 Doesn't look like anyone with the phone number \(phone) has signed up yet.", preferredStyle: .Alert)
+                            a.addAction(UIAlertAction(title: "😕 Okay", style: .Default, handler: nil))
+                            a.addAction(UIAlertAction(title: "💬 Text them", style: .Default, handler: { (_) in
+                                UIApplication.sharedApplication().openURL(NSURL(string: "sms://" + phone)!)
+                            }))
+                            self.presentViewController(a, animated: true, completion: nil)
+                        }
+                    })
+                }
+            }))
+            self.presentViewController(q, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "🗃 Search contacts for friends", style: .Default, handler: { (_) in
+            // TODO
+        }))
+        alert.addAction(UIAlertAction(title: "Never mind", style: .Cancel, handler: { (_) in
+            
+        }))
+        presentViewController(alert, animated: true, completion: nil)
     }
     
     // MARK: Self-profile

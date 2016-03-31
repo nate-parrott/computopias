@@ -70,6 +70,20 @@ extension Data {
         }
         return nil
     }
+    
+    static func findUserByPhone(phone: String, callback: (FDataSnapshot? -> ())) {
+        let hash = hashPhoneNumber(phone.normalizedPhone)
+        print("\(hash)")
+        // let q = firebase.childByAppendingPath("users").queryEqualToValue(hashPhoneNumber(phone.normalizedPhone), childKey: "phoneHash")
+        let q = firebase.childByAppendingPath("users").queryOrderedByChild("phoneHash").queryEqualToValue(hash)
+        q.observeSingleEventOfType(.Value) { (let snapshot: FDataSnapshot!) in
+            if snapshot != nil && snapshot.hasChildren() {
+                callback((snapshot.children.allObjects.first! as! FDataSnapshot))
+            } else {
+                callback(nil)
+            }
+        }
+    }
 }
 
 extension Firebase {

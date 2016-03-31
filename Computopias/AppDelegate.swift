@@ -46,10 +46,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
-        if url.scheme == "computopias" {
-            // TODO
+        if url.scheme == "bubble", let route = Route.fromURL(url) where Data.getUID() != nil {
+            navigateToRoute(route)
+            return true
         }
         return false
+    }
+    
+    func navigateToRoute(route: Route) {
+        let nav = window!.rootViewController as! UINavigationController
+        let curPage = nav.viewControllers.last as? NavigableViewController
+        curPage?.navigate(route)
     }
 
     func applicationWillResignActive(application: UIApplication) {
