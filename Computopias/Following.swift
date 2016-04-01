@@ -28,6 +28,7 @@ extension Data {
         // `data` dict should include `type` field
         var d = data
         d["negativeDate"] = -NSDate().timeIntervalSince1970
+        d["following"] = ofItem
         // fetch followers:
         firebase.childByAppendingPath("followers").childByAppendingPath(ofItem).observeSingleEventOfType(.Value) { (let snapshot: FDataSnapshot!) in
             for child in snapshot.children {

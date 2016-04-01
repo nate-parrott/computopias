@@ -12,6 +12,7 @@ import Firebase
 class CardView: UIView {
     var cardFirebase: Firebase?
     var hashtag: String?
+    var poster: String?
     
     let backgroundImageView = UIImageView()
     
@@ -167,7 +168,11 @@ class CardView: UIView {
     // MARK: Card actions
     
     func canDelete() -> Bool {
-        return hashtag != "profiles"
+        return canEdit() && hashtag != "profiles"
+    }
+    
+    func canEdit() -> Bool {
+        return poster != nil && poster! == Data.getUID()
     }
     
     let ellipsesButton = UIButton()
@@ -179,14 +184,16 @@ class CardView: UIView {
                 Data.DeleteCard(self.cardFirebase!.key)
             }))
         }
+        if canEdit() {
+            actions.addAction(UIAlertAction(title: "Edit card", style: .Default, handler: { (_) in
+                self.editCard()
+            }))
+        }
         actions.addAction(UIAlertAction(title: "Copy direct link", style: .Default, handler: { (let _) in
             if let hashtag = self.hashtag, let key = self.cardFirebase?.key {
                 let link = Route.Card(hashtag: hashtag, id: key)
                 UIPasteboard.generalPasteboard().string = link.url.absoluteString
             }
-        }))
-        actions.addAction(UIAlertAction(title: "Edit card", style: .Default, handler: { (_) in
-            self.editCard()
         }))
         actions.addAction(UIAlertAction(title: "Never mind", style: .Cancel, handler: { (_) in
             

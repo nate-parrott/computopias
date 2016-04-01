@@ -17,7 +17,9 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
         
         collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: "Card")
         collectionView.registerClass(TextCell.self, forCellWithReuseIdentifier: "Text")
-        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInset = UIEdgeInsetsMake(20, 0, 0, 0)
+        
+        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInset = UIEdgeInsetsMake(10, 0, 0, 0)
+        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing = 10
     }
     
     var rows = [RowModel]() {
@@ -161,6 +163,7 @@ class TextCell: UICollectionViewCell {
             label.textAlignment = NSTextAlignment.Center
             label.textColor = UIColor.whiteColor()
             label.alpha = 0.8
+            label.numberOfLines = 0
         }
     }
     override func layoutSubviews() {

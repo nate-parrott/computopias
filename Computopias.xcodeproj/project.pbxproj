@@ -58,6 +58,8 @@
 		5FD3605D1CAC72FD0016D837 /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3605C1CAC72FD0016D837 /* Cards.swift */; };
 		5FD360611CAC86160016D837 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360601CAC86160016D837 /* UserCardViewController.swift */; };
 		5FD360631CACECD50016D837 /* StarRatingCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360621CACECD50016D837 /* StarRatingCardItemView.swift */; };
+		5FD360651CACFD9E0016D837 /* ContactsSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360641CACFD9E0016D837 /* ContactsSync.swift */; };
+		5FD360671CADFAD30016D837 /* ActivityFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360661CADFAD30016D837 /* ActivityFeedViewController.swift */; };
 		5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE531CA1BEB3006A7191 /* Queues.swift */; };
 		5FD8FE581CA1C9AA006A7191 /* HashtagListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */; };
 /* End PBXBuildFile section */
@@ -118,6 +120,8 @@
 		5FD3605C1CAC72FD0016D837 /* Cards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cards.swift; sourceTree = "<group>"; };
 		5FD360601CAC86160016D837 /* UserCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
 		5FD360621CACECD50016D837 /* StarRatingCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRatingCardItemView.swift; sourceTree = "<group>"; };
+		5FD360641CACFD9E0016D837 /* ContactsSync.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsSync.swift; sourceTree = "<group>"; };
+		5FD360661CADFAD30016D837 /* ActivityFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityFeedViewController.swift; sourceTree = "<group>"; };
 		5FD8FE531CA1BEB3006A7191 /* Queues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queues.swift; sourceTree = "<group>"; };
 		5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagListViewController.swift; sourceTree = "<group>"; };
 		73F1389C7F54711D4F1B4F21 /* Pods_Computopias.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Computopias.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +175,7 @@
 				5FD360541CAC6E670016D837 /* Users.swift */,
 				5FD3605C1CAC72FD0016D837 /* Cards.swift */,
 				5FD360561CAC6EC40016D837 /* Following.swift */,
+				5FD360641CACFD9E0016D837 /* ContactsSync.swift */,
 				5FB2F2451CA20FB8001863C4 /* Screens */,
 				5FB2F2461CA20FC4001863C4 /* Card Items */,
 				5FB2F2471CA20FCB001863C4 /* Utils */,
@@ -194,6 +199,7 @@
 				5FD360451CA9CA0D0016D837 /* HashtagViewController.swift */,
 				5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */,
 				5FD360431CA9457A0016D837 /* OnboardingViewController.swift */,
+				5FD360661CADFAD30016D837 /* ActivityFeedViewController.swift */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -404,6 +410,7 @@
 				5FB2F2591CA21E1C001863C4 /* String+Substring.swift in Sources */,
 				5FB2F2611CA254D7001863C4 /* ProfileCardItemView.swift in Sources */,
 				5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */,
+				5FD360671CADFAD30016D837 /* ActivityFeedViewController.swift in Sources */,
 				5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */,
 				5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */,
 				5FD360401CA72BED0016D837 /* CommentsCardItemView.swift in Sources */,
@@ -413,6 +420,7 @@
 				5FD360441CA9457A0016D837 /* OnboardingViewController.swift in Sources */,
 				5F7098301CA0EEB000B499BC /* CardView.swift in Sources */,
 				5FD3603C1CA4D5550016D837 /* DrawingCardItemView.swift in Sources */,
+				5FD360651CACFD9E0016D837 /* ContactsSync.swift in Sources */,
 				5FD360611CAC86160016D837 /* UserCardViewController.swift in Sources */,
 				5FD360351CA3B5590016D837 /* GivePointsCardItemView.swift in Sources */,
 				5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */,

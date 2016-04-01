@@ -9,23 +9,28 @@
 import Foundation
 import Firebase
 
-class FirebasePusher: Pusher<AnyObject> {
-    init(firebase: Firebase) {
+class FirebasePusher: Pusher<FDataSnapshot?> {
+    init(firebase: FQuery) {
         self.firebase = firebase
         super.init()
         _handle = firebase.observeEventType(.Value, withBlock: { [weak self] (let snapshot) in
-            self?.push(snapshot.value)
+            self?.push(snapshot)
         })
     }
     var _handle: UInt!
-    let firebase: Firebase
+    let firebase: FQuery
     deinit {
         firebase.removeObserverWithHandle(_handle)
     }
 }
 
-extension Firebase {
-    var pusher: FirebasePusher {
+extension FQuery {
+    var pusher: Pusher<AnyObject> {
+        get {
+            return FirebasePusher(firebase: self).map({ $0!.value })
+        }
+    }
+    var snapshotPusher: Pusher<FDataSnapshot?> {
         get {
             return FirebasePusher(firebase: self)
         }

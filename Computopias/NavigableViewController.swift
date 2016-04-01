@@ -26,7 +26,7 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
             vc = storyboard.instantiateViewControllerWithIdentifier("HashtagViewController") as! HashtagViewController
             (vc as! HashtagViewController).hashtag = hashtag
         case .HashtagsList:
-            vc = storyboard.instantiateViewControllerWithIdentifier("HashtagListViewController") as! HashtagListViewController
+            vc = storyboard.instantiateViewControllerWithIdentifier("ActivityFeed") as! ActivityFeedViewController
         case .ProfilesList:
             vc = storyboard.instantiateViewControllerWithIdentifier("FriendFeedViewController") as! FriendFeedViewController
         default:
@@ -95,6 +95,11 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        if self === navigationController?.viewControllers.first {
+            let dummy = UIBarButtonItem(title: " ", style: .Plain, target: nil, action: nil)
+            navigationItem.leftBarButtonItem = dummy
+        }
+        
         navigationController?.toolbar.barStyle = .Black
         
         let hasToolbar = getTabs() != nil
@@ -143,5 +148,12 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
             }
             nav.viewControllers = vcs
         }
+    }
+    
+    // MARK: Convenience
+    func showAlert(text: String) {
+        let a = UIAlertController(title: nil, message: text, preferredStyle: .Alert)
+        a.addAction(UIAlertAction(title: "Okay", style: .Cancel, handler: nil))
+        presentViewController(a, animated: true, completion: nil)
     }
 }

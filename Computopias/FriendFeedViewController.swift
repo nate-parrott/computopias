@@ -64,12 +64,22 @@ class FriendFeedViewController: CardFeedViewController {
             self.presentViewController(q, animated: true, completion: nil)
         }))
         alert.addAction(UIAlertAction(title: "🗃 Search contacts for friends", style: .Default, handler: { (_) in
-            // TODO
+            self._doContactsSync()
         }))
         alert.addAction(UIAlertAction(title: "Never mind", style: .Cancel, handler: { (_) in
             
         }))
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func _doContactsSync() {
+        _searchingContactsInProgress = true
+        Data.doContactsSync({ (let success) in
+            self._searchingContactsInProgress = false
+            if !success {
+                self.showAlert("Something went wrong 😯")
+            }
+        })
     }
     
     // MARK: Self-profile
@@ -87,6 +97,12 @@ class FriendFeedViewController: CardFeedViewController {
         }
     }
     
+    var _searchingContactsInProgress = false {
+        didSet {
+            _updateRows()
+        }
+    }
+    
     // MARK: Rows
     func _updateRows() {
         var r = selfProfileRows
@@ -96,6 +112,18 @@ class FriendFeedViewController: CardFeedViewController {
             r += friendRows
         } else {
             // TODO: show contacts-syncing rows
+            if _searchingContactsInProgress {
+                let row = RowModel.Caption(text: NSAttributedString.defaultText("⏳ Searching for friends"), action: nil)
+                r.append(row)
+            } else if Data.shouldPromptToDoContactSync() {
+                let row = RowModel.Caption(text: NSAttributedString.defaultText("No friends to show. ") + NSAttributedString.defaultUnderlinedText("Search your contacts") + NSAttributedString.defaultText(" for friends?"), action: {
+                    [weak self] in
+                    self?._doContactsSync()
+                })
+                r.append(row)
+            } else {
+                r.append(RowModel.Caption(text: NSAttributedString.defaultText("No friends 😕"), action: nil))
+            }
         }
         rows = r
     }

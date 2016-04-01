@@ -24,6 +24,9 @@ class HashtagViewController: CardFeedViewController {
                 s.nothingHere.hidden = (s.rows.count > 0)
             }
         }
+        _followingSub = Data.isFollowingItem(hashtag).subscribe({ [weak self] (let following) in
+            self?.following = following
+        })
     }
     var _fbHandle: UInt?
     deinit {
@@ -40,7 +43,21 @@ class HashtagViewController: CardFeedViewController {
         followButton = UIBarButtonItem(title: "Follow", style: .Plain, target: self, action: #selector(HashtagViewController.toggleFollowing))
         toolbarItems = [addPost, followButton]
     }
+    
+    // MARK: Following
+    var following: Bool? {
+        didSet {
+            followButton.title = following ?? false ? "Following" : "Follow"
+        }
+    }
+    var _followingSub: Subscription?
     var followButton: UIBarButtonItem!
+    
+    func toggleFollowing() {
+        Data.setFollowing(hashtag, following: !(following ?? false), isUser: false)
+    }
+    
+    // MARK: Posting
     
     @IBAction func addPost() {
         // get the template:
@@ -52,10 +69,6 @@ class HashtagViewController: CardFeedViewController {
             }
             self.presentViewController(editor, animated: true, completion: nil)
         }
-    }
-    
-    func toggleFollowing() {
-        // TODO
     }
     
     override func viewWillAppear(animated: Bool) {
