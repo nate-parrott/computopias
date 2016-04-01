@@ -11,7 +11,7 @@ import Firebase
 
 extension Data {
     static func isFollowingItem(item: String) -> Pusher<Bool> {
-        return FirebasePusher(firebase: firebase.childByAppendingPath("followers").childByAppendingPath(item).childByAppendingPath(getUID())).map({ (let value) -> Bool in
+        return firebase.childByAppendingPath("followers").childByAppendingPath(item).childByAppendingPath(getUID()).pusher.map({ (let value) -> Bool in
             return value as? Bool ?? false
         })
     }

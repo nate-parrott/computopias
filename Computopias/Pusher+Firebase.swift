@@ -27,7 +27,7 @@ class FirebasePusher: Pusher<FDataSnapshot?> {
 extension FQuery {
     var pusher: Pusher<AnyObject> {
         get {
-            return FirebasePusher(firebase: self).map({ $0!.value })
+            return FirebasePusher(firebase: self).map({ $0?.value ?? NSNull() })
         }
     }
     var snapshotPusher: Pusher<FDataSnapshot?> {

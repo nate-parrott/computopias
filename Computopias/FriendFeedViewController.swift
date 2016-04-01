@@ -30,9 +30,11 @@ class FriendFeedViewController: CardFeedViewController {
         }
         self.selfProfileRows = rows
         
-        _friendsListSub = Data.friendFeed().subscribe({ [weak self] (let friendIDs) in
-            self?.friendRows = friendIDs.map({ CardFeedViewController.RowModel.Card(id: $0, hashtag: "profiles") })
-        })
+        if Data.getUID() != nil {
+            _friendsListSub = Data.friendFeed().subscribe({ [weak self] (let friendIDs) in
+                self?.friendRows = friendIDs.map({ CardFeedViewController.RowModel.Card(id: $0, hashtag: "profiles") })
+                })
+        }
     }
     
     func addFriends() {
