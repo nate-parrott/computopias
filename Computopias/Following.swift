@@ -40,7 +40,7 @@ extension Data {
     
     static func broadcastCardUpdate(cardID: String, hashtag: String) {
         let data: [String: AnyObject] = ["type": "card", "card": cardJson(cardID, hashtag: hashtag)]
-        broadcastToFollowers(getUID(), data: data)
+        broadcastToFollowers(getUID()!, data: data)
         broadcastToFollowers(hashtag, data: data)
     }
     

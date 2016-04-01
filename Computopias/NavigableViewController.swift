@@ -9,6 +9,7 @@
 import UIKit
 
 class NavigableViewController: UIViewController, UISearchBarDelegate {
+    // MARK: Routing
     class func FromRoute(route: Route) -> NavigableViewController! {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         var vc: NavigableViewController!
@@ -38,6 +39,8 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
     
     var route: Route!
     
+    // MARK: Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if !isHome {
@@ -56,7 +59,78 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
         if !isHome {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "home"), style: .Plain, target: self, action: #selector(NavigableViewController.home))
         }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NavigableViewController._onLoggedIn), name: Data.LoginDidCompleteNotification, object: nil)
     }
+    
+    var visible = false {
+        didSet {
+            _updating = visible && Data.getUID() != nil
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        _setupBarsAnimated(animated)
+        visible = true
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        visible = false
+    }
+    
+    // Mark: Data observing
+    
+    func _onLoggedIn() {
+        _updating = false
+        _updating = visible && Data.getUID() != nil
+    }
+    
+    var _updating = false {
+        didSet(oldVal) {
+            if oldVal != _updating {
+                if _updating {
+                    startUpdating()
+                } else {
+                    stopUpdating()
+                }
+            }
+        }
+    }
+    
+    func startUpdating() {
+        
+    }
+    
+    func stopUpdating() {
+        
+    }
+    
+    // MARK: Search bar/nav
+    
+    func _setupBarsAnimated(animated: Bool) {
+        if self === navigationController?.viewControllers.first {
+            let dummy = UIBarButtonItem(title: " ", style: .Plain, target: nil, action: nil)
+            navigationItem.leftBarButtonItem = dummy
+        }
+        
+        navigationController?.toolbar.barStyle = .Black
+        
+        let hasToolbar = getTabs() != nil
+        if let tabs = getTabs() {
+            let flex1 = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            let flex2 = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            _tabBarButtonItems = tabs.map({ UIBarButtonItem(title: $0.0, style: .Plain, target: self, action: #selector(NavigableViewController.switchTab)) })
+            _tabRoutes = tabs.map({ $0.1 })
+            for (item, route) in zip(_tabBarButtonItems!, _tabRoutes!) {
+                item.tintColor = (route.string == self.route.string) ? nil : UIColor.grayColor()
+            }
+            toolbarItems = [flex1] + _tabBarButtonItems! + [flex2]
+        }
+        navigationController?.setToolbarHidden(!hasToolbar, animated: animated)
+    }
+    
     let searchBar = UISearchBar()
     func home(sender: AnyObject) {
         navigate(Route.HashtagsList)
@@ -90,30 +164,6 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
     }
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if self === navigationController?.viewControllers.first {
-            let dummy = UIBarButtonItem(title: " ", style: .Plain, target: nil, action: nil)
-            navigationItem.leftBarButtonItem = dummy
-        }
-        
-        navigationController?.toolbar.barStyle = .Black
-        
-        let hasToolbar = getTabs() != nil
-        if let tabs = getTabs() {
-            let flex1 = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-            let flex2 = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-            _tabBarButtonItems = tabs.map({ UIBarButtonItem(title: $0.0, style: .Plain, target: self, action: #selector(NavigableViewController.switchTab)) })
-            _tabRoutes = tabs.map({ $0.1 })
-            for (item, route) in zip(_tabBarButtonItems!, _tabRoutes!) {
-                item.tintColor = (route.string == self.route.string) ? nil : UIColor.grayColor()
-            }
-            toolbarItems = [flex1] + _tabBarButtonItems! + [flex2]
-        }
-        navigationController?.setToolbarHidden(!hasToolbar, animated: animated)
     }
     
     var isHome: Bool {

@@ -11,14 +11,10 @@ import UIKit
 class FriendFeedViewController: CardFeedViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FriendFeedViewController._loginChanged), name: Data.LoginDidCompleteNotification, object: nil)
-        _loginChanged(nil)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "addFriends"), style: .Plain, target: self, action: #selector(FriendFeedViewController.addFriends))
     }
     
-    func _loginChanged(sender: AnyObject!) {
-        print("Logged in as \(Data.getName())")
-        
+    override func startUpdating() {
         var rows = [RowModel]()
         if let profile = Data.profileFirebase() {
             let text = NSAttributedString.defaultText("This is your profile. Try ") + NSAttributedString.defaultUnderlinedText("editing it") + NSAttributedString.defaultText(".")
@@ -35,6 +31,10 @@ class FriendFeedViewController: CardFeedViewController {
                 self?.friendRows = friendIDs.map({ CardFeedViewController.RowModel.Card(id: $0, hashtag: "profiles") })
                 })
         }
+    }
+    
+    override func stopUpdating() {
+        _friendsListSub = nil
     }
     
     func addFriends() {

@@ -53,8 +53,8 @@ class CounterCardItemView: CardItemView {
         super.willMoveToSuperview(newSuperview)
         
         _observer = pathToObserve().observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot: FDataSnapshot!) -> Void in
-            if let dict = snapshot.value as? [String: AnyObject] {
-                self?.selectedByMe = dict[Data.getUID()] != nil
+            if let dict = snapshot.value as? [String: AnyObject], let uid = Data.getUID() {
+                self?.selectedByMe = dict[uid] != nil
                 self?.count = dict.count
             } else {
                 self?.selectedByMe = false

@@ -26,7 +26,7 @@ extension Data {
         return NSUserDefaults.standardUserDefaults().valueForKey("Phone") as? String
     }
     static func profileJson() -> [String: AnyObject] {
-        return ["name": getName() ?? "", "uid": getUID()]
+        return ["name": getName() ?? "", "uid": getUID()!]
     }
     
     static func hashPhoneNumber(n: String) -> String {

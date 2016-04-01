@@ -9,15 +9,21 @@
 import UIKit
 
 class ActivityFeedViewController: CardFeedViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func startUpdating() {
+        super.startUpdating()
         let q = Data.firebase.childByAppendingPath("inboxes").childByAppendingPath(Data.getUID()).queryOrderedByKey().queryLimitedToLast(80)
         _inboxSub = q.snapshotPusher.subscribe({ [weak self] (let snapshotOpt) in
             if let snapshot = snapshotOpt {
                 self?._inboxUpdated(snapshot.childDictionaries)
             }
-        })
+            })
     }
+    
+    override func stopUpdating() {
+        super.stopUpdating()
+        _inboxSub = nil
+    }
+    
     var _inboxSub: Subscription?
     func _inboxUpdated(entries: [[String: AnyObject]]) {
         /*

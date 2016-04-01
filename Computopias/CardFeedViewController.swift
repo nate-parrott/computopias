@@ -12,36 +12,61 @@ import Firebase
 class CardFeedViewController: NavigableViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         collectionView.backgroundColor = UIColor.blackColor()
         view.backgroundColor = UIColor.blackColor()
         
         collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: "Card")
         collectionView.registerClass(TextCell.self, forCellWithReuseIdentifier: "Text")
         
-        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInset = UIEdgeInsetsMake(10, 0, 0, 0)
-        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing = 10
+        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInset = UIEdgeInsetsMake(lineSpacing, 0, 0, 0)
+        (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing = lineSpacing
     }
+    
+    let lineSpacing: CGFloat = 10
     
     var rows = [RowModel]() {
         didSet(oldRows) {
-            loadViewIfNeeded()
-            let changes = Diff.Compute(rows, oldSeq: oldRows)
-            if changes.count > 0 {
-                collectionView.performBatchUpdates({
-                    for change in changes.reverse() {
-                        switch change {
-                        case .Reload(let indices):
-                            self.collectionView.reloadItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
-                        case .Insert(let indices):
-                            self.collectionView.insertItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
-                        case .Delete(let indices):
-                            self.collectionView.deleteItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
-                        }
-                    }
-                }, completion: nil)
+            var currentPosition: (RowModel, CGFloat)?
+            if let i = indexOfCurrentlyViewedRow() {
+                currentPosition = (_rows[i], collectionView.contentOffset.y - scrollOffsetForRowAtIndex(i, rows: _rows))
+            }
+            
+            if isViewLoaded() {
+                let changes = Diff.OrderActionsDeletionsFirst(Diff.Compute(rows, oldSeq: oldRows))
+                if changes.count > 0 {
+                    UIView.animateWithDuration(0.3, animations: {
+                        
+                        self.collectionView.performBatchUpdates({
+                            self._rows = self.rows
+                            for change in changes {
+                                switch change {
+                                case .Reload(let indices):
+                                    self.collectionView.reloadItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
+                                case .Insert(let indices):
+                                    self.collectionView.insertItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
+                                case .Delete(let indices):
+                                    self.collectionView.deleteItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
+                                }
+                            }
+                            if let (row, offset) = currentPosition {
+                                if let index = self.rows.indexOf({ $0 == row }) {
+                                    self.collectionView.contentOffset = CGPointMake(0, self.scrollOffsetForRowAtIndex(index, rows: self.rows) + offset)
+                                }
+                            }
+                            }, completion: { (_) in
+                        })
+                        
+                        }, completion: { (_) in
+                            
+                    })
+                }
+            } else {
+                _rows = rows
             }
         }
     }
+    var _rows = [RowModel]()
     
     enum RowModel: Equatable {
         case Card(id: String, hashtag: String?)
@@ -59,17 +84,47 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
     
     @IBOutlet var collectionView: UICollectionView!
     
+    func scrollOffsetForRowAtIndex(i: Int, rows: [RowModel]) -> CGFloat {
+        var y = lineSpacing
+        var j = 0
+        for row in rows {
+            if j == i {
+                return y
+            } else {
+                y += row.sizeForWidth(collectionView.bounds.size.width).height + lineSpacing
+                j += 1
+            }
+        }
+        return 0
+    }
+    
+    func indexOfCurrentlyViewedRow() -> Int? {
+        let pt = collectionView.frame.center
+        var closestCell: UICollectionViewCell?
+        for cell in collectionView.visibleCells() {
+            let cellDist = (view.convertRect(cell.bounds, fromView: cell).center - pt).magnitude
+            if closestCell == nil || cellDist < (view.convertRect(closestCell!.bounds, fromView: closestCell!).center - pt).magnitude {
+                closestCell = cell
+            }
+        }
+        if let cell = closestCell {
+            return collectionView.indexPathForCell(cell)?.item
+        } else {
+            return nil
+        }
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return rows.count
+        return _rows.count
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let width = collectionView.bounds.size.width
-        return rows[indexPath.item].sizeForWidth(width)
+        return _rows[indexPath.item].sizeForWidth(width)
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        switch rows[indexPath.item] {
+        switch _rows[indexPath.item] {
         case .Card(id: let id, hashtag: let hashtag):
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Card", forIndexPath: indexPath) as! CardCell
             cell.card = (id: id, hashtag: hashtag)
@@ -82,7 +137,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        switch rows[indexPath.item] {
+        switch _rows[indexPath.item] {
         case .Caption(text: _, action: let actionOpt):
             if let a = actionOpt {
                 a()
@@ -121,72 +176,6 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
             }
         }
         return rows
-    }
-}
-
-class CardCell: UICollectionViewCell {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(cardView)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    let cardView = CardView()
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        cardView.bounds = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
-        cardView.center = bounds.center
-    }
-    
-    var card: (id: String, hashtag: String?)? {
-        didSet {
-            if let h = _fbHandle {
-                Data.firebase.removeObserverWithHandle(h)
-            }
-            _fbHandle = nil
-            
-            if let (id, hashtag) = card {
-                let cardFirebase = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id)
-                cardView.cardFirebase = cardFirebase
-                cardView.hashtag = hashtag
-                cardView.backgroundImageView.image = Appearance.gradientForHashtag(hashtag ?? "")
-                _fbHandle = cardFirebase.observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot) -> Void in
-                    if let json = snapshot.value as? [String: AnyObject] {
-                        self?.cardView.importJson(json)
-                        for item in self?.cardView.items ?? [] {
-                            item.prepareToPresent()
-                        }
-                    }
-                    })
-            }
-        }
-    }
-    var _fbHandle: UInt?
-}
-
-class TextCell: UICollectionViewCell {
-    let label = UILabel()
-    override func willMoveToWindow(newWindow: UIWindow?) {
-        super.willMoveToWindow(newWindow)
-        if label.superview == nil {
-            contentView.addSubview(label)
-            label.textAlignment = NSTextAlignment.Center
-            label.textColor = UIColor.whiteColor()
-            label.alpha = 0.8
-            label.numberOfLines = 0
-        }
-    }
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        label.frame = CGRectMake((bounds.size.width - CardView.CardSize.width)/2, 0, CardView.CardSize.width, bounds.size.height)
-    }
-    enum TextFormats {
-        case Normal(text: String)
-        case Highlighted(text: String)
     }
 }
 

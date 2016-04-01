@@ -47,6 +47,23 @@ struct Diff {
             }
         }
     }
+    static func OrderActionsDeletionsFirst(actions: [Action]) -> [Action] {
+        var deletionsYet = 0
+        var deletions = [Action]()
+        var nonDeletions = [Action]()
+        for action in actions {
+            switch action {
+            case .Delete(let indices):
+                deletionsYet += indices.count
+                deletions.append(action)
+            case .Insert(let indices):
+                nonDeletions.append(.Insert(indices.map({ $0 - deletionsYet })))
+            case .Reload(let indices):
+                nonDeletions.append(.Reload(indices.map({ $0 - deletionsYet })))
+            }
+        }
+        return deletions + nonDeletions
+    }
     static func Compute<T:Equatable>(newSeq: [T], oldSeq: [T]) -> [Action] {
         return _Compute(newSeq, oldSeq: oldSeq, oldSeqIdx: 0, newSeqIdx: 0)
     }

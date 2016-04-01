@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nav.view.tintColor = Appearance.tint
         
         var defaultRoute = Data.lastHomeScreenShownWasFriendsList ? Route.ProfilesList : Route.HashtagsList
-        if Data.getPhone() == nil {
+        if Data.getUID() == nil || Data.getPhone() == nil {
             defaultRoute = Route.ProfilesList
             delay(0.5, closure: {
                 NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Onboarding"))

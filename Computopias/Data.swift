@@ -71,7 +71,7 @@ import Firebase
 typealias GridSize = CGSize
 
 struct Data {
-    static func getUID() -> String! {
+    static func getUID() -> String? {
         return firebase.authData?.uid
     }
     
