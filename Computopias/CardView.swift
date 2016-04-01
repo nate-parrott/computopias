@@ -35,6 +35,8 @@ class CardView: UIView {
             bounds = CGRectMake(0, 0, CGFloat(wf), CGFloat(hf))
         }*/
         
+        poster = (j["poster"] as? [String: AnyObject])?["uid"] as? String
+
         for item in items {
             item.removeFromSuperview()
         }

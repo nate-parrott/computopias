@@ -89,7 +89,7 @@ struct Data {
     static func DeleteCard(id: String) {
         firebase.childByAppendingPath("cards").childByAppendingPath(id).observeSingleEventOfType(.Value) { (let snapshot: FDataSnapshot!) in
             if let s = snapshot, let dict = s.value as? [String: AnyObject], let hashtag = dict["hashtag"] as? String {
-                firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath(id).setValue(nil)
+                firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").childByAppendingPath(id).setValue(nil)
             }
             firebase.childByAppendingPath("cards").childByAppendingPath(id).setValue(nil)
         }

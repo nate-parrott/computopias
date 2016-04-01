@@ -23,13 +23,27 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
     }
     
     var rows = [RowModel]() {
-        didSet {
+        didSet(oldRows) {
             loadViewIfNeeded()
-            collectionView.reloadData()
+            let changes = Diff.Compute(rows, oldSeq: oldRows)
+            if changes.count > 0 {
+                collectionView.performBatchUpdates({
+                    for change in changes.reverse() {
+                        switch change {
+                        case .Reload(let indices):
+                            self.collectionView.reloadItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
+                        case .Insert(let indices):
+                            self.collectionView.insertItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
+                        case .Delete(let indices):
+                            self.collectionView.deleteItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
+                        }
+                    }
+                }, completion: nil)
+            }
         }
     }
     
-    enum RowModel {
+    enum RowModel: Equatable {
         case Card(id: String, hashtag: String?)
         case Caption(text: NSAttributedString, action: (() -> ())?)
         
@@ -173,5 +187,16 @@ class TextCell: UICollectionViewCell {
     enum TextFormats {
         case Normal(text: String)
         case Highlighted(text: String)
+    }
+}
+
+func ==(m1: CardFeedViewController.RowModel, m2: CardFeedViewController.RowModel) -> Bool {
+    switch (m1, m2) {
+    case (.Card(id: let id1, hashtag: let tag1), .Card(id: let id2, hashtag: let tag2)):
+        return id1 == id2 && tag1 == tag2
+    case (.Caption(text: let text1, action: _), .Caption(text: let text2, action: _)):
+        return text1 == text2
+    default:
+        return false
     }
 }
