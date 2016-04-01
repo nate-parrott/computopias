@@ -18,6 +18,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     @IBOutlet var cardView: CardView!
     @IBOutlet var collectionView: UICollectionView!
     
+    var onPost: ((CardID: String) -> ())?
+    var onPrePost: (() -> ())?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         cardView.backgroundImageView.image = Appearance.gradientForHashtag(hashtag)
@@ -137,6 +140,10 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
     
     @IBAction func send() {
+        if let p = onPrePost {
+            p()
+        }
+        
         var cardJson = cardView.toJson()
         cardJson["hashtag"] = hashtag
         cardJson["poster"] = Data.profileJson()
@@ -155,6 +162,10 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }
         
         dismissViewControllerAnimated(true, completion: nil)
+        
+        if let p = onPost {
+            p(CardID: card.key!)
+        }
     }
     
     @IBAction func cancel() {

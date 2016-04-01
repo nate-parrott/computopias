@@ -17,13 +17,18 @@ class HashtagListViewController: NavigableViewController, UICollectionViewDelega
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let q = Data.firebase.childByAppendingPath("all_hashtags").queryOrderedByChild("negativeDate")
-        q.observeEventType(FEventType.Value) { [weak self] (let snapshot) -> Void in
-            self?.hashtags = snapshot.childDictionaries.map({ $0["hashtag"] as! String })
+    override func startUpdating() {
+        let q = Data.firebase.childByAppendingPath("all_hashtags").queryOrderedByChild("negativeDate").queryLimitedToFirst(40)
+        _sub = q.snapshotPusher.subscribe { [weak self] (let snapshot) in
+            self?.hashtags = snapshot!.childDictionaries.map({ $0["hashtag"] as! String })
         }
     }
+    
+    override func stopUpdating() {
+        _sub = nil
+    }
+    
+    var _sub: Subscription?
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)

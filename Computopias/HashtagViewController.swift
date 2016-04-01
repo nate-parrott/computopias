@@ -68,6 +68,18 @@ class HashtagViewController: CardFeedViewController {
                 editor.template = template
             }
             self.presentViewController(editor, animated: true, completion: nil)
+            editor.onPrePost = {
+                [weak self] in
+                if let s = self {
+                    Data.setFollowing(s.hashtag, following: true, isUser: false)
+                }
+            }
+            editor.onPost = {
+                [weak self] (cardID: String) in
+                delay(0.5, closure: { 
+                    self?.collectionView.setContentOffset(CGPointMake(0, -(self?.collectionView.contentInset.top ?? 0)), animated: true)
+                })
+            }
         }
     }
     
