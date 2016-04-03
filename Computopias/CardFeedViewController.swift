@@ -18,6 +18,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
         
         collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: "Card")
         collectionView.registerClass(TextCell.self, forCellWithReuseIdentifier: "Text")
+        collectionView.registerClass(DescriptionCell.self, forCellWithReuseIdentifier: "Description")
         
         (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInset = UIEdgeInsetsMake(lineSpacing, 0, 0, 0)
         (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing = lineSpacing
@@ -73,6 +74,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
     enum RowModel: Equatable {
         case Card(id: String, hashtag: String?)
         case Caption(text: NSAttributedString, action: (() -> ())?)
+        case Description(text: NSAttributedString, action: (() -> ())?)
         
         func sizeForWidth(width: CGFloat) -> CGSize {
             switch self {
@@ -81,6 +83,9 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
             case .Caption(text: let text, action: _):
                 let height = text.boundingRectWithSize(CGSizeMake(CardView.CardSize.width, 500), options: [.UsesLineFragmentOrigin], context: nil).size.height
                 return CGSizeMake(CardView.CardSize.width, height)
+            case .Description(text: let text, _):
+                let height = text.boundingRectWithSize(CGSizeMake(width, 500), options: [.UsesLineFragmentOrigin], context: nil).size.height
+                return CGSizeMake(width, height + DescriptionCell.Padding * 2)
             }
         }
     }
@@ -136,12 +141,20 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Text", forIndexPath: indexPath) as! TextCell
             cell.label.attributedText = text
             return cell
+        case .Description(text: let text, action: _):
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Description", forIndexPath: indexPath) as! DescriptionCell
+            cell.label.attributedText = text
+            return cell
         }
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         switch _rows[indexPath.item] {
         case .Caption(text: _, action: let actionOpt):
+            if let a = actionOpt {
+                a()
+            }
+        case .Description(text: _, action: let actionOpt):
             if let a = actionOpt {
                 a()
             }

@@ -156,26 +156,16 @@ class HashtagViewController: CardFeedViewController {
     var _infoSub: Subscription?
     var _ownersSub: Subscription?
     func _updateGroupInfo() {
-        let attrs: [String: AnyObject] = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont.systemFontOfSize(14)]
-        var underlinedAttrs = attrs
-        underlinedAttrs[NSUnderlineStyleAttributeName] = NSUnderlineStyle.StyleSingle.rawValue
-        
         let text = NSMutableAttributedString()
-        if let n = ownerName {
-            text.appendAttributedString(NSAttributedString(string: "Created by \(n)", attributes: attrs))
+        if ownerIsSelf ?? false {
+            text.appendAttributedString(NSAttributedString.smallText("Created by you (") + NSAttributedString.smallUnderlinedText("edit") + NSAttributedString.smallText(")"))
+        } else if let n = ownerName {
+            text.appendAttributedString(NSAttributedString.smallText("Created by \(n):"))
         }
         if let desc = hashtagDescription {
-            text.appendAttributedString(NSAttributedString(string: ":\n" + desc, attributes: attrs))
+            text.appendAttributedString(NSAttributedString.smallText(desc))
         }
-        if ownerIsSelf ?? false {
-            text.appendAttributedString(NSAttributedString(string: "\nEdit group info", attributes: underlinedAttrs))
-        }
-        
-        let p = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-        p.alignment = NSTextAlignment.Left
-        text.addAttribute(NSParagraphStyleAttributeName, value: p, range: NSMakeRange(0, text.length))
-        
-        groupInfoRow = RowModel.Caption(text: text, action: {
+        groupInfoRow = RowModel.Description(text: text, action: {
             [weak self] in
             self?.editGroupInfo()
         })

@@ -81,8 +81,28 @@ class TextCell: UICollectionViewCell {
         super.layoutSubviews()
         label.frame = CGRectMake((bounds.size.width - CardView.CardSize.width)/2, 0, CardView.CardSize.width, bounds.size.height)
     }
-    enum TextFormats {
-        case Normal(text: String)
-        case Highlighted(text: String)
+}
+
+class DescriptionCell: UICollectionViewCell {
+    let label = UILabel()
+    let bg = UIView()
+    override func willMoveToWindow(newWindow: UIWindow?) {
+        super.willMoveToWindow(newWindow)
+        if label.superview == nil {
+            contentView.addSubview(bg)
+            bg.backgroundColor = UIColor(white: 0.95, alpha: 1)
+            
+            contentView.addSubview(label)
+            label.textAlignment = NSTextAlignment.Left
+            label.textColor = UIColor.blackColor()
+            label.numberOfLines = 0
+        }
+    }
+    static let Padding: CGFloat = 20
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let top: CGFloat = 100
+        bg.frame = CGRectMake(0, -top, bounds.size.width, bounds.size.height + top)
+        label.frame = CGRectMake(DescriptionCell.Padding, DescriptionCell.Padding, bounds.size.width - DescriptionCell.Padding * 2, bounds.size.height - DescriptionCell.Padding * 2)
     }
 }
