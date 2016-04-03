@@ -16,6 +16,9 @@ FIREBASE STRUCTURE
 /hashtags/<hashtag>/
   - cards/<card>
     - cardJson
+  - owners/<uid>/<userJson>
+  - info/
+    - description
 
 cardJson:
  - date, cardID, negativeDate, likes, negativeLikes, poster

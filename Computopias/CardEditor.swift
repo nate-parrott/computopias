@@ -150,9 +150,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         let card = existingID != nil ? Data.firebase.childByAppendingPath("cards").childByAppendingPath(existingID!) : Data.firebase.childByAppendingPath("cards").childByAutoId()
         card.setValue(cardJson)
         
-        Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").childByAppendingPath(card.key).setValue(Data.cardJson(card.key, hashtag: hashtag))
-        Data.firebase.childByAppendingPath("all_hashtags").childByAppendingPath(hashtag).childByAppendingPath("hashtag").setValue(hashtag)
-        Data.firebase.childByAppendingPath("all_hashtags").childByAppendingPath(hashtag).childByAppendingPath("negativeDate").setValue(-NSDate().timeIntervalSince1970)
+        Data.createOrUpdateHashtag(hashtag, cardID: card.key)
         
         Data.broadcastCardUpdate(card.key, hashtag: hashtag)
     

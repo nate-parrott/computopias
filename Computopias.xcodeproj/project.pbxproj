@@ -32,6 +32,7 @@
 		5FB2F2611CA254D7001863C4 /* ProfileCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2601CA254D7001863C4 /* ProfileCardItemView.swift */; };
 		5FB2F2631CA257D2001863C4 /* CounterCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */; };
 		5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */; };
+		5FB976BA1CAF292A00B92A16 /* Hashtags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976B91CAF292A00B92A16 /* Hashtags.swift */; };
 		5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7A1CA2795100E6F5F7 /* Route.swift */; };
 		5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
@@ -95,6 +96,7 @@
 		5FB2F2601CA254D7001863C4 /* ProfileCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCardItemView.swift; sourceTree = "<group>"; };
 		5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterCardItemView.swift; sourceTree = "<group>"; };
 		5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeCounterCardItemView.swift; sourceTree = "<group>"; };
+		5FB976B91CAF292A00B92A16 /* Hashtags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hashtags.swift; sourceTree = "<group>"; };
 		5FC84B7A1CA2795100E6F5F7 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCardItemView.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				5FD3605C1CAC72FD0016D837 /* Cards.swift */,
 				5FD360561CAC6EC40016D837 /* Following.swift */,
 				5FD360641CACFD9E0016D837 /* ContactsSync.swift */,
+				5FB976B91CAF292A00B92A16 /* Hashtags.swift */,
 				5FB2F2451CA20FB8001863C4 /* Screens */,
 				5FB2F2461CA20FC4001863C4 /* Card Items */,
 				5FB2F2471CA20FCB001863C4 /* Utils */,
@@ -440,6 +443,7 @@
 				5FD360571CAC6EC40016D837 /* Following.swift in Sources */,
 				5FD360591CAC70340016D837 /* Pusher.swift in Sources */,
 				5FD360421CA8A5A80016D837 /* CommentsViewController.swift in Sources */,
+				5FB976BA1CAF292A00B92A16 /* Hashtags.swift in Sources */,
 				5FB2F2571CA2184E001863C4 /* UIColor+Hex.swift in Sources */,
 				5F70982E1CA0EEA600B499BC /* CardEditor.swift in Sources */,
 				5FB2F2511CA217CF001863C4 /* KeyboardAvoidance.swift in Sources */,

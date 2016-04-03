@@ -15,25 +15,73 @@ class HashtagViewController: CardFeedViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createToolbar()
-        // start observing:
+    }
+    
+    override func startUpdating() {
+        super.startUpdating()
+        
         nothingHere.hidden = true
-        let q = Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").queryOrderedByChild("negativeDate")
-        _fbHandle = q.observeEventType(FEventType.Value) { [weak self] (let snapshot: FDataSnapshot!) -> Void in
-            if let s = self {
-                s.rows = s.createRowsForCardDicts(snapshot.childDictionaries)
+        
+        let hashtagFB = Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag)
+        
+        let q = hashtagFB.childByAppendingPath("cards").queryOrderedByChild("negativeDate").queryLimitedToFirst(50)
+        _cardsSub = q.snapshotPusher.subscribe({ [weak self] (let snapshotOpt) in
+            if let s = self, let snapshot = snapshotOpt {
+                s._cardRows = s.createRowsForCardDicts(snapshot.childDictionaries)
                 s.nothingHere.hidden = (s.rows.count > 0)
             }
-        }
+        })
         _followingSub = Data.isFollowingItem(hashtag).subscribe({ [weak self] (let following) in
             self?.following = following
         })
+        _infoSub = hashtagFB.childByAppendingPath("info").pusher.subscribe({ [weak self] (let info) in
+            if let infoDict = info as? [String: AnyObject], let desc = infoDict["description"] as? String {
+                self?.hashtagDescription = desc
+            } else {
+                self?.hashtagDescription = nil
+            }
+            self?._updateGroupInfo()
+        })
+        _ownersSub = hashtagFB.childByAppendingPath("owners").pusher.subscribe({ [weak self] (let owners) in
+            self?.ownerIsSelf = false
+            self?.ownerName = nil
+            if let ownersDict = owners as? [String: AnyObject] {
+                if ownersDict[Data.getUID()!] != nil {
+                    self?.ownerIsSelf = true
+                    self?.ownerName = Data.getName()
+                } else if let firstOwnerID = ownersDict.keys.first, let firstOwnerDict = ownersDict[firstOwnerID] as? [String: AnyObject], let firstOwnerName = firstOwnerDict["name"] as? String {
+                    self?.ownerName = firstOwnerName
+                }
+            }
+            self?._updateGroupInfo()
+        })
     }
-    var _fbHandle: UInt?
-    deinit {
-        if let h = _fbHandle {
-            Data.firebase.removeObserverWithHandle(h)
+    
+    override func stopUpdating() {
+        super.stopUpdating()
+        _cardsSub = nil
+        _followingSub = nil
+        _infoSub = nil
+        _ownersSub = nil
+    }
+    
+    // MARK: Rows
+    
+    var _cardRows = [RowModel]() {
+        didSet {
+            _updateRows()
         }
     }
+    func _updateRows() {
+        var r = [RowModel]()
+        if let g = groupInfoRow {
+            r.append(g)
+        }
+        r += _cardRows
+        self.rows = r
+    }
+    
+    var _cardsSub: Subscription?
     
     @IBOutlet var nothingHere: UIView!
     @IBOutlet var loader: UIActivityIndicatorView!
@@ -87,4 +135,49 @@ class HashtagViewController: CardFeedViewController {
         super.viewWillAppear(animated)
         navigationController?.setToolbarHidden(false, animated: animated)
     }
+    
+    // MARK: Info
+    var ownerName: String?
+    var ownerIsSelf: Bool?
+    var hashtagDescription: String?
+    var _infoSub: Subscription?
+    var _ownersSub: Subscription?
+    func _updateGroupInfo() {
+        let attrs: [String: AnyObject] = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont.systemFontOfSize(14)]
+        var underlinedAttrs = attrs
+        underlinedAttrs[NSUnderlineStyleAttributeName] = NSUnderlineStyle.StyleSingle.rawValue
+        
+        let text = NSMutableAttributedString()
+        if let n = ownerName {
+            text.appendAttributedString(NSAttributedString(string: "Created by \(n)", attributes: attrs))
+        }
+        if let desc = hashtagDescription {
+            text.appendAttributedString(NSAttributedString(string: ":\n" + desc, attributes: attrs))
+        }
+        if ownerIsSelf ?? false {
+            text.appendAttributedString(NSAttributedString(string: "\nEdit group info", attributes: underlinedAttrs))
+        }
+        
+        let p = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        p.alignment = NSTextAlignment.Left
+        text.addAttribute(NSParagraphStyleAttributeName, value: p, range: NSMakeRange(0, text.length))
+        
+        groupInfoRow = RowModel.Caption(text: text, action: {
+            [weak self] in
+            self?.editGroupInfo()
+        })
+    }
+    
+    var groupInfoRow: RowModel? {
+        didSet {
+            _updateRows()
+        }
+    }
+    
+    @IBAction func editGroupInfo() {
+        if ownerIsSelf ?? false {
+            // TODO
+        }
+    }
 }
+

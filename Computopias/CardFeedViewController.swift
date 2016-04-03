@@ -77,7 +77,8 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
             case .Card(id: _, hashtag: _):
                 return CardView.CardSize
             case .Caption(text: let text, action: _):
-                return text.boundingRectWithSize(CGSizeMake(CardView.CardSize.width, 400), options: [.UsesLineFragmentOrigin], context: nil).size
+                let height = text.boundingRectWithSize(CGSizeMake(CardView.CardSize.width, 500), options: [.UsesLineFragmentOrigin], context: nil).size.height
+                return CGSizeMake(CardView.CardSize.width, height)
             }
         }
     }
