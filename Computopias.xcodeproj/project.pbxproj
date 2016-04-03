@@ -34,6 +34,7 @@
 		5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */; };
 		5FB976BA1CAF292A00B92A16 /* Hashtags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976B91CAF292A00B92A16 /* Hashtags.swift */; };
 		5FB976BD1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976BC1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m */; };
+		5FB976BF1CB1A5B200B92A16 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976BE1CB1A5B200B92A16 /* CreateGroupViewController.swift */; };
 		5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7A1CA2795100E6F5F7 /* Route.swift */; };
 		5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
@@ -100,6 +101,7 @@
 		5FB976B91CAF292A00B92A16 /* Hashtags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hashtags.swift; sourceTree = "<group>"; };
 		5FB976BB1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+BorderedButton.h"; sourceTree = "<group>"; };
 		5FB976BC1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+BorderedButton.m"; sourceTree = "<group>"; };
+		5FB976BE1CB1A5B200B92A16 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		5FC84B7A1CA2795100E6F5F7 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCardItemView.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				5FD8FE571CA1C9AA006A7191 /* HashtagListViewController.swift */,
 				5FD360431CA9457A0016D837 /* OnboardingViewController.swift */,
 				5FD360661CADFAD30016D837 /* ActivityFeedViewController.swift */,
+				5FB976BE1CB1A5B200B92A16 /* CreateGroupViewController.swift */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				5FB976BA1CAF292A00B92A16 /* Hashtags.swift in Sources */,
 				5FB2F2571CA2184E001863C4 /* UIColor+Hex.swift in Sources */,
 				5F70982E1CA0EEA600B499BC /* CardEditor.swift in Sources */,
+				5FB976BF1CB1A5B200B92A16 /* CreateGroupViewController.swift in Sources */,
 				5FB2F2511CA217CF001863C4 /* KeyboardAvoidance.swift in Sources */,
 				5FD360631CACECD50016D837 /* StarRatingCardItemView.swift in Sources */,
 				5FD3604E1CAB7A9A0016D837 /* FlipbookCardItemView.swift in Sources */,

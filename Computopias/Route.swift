@@ -13,6 +13,7 @@ enum Route {
     case Card(hashtag: String, id: String)
     case ProfilesList
     case HashtagsList
+    case CreateGroup
     case Nothing
     var string: String {
         get {
@@ -21,6 +22,16 @@ enum Route {
             case .Card(hashtag: let hashtag, id: let id): return "#" + hashtag + "/" + id
             case .HashtagsList: return "!hashtags"
             case .ProfilesList: return "!profiles"
+            case .CreateGroup: return "!create"
+            default: return ""
+            }
+        }
+    }
+    var titleStringForNav: String {
+        get {
+            switch self {
+            case .Card(hashtag: let hashtag, id: _): return "#" + hashtag
+            case .Hashtag(name: let hashtag): return "#" + hashtag
             default: return ""
             }
         }
@@ -37,6 +48,8 @@ enum Route {
                 urlComps.path = "/friends"
             case .HashtagsList:
                 urlComps.path = "/feed"
+            case .CreateGroup:
+                urlComps.path = "/create"
             default: ()
             }
             return urlComps.URL!
@@ -70,6 +83,8 @@ enum Route {
             return Route.HashtagsList
         } else if parts.count == 1 && parts[0] == "friends" {
             return Route.ProfilesList
+        } else if parts.count == 1 && parts[0] == "create" {
+            return Route.CreateGroup
         }
         return nil
     }

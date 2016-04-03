@@ -30,6 +30,8 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
             vc = storyboard.instantiateViewControllerWithIdentifier("ActivityFeed") as! ActivityFeedViewController
         case .ProfilesList:
             vc = storyboard.instantiateViewControllerWithIdentifier("FriendFeedViewController") as! FriendFeedViewController
+        case .CreateGroup:
+            vc = storyboard.instantiateViewControllerWithIdentifier("CreateGroupViewController") as! CreateGroupViewController
         default:
             vc = storyboard.instantiateViewControllerWithIdentifier("NavigableViewController") as! NavigableViewController
         }
@@ -43,17 +45,17 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if !isHome {
-            searchBar.text = route.string
-        }
+        searchBar.text = route.titleStringForNav
         searchBar.placeholder = "Search…"
         navigationItem.titleView = searchBar
         searchBar.frame = CGRectMake(0, 0, 200, searchBar.bounds.size.height)
         searchBar.delegate = self
         searchBar.setImage(UIImage(), forSearchBarIcon: .Clear, state: .Normal)
+        searchBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         searchBar.barTintColor = UIColor.clearColor()
         searchBar.backgroundColor = UIColor.clearColor()
-        searchBar.searchBarStyle = .Minimal
+        searchBar.setSearchFieldBackgroundImage(UIImage(named: "searchfield"), forState: .Normal)
+        // searchBar.searchBarStyle = .Minimal
         searchBar.autocapitalizationType = .None
         searchBar.autocorrectionType = .No
         searchBar.backgroundImage = UIImage()
@@ -74,11 +76,19 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         _setupBarsAnimated(animated)
+        searchBar.alpha = 0
         visible = true
         if navigationController?.viewControllers.count > 1 {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "NavBack"), style: .Plain, target: self, action: #selector(NavigableViewController.back))
             navigationController!.interactivePopGestureRecognizer!.delegate = self
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.animateWithDuration(0.2, delay: 0, options: .AllowUserInteraction, animations: {
+            self.searchBar.alpha = 1
+            }, completion: nil)
     }
     
     func back() {
@@ -167,7 +177,7 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
         searchBar.setShowsCancelButton(true, animated: true)
     }
     func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        searchBar.text = isHome ? "" : route.string
+        searchBar.text = route.titleStringForNav
         searchBar.setShowsCancelButton(false, animated: true)
     }
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -192,7 +202,7 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
     }
     
     class func homeTabs() -> [(String, Route)] {
-        return [("New", Route.HashtagsList), ("Friends", Route.ProfilesList)]
+        return [("Activity", Route.HashtagsList), ("Friends", Route.ProfilesList), ("New Group", Route.CreateGroup)]
     }
     
     // MARK: Memory warnings
