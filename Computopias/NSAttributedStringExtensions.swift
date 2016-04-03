@@ -17,12 +17,28 @@ extension NSAttributedString {
         return UIFont.systemFontOfSize(size)
     }
     
+    class func defaultBoldFontAtSize(size: CGFloat) -> UIFont {
+        return UIFont.boldSystemFontOfSize(size)
+    }
+    
     class func defaultText(text: String) -> NSAttributedString {
         return NSAttributedString(string: text, attributes: [NSFontAttributeName: defaultFont()])
     }
     
     class func defaultUnderlinedText(text: String) -> NSAttributedString {
         return NSAttributedString(string: text, attributes: [NSFontAttributeName: defaultFont(), NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue])
+    }
+    
+    class func smallText(text: String) -> NSAttributedString {
+        return NSAttributedString(string: text, attributes: [NSFontAttributeName: defaultFontAtSize(13)])
+    }
+    
+    class func smallUnderlinedText(text: String) -> NSAttributedString {
+        return NSAttributedString(string: text, attributes: [NSFontAttributeName: defaultFontAtSize(13), NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue])
+    }
+    
+    class func smallBoldText(text: String) -> NSAttributedString {
+        return NSAttributedString(string: text, attributes: [NSFontAttributeName: defaultBoldFontAtSize(13)])
     }
 }
 

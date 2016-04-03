@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NavigableViewController: UIViewController, UISearchBarDelegate {
+class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureRecognizerDelegate {
     // MARK: Routing
     class func FromRoute(route: Route) -> NavigableViewController! {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -48,16 +48,18 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
         }
         searchBar.placeholder = "Search…"
         navigationItem.titleView = searchBar
-        searchBar.frame = CGRectMake(0, 0, searchBar.bounds.size.height, 200)
+        searchBar.frame = CGRectMake(0, 0, 200, searchBar.bounds.size.height)
         searchBar.delegate = self
         searchBar.setImage(UIImage(), forSearchBarIcon: .Clear, state: .Normal)
         searchBar.barTintColor = UIColor.clearColor()
+        searchBar.backgroundColor = UIColor.clearColor()
         searchBar.searchBarStyle = .Minimal
         searchBar.autocapitalizationType = .None
         searchBar.autocorrectionType = .No
+        searchBar.backgroundImage = UIImage()
         
         if !isHome {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "home"), style: .Plain, target: self, action: #selector(NavigableViewController.home))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "NavHome"), style: .Plain, target: self, action: #selector(NavigableViewController.home))
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NavigableViewController._onLoggedIn), name: Data.LoginDidCompleteNotification, object: nil)
@@ -73,6 +75,14 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
         super.viewWillAppear(animated)
         _setupBarsAnimated(animated)
         visible = true
+        if navigationController?.viewControllers.count > 1 {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "NavBack"), style: .Plain, target: self, action: #selector(NavigableViewController.back))
+            navigationController!.interactivePopGestureRecognizer!.delegate = self
+        }
+    }
+    
+    func back() {
+        navigationController?.popViewControllerAnimated(true)
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -110,13 +120,11 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
     // MARK: Search bar/nav
     
     func _setupBarsAnimated(animated: Bool) {
-        if self === navigationController?.viewControllers.first {
+        /*if self === navigationController?.viewControllers.first {
             let dummy = UIBarButtonItem(title: " ", style: .Plain, target: nil, action: nil)
             navigationItem.leftBarButtonItem = dummy
-        }
-        
-        navigationController?.toolbar.barStyle = .Black
-        
+        }*/
+                
         let hasToolbar = getTabs() != nil
         if let tabs = getTabs() {
             let flex1 = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
@@ -205,5 +213,11 @@ class NavigableViewController: UIViewController, UISearchBarDelegate {
         let a = UIAlertController(title: nil, message: text, preferredStyle: .Alert)
         a.addAction(UIAlertAction(title: "Okay", style: .Cancel, handler: nil))
         presentViewController(a, animated: true, completion: nil)
+    }
+    
+    // MARK: Layout
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 }

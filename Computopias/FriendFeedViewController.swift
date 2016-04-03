@@ -17,7 +17,7 @@ class FriendFeedViewController: CardFeedViewController {
     override func startUpdating() {
         var rows = [RowModel]()
         if let profile = Data.profileFirebase() {
-            let text = NSAttributedString.defaultText("This is your profile. Try ") + NSAttributedString.defaultUnderlinedText("editing it") + NSAttributedString.defaultText(".")
+            let text = NSAttributedString.smallText("This is your profile. Try ") + NSAttributedString.smallUnderlinedText("editing it") + NSAttributedString.defaultText(".")
             rows.append(RowModel.Caption(text: text, action: {
                 [weak self] in
                 self?.cellForCardWithID(profile.key)?.cardView.editCard()
@@ -109,22 +109,22 @@ class FriendFeedViewController: CardFeedViewController {
     func _updateRows() {
         var r = selfProfileRows
         if friendRows.count > 0 {
-            let header = RowModel.Caption(text: NSAttributedString.defaultText("People you follow"), action: nil)
+            let header = RowModel.Caption(text: NSAttributedString.smallText("People you follow"), action: nil)
             r.append(header)
             r += friendRows
         } else {
             // TODO: show contacts-syncing rows
             if _searchingContactsInProgress {
-                let row = RowModel.Caption(text: NSAttributedString.defaultText("⏳ Searching for friends"), action: nil)
+                let row = RowModel.Caption(text: NSAttributedString.smallText("⏳ Searching for friends"), action: nil)
                 r.append(row)
             } else if Data.shouldPromptToDoContactSync() {
-                let row = RowModel.Caption(text: NSAttributedString.defaultText("No friends to show. ") + NSAttributedString.defaultUnderlinedText("Search your contacts") + NSAttributedString.defaultText(" for friends?"), action: {
+                let row = RowModel.Caption(text: NSAttributedString.smallText("No friends to show. ") + NSAttributedString.smallUnderlinedText("Search your contacts") + NSAttributedString.defaultText(" for friends?"), action: {
                     [weak self] in
                     self?._doContactsSync()
                 })
                 r.append(row)
             } else {
-                r.append(RowModel.Caption(text: NSAttributedString.defaultText("No friends 😕"), action: nil))
+                r.append(RowModel.Caption(text: NSAttributedString.smallText("No friends 😕"), action: nil))
             }
         }
         rows = r

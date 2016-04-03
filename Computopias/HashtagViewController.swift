@@ -86,10 +86,28 @@ class HashtagViewController: CardFeedViewController {
     @IBOutlet var nothingHere: UIView!
     @IBOutlet var loader: UIActivityIndicatorView!
     
+    // MARK: Toolbar
+    let toolbar = UIToolbar()
+    let addPostButton = UIButton()
+    var sortButton: UIBarButtonItem!
     func createToolbar() {
-        let addPost = UIBarButtonItem(title: "Add Post", style: .Plain, target: self, action: #selector(HashtagViewController.addPost))
-        followButton = UIBarButtonItem(title: "Follow", style: .Plain, target: self, action: #selector(HashtagViewController.toggleFollowing))
-        toolbarItems = [addPost, followButton]
+        followButton = UIBarButtonItem(title: "Follow", style: .Done, target: self, action: #selector(HashtagViewController.toggleFollowing))
+        sortButton = UIBarButtonItem(title: "Most recent", style: .Plain, target: nil, action: nil)
+        toolbar.items = [followButton, sortButton]
+        view.addSubview(toolbar)
+        addPostButton.setImage(UIImage(named: "AddPost"), forState: .Normal)
+        addPostButton.addTarget(self, action: #selector(HashtagViewController.addPost), forControlEvents: .TouchUpInside)
+        view.addSubview(addPostButton)
+    }
+    
+    // MARK: Layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        toolbar.sizeToFit()
+        toolbar.frame = CGRectMake(0, view.bounds.size.height - toolbar.frame.height, view.bounds.width, view.bounds.height)
+        collectionView.frame = CGRectMake(0, 0, view.bounds.width, toolbar.frame.minY)
+        addPostButton.sizeToFit()
+        addPostButton.center = CGPointMake(view.bounds.width - addPostButton.frame.width/2 - 10, toolbar.frame.minY - 10)
     }
     
     // MARK: Following
@@ -129,11 +147,6 @@ class HashtagViewController: CardFeedViewController {
                 })
             }
         }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setToolbarHidden(false, animated: animated)
     }
     
     // MARK: Info

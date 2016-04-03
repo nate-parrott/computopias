@@ -136,4 +136,8 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
 }

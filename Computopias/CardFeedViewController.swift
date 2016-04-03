@@ -13,8 +13,8 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.backgroundColor = UIColor.blackColor()
-        view.backgroundColor = UIColor.blackColor()
+        collectionView.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.whiteColor()
         
         collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: "Card")
         collectionView.registerClass(TextCell.self, forCellWithReuseIdentifier: "Text")
@@ -167,7 +167,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
                 let date = dict["date"] as? Double {
                 
                 let dateString = NSDateFormatter.localizedStringFromDate(NSDate(timeIntervalSince1970: date), dateStyle: .ShortStyle, timeStyle: .ShortStyle)
-                let text = NSAttributedString.defaultUnderlinedText(posterName) + NSAttributedString.defaultText(" on " + dateString)
+                let text = NSAttributedString.smallBoldText(posterName) + NSAttributedString.smallText(" on " + dateString)
                 let caption = RowModel.Caption(text: text, action: { 
                     [weak self] in
                     self?.navigate(Route.forProfile(posterId))

@@ -23,9 +23,9 @@ struct Appearance {
     
     static let transparentWhite = UIColor(white: 1, alpha: 0.3)
     
-    static let tint = UIColor(red: 0.981, green: 0, blue: 0.331, alpha: 1)
+    static let tint = UIColor(hex: "#FF74A3")!
     
     static func setup() {
-        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).defaultTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        // UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).defaultTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
     }
 }

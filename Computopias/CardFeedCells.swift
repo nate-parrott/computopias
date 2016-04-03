@@ -72,7 +72,7 @@ class TextCell: UICollectionViewCell {
         if label.superview == nil {
             contentView.addSubview(label)
             label.textAlignment = NSTextAlignment.Center
-            label.textColor = UIColor.whiteColor()
+            label.textColor = UIColor.blackColor()
             label.alpha = 0.8
             label.numberOfLines = 0
         }

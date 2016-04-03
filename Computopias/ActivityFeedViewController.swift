@@ -70,49 +70,11 @@ class ActivityFeedViewController: CardFeedViewController {
             cardEntries = entriesForLater
         }
         
-        /*var cardsByFollowedItems = [String: [[String: AnyObject]]]()
-        var followedItems = [String]()
-        var seenCardIDs = Set<String>()
-        for entry in cardEntries {
-            if let card = entry["card"] as? [String: AnyObject], let id = card["cardID"] as? String {
-                if seenCardIDs.contains(id) { continue }
-                seenCardIDs.insert(id)
-                
-                var followedItemsForCard = [String]()
-                if let hashtag = card["hashtag"] as? String {
-                    followedItemsForCard.append(hashtag)
-                }
-                if let poster = card["poster"] as? [String: AnyObject], let uid = poster["uid"] as? String {
-                    followedItemsForCard.append(uid)
-                }
-                
-                for item in followedItemsForCard {
-                    if cardsByFollowedItems[item] == nil {
-                        cardsByFollowedItems[item] = [[String: AnyObject]]()
-                        followedItems.append(item)
-                    }
-                    cardsByFollowedItems[item]!.append(card)
-                }
-            }
-        }
-        
-        var cards = [[String: AnyObject]]()
-        seenCardIDs.removeAll()
-        while followedItems.count > 0 {
-            for followedItem in followedItems {
-                if let card = cardsByFollowedItems[followedItem]?.first {
-                    cards.append(card)
-                    cardsByFollowedItems[followedItem]!.removeFirst()
-                }
-            }
-            followedItems = followedItems.filter({ (cardsByFollowedItems[$0]?.count ?? 0) > 0 })
-        }*/
-        
         var rows = [RowModel]()
         for card in cards {
             if let cardID = card["cardID"] as? String, let hashtag = card["hashtag"] as? String {
                 let posterName = (card["poster"] as? [String: AnyObject])?["name"] as? String ?? "??"
-                let text = NSAttributedString.defaultText("\(posterName) in ") + NSAttributedString.defaultUnderlinedText(hashtag)
+                let text = NSAttributedString.smallText("\(posterName) in ") + NSAttributedString.smallBoldText(hashtag)
                 rows.append(RowModel.Caption(text: text, action: {
                     [weak self] in
                     self?.navigate(Route.Hashtag(name: hashtag))
