@@ -33,6 +33,7 @@
 		5FB2F2631CA257D2001863C4 /* CounterCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */; };
 		5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */; };
 		5FB976BA1CAF292A00B92A16 /* Hashtags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976B91CAF292A00B92A16 /* Hashtags.swift */; };
+		5FB976BD1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976BC1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m */; };
 		5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7A1CA2795100E6F5F7 /* Route.swift */; };
 		5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
@@ -97,6 +98,8 @@
 		5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterCardItemView.swift; sourceTree = "<group>"; };
 		5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeCounterCardItemView.swift; sourceTree = "<group>"; };
 		5FB976B91CAF292A00B92A16 /* Hashtags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hashtags.swift; sourceTree = "<group>"; };
+		5FB976BB1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+BorderedButton.h"; sourceTree = "<group>"; };
+		5FB976BC1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+BorderedButton.m"; sourceTree = "<group>"; };
 		5FC84B7A1CA2795100E6F5F7 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCardItemView.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
@@ -240,6 +243,8 @@
 		5FB2F2471CA20FCB001863C4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5FB976BB1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.h */,
+				5FB976BC1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m */,
 				5FD360581CAC70340016D837 /* Pusher.swift */,
 				5FD3605A1CAC70BE0016D837 /* Pusher+Firebase.swift */,
 				5FD360681CAE16250016D837 /* UICollectionView+UpdateRows.swift */,
@@ -398,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FB2F24D1CA21774001863C4 /* NetImageView.swift in Sources */,
+				5FB976BD1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m in Sources */,
 				5FB2F25F1CA242FD001863C4 /* CMWindow.m in Sources */,
 				5FD3606B1CAF03030016D837 /* CardFeedCells.swift in Sources */,
 				5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */,

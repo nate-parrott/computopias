@@ -27,6 +27,8 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
     
     var rows = [RowModel]() {
         didSet(oldRows) {
+            loadViewIfNeeded()
+            
             var currentPosition: (RowModel, CGFloat)?
             if let i = indexOfCurrentlyViewedRow() {
                 currentPosition = (_rows[i], collectionView.contentOffset.y - scrollOffsetForRowAtIndex(i, rows: _rows))

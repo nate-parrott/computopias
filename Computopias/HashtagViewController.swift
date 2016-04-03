@@ -93,7 +93,8 @@ class HashtagViewController: CardFeedViewController {
     func createToolbar() {
         followButton = UIBarButtonItem(title: "Follow", style: .Done, target: self, action: #selector(HashtagViewController.toggleFollowing))
         sortButton = UIBarButtonItem(title: "Most recent", style: .Plain, target: nil, action: nil)
-        toolbar.items = [followButton, sortButton]
+        // followButton = UIBarButtonItem(unborderedWithTitle: "Follow", target: self, action: #selector(HashtagViewController.toggleFollowing))
+        toolbar.setItems([followButton, sortButton], animated: false)
         view.addSubview(toolbar)
         addPostButton.setImage(UIImage(named: "AddPost"), forState: .Normal)
         addPostButton.addTarget(self, action: #selector(HashtagViewController.addPost), forControlEvents: .TouchUpInside)
@@ -103,8 +104,7 @@ class HashtagViewController: CardFeedViewController {
     // MARK: Layout
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        toolbar.sizeToFit()
-        toolbar.frame = CGRectMake(0, view.bounds.size.height - toolbar.frame.height, view.bounds.width, view.bounds.height)
+        toolbar.frame = CGRectMake(0, view.bounds.size.height - 44, view.bounds.width, 44)
         collectionView.frame = CGRectMake(0, 0, view.bounds.width, toolbar.frame.minY)
         addPostButton.sizeToFit()
         addPostButton.center = CGPointMake(view.bounds.width - addPostButton.frame.width/2 - 10, toolbar.frame.minY - 10)

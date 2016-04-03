@@ -17,7 +17,7 @@ class FriendFeedViewController: CardFeedViewController {
     override func startUpdating() {
         var rows = [RowModel]()
         if let profile = Data.profileFirebase() {
-            let text = NSAttributedString.smallText("This is your profile. Try ") + NSAttributedString.smallUnderlinedText("editing it") + NSAttributedString.defaultText(".")
+            let text = NSAttributedString.smallText("This is your profile. Try ") + NSAttributedString.smallUnderlinedText("editing it") + NSAttributedString.smallText(".")
             rows.append(RowModel.Caption(text: text, action: {
                 [weak self] in
                 self?.cellForCardWithID(profile.key)?.cardView.editCard()
@@ -28,7 +28,7 @@ class FriendFeedViewController: CardFeedViewController {
         
         if Data.getUID() != nil {
             _friendsListSub = Data.friendFeed().subscribe({ [weak self] (let friendIDs) in
-                self?.friendRows = friendIDs.map({ CardFeedViewController.RowModel.Card(id: $0, hashtag: "profiles") })
+                self?.friendRows = friendIDs.filter({ $0 != Data.getUID() }).map({ CardFeedViewController.RowModel.Card(id: $0, hashtag: "profiles") })
                 })
         }
     }
@@ -118,7 +118,7 @@ class FriendFeedViewController: CardFeedViewController {
                 let row = RowModel.Caption(text: NSAttributedString.smallText("⏳ Searching for friends"), action: nil)
                 r.append(row)
             } else if Data.shouldPromptToDoContactSync() {
-                let row = RowModel.Caption(text: NSAttributedString.smallText("No friends to show. ") + NSAttributedString.smallUnderlinedText("Search your contacts") + NSAttributedString.defaultText(" for friends?"), action: {
+                let row = RowModel.Caption(text: NSAttributedString.smallText("No friends to show. ") + NSAttributedString.smallUnderlinedText("Search your contacts") + NSAttributedString.smallText(" for friends?"), action: {
                     [weak self] in
                     self?._doContactsSync()
                 })

@@ -68,9 +68,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             let m = ImageCardItemView()
             return m
         }),
-        Item(title: "Profile", image: UIImage(named: "profile"), callback: { () -> CardItemView! in
+        /*Item(title: "Profile", image: UIImage(named: "profile"), callback: { () -> CardItemView! in
             return ProfileCardItemView()
-        }),
+        }),*/
         Item(title: "Button", image: UIImage(named: "link"), callback: { () -> CardItemView! in
             return ButtonCardItemView()
         }),
@@ -98,9 +98,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         /*Item(title: "Timer", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
             return nil
         }),*/
-        Item(title: "Destruct", image: UIImage(named: "destruct"), callback: { () -> CardItemView! in
+        /*Item(title: "Destruct", image: UIImage(named: "destruct"), callback: { () -> CardItemView! in
             return CountdownCardItemView()
-        })
+        })*/
     ]
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

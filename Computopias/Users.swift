@@ -48,6 +48,9 @@ extension Data {
                         let defaultCard = ["width": CardView.CardSize.width, "height": CardView.CardSize.height, "items": [], "hashtag": "profiles", "poster": profileJson()]
                         profileFirebase().setValue(defaultCard)
                     }
+                    // post-signup work:
+                    // follow self:
+                    Data.setFollowing(Data.getUID()!, following: true, isUser: true)
                     NSNotificationCenter.defaultCenter().postNotificationName(LoginDidCompleteNotification, object: nil)
                     callback(true)
                 })
