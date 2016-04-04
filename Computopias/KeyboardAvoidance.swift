@@ -49,6 +49,11 @@ class KeyboardProxyView: UIView {
     func _frameChanged(notif: NSNotification) {
         let frame = (notif.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         _updateSize(frame)
+        if let duration = notif.userInfo![UIKeyboardAnimationDurationUserInfoKey] as? NSTimeInterval {
+            UIView.animateWithDuration(duration, delay: 0, options: [.CurveEaseInOut], animations: {
+                self.superview?.layoutIfNeeded()
+                }, completion: nil)
+        }
     }
     
     func _updateSize(kbFrame: CGRect?) {
@@ -56,9 +61,11 @@ class KeyboardProxyView: UIView {
         if let frame = kbFrame {
             switch UIApplication.sharedApplication().statusBarOrientation {
             case .LandscapeLeft, .LandscapeRight:
-                keyboardHeight = frame.size.width
+                let screenBounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.height, UIScreen.mainScreen().bounds.size.width)
+                keyboardHeight = CGRectIntersection(screenBounds, frame).width
             default:
-                keyboardHeight = frame.size.height
+                let screenBounds = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height)
+                keyboardHeight = CGRectIntersection(screenBounds, frame).height
             }
         }
         _height = keyboardHeight

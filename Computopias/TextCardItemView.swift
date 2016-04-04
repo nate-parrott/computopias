@@ -28,8 +28,8 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         return field.isFirstResponder()
     }
     
-    static let font = UIFont(name: "AvenirNext-Regular", size: 15)!
-    static let boldFont = UIFont(name: "AvenirNext-Medium", size: 15)!
+    static let font = UIFont(name: "AvenirNext-Medium", size: 15)!
+    static let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 15)!
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {

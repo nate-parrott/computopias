@@ -108,11 +108,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Computopias/CardView.swift"
-            timestampString = "481451243.537736"
+            timestampString = "481452078.885706"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "316"
-            endingLineNumber = "316"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
             landmarkName = "touchesEnded(_:withEvent:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -124,11 +124,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Computopias/CardView.swift"
-            timestampString = "481451262.910199"
+            timestampString = "481452078.885706"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
+            startingLineNumber = "328"
+            endingLineNumber = "328"
             landmarkName = "touchesEnded(_:withEvent:)"
             landmarkType = "5">
             <Locations>
@@ -172,12 +172,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Computopias/CardView.swift"
-            timestampString = "481451371.398177"
+            timestampString = "481452078.885706"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "315"
-            endingLineNumber = "315"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
             landmarkName = "touchesEnded(_:withEvent:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Computopias/KeyboardAvoidance.swift"
+            timestampString = "481452682.422664"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "_updateSize(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

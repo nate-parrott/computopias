@@ -261,10 +261,21 @@ class CardView: UIView {
     // MARK: Gestures
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         let result = super.hitTest(point, withEvent: event)
-        if (result as? CardItemView) != nil && !(result as! CardItemView).acceptsTouches() {
+        if let v = result, let parent = _itemParentOfView(v) where !parent.acceptsTouches() {
             return self // ignore the individual item
         }
         return result
+    }
+    func _itemParentOfView(view: UIView) -> CardItemView? {
+        var v: UIView? = view
+        while v != nil {
+            if let item = (v as? CardItemView) {
+                return item
+            } else {
+                v = v?.superview
+            }
+        }
+        return nil
     }
     var editingItem: CardItemView? {
         didSet {

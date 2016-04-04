@@ -395,10 +395,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="WpN-5c-ko5" customClass="KeyboardProxyView" customModule="Computopias" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="558" width="320" height="10"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LeT-qF-jgB">
                                 <rect key="frame" x="0.0" y="468" width="320" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="QEo-pT-ZcI"/>
+                                    <constraint firstAttribute="height" constant="100" id="QEo-pT-ZcI"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="ubE-XE-SUq">
                                     <size key="itemSize" width="48" height="48"/>
@@ -485,17 +489,21 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="BbP-Hw-gFM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PNB-0J-zXU" secondAttribute="bottom" id="4hp-kx-kjg"/>
-                            <constraint firstItem="LeT-qF-jgB" firstAttribute="top" secondItem="BbP-Hw-gFM" secondAttribute="bottom" id="7Pj-Nt-ZGn"/>
+                            <constraint firstItem="BbP-Hw-gFM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PNB-0J-zXU" secondAttribute="bottom" priority="760" id="4hp-kx-kjg"/>
                             <constraint firstItem="ew1-3d-JLj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="1" id="80j-nz-Me4"/>
                             <constraint firstAttribute="trailing" secondItem="9zk-m1-gtf" secondAttribute="trailing" id="EyR-vB-QQt"/>
                             <constraint firstItem="BbP-Hw-gFM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="M8c-lA-ZfS"/>
                             <constraint firstItem="DaB-Rm-CLj" firstAttribute="top" secondItem="LeT-qF-jgB" secondAttribute="bottom" id="Tjf-h1-MQB"/>
                             <constraint firstAttribute="trailing" secondItem="LeT-qF-jgB" secondAttribute="trailing" id="V5o-sE-8v2"/>
+                            <constraint firstItem="WpN-5c-ko5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ztd-mA-bTW"/>
                             <constraint firstItem="BbP-Hw-gFM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" priority="200" id="k3K-Xf-CJ8"/>
+                            <constraint firstAttribute="trailing" secondItem="WpN-5c-ko5" secondAttribute="trailing" id="kNq-iJ-Tja"/>
                             <constraint firstItem="ew1-3d-JLj" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ktP-hv-M5t"/>
+                            <constraint firstItem="WpN-5c-ko5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="BbP-Hw-gFM" secondAttribute="bottom" constant="90" id="n8c-Zu-dLe"/>
                             <constraint firstItem="9zk-m1-gtf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="nxA-JM-LM4"/>
                             <constraint firstItem="LeT-qF-jgB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="u0F-TT-DXX"/>
+                            <constraint firstItem="DaB-Rm-CLj" firstAttribute="top" secondItem="WpN-5c-ko5" secondAttribute="bottom" id="v7Y-DN-SJG"/>
+                            <constraint firstItem="LeT-qF-jgB" firstAttribute="top" relation="greaterThanOrEqual" secondItem="BbP-Hw-gFM" secondAttribute="bottom" id="zc9-5Z-Syt"/>
                         </constraints>
                     </view>
                     <connections>
