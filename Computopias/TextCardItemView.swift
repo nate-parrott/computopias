@@ -24,7 +24,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         field.tintColor = UIColor.whiteColor()
     }
     
-    static let font = NSAttributedString.defaultFontAtSize(15)
+    static let font = UIFont(name: "AvenirNext-Regular", size: 15)!
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
