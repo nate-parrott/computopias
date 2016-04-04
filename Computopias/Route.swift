@@ -74,7 +74,8 @@ enum Route {
         return nil
     }
     static func fromURL(url: NSURL) -> Route? {
-        let parts = url.pathComponents ?? []
+        var parts = url.pathComponents ?? []
+        if parts.first == "/" { parts.removeAtIndex(0) }
         if parts.count == 2 && parts[0] == "groups" {
             return Route.Hashtag(name: parts[1])
         } else if parts.count == 3 && parts[0] == "groups" {

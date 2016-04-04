@@ -84,7 +84,7 @@ class ButtonCardItemView: CardItemView {
                 if link.componentsSeparatedByString(".").count == 1 {
                     isURL = false
                 }
-                if link.hasPrefix("sms://") {
+                if link.hasPrefix("sms://") || link.hasPrefix("bubble://") {
                     isURL = true
                 }
                 if isURL {
