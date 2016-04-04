@@ -18,24 +18,46 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func verifyPhone(sender: AnyObject) {
         phoneState = .InProgress
-        Phony.sharedPhony().verifyPhoneNumber { (let phoneNumberOpt, let firebaseTokenOpt, let errorOpt) in
-            if let phone = phoneNumberOpt, let firebaseToken = firebaseTokenOpt {
-                self.phoneState = .Success(number: phone, firebaseToken: firebaseToken)
-            } else {
-                self.phoneState = .Error(err: errorOpt)
+        if Data.ALLOW_FAKE_LOGIN {
+            let prompt = UIAlertController(title: "Enter your phone number:", message: nil, preferredStyle: .Alert)
+            prompt.addTextFieldWithConfigurationHandler({ (let field) in
+                field.keyboardType = .PhonePad
+            })
+            prompt.addAction(UIAlertAction(title: "Okay", style: .Default, handler: { (_) in
+                let phone = (prompt.textFields![0].text ?? "").normalizedPhone
+                if phone != "" {
+                    self.phoneState = .Success(number: phone, firebaseToken: "FAKE")
+                }
+            }))
+            presentViewController(prompt, animated: true, completion: nil)
+        } else {
+            Phony.sharedPhony().verifyPhoneNumber { (let phoneNumberOpt, let firebaseTokenOpt, let errorOpt) in
+                if let phone = phoneNumberOpt, let firebaseToken = firebaseTokenOpt {
+                    self.phoneState = .Success(number: phone, firebaseToken: firebaseToken)
+                } else {
+                    self.phoneState = .Error(err: errorOpt)
+                }
             }
         }
     }
     
     @IBAction func done(sender: AnyObject) {
         loginInProgress = true
-        Data.logIn(phoneState.number!, firebaseToken: phoneState.firebaseToken!) { (let success) in
+        
+        let callback = {
+            (let success: Bool) in
             if success {
                 Data.setName(self.nameField.text!)
                 self.dismissViewControllerAnimated(true, completion: nil)
             } else {
                 self.loginInProgress = false
             }
+        }
+        
+        if phoneState.firebaseToken! == "FAKE" && Data.ALLOW_FAKE_LOGIN {
+            Data.fakeLogin(phoneState.number!, callback: callback)
+        } else {
+            Data.logIn(phoneState.number!, firebaseToken: phoneState.firebaseToken!, callback: callback)
         }
     }
     

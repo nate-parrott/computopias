@@ -12,6 +12,8 @@ import Firebase
 extension Data {
     static let LoginDidCompleteNotification = "LoginDidCompleteNotification"
     
+    static let ALLOW_FAKE_LOGIN = true
+    
     static func getName() -> String? {
         return NSUserDefaults.standardUserDefaults().valueForKey("Name") as? String
     }
@@ -37,27 +39,41 @@ extension Data {
     static func logIn(phone: String, firebaseToken: String, callback: Bool -> ()) {
         firebase.authWithCustomToken(firebaseToken) { (_, let authDataOpt) in
             if authDataOpt != nil {
-                NSUserDefaults.standardUserDefaults().setValue(phone, forKey: "Phone")
-                
-                let userLocation = self.firebase.childByAppendingPath("users").childByAppendingPath(self.getUID())
-                userLocation.childByAppendingPath("phoneHash").setValue(Data.hashPhoneNumber(phone))
-                
-                profileFirebase().observeSingleEventOfType(.Value, withBlock: { (let snapshot) in
-                    if snapshot.value === NSNull() {
-                        // initialize the default card:
-                        let defaultCard = ["width": CardView.CardSize.width, "height": CardView.CardSize.height, "items": [], "hashtag": "profiles", "poster": profileJson()]
-                        profileFirebase().setValue(defaultCard)
-                    }
-                    // post-signup work:
-                    // follow self:
-                    Data.setFollowing(Data.getUID()!, following: true, isUser: true)
-                    NSNotificationCenter.defaultCenter().postNotificationName(LoginDidCompleteNotification, object: nil)
-                    callback(true)
-                })
+                self._completeLogin(phone, callback: callback)
             } else {
                 callback(false)
             }
         }
+    }
+    
+    static func fakeLogin(phone: String, callback: Bool -> ()) {
+        firebase.authCreatingUserIfNecessary("fakePhone-" + phone, password: "password") { (let authDataOpt) in
+            if authDataOpt != nil {
+                self._completeLogin(phone, callback: callback)
+            } else {
+                callback(false)
+            }
+        }
+    }
+    
+    static func _completeLogin(phone: String, callback: Bool -> ()) {
+        NSUserDefaults.standardUserDefaults().setValue(phone, forKey: "Phone")
+        
+        let userLocation = self.firebase.childByAppendingPath("users").childByAppendingPath(self.getUID())
+        userLocation.childByAppendingPath("phoneHash").setValue(Data.hashPhoneNumber(phone))
+        
+        profileFirebase().observeSingleEventOfType(.Value, withBlock: { (let snapshot) in
+            if snapshot.value === NSNull() {
+                // initialize the default card:
+                let defaultCard = ["width": CardView.CardSize.width, "height": CardView.CardSize.height, "items": [], "hashtag": "profiles", "poster": profileJson()]
+                profileFirebase().setValue(defaultCard)
+            }
+            // post-signup work:
+            // follow self:
+            Data.setFollowing(Data.getUID()!, following: true, isUser: true)
+            NSNotificationCenter.defaultCenter().postNotificationName(LoginDidCompleteNotification, object: nil)
+            callback(true)
+        })
     }
     
     static func profileFirebase() -> Firebase! {
