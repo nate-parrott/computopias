@@ -17,14 +17,17 @@ class ActivityFeedViewController: CardFeedViewController {
                 self?._inboxUpdated(snapshot.childDictionaries)
             }
             })
+        // TODO: random posts
     }
     
     override func stopUpdating() {
         super.stopUpdating()
         _inboxSub = nil
+        _randomPostsSub = nil
     }
     
     var _inboxSub: Subscription?
+    var _randomPostsSub: Subscription?
     func _inboxUpdated(entries: [[String: AnyObject]]) {
         /*
          ASSEMBLING THE FEED:

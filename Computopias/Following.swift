@@ -42,6 +42,7 @@ extension Data {
         let data: [String: AnyObject] = ["type": "card", "card": cardJson(cardID, hashtag: hashtag)]
         broadcastToFollowers(getUID()!, data: data)
         broadcastToFollowers(hashtag, data: data)
+        broadcastToFollowers("all", data: data)
     }
     
     static func friendFeed() -> Pusher<[String]> {

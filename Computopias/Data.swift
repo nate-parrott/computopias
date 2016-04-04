@@ -65,6 +65,7 @@ dates are unix timestamps
  - type: "card"
  - negativeDate
  - card: cardJson
+[ also: inboxes/all ]
  
 */
 
