@@ -38,7 +38,7 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
     
     override var defaultSize: GridSize {
         get {
-            return CGSizeMake(7, 6)
+            return CGSizeMake(-1, 6)
         }
     }
     

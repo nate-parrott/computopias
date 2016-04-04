@@ -128,15 +128,43 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
     
     func addItemView(itemView: CardItemView) {
+        var size = CGSizeMake(itemView.defaultSize.width * cardView.gridCellSize.width, itemView.defaultSize.height * cardView.gridCellSize.height)
+        if size.width < 0 { size.width = cardView.bounds.size.width }
+        if size.height < 0 { size.height = cardView.bounds.size.height }
+        itemView.frame = findFrameForItemWithSize(size)
+            
         cardView.addSubview(itemView)
-        var frame = CGRectMake(0, 0, itemView.defaultSize.width * cardView.gridCellSize.width, itemView.defaultSize.height * cardView.gridCellSize.height)
-        if frame.size.width < 0 { frame.size.width = cardView.bounds.size.width }
-        if frame.size.height < 0 { frame.size.height = cardView.bounds.size.height }
-        itemView.frame = frame
         
         delay(0, closure: { () -> () in
             itemView.onInsert()
         })
+    }
+    
+    func findFrameForItemWithSize(size: CGSize) -> CGRect {
+        let itemFrames = cardView.items.map({ $0.frame })
+        let frameIsOccupied = {
+            (frame: CGRect) -> Bool in
+            for f in itemFrames {
+                if CGRectIntersectsRect(f, frame) {
+                    return true
+                }
+            }
+            return false
+        }
+        
+        var y: CGFloat = 0
+        while y + size.height <= CardView.CardSize.height {
+            var x: CGFloat = 0
+            while x + size.width <= CardView.CardSize.width {
+                let frame = CGRectMake(x, y, size.width, size.height)
+                if !frameIsOccupied(frame) {
+                    return frame
+                }
+                x += cardView.gridCellSize.width
+            }
+            y += cardView.gridCellSize.height
+        }
+        return CGRectMake(0, 0, size.width, size.height)
     }
     
     @IBAction func send() {
