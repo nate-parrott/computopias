@@ -13,28 +13,20 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        panRec = UIPanGestureRecognizer(target: self, action: #selector(CardItemView.panned(_:)))
-        tapRec = UITapGestureRecognizer(target: self, action: #selector(CardItemView.tapped(_:)))
-        pinchRec = UIPinchGestureRecognizer(target: self, action: #selector(CardItemView.pinched(_:)))
-        gestureRecs = [panRec, tapRec, pinchRec]
-        for r in gestureRecs {
-            addGestureRecognizer(r)
-            r.delegate = self
-        }
     }
     
     var cardPath: Firebase?
     
-    var tapRec: UITapGestureRecognizer!
-    var panRec: UIPanGestureRecognizer!
-    var pinchRec: UIPinchGestureRecognizer!
-    
     func setup() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardItemView._windowTouchedEnded(_:)), name: CMWindowGlobalTouchesEndedNotification, object: nil)
+        
     }
     
     func tapped() {
         
+    }
+    
+    func acceptsTouches() -> Bool {
+        return true
     }
     
     var defaultSize: GridSize {
@@ -50,11 +42,7 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
     }
     
     var editMode = true
-    var templateEditMode = true {
-        didSet {
-            panRec.enabled = templateEditMode
-        }
-    }
+    var templateEditMode = true
     
     var card: CardView? {
         get {
@@ -102,99 +90,6 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
-    // MARK: Gesture recs
-    var gestureRecs: [UIGestureRecognizer]!
-    
-    var _prevTranslation: CGPoint?
-    func panned(sender: UIPanGestureRecognizer) {
-        if !templateEditMode { return }
-        let translation = sender.translationInView(superview!)
-        if let prev = _prevTranslation {
-            frame = frame + (translation - prev)
-        }
-        _prevTranslation = translation
-        if sender.state == .Ended { _prevTranslation = nil }
-        _updateDragging()
-    }
-    
-    func tapped(sender: UITapGestureRecognizer) {
-        tapped()
-    }
-    
-    var _prevArea: CGRect?
-    func pinched(sender: UIPinchGestureRecognizer) {
-        if !templateEditMode { return }
-        if sender.state == .Changed && sender.numberOfTouches() == 2 {
-            let area = sender.boundingRectOfTouchesInView(superview!)
-            if let prev = _prevArea {
-                let dp = area.origin - prev.origin
-                let dSize = area.size - prev.size
-                frame = (frame + dp) + dSize
-            }
-            _prevArea = area
-        }
-        if sender.state == .Ended {
-            _prevArea = nil
-            if frame.size.width <= 0 || frame.size.height <= 0 {
-                removeFromSuperview()
-            }
-        }
-        _updateDragging()
-    }
-    
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer == panRec && otherGestureRecognizer == pinchRec || gestureRecognizer == pinchRec && otherGestureRecognizer == panRec {
-            return true
-        }
-        return false
-    }
-    
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if panRec.numberOfTouches() > 0 {
-            return true
-        }
-        return CGRectContainsPoint(bounds, touch.locationInView(self))
-    }
-    
-    func _updateDragging() {
-        self.dragging = self.pinchRec.numberOfTouches() + self.panRec.numberOfTouches() + self.tapRec.numberOfTouches() > 0
-    }
-    
-    func _windowTouchedEnded(notif: NSNotification) {
-        if dragging { dragging = false }
-        delay(0.01) { 
-            if self.dragging { self.dragging = false }
-        }
-    }
-    
-    var dragging = false {
-        willSet(newVal) {
-            if newVal {
-                card?.showProposalRectForView(self)
-            } else if !newVal && dragging {
-                // we're done dragging:
-                card?.showProposalRectForView(nil)
-                frame = card!.proposedFrameForView(self)
-                
-                if !CGRectIntersectsRect(card!.bounds, frame) || CGRectEqualToRect(frame, CGRectZero) {
-                    let oldCard = card!
-                    removeFromSuperview()
-                    delay(0, closure: { 
-                        oldCard.showProposalRectForView(nil)
-                    })
-                }
-            }
-        }
-    }
-    
-    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
-        _updateDragging()
-        if dragging {
-            return true
-        }
-        return super.pointInside(point, withEvent: event)
-    }
-    
     // MARK: Json
     class func FromJson(j: [String: AnyObject]) -> CardItemView? {
         let type = j["type"] as? String ?? ""
@@ -239,6 +134,7 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
         j["frame"] = NSStringFromCGRect(frame)
         return j
     }
+    
     // MARK: Events
     func detachFromTemplate() {
         

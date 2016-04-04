@@ -24,7 +24,12 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         field.tintColor = UIColor.whiteColor()
     }
     
+    override func acceptsTouches() -> Bool {
+        return field.isFirstResponder()
+    }
+    
     static let font = UIFont(name: "AvenirNext-Regular", size: 15)!
+    static let boldFont = UIFont(name: "AvenirNext-Medium", size: 15)!
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
@@ -79,6 +84,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     
     func _updateAppearance() {
         field.backgroundColor = staticLabel ? nil : Appearance.transparentWhite
+        field.font = staticLabel ? TextCardItemView.boldFont : TextCardItemView.font
     }
     
     override var defaultSize: GridSize {

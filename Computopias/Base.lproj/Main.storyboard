@@ -132,8 +132,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="S6O-qy-eHX">
-                                <rect key="frame" x="0.0" y="53" width="320" height="273"/>
+                                <rect key="frame" x="0.0" y="53" width="320" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="700" constant="128" id="Vun-Oe-1wI"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -141,8 +144,8 @@
                                 <rect key="frame" x="0.0" y="334" width="320" height="234"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Group Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbP-1P-SHM">
-                                <rect key="frame" x="20" y="20" width="121" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbP-1P-SHM">
+                                <rect key="frame" x="16" y="28" width="121" height="17"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -151,7 +154,7 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="XxS-Vk-wrn" firstAttribute="top" secondItem="iBv-ro-kp2" secondAttribute="bottom" id="6NK-QC-4vh"/>
-                            <constraint firstItem="iBv-ro-kp2" firstAttribute="top" secondItem="S6O-qy-eHX" secondAttribute="bottom" constant="8" id="A73-0x-h5w"/>
+                            <constraint firstItem="iBv-ro-kp2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="S6O-qy-eHX" secondAttribute="bottom" constant="8" id="A73-0x-h5w"/>
                             <constraint firstItem="cbP-1P-SHM" firstAttribute="leading" secondItem="c1M-M6-rOk" secondAttribute="leadingMargin" id="IbJ-vE-tJD"/>
                             <constraint firstItem="iBv-ro-kp2" firstAttribute="leading" secondItem="c1M-M6-rOk" secondAttribute="leading" id="KJL-OZ-oWi"/>
                             <constraint firstItem="S6O-qy-eHX" firstAttribute="leading" secondItem="c1M-M6-rOk" secondAttribute="leading" id="KqV-IO-eq2"/>

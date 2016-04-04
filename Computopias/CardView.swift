@@ -59,6 +59,8 @@ class CardView: UIView {
         if !_setupYet {
             _setupYet = true
             
+            multipleTouchEnabled = true
+            
             insertSubview(backgroundImageView, atIndex: 0)
             
             layer.cornerRadius = CardView.rounding
@@ -120,6 +122,7 @@ class CardView: UIView {
     }
     
     var _proposalRect: UIView?
+    var _outlineRect: UIView?
     func showProposalRectForView(view: CardItemView?) {
         if let v = view {
             if _proposalRect == nil {
@@ -128,10 +131,20 @@ class CardView: UIView {
                 _proposalRect!.backgroundColor = UIColor(white: 1, alpha: 0.5)
                 _proposalRect!.layer.cornerRadius = CardView.rounding
             }
+            if _outlineRect == nil {
+                _outlineRect = UIView()
+                insertSubview(_outlineRect!, aboveSubview: _proposalRect!)
+                _outlineRect!.layer.cornerRadius = CardView.rounding
+                _outlineRect!.layer.borderColor = UIColor(white: 1, alpha: 0.5).CGColor
+                _outlineRect!.layer.borderWidth = 1.5
+            }
             _proposalRect!.frame = proposedFrameForView(v)
+            _outlineRect!.frame = v.frame
         } else {
             _proposalRect?.removeFromSuperview()
             _proposalRect = nil
+            _outlineRect?.removeFromSuperview()
+            _outlineRect = nil
         }
     }
     
@@ -159,7 +172,7 @@ class CardView: UIView {
         bringSubviewToFront(drawingView)
         
         for item in items {
-            if !item.dragging {
+            if item != editingItem {
                 let x = CardItemView.Alignment.fromValues(0, itemMin: item.frame.origin.x, itemMax: item.frame.right, containerMax: bounds.width)
                 let y = CardItemView.Alignment.fromValues(0, itemMin: item.frame.origin.y, itemMax: item.frame.bottom, containerMax: bounds.height)
                 item.alignment = (x: x, y: y)
@@ -241,6 +254,97 @@ class CardView: UIView {
                     return d
                 }
             }
+            return nil
+        }
+    }
+    
+    // MARK: Gestures
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        let result = super.hitTest(point, withEvent: event)
+        if (result as? CardItemView) != nil && !(result as! CardItemView).acceptsTouches() {
+            return self // ignore the individual item
+        }
+        return result
+    }
+    var editingItem: CardItemView? {
+        didSet {
+            showProposalRectForView(editingItem)
+        }
+    }
+    var _prevTouchRect: CGRect?
+    func _nearestItemToPoint(point: CGPoint) -> CardItemView? {
+        let smallestDist = items.map({ $0.frame.distanceFromPoint(point) }).reduce(99999, combine: { $0 < $1 ? $0 : $1 })
+        return items.filter({ $0.frame.distanceFromPoint(point) == smallestDist }).first
+    }
+    var _touchesDown = Set<UITouch>()
+    var _tapStartPos: CGPoint?
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if _touchesDown.count == 0 {
+            if let item = _nearestItemToPoint(touches.first!.locationInView(self)) where item.templateEditMode {
+                editingItem = _nearestItemToPoint(touches.first!.locationInView(self))
+            }
+            _tapStartPos = touches.first!.locationInView(self)
+        } else {
+            _tapStartPos = nil
+        }
+        for t in touches { _touchesDown.insert(t) }
+        _prevTouchRect = boundingRectOfTouches(_touchesDown)
+    }
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touchRect = boundingRectOfTouches(_touchesDown)
+        if _tapStartPos != nil && (_tapStartPos! - touches.first!.locationInView(self)).magnitude > 5 {
+            _tapStartPos = nil // we've moved too much; no tap
+        }
+        if let prev = _prevTouchRect {
+            let dx = touchRect.center.x - prev.center.x
+            let dy = touchRect.center.y - prev.center.y
+            let dw = touchRect.size.width - prev.size.width
+            let dh = touchRect.size.height - prev.size.height
+            if let item = editingItem {
+                let newCenter = CGPointMake(item.center.x + dx, item.center.y + dy)
+                let newSize = CGSizeMake(item.bounds.size.width + dw, item.bounds.size.height + dh)
+                item.frame = CGRectMake(newCenter.x - newSize.width/2, newCenter.y - newSize.height/2, newSize.width, newSize.height)
+                showProposalRectForView(item)
+            }
+        }
+        _prevTouchRect = touchRect
+    }
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        for t in touches { _touchesDown.remove(t) }
+        _prevTouchRect = boundingRectOfTouches(_touchesDown)
+        if _touchesDown.count == 0 {
+            if let item = editingItem {
+                if CGRectIntersectsRect(item.frame, bounds) {
+                    item.frame = proposedFrameForView(item)
+                } else {
+                    item.removeFromSuperview() // remove item
+                }
+            }
+            if let pos = _tapStartPos, let tappedItem = _nearestItemToPoint(pos) {
+                tappedItem.tapped()
+            }
+            editingItem = nil
+        }
+        setNeedsLayout()
+    }
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        touchesEnded(touches ?? Set<UITouch>(), withEvent: event)
+    }
+}
+
+extension UIView {
+    func boundingRectOfTouches(touches: Set<UITouch>) -> CGRect! {
+        let positions = touches.map({ $0.locationInView(self) })
+        if var minPt = positions.first {
+            var maxPt = minPt
+            for pos in positions {
+                minPt.x = min(minPt.x, pos.x)
+                minPt.y = min(minPt.y, pos.y)
+                maxPt.x = max(maxPt.x, pos.x)
+                maxPt.y = max(maxPt.y, pos.y)
+            }
+            return CGRectMake(minPt.x, minPt.y, maxPt.x - minPt.x, maxPt.y - minPt.y)
+        } else {
             return nil
         }
     }
