@@ -24,7 +24,8 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
         (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing = lineSpacing
     }
     
-    let lineSpacing: CGFloat = 10
+    static let LineSpacing: CGFloat = 10
+    let lineSpacing: CGFloat = CardFeedViewController.LineSpacing
     
     var rows = [RowModel]() {
         didSet(oldRows) {
@@ -137,29 +138,21 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Card", forIndexPath: indexPath) as! CardCell
             cell.card = (id: id, hashtag: hashtag)
             return cell
-        case .Caption(text: let text, action: _):
+        case .Caption(text: let text, action: let action):
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Text", forIndexPath: indexPath) as! TextCell
             cell.label.attributedText = text
+            cell.onTap = action
             return cell
-        case .Description(text: let text, action: _):
+        case .Description(text: let text, action: let action):
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Description", forIndexPath: indexPath) as! DescriptionCell
             cell.label.attributedText = text
+            cell.onTap = action
             return cell
         }
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        switch _rows[indexPath.item] {
-        case .Caption(text: _, action: let actionOpt):
-            if let a = actionOpt {
-                a()
-            }
-        case .Description(text: _, action: let actionOpt):
-            if let a = actionOpt {
-                a()
-            }
-        default: ()
-        }
+        
     }
     // MARK: Convenience
     func cellForCardWithID(id: String) -> CardCell? {

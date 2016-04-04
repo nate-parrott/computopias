@@ -75,11 +75,20 @@ class TextCell: UICollectionViewCell {
             label.textColor = UIColor.blackColor()
             label.alpha = 0.8
             label.numberOfLines = 0
+            let tapRec = UITapGestureRecognizer(target: self, action: #selector(TextCell._tapped))
+            addGestureRecognizer(tapRec)
         }
     }
     override func layoutSubviews() {
         super.layoutSubviews()
         label.frame = CGRectMake((bounds.size.width - CardView.CardSize.width)/2, 0, CardView.CardSize.width, bounds.size.height)
+    }
+    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+        return super.pointInside(point, withEvent: event) || CGRectContainsPoint(CGRectInset(bounds, -CardFeedViewController.LineSpacing, -CardFeedViewController.LineSpacing), point)
+    }
+    var onTap: (() -> ())?
+    func _tapped() {
+        if let t = onTap { t() }
     }
 }
 
@@ -96,6 +105,9 @@ class DescriptionCell: UICollectionViewCell {
             label.textAlignment = NSTextAlignment.Left
             label.textColor = UIColor.blackColor()
             label.numberOfLines = 0
+            
+            let tapRec = UITapGestureRecognizer(target: self, action: #selector(TextCell._tapped))
+            addGestureRecognizer(tapRec)
         }
     }
     static let VerticalPadding: CGFloat = 10
@@ -105,5 +117,9 @@ class DescriptionCell: UICollectionViewCell {
         let top: CGFloat = 100
         bg.frame = CGRectMake(0, -top, bounds.size.width, bounds.size.height + top)
         label.frame = CGRectMake(DescriptionCell.HorizontalPadding, 0, bounds.size.width - DescriptionCell.HorizontalPadding * 2, bounds.size.height - DescriptionCell.VerticalPadding)
+    }
+    var onTap: (() -> ())?
+    func _tapped() {
+        if let t = onTap { t() }
     }
 }
