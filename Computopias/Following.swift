@@ -29,11 +29,15 @@ extension Data {
         var d = data
         d["negativeDate"] = -NSDate().timeIntervalSince1970
         d["following"] = ofItem
-        // fetch followers:
-        firebase.childByAppendingPath("followers").childByAppendingPath(ofItem).observeSingleEventOfType(.Value) { (let snapshot: FDataSnapshot!) in
-            for child in snapshot.children {
-                let inboxID = (child as! FDataSnapshot).key
-                firebase.childByAppendingPath("inboxes").childByAppendingPath(inboxID).childByAutoId().setValue(d)
+        if ofItem == "all" {
+            Data.firebase.childByAppendingPath("inboxes").childByAppendingPath("all").childByAutoId().setValue(d)
+        } else {
+            // fetch followers:
+            firebase.childByAppendingPath("followers").childByAppendingPath(ofItem).observeSingleEventOfType(.Value) { (let snapshot: FDataSnapshot!) in
+                for child in snapshot.children {
+                    let inboxID = (child as! FDataSnapshot).key
+                    firebase.childByAppendingPath("inboxes").childByAppendingPath(inboxID).childByAutoId().setValue(d)
+                }
             }
         }
     }
