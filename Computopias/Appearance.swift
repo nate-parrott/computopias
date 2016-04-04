@@ -17,8 +17,9 @@ struct Appearance {
         return colors[abs(hashtag.hash) % colors.count]
     }*/
     
-    static func gradientForHashtag(hashtag: String) -> UIImage {
-        return gradients[abs(hashtag.hash) % gradients.count]
+    static func gradientForHashtag(hashtag: String, cardID: String?) -> UIImage {
+        let key = hashtag + "/" + (cardID ?? "")
+        return gradients[abs(key.hash) % gradients.count]
     }
     
     static let transparentWhite = UIColor(white: 1, alpha: 0.3)

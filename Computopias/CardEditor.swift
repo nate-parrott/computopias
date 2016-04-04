@@ -23,7 +23,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cardView.backgroundImageView.image = Appearance.gradientForHashtag(hashtag)
+        cardView.backgroundImageView.image = Appearance.gradientForHashtag(hashtag, cardID: nil)
         view.tintColor = cardView.backgroundColor
         collectionView.hidden = true
         if let t = template {

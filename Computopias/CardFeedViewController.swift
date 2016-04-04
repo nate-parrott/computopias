@@ -19,6 +19,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
         collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: "Card")
         collectionView.registerClass(TextCell.self, forCellWithReuseIdentifier: "Text")
         collectionView.registerClass(DescriptionCell.self, forCellWithReuseIdentifier: "Description")
+        collectionView.registerClass(ButtonFeedCell.self, forCellWithReuseIdentifier: "ButtonFeedCell")
         
         (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInset = UIEdgeInsetsMake(lineSpacing, 0, 0, 0)
         (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing = lineSpacing
@@ -97,6 +98,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
     enum RowModel: Equatable {
         case Card(id: String, hashtag: String?)
         case Caption(text: NSAttributedString, action: (() -> ())?)
+        case ButtonCell(text: NSAttributedString, action: (() -> ())?, buttons: [(String, () -> ())])
         case Description(text: NSAttributedString, action: (() -> ())?)
         
         func sizeForWidth(width: CGFloat) -> CGSize {
@@ -109,6 +111,10 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
             case .Description(text: let text, _):
                 let height = text.boundingRectWithSize(CGSizeMake(width, 500), options: [.UsesLineFragmentOrigin], context: nil).size.height
                 return CGSizeMake(width, height + DescriptionCell.VerticalPadding)
+            case .ButtonCell(text: let text, action: _, buttons: let buttons):
+                let width = CardView.CardSize.width - CGFloat(buttons.count) * ButtonFeedCell.ButtonSize.width
+                let textHeight = text.boundingRectWithSize(CGSizeMake(width, 500), options: [.UsesLineFragmentOrigin], context: nil).size.height
+                return CGSizeMake(CardView.CardSize.width, max(ButtonFeedCell.ButtonSize.height, textHeight))
             }
         }
     }
@@ -169,6 +175,11 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Description", forIndexPath: indexPath) as! DescriptionCell
             cell.label.attributedText = text
             cell.onTap = action
+            return cell
+        case .ButtonCell(text: let text, action: let action, buttons: let buttons):
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ButtonFeedCell", forIndexPath: indexPath) as! ButtonFeedCell
+            cell.value = (text, buttons)
+            cell.tapAction = action
             return cell
         }
     }

@@ -127,6 +127,8 @@ class FriendFeedViewController: CardFeedViewController {
                 r.append(RowModel.Caption(text: NSAttributedString.smallText("No friends 😕"), action: nil))
             }
         }
+        /*let null: (() -> ()) = { }
+        r.insert(RowModel.ButtonCell(text: NSAttributedString.smallBoldText("Justin") + NSAttributedString.smallText(" followed you."), action: nil, buttons: [("FOLLOW", null), ("DISMISS", null)]), atIndex: 0)*/
         rows = r
     }
     
