@@ -36,6 +36,7 @@
 		5FB976BD1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976BC1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m */; };
 		5FB976BF1CB1A5B200B92A16 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976BE1CB1A5B200B92A16 /* CreateGroupViewController.swift */; };
 		5FB976C21CB1C83100B92A16 /* Phony.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976C11CB1C83100B92A16 /* Phony.m */; };
+		5FB976C61CB247D400B92A16 /* GroupEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976C51CB247D400B92A16 /* GroupEditor.swift */; };
 		5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7A1CA2795100E6F5F7 /* Route.swift */; };
 		5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
@@ -105,6 +106,7 @@
 		5FB976BE1CB1A5B200B92A16 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		5FB976C01CB1C83100B92A16 /* Phony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Phony.h; sourceTree = "<group>"; };
 		5FB976C11CB1C83100B92A16 /* Phony.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Phony.m; sourceTree = "<group>"; };
+		5FB976C51CB247D400B92A16 /* GroupEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupEditor.swift; sourceTree = "<group>"; };
 		5FC84B7A1CA2795100E6F5F7 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCardItemView.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				5FD360431CA9457A0016D837 /* OnboardingViewController.swift */,
 				5FD360661CADFAD30016D837 /* ActivityFeedViewController.swift */,
 				5FB976BE1CB1A5B200B92A16 /* CreateGroupViewController.swift */,
+				5FB976C51CB247D400B92A16 /* GroupEditor.swift */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				5FB976BF1CB1A5B200B92A16 /* CreateGroupViewController.swift in Sources */,
 				5FB2F2511CA217CF001863C4 /* KeyboardAvoidance.swift in Sources */,
 				5FD360631CACECD50016D837 /* StarRatingCardItemView.swift in Sources */,
+				5FB976C61CB247D400B92A16 /* GroupEditor.swift in Sources */,
 				5FD3604E1CAB7A9A0016D837 /* FlipbookCardItemView.swift in Sources */,
 				5F70983C1CA11C5C00B499BC /* CGMath.swift in Sources */,
 				5FD360311CA355700016D837 /* SoundCardItemView.swift in Sources */,

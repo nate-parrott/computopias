@@ -27,6 +27,23 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
     static let LineSpacing: CGFloat = 10
     let lineSpacing: CGFloat = CardFeedViewController.LineSpacing
     
+    var _timeViewAppeared: CFAbsoluteTime?
+    var _viewAppearedVeryRecently: Bool {
+        get {
+            let THRESHOLD: CFAbsoluteTime = 1
+            if let t = _timeViewAppeared {
+                return CFAbsoluteTimeGetCurrent() - t < THRESHOLD
+            } else {
+                return false
+            }
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        _timeViewAppeared = CFAbsoluteTimeGetCurrent()
+    }
+    
     var rows = [RowModel]() {
         didSet(oldRows) {
             loadViewIfNeeded()
@@ -36,7 +53,9 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
                 currentPosition = (_rows[i], collectionView.contentOffset.y - scrollOffsetForRowAtIndex(i, rows: _rows))
             }
             
-            if isViewLoaded() {
+            let shouldAnimate = visible && !_viewAppearedVeryRecently
+            
+            if shouldAnimate {
                 let changes = Diff.OrderActionsDeletionsFirst(Diff.Compute(rows, oldSeq: oldRows))
                 if changes.count > 0 {
                     UIView.animateWithDuration(0.3, animations: {
@@ -53,7 +72,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
                                     self.collectionView.deleteItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
                                 }
                             }
-                            if let (row, offset) = currentPosition {
+                            if let (row, offset) = currentPosition where !self.collectionView.isAtTop {
                                 if let index = self.rows.indexOf({ $0 == row }) {
                                     self.collectionView.contentOffset = CGPointMake(0, self.scrollOffsetForRowAtIndex(index, rows: self.rows) + offset)
                                 }
@@ -67,6 +86,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
                 }
             } else {
                 _rows = rows
+                collectionView.reloadData()
             }
         }
     }

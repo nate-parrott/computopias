@@ -34,6 +34,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    var navController: UINavigationController {
+        get {
+            return window!.rootViewController as! UINavigationController
+        }
+    }
+    
+    static var Shared: AppDelegate {
+        get {
+            return UIApplication.sharedApplication().delegate as! AppDelegate
+        }
+    }
+    
     var _window: CMWindow?
     var window: UIWindow? {
         get {

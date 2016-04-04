@@ -157,13 +157,15 @@ class HashtagViewController: CardFeedViewController {
     var _ownersSub: Subscription?
     func _updateGroupInfo() {
         let text = NSMutableAttributedString()
+        let colon = (hashtagDescription ?? "") != "" ? ":" : ""
         if ownerIsSelf ?? false {
-            text.appendAttributedString(NSAttributedString.smallText("Created by you (") + NSAttributedString.smallUnderlinedText("edit") + NSAttributedString.smallText(")"))
+            text.appendAttributedString(NSAttributedString.smallText("Created by you (") + NSAttributedString.smallUnderlinedText("edit") + NSAttributedString.smallText(")" + colon))
         } else if let n = ownerName {
-            text.appendAttributedString(NSAttributedString.smallText("Created by \(n):"))
+            text.appendAttributedString(NSAttributedString.smallText("Created by \(n)" + colon))
         }
-        if let desc = hashtagDescription {
-            text.appendAttributedString(NSAttributedString.smallText(desc))
+        if let desc = hashtagDescription where desc != "" {
+            let trimmed = desc.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            text.appendAttributedString(NSAttributedString.smallText("\n" + trimmed))
         }
         groupInfoRow = RowModel.Description(text: text, action: {
             [weak self] in
@@ -179,7 +181,10 @@ class HashtagViewController: CardFeedViewController {
     
     @IBAction func editGroupInfo() {
         if ownerIsSelf ?? false {
-            // TODO
+            let editor = storyboard!.instantiateViewControllerWithIdentifier("GroupEditor") as! GroupEditor
+            editor.hashtag = hashtag
+            let nav = UINavigationController(rootViewController: editor)
+            presentViewController(nav, animated: true, completion: nil)
         }
     }
 }

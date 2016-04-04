@@ -42,6 +42,8 @@ class CommentsViewController: JSQMessagesViewController {
             }
             })
         
+        title = "Comments"
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(CommentsViewController.dismiss))
         
         inputToolbar.contentView.leftBarButtonItem = nil

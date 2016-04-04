@@ -9,8 +9,10 @@
 import UIKit
 
 extension UICollectionView {
-    func updateRows(newRows: [CardFeedViewController.RowModel], oldRows: [CardFeedViewController.RowModel]) {
-        
+    var isAtTop: Bool {
+        get {
+            return contentOffset.y == -contentInset.top
+        }
     }
 }
 
