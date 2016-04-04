@@ -98,11 +98,12 @@ class DescriptionCell: UICollectionViewCell {
             label.numberOfLines = 0
         }
     }
-    static let Padding: CGFloat = 20
+    static let VerticalPadding: CGFloat = 10
+    static let HorizontalPadding: CGFloat = 10
     override func layoutSubviews() {
         super.layoutSubviews()
         let top: CGFloat = 100
         bg.frame = CGRectMake(0, -top, bounds.size.width, bounds.size.height + top)
-        label.frame = CGRectMake(DescriptionCell.Padding, DescriptionCell.Padding, bounds.size.width - DescriptionCell.Padding * 2, bounds.size.height - DescriptionCell.Padding * 2)
+        label.frame = CGRectMake(DescriptionCell.HorizontalPadding, 0, bounds.size.width - DescriptionCell.HorizontalPadding * 2, bounds.size.height - DescriptionCell.VerticalPadding)
     }
 }

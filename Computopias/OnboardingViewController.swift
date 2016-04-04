@@ -18,23 +18,18 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func verifyPhone(sender: AnyObject) {
         phoneState = .InProgress
-        let a = UIAlertController(title: nil, message: "what's your phone number", preferredStyle: .Alert)
-        a.addTextFieldWithConfigurationHandler { (let f) in
-            f.keyboardType = .PhonePad
-        }
-        a.addAction(UIAlertAction(title: "Done", style: .Default, handler: { (_) in
-            if let t = a.textFields?.first?.text where t != "" {
-                self.phoneState = .Success(number: t)
+        Phony.sharedPhony().verifyPhoneNumber { (let phoneNumberOpt, let firebaseTokenOpt, let errorOpt) in
+            if let phone = phoneNumberOpt, let firebaseToken = firebaseTokenOpt {
+                self.phoneState = .Success(number: phone, firebaseToken: firebaseToken)
             } else {
-                self.phoneState = .Error(err: nil)
+                self.phoneState = .Error(err: errorOpt)
             }
-        }))
-        presentViewController(a, animated: true, completion: nil)
+        }
     }
     
     @IBAction func done(sender: AnyObject) {
         loginInProgress = true
-        Data.logIn(phoneState.number!) { (let success) in
+        Data.logIn(phoneState.number!, firebaseToken: phoneState.firebaseToken!) { (let success) in
             if success {
                 Data.setName(self.nameField.text!)
                 self.dismissViewControllerAnimated(true, completion: nil)
@@ -75,11 +70,19 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         case None
         case InProgress
         case Error(err: NSError?)
-        case Success(number: String)
+        case Success(number: String, firebaseToken: String)
         var number: String? {
             get {
                 switch self {
-                case .Success(number: let n): return n.normalizedPhone
+                case .Success(number: let n, firebaseToken: _): return n.normalizedPhone
+                default: return nil
+                }
+            }
+        }
+        var firebaseToken: String? {
+            get {
+                switch self {
+                case .Success(number: _, firebaseToken: let t): return t
                 default: return nil
                 }
             }
@@ -119,7 +122,7 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             phoneButtonText = "Verifying…"
         case .Error(err: _):
             phoneButtonText = "Error 🙀 Try again?"
-        case .Success(number: let n):
+        case .Success(number: let n, firebaseToken: _):
             phoneButtonText = "Hi, \(n)!"
         default: ()
         }
@@ -139,5 +142,9 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
     
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    override func preferredSoftModalPosition() -> CGPoint {
+        return CGPointMake(0.5, 0.25)
     }
 }

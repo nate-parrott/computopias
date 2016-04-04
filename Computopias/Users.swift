@@ -34,8 +34,8 @@ extension Data {
         return (salt + n).MD5String()
     }
     
-    static func logIn(phone: String, callback: Bool -> ()) {
-        firebase.authCreatingUserIfNecessary(phone, password: "password") { (let authDataOpt) in
+    static func logIn(phone: String, firebaseToken: String, callback: Bool -> ()) {
+        firebase.authWithCustomToken(firebaseToken) { (_, let authDataOpt) in
             if authDataOpt != nil {
                 NSUserDefaults.standardUserDefaults().setValue(phone, forKey: "Phone")
                 

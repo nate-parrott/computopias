@@ -123,7 +123,10 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
     override func frameOfPresentedViewInContainerView() -> CGRect {
         let bounds = containerView!.bounds
         let size = presentedViewController.preferredSizeForSoftModalInBounds(bounds)
-        return CGRectIntegral(CGRectMake((bounds.size.width - size.width)/2, (bounds.size.height - size.height)/2, size.width, size.height))
+        let preferredCenter = presentedViewController.preferredSoftModalPosition()
+        let origin = CGPointMake((bounds.size.width - size.width) * preferredCenter.x, (bounds.size.height - size.height) * preferredCenter.y)
+        return CGRectMake(round(origin.x), round(origin.y), round(size.width), round(size.height))
+        // return CGRectIntegral(CGRectMake((bounds.size.width - size.width)/2, (bounds.size.height - size.height)/2, size.width, size.height))
     }
     override func shouldRemovePresentersView() -> Bool {
         return false
@@ -180,5 +183,8 @@ extension UIViewController {
     }
     func allowUserToDismissSoftModal() -> Bool {
         return true
+    }
+    func preferredSoftModalPosition() -> CGPoint {
+        return CGPointMake(0.5, 0.5)
     }
 }

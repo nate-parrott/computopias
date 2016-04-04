@@ -35,6 +35,7 @@
 		5FB976BA1CAF292A00B92A16 /* Hashtags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976B91CAF292A00B92A16 /* Hashtags.swift */; };
 		5FB976BD1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976BC1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m */; };
 		5FB976BF1CB1A5B200B92A16 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976BE1CB1A5B200B92A16 /* CreateGroupViewController.swift */; };
+		5FB976C21CB1C83100B92A16 /* Phony.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976C11CB1C83100B92A16 /* Phony.m */; };
 		5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7A1CA2795100E6F5F7 /* Route.swift */; };
 		5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
@@ -102,6 +103,8 @@
 		5FB976BB1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+BorderedButton.h"; sourceTree = "<group>"; };
 		5FB976BC1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+BorderedButton.m"; sourceTree = "<group>"; };
 		5FB976BE1CB1A5B200B92A16 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
+		5FB976C01CB1C83100B92A16 /* Phony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Phony.h; sourceTree = "<group>"; };
+		5FB976C11CB1C83100B92A16 /* Phony.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Phony.m; sourceTree = "<group>"; };
 		5FC84B7A1CA2795100E6F5F7 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCardItemView.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
@@ -269,6 +272,8 @@
 				5FD3604F1CABA1DB0016D837 /* NSAttributedStringExtensions.swift */,
 				5FD360511CABB1690016D837 /* NSString+MD5.h */,
 				5FD360521CABB1690016D837 /* NSString+MD5.m */,
+				5FB976C01CB1C83100B92A16 /* Phony.h */,
+				5FB976C11CB1C83100B92A16 /* Phony.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -420,6 +425,7 @@
 				5FD360481CA9CF8D0016D837 /* NavigableViewController.swift in Sources */,
 				5F7098341CA0EF7E00B499BC /* CardFeedViewController.swift in Sources */,
 				5F7098321CA0EEE200B499BC /* Data.swift in Sources */,
+				5FB976C21CB1C83100B92A16 /* Phony.m in Sources */,
 				5FB2F2631CA257D2001863C4 /* CounterCardItemView.swift in Sources */,
 				5FD360691CAE16250016D837 /* UICollectionView+UpdateRows.swift in Sources */,
 				5FD3604A1CAB4FF10016D837 /* FriendFeedViewController.swift in Sources */,

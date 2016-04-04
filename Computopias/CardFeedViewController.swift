@@ -85,7 +85,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
                 return CGSizeMake(CardView.CardSize.width, height)
             case .Description(text: let text, _):
                 let height = text.boundingRectWithSize(CGSizeMake(width, 500), options: [.UsesLineFragmentOrigin], context: nil).size.height
-                return CGSizeMake(width, height + DescriptionCell.Padding * 2)
+                return CGSizeMake(width, height + DescriptionCell.VerticalPadding)
             }
         }
     }

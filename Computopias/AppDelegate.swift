@@ -12,7 +12,9 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-                
+        
+        Phony.initWithAppKey("YL8BDC2SGY8FC3A", secret: "UTL284BKZOHS04KJ9D6XKXO8NV11GQFGB96VZO8NDHWALTOC45TBD4EDH3M0")
+        
         srandom(UInt32(time(nil)))
         
         Appearance.setup()
