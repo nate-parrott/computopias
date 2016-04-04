@@ -36,28 +36,29 @@ extension Data {
         return (salt + n).MD5String()
     }
     
-    static func logIn(phone: String, firebaseToken: String, callback: Bool -> ()) {
+    static func logIn(phone: String, name: String, firebaseToken: String, callback: Bool -> ()) {
         firebase.authWithCustomToken(firebaseToken) { (_, let authDataOpt) in
             if authDataOpt != nil {
-                self._completeLogin(phone, callback: callback)
+                self._completeLogin(phone, name: name, callback: callback)
             } else {
                 callback(false)
             }
         }
     }
     
-    static func fakeLogin(phone: String, callback: Bool -> ()) {
+    static func fakeLogin(phone: String, name: String, callback: Bool -> ()) {
         firebase.authCreatingUserIfNecessary("fakePhone-" + phone, password: "password") { (let authDataOpt) in
             if authDataOpt != nil {
-                self._completeLogin(phone, callback: callback)
+                self._completeLogin(phone, name: name, callback: callback)
             } else {
                 callback(false)
             }
         }
     }
     
-    static func _completeLogin(phone: String, callback: Bool -> ()) {
+    static func _completeLogin(phone: String, name: String, callback: Bool -> ()) {
         NSUserDefaults.standardUserDefaults().setValue(phone, forKey: "Phone")
+        Data.setName(name)
         
         let userLocation = self.firebase.childByAppendingPath("users").childByAppendingPath(self.getUID())
         userLocation.childByAppendingPath("phoneHash").setValue(Data.hashPhoneNumber(phone))
@@ -65,8 +66,7 @@ extension Data {
         profileFirebase().observeSingleEventOfType(.Value, withBlock: { (let snapshot) in
             if snapshot.value === NSNull() {
                 // initialize the default card:
-                let defaultCard = ["width": CardView.CardSize.width, "height": CardView.CardSize.height, "items": [], "hashtag": "profiles", "poster": profileJson()]
-                profileFirebase().setValue(defaultCard)
+                self.createDefaultProfile(name)
             }
             // post-signup work:
             // follow self:
@@ -102,6 +102,17 @@ extension Data {
                 callback(nil)
             }
         }
+    }
+    
+    static func createDefaultProfile(name: String) {
+        var card = try! NSJSONSerialization.JSONObjectWithData(NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("DefaultProfile", ofType: "json")!)!, options: []) as! [String: AnyObject]
+        card["poster"] = profileJson()
+        var items = card["items"] as! [[String: AnyObject]]
+        items[0]["text"] = name
+        items[1]["chatID"] = NSUUID().UUIDString
+        items[2]["counterID"] = NSUUID().UUIDString
+        card["items"] = items
+        profileFirebase().setValue(card)
     }
 }
 

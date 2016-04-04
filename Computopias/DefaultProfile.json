@@ -1,0 +1,31 @@
+{
+  "hashtag" : "profiles",
+  "height" : "400.0",
+  "items" : [ {
+    "frame" : "{{50, 0}, {200, 50}}",
+    "staticLabel" : true,
+    "text" : "REPLACE",
+    "type" : "text"
+  }, {
+    "chatID" : "REPLACE",
+    "frame" : "{{0, 350}, {150, 50}}",
+    "type" : "comments"
+  }, {
+    "counterID" : "REPLACE",
+    "emoji" : "🌴",
+    "frame" : "{{150, 350}, {100, 50}}",
+    "type" : "counter"
+  }, {
+    "frame" : "{{250, 0}, {50, 50}}",
+    "type" : "drawing"
+  }, {
+    "frame" : "{{0, 50}, {300, 300}}",
+    "type" : "image",
+    "url" : "https://storage.googleapis.com/surfboard-services.appspot.com/c0a703e2269340fbb479f643bf64d1a8"
+  } ],
+  "poster" : {
+    "name" : "REPLACE",
+    "uid" : "REPLACE"
+  },
+  "width" : "300.0"
+}

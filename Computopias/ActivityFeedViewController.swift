@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ActivityFeedViewController: CardFeedViewController {
     override func startUpdating() {
@@ -17,17 +18,14 @@ class ActivityFeedViewController: CardFeedViewController {
                 self?._inboxUpdated(snapshot.childDictionaries)
             }
             })
-        // TODO: random posts
     }
     
     override func stopUpdating() {
         super.stopUpdating()
         _inboxSub = nil
-        _randomPostsSub = nil
     }
     
     var _inboxSub: Subscription?
-    var _randomPostsSub: Subscription?
     func _inboxUpdated(entries: [[String: AnyObject]]) {
         /*
          ASSEMBLING THE FEED:
@@ -41,6 +39,7 @@ class ActivityFeedViewController: CardFeedViewController {
         cardEntries.sortInPlace({ ($0["negativeDate"] as! Double) < ($1["negativeDate"] as! Double) })
 
         var cards = [[String: AnyObject]]()
+        cards = filterCardsByRecency(cards, maxAge: 48 * 24 * 60 * 60)
         var seenCardIDs = Set<String>()
         while cardEntries.count > 0 {
             var entriesForLater = [[String: AnyObject]]()
@@ -73,11 +72,18 @@ class ActivityFeedViewController: CardFeedViewController {
             cardEntries = entriesForLater
         }
         
+        _activityCards = cards
+    }
+    
+    override func createRowsForCardDicts(cardDicts: [[String : AnyObject]]) -> [CardFeedViewController.RowModel] {
+        var seenCardIDs = Set<String>()
+        
         var rows = [RowModel]()
-        for card in cards {
-            if let cardID = card["cardID"] as? String, let hashtag = card["hashtag"] as? String {
+        for card in cardDicts {
+            if let cardID = card["cardID"] as? String, let hashtag = card["hashtag"] as? String where !seenCardIDs.contains(cardID) {
+                seenCardIDs.insert(cardID)
                 let posterName = (card["poster"] as? [String: AnyObject])?["name"] as? String ?? "??"
-                let text = NSAttributedString.smallText("\(posterName) in ") + NSAttributedString.smallBoldText(hashtag)
+                let text = NSAttributedString.smallText("\(posterName) in ") + NSAttributedString.smallBoldText(hashtag + " ›")
                 rows.append(RowModel.Caption(text: text, action: {
                     [weak self] in
                     self?.navigate(Route.Hashtag(name: hashtag))
@@ -85,9 +91,22 @@ class ActivityFeedViewController: CardFeedViewController {
                 rows.append(RowModel.Card(id: cardID, hashtag: hashtag))
             }
         }
-        self.rows = rows
+        return rows
     }
     
+    func filterCardsByRecency(cards: [[String: AnyObject]], maxAge: NSTimeInterval) -> [[String: AnyObject]] {
+        let now = NSDate().timeIntervalSince1970
+        return cards.filter({
+            (let card) in
+            if let negativeDate = card["negativeDate"] as? NSTimeInterval {
+                let age = now - (-negativeDate)
+                return age < maxAge
+            } else {
+                return false
+            }
+        })
+    }
+        
     func _followedItemsFromInboxEntry(entry: [String: AnyObject]) -> [String] {
         var followedItemsForCard = [String]()
         if let card = entry["card"] as? [String: AnyObject] {
@@ -99,6 +118,11 @@ class ActivityFeedViewController: CardFeedViewController {
             }
         }
         return followedItemsForCard
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        _ensureRandomPosts()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -114,5 +138,39 @@ class ActivityFeedViewController: CardFeedViewController {
         get {
             return true
         }
+    }
+    
+    // MARK: Random posts
+    var _lastLoadedRandomPosts: CFAbsoluteTime?
+    func _ensureRandomPosts() {
+        let randomPostReloadInterval: CFAbsoluteTime = 60 * 5
+        if CFAbsoluteTimeGetCurrent() - (_lastLoadedRandomPosts ?? 0) > randomPostReloadInterval {
+            // reload random posts:
+            let query = Data.firebase.childByAppendingPath("inboxes").childByAppendingPath("all").queryOrderedByKey().queryLimitedToLast(30)
+            query.observeSingleEventOfType(.Value, withBlock: { [weak self] (let snapshot) in
+                var cards = [[String: AnyObject]]()
+                for entry in snapshot.childDictionaries {
+                    if let card = entry["card"] as? [String: AnyObject] {
+                        cards.append(card)
+                    }
+                }
+                self?._randomCards = cards
+            })
+        }
+    }
+    
+    // MARK: Cards and rows
+    var _activityCards = [[String: AnyObject]]() {
+        didSet {
+            _updateRows()
+        }
+    }
+    var _randomCards = [[String: AnyObject]]() {
+        didSet {
+            _updateRows()
+        }
+    }
+    func _updateRows() {
+        rows = createRowsForCardDicts(_activityCards + _randomCards)
     }
 }

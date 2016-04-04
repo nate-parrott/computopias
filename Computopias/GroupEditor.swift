@@ -52,4 +52,7 @@ class GroupEditor: UIViewController {
             Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("info").setValue(info)
         }
     }
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
 }

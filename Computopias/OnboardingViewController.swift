@@ -47,17 +47,16 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
         let callback = {
             (let success: Bool) in
             if success {
-                Data.setName(self.nameField.text!)
                 self.dismissViewControllerAnimated(true, completion: nil)
             } else {
                 self.loginInProgress = false
             }
         }
-        
+        let name = nameField.text!
         if phoneState.firebaseToken! == "FAKE" && Data.ALLOW_FAKE_LOGIN {
-            Data.fakeLogin(phoneState.number!, callback: callback)
+            Data.fakeLogin(phoneState.number!, name: name, callback: callback)
         } else {
-            Data.logIn(phoneState.number!, firebaseToken: phoneState.firebaseToken!, callback: callback)
+            Data.logIn(phoneState.number!, name: name, firebaseToken: phoneState.firebaseToken!, callback: callback)
         }
     }
     

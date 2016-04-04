@@ -284,7 +284,7 @@ class CardView: UIView {
     }
     var _prevTouchRect: CGRect?
     func _nearestItemToPoint(point: CGPoint) -> CardItemView? {
-        let smallestDist = items.map({ $0.frame.distanceFromPoint(point) }).reduce(99999, combine: { $0 < $1 ? $0 : $1 })
+        let smallestDist = items.reverse().map({ $0.frame.distanceFromPoint(point) }).reduce(99999, combine: { $0 < $1 ? $0 : $1 })
         return items.filter({ $0.frame.distanceFromPoint(point) == smallestDist }).first
     }
     var _touchesDown = Set<UITouch>()

@@ -38,6 +38,7 @@
 		5FB976C21CB1C83100B92A16 /* Phony.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976C11CB1C83100B92A16 /* Phony.m */; };
 		5FB976C61CB247D400B92A16 /* GroupEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976C51CB247D400B92A16 /* GroupEditor.swift */; };
 		5FB976C81CB24E3700B92A16 /* ResolvedCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976C71CB24E3700B92A16 /* ResolvedCardItemView.swift */; };
+		5FB976CA1CB30EFB00B92A16 /* DefaultProfile.json in Resources */ = {isa = PBXBuildFile; fileRef = 5FB976C91CB30EFB00B92A16 /* DefaultProfile.json */; };
 		5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7A1CA2795100E6F5F7 /* Route.swift */; };
 		5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
@@ -109,6 +110,7 @@
 		5FB976C11CB1C83100B92A16 /* Phony.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Phony.m; sourceTree = "<group>"; };
 		5FB976C51CB247D400B92A16 /* GroupEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupEditor.swift; sourceTree = "<group>"; };
 		5FB976C71CB24E3700B92A16 /* ResolvedCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolvedCardItemView.swift; sourceTree = "<group>"; };
+		5FB976C91CB30EFB00B92A16 /* DefaultProfile.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DefaultProfile.json; sourceTree = "<group>"; };
 		5FC84B7A1CA2795100E6F5F7 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCardItemView.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				5F70981F1CA0EDF600B499BC /* Main.storyboard */,
 				5F7098221CA0EDF600B499BC /* Assets.xcassets */,
 				5F7098241CA0EDF600B499BC /* LaunchScreen.storyboard */,
+				5FB976C91CB30EFB00B92A16 /* DefaultProfile.json */,
 				5F7098271CA0EDF600B499BC /* Info.plist */,
 				5FB2F25C1CA242FC001863C4 /* Computopias-Bridging-Header.h */,
 			);
@@ -355,6 +358,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FB976CA1CB30EFB00B92A16 /* DefaultProfile.json in Resources */,
 				5F7098261CA0EDF600B499BC /* LaunchScreen.storyboard in Resources */,
 				5F7098231CA0EDF600B499BC /* Assets.xcassets in Resources */,
 				5F7098211CA0EDF600B499BC /* Main.storyboard in Resources */,

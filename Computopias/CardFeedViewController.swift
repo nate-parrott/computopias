@@ -53,40 +53,42 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
                 currentPosition = (_rows[i], collectionView.contentOffset.y - scrollOffsetForRowAtIndex(i, rows: _rows))
             }
             
-            let shouldAnimate = visible && !_viewAppearedVeryRecently
-            
-            if shouldAnimate {
-                let changes = Diff.OrderActionsDeletionsFirst(Diff.Compute(rows, oldSeq: oldRows))
-                if changes.count > 0 {
-                    UIView.animateWithDuration(0.3, animations: {
-                        
-                        self.collectionView.performBatchUpdates({
-                            self._rows = self.rows
-                            for change in changes {
-                                switch change {
-                                case .Reload(let indices):
-                                    self.collectionView.reloadItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
-                                case .Insert(let indices):
-                                    self.collectionView.insertItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
-                                case .Delete(let indices):
-                                    self.collectionView.deleteItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
-                                }
+            let changes = Diff.OrderActionsDeletionsFirst(Diff.Compute(rows, oldSeq: oldRows))
+            if changes.count > 0 {
+                let performUpdates: (() -> ()) = {
+                    self.collectionView.performBatchUpdates({
+                        self._rows = self.rows
+                        for change in changes {
+                            switch change {
+                            case .Reload(let indices):
+                                self.collectionView.reloadItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
+                            case .Insert(let indices):
+                                self.collectionView.insertItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
+                            case .Delete(let indices):
+                                self.collectionView.deleteItemsAtIndexPaths(indices.map({ NSIndexPath(forItem: $0, inSection: 0) }))
                             }
-                            if let (row, offset) = currentPosition where !self.collectionView.isAtTop {
-                                if let index = self.rows.indexOf({ $0 == row }) {
-                                    self.collectionView.contentOffset = CGPointMake(0, self.scrollOffsetForRowAtIndex(index, rows: self.rows) + offset)
-                                }
+                        }
+                        if let (row, offset) = currentPosition where !self.collectionView.isAtTop {
+                            if let index = self.rows.indexOf({ $0 == row }) {
+                                self.collectionView.contentOffset = CGPointMake(0, self.scrollOffsetForRowAtIndex(index, rows: self.rows) + offset)
                             }
-                            }, completion: { (_) in
-                        })
-                        
+                        }
                         }, completion: { (_) in
-                            
                     })
                 }
-            } else {
-                _rows = rows
-                collectionView.reloadData()
+                
+                let animate = false
+                
+                if animate {
+                    UIView.animateWithDuration(0.3, animations: {
+                        performUpdates()
+                        }, completion: { (_) in
+                    })
+                } else {
+                    UIView.performWithoutAnimation({ 
+                        performUpdates()
+                    })
+                }
             }
         }
     }
@@ -195,7 +197,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
                 let date = dict["date"] as? Double {
                 
                 let dateString = NSDateFormatter.localizedStringFromDate(NSDate(timeIntervalSince1970: date), dateStyle: .ShortStyle, timeStyle: .ShortStyle)
-                let text = NSAttributedString.smallBoldText(posterName) + NSAttributedString.smallText(" on " + dateString)
+                let text = NSAttributedString.smallBoldText(posterName + " ›") + NSAttributedString.smallText(" on " + dateString)
                 let caption = RowModel.Caption(text: text, action: { 
                     [weak self] in
                     self?.navigate(Route.forProfile(posterId))
