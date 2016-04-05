@@ -203,7 +203,7 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
     }
     
     class func homeTabs() -> [(String, Route)] {
-        return [("Activity", Route.HashtagsList), ("Friends", Route.ProfilesList), ("New Group", Route.CreateGroup)]
+        return [("Activity", Route.HashtagsList), ("Friends", Route.ProfilesList), ("New Stack", Route.CreateGroup)]
     }
     
     // MARK: Memory warnings

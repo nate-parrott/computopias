@@ -12,7 +12,11 @@ import Firebase
 extension Data {
     static let LoginDidCompleteNotification = "LoginDidCompleteNotification"
     
+    #if arch(i386) || arch(x86_64)
+    static let ALLOW_FAKE_LOGIN = true
+    #else
     static let ALLOW_FAKE_LOGIN = false
+    #endif
     
     static func getName() -> String? {
         return NSUserDefaults.standardUserDefaults().valueForKey("Name") as? String

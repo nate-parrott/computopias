@@ -18,6 +18,8 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     @IBOutlet var cardView: CardView!
     @IBOutlet var collectionView: UICollectionView!
     
+    @IBOutlet var promptLabel: UILabel!
+    
     var onPost: ((CardID: String) -> ())?
     var onPrePost: (() -> ())?
     
@@ -26,7 +28,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         cardView.backgroundImageView.image = Appearance.gradientForHashtag(hashtag, cardID: nil)
         view.tintColor = cardView.backgroundColor
         collectionView.hidden = true
+        var prompt = ""
         if let t = template {
+            prompt = "New Post"
             // we already have a template, so don't allow editing it:
             cardView.importJson(t)
             for item in cardView.items {
@@ -34,6 +38,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                 item.prepareToEditWithExistingTemplate()
             }
         } else if let existing = existingContent {
+            prompt = "Edit Card"
             cardView.importJson(existing)
             let allowTemplateEditing = hashtag == "profiles"
             for item in cardView.items {
@@ -43,8 +48,10 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         } else {
             // we're building a new template; add initial content:
             // addItemView(ProfileCardItemView())
+            prompt = "First Post in #\(hashtag)"
             collectionView.hidden = false
         }
+        promptLabel.text = prompt
     }
     
     struct Item {
@@ -56,12 +63,13 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     let items: [Item] = [
         Item(title: "Label", image: UIImage(named: "label"), callback: { () -> CardItemView! in
             let l = TextCardItemView()
-            l.staticLabel = true
+            l.staticLabel = false
             return l
         }),
         Item(title: "Text", image: UIImage(named: "editable_text"), callback: { () -> CardItemView! in
             let l = TextCardItemView()
             l.staticLabel = false
+            l.backgrounded = true
             return l
         }),
         Item(title: "Image", image: UIImage(named: "image"), callback: { () -> CardItemView! in
@@ -215,6 +223,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         
         collectionView.contentInset = UIEdgeInsetsMake(padding, leftPadding, padding, padding)
     }
+    
 }
 
 class CardEditorItemCell: UICollectionViewCell {

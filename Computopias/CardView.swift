@@ -86,7 +86,7 @@ class CardView: UIView {
                 addSubview(drawingView)
             }
             
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "_hideIfBlocked", name: Data.BlockedUsersChangedNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardView._hideIfBlocked), name: Data.BlockedUsersChangedNotification, object: nil)
         }
     }
     
@@ -274,8 +274,12 @@ class CardView: UIView {
     // MARK: Gestures
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         let result = super.hitTest(point, withEvent: event)
-        if let v = result, let parent = _itemParentOfView(v) where !parent.acceptsTouches() {
-            return self // ignore the individual item
+        if let v = result, let parent = _itemParentOfView(v) {
+            if parent.isFirstResponder() || parent.acceptsTouches() {
+                return result
+            } else {
+                return self // ignore the individual item
+            }
         }
         return result
     }

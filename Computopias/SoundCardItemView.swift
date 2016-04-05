@@ -58,6 +58,8 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
         loader.stopAnimating()
         
         _updateText()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SoundCardItemView._menuWillHide), name: UIMenuControllerWillHideMenuNotification, object: UIMenuController.sharedMenuController())
     }
     
     deinit {
@@ -121,24 +123,42 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
     override func tapped() {
         super.tapped()
         if editMode {
-            becomeFirstResponder()
-            let menuController = UIMenuController.sharedMenuController()
-            
-            let recordAudioMenuItem = UIMenuItem(title: "Record", action: #selector(SoundCardItemView.recordAudio))
-            let clearAudioMenuItem = UIMenuItem(title: "Clear recording", action: #selector(SoundCardItemView.clearAudio))
-            let enableLoop = UIMenuItem(title: "Loop", action: #selector(SoundCardItemView.enableLoop))
-            let disableLoop = UIMenuItem(title: "✅ Loop", action: #selector(SoundCardItemView.disableLoop))
-            
-            menuController.menuItems = [recordAudioMenuItem, clearAudioMenuItem, enableLoop, disableLoop]
-            menuController.setTargetRect(bounds, inView: self)
-            menuController.setMenuVisible(true, animated: true)
+            delay(0.1, closure: {
+                let menuController = UIMenuController.sharedMenuController()
+                                
+                let recordAudioMenuItem = UIMenuItem(title: "Record", action: #selector(SoundCardItemView.recordAudio))
+                let clearAudioMenuItem = UIMenuItem(title: "Clear recording", action: #selector(SoundCardItemView.clearAudio))
+                let enableLoop = UIMenuItem(title: "Loop", action: #selector(SoundCardItemView.enableLoop))
+                let disableLoop = UIMenuItem(title: "✅ Loop", action: #selector(SoundCardItemView.disableLoop))
+                
+                menuController.setMenuVisible(false, animated: true)
+
+                self._menuLastShown = CFAbsoluteTimeGetCurrent()
+                self.becomeFirstResponder()
+                
+                menuController.menuItems = [recordAudioMenuItem, clearAudioMenuItem, enableLoop, disableLoop]
+                menuController.setTargetRect(self.bounds, inView: self)
+                menuController.setMenuVisible(true, animated: true)
+                
+            })
         }
         togglePlayback()
+    }
+    var _menuLastShown: CFAbsoluteTime?
+    func _menuWillHide(notif: NSNotification) {
+        if let m = _menuLastShown where CFAbsoluteTimeGetCurrent() - m < 1 {
+            let menu = notif.object as! UIMenuController
+            menu.menuVisible = true
+        }
     }
     // TODO: let people change the title?
     
     override func canBecomeFirstResponder() -> Bool {
         return true
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        return super.resignFirstResponder()
     }
     
     func recordAudio(sender: AnyObject) {
@@ -206,11 +226,15 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
     }
     func _tryPlay() {
         if let path = localFilePath, let player_ = try? AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path)) {
+            // play now:
+            _ = try? AVAudioSession.sharedInstance().setMode(AVAudioSessionCategoryPlayback)
+            _ = try? AVAudioSession.sharedInstance().setActive(true)
             player = player_
             player_.delegate = self
             player_.play()
             _shouldPlayWhenAvailable = false
         } else if let url_ = url {
+            // download, then play
             _shouldPlayWhenAvailable = true
             downloadTask = Assets.fetch(NSURL(string: url_)!, callback: { [weak self] (dataOpt: NSData?, errorOpt: NSError?) in
                 if let e = errorOpt {
@@ -232,6 +256,10 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
                     })
                 }
             })
+        } else {
+            // nothing to play
+            nowPlaying = false
+            _shouldPlayWhenAvailable = false
         }
     }
     var player: AVAudioPlayer?

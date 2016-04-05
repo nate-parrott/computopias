@@ -25,7 +25,7 @@ class GroupEditor: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(GroupEditor.dismiss))
-        title = "#\(hashtag) Settings"
+        title = "#\(hashtag) Stack Settings"
         automaticallyAdjustsScrollViewInsets = false
     }
     func dismiss() {

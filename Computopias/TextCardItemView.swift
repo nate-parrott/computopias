@@ -76,6 +76,12 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         }
     }
     
+    var backgrounded = false {
+        didSet {
+            _updateAppearance()
+        }
+    }
+    
     override var editMode: Bool {
         didSet {
             _updateAppearance()
@@ -83,13 +89,13 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     }
     
     func _updateAppearance() {
-        field.backgroundColor = staticLabel ? nil : Appearance.transparentWhite
-        field.font = staticLabel ? TextCardItemView.boldFont : TextCardItemView.font
+        field.backgroundColor = backgrounded ? Appearance.transparentWhite : nil
+        field.font = backgrounded ? TextCardItemView.font : TextCardItemView.boldFont
     }
     
     override var defaultSize: GridSize {
         get {
-            return CGSizeMake(staticLabel ? 2 : -1, 1)
+            return CGSizeMake(backgrounded ? -1 : 2, 1)
         }
     }
     
@@ -113,6 +119,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         j["type"] = "text"
         j["text"] = field.text ?? ""
         j["staticLabel"] = staticLabel
+        j["backgrounded"] = backgrounded
         return j
     }
     
@@ -120,6 +127,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         super.importJson(json)
         field.text = json["text"] as? String ?? ""
         staticLabel = json["staticLabel"] as? Bool ?? false
+        backgrounded = json["backgrounded"] as? Bool ?? !staticLabel
     }
     
     override var alignment: (x: CardItemView.Alignment, y: CardItemView.Alignment) {
