@@ -331,7 +331,7 @@ class CardView: UIView {
                     item.removeFromSuperview() // remove item
                 }
             }
-            if let pos = _tapStartPos, let tappedItem = _nearestItemToPoint(pos) {
+            if let pos = _tapStartPos, let tappedItem = _nearestItemToPoint(pos) where CGRectContainsPoint(tappedItem.frame, pos) {
                 tappedItem.tapped()
             }
             editingItem = nil

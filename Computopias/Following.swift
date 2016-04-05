@@ -21,7 +21,9 @@ extension Data {
         firebase.childByAppendingPath("following").childByAppendingPath(getUID()).childByAppendingPath(item).setValue(following ? true : nil)
         if isUser {
             userInfoFirebase().childByAppendingPath("following_users").childByAppendingPath(item).setValue(following ? true : nil)
-            firebase.childByAppendingPath("new_followers").childByAppendingPath(item).childByAppendingPath(getUID()!).setValue(following ? profileJson() : nil)
+            if item != getUID() {
+                firebase.childByAppendingPath("new_followers").childByAppendingPath(item).childByAppendingPath(getUID()!).setValue(following ? profileJson() : nil)
+            }
         }
     }
     
