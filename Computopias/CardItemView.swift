@@ -26,7 +26,7 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
     }
     
     func acceptsTouches() -> Bool {
-        return true
+        return false
     }
     
     var defaultSize: GridSize {

@@ -184,6 +184,7 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
             
             let radiusSize = min(view.bounds.size.width, view.bounds.size.height) * 0.8
             radiusView.bounds = CGRectMake(0, 0, radiusSize, radiusSize)
+            radiusView.layer.cornerRadius = radiusSize/2
             radiusView.center = view.bounds.center
         }
         override func viewWillDisappear(animated: Bool) {
