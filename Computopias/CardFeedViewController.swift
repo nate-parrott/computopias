@@ -227,6 +227,15 @@ func ==(m1: CardFeedViewController.RowModel, m2: CardFeedViewController.RowModel
         return id1 == id2 && tag1 == tag2
     case (.Caption(text: let text1, action: _), .Caption(text: let text2, action: _)):
         return text1 == text2
+    case (.Description(let text1, action: _), .Description(let text2, action: _)):
+        return text1 == text2
+    case (.ButtonCell(let title1, _, let buttons1), .ButtonCell(let title2, _, let buttons2)):
+        if title1 != title2 { return false }
+        if buttons1.count != buttons2.count { return false }
+        for ((b1, _), (b2, _)) in zip(buttons1, buttons2) {
+            if b1 == b2 { return false }
+        }
+        return true
     default:
         return false
     }

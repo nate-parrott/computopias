@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class FriendFeedViewController: CardFeedViewController {
     override func viewDidLoad() {
@@ -14,27 +15,31 @@ class FriendFeedViewController: CardFeedViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "addFriends"), style: .Plain, target: self, action: #selector(FriendFeedViewController.addFriends))
     }
     
+    // MARK: Subscriptions
+    var _newFollowersSub: Subscription?
+    var _friendsListSub: Subscription?
+    
     override func startUpdating() {
-        var rows = [RowModel]()
-        if let profile = Data.profileFirebase() {
-            let text = NSAttributedString.smallText("This is your profile. Try ") + NSAttributedString.smallUnderlinedText("editing it") + NSAttributedString.smallText(".")
-            rows.append(RowModel.Caption(text: text, action: {
-                [weak self] in
-                self?.cellForCardWithID(profile.key)?.cardView.editCard()
-                }))
-            rows.append(RowModel.Card(id: profile.key, hashtag: "profiles"))
-        }
-        self.selfProfileRows = rows
+        _selfProfile = Data.profileFirebase()
         
         if Data.getUID() != nil {
             _friendsListSub = Data.friendFeed().subscribe({ [weak self] (let friendIDs) in
-                self?.friendRows = friendIDs.filter({ $0 != Data.getUID() }).map({ CardFeedViewController.RowModel.Card(id: $0, hashtag: "profiles") })
-                })
+                self?._friendIDs = friendIDs
+            })
         }
+        
+        _newFollowersSub = Data.firebase.childByAppendingPath("new_followers").childByAppendingPath(Data.getUID()!).pusher.subscribe({ [weak self] (let dict) in
+            if let d = dict as? [String: AnyObject], let followers = Array<AnyObject>(d.values) as? [[String: AnyObject]] {
+                self?._newFollowers = followers
+            } else {
+                self?._newFollowers = []
+            }
+        })
     }
     
     override func stopUpdating() {
         _friendsListSub = nil
+        _newFollowersSub = nil
     }
     
     func addFriends() {
@@ -91,9 +96,18 @@ class FriendFeedViewController: CardFeedViewController {
         }
     }
     
-    // MARK: Friends
-    var _friendsListSub: Subscription?
-    var friendRows = [RowModel]() {
+    // MARK: Content
+    var _friendIDs = [String]() {
+        didSet {
+            _updateRows()
+        }
+    }
+    var _newFollowers = [[String: AnyObject]]() {
+        didSet {
+            _updateRows()
+        }
+    }
+    var _selfProfile: Firebase? {
         didSet {
             _updateRows()
         }
@@ -107,12 +121,12 @@ class FriendFeedViewController: CardFeedViewController {
     
     // MARK: Rows
     func _updateRows() {
-        var r = selfProfileRows
-        if friendRows.count > 0 {
-            let header = RowModel.Caption(text: NSAttributedString.smallText("People you follow"), action: nil)
-            r.append(header)
-            r += friendRows
-        } else {
+        rows = _createNewFollowersRows() + _createSelfProfileRows() + _createContactsSearchRows() + _createFriendRows()
+    }
+    
+    func _createContactsSearchRows() -> [RowModel] {
+        var r = [RowModel]()
+        if _friendIDs.count == 0 {
             // TODO: show contacts-syncing rows
             if _searchingContactsInProgress {
                 let row = RowModel.Caption(text: NSAttributedString.smallText("⏳ Searching for friends"), action: nil)
@@ -121,15 +135,62 @@ class FriendFeedViewController: CardFeedViewController {
                 let row = RowModel.Caption(text: NSAttributedString.smallText("No friends to show. ") + NSAttributedString.smallUnderlinedText("Search your contacts") + NSAttributedString.smallText(" for friends?"), action: {
                     [weak self] in
                     self?._doContactsSync()
-                })
+                    })
                 r.append(row)
             } else {
                 r.append(RowModel.Caption(text: NSAttributedString.smallText("No friends 😕"), action: nil))
             }
         }
-        /*let null: (() -> ()) = { }
-        r.insert(RowModel.ButtonCell(text: NSAttributedString.smallBoldText("Justin") + NSAttributedString.smallText(" followed you."), action: nil, buttons: [("FOLLOW", null), ("DISMISS", null)]), atIndex: 0)*/
-        rows = r
+        return r
+    }
+    
+    func _createNewFollowersRows() -> [RowModel] {
+        var r = [RowModel]()
+        for follower in _newFollowers {
+            if let uid = follower["uid"] as? String, let name = follower["name"] as? String {
+                let dismiss = {
+                    Data.firebase.childByAppendingPath("new_followers").childByAppendingPath(Data.getUID()!).childByAppendingPath(uid).setValue(nil)
+                }
+                let follow = { [weak self] in
+                    Data.setFollowing(uid, following: true, isUser: true)
+                    dismiss()
+                    self?.navigate(Route.forProfile(uid))
+                }
+                var buttons = [("Dismiss", dismiss)]
+                if !_friendIDs.contains(uid) {
+                    buttons = [("Follow", follow)] + buttons
+                }
+                let row = RowModel.ButtonCell(text: NSAttributedString.smallBoldText(name) + NSAttributedString.smallText(" followed you."), action: { [weak self] in
+                    self?.navigate(Route.forProfile(uid))
+                    }, buttons: buttons)
+                r.append(row)
+            }
+        }
+        return r
+    }
+    
+    func _createSelfProfileRows() -> [RowModel] {
+        if let profile = _selfProfile {
+            let text = NSAttributedString.smallText("This is your profile. Try ") + NSAttributedString.smallUnderlinedText("editing it") + NSAttributedString.smallText(".")
+            let caption = RowModel.Caption(text: text, action: {
+                [weak self] in
+                self?.cellForCardWithID(profile.key)?.cardView.editCard()
+            })
+            let profile = RowModel.Card(id: profile.key, hashtag: "profiles")
+            return [caption, profile]
+        } else {
+            return []
+        }
+    }
+    
+    func _createFriendRows() -> [RowModel] {
+        var r = [RowModel]()
+        if _friendIDs.count > 0 {
+            let header = RowModel.Caption(text: NSAttributedString.smallText("People you follow"), action: nil)
+            r.append(header)
+            r += _friendIDs.filter({ $0 != Data.getUID() }).map({ CardFeedViewController.RowModel.Card(id: $0, hashtag: "profiles") })
+        }
+        return r
     }
     
     // MARK: Misc.

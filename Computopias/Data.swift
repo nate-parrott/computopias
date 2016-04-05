@@ -67,6 +67,9 @@ dates are unix timestamps
  - card: cardJson
 [ also: inboxes/all ]
  
+/new_followers/<uid>/<new_follower_uid>
+    - userJson
+ 
 */
 
 import Foundation
