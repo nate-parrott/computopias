@@ -206,6 +206,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
                 let posterId = poster["uid"] as? String,
                 let hashtag = dict["hashtag"] as? String,
                 let date = dict["date"] as? Double {
+                if Data.userIsBlocked(posterId) { continue }
                 
                 let dateString = NSDateFormatter.localizedStringFromDate(NSDate(timeIntervalSince1970: date), dateStyle: .ShortStyle, timeStyle: .ShortStyle)
                 let text = NSAttributedString.smallBoldText(posterName + " ›") + NSAttributedString.smallText(" on " + dateString)

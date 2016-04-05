@@ -81,8 +81,12 @@ class ActivityFeedViewController: CardFeedViewController {
         var rows = [RowModel]()
         for card in cardDicts {
             if let cardID = card["cardID"] as? String, let hashtag = card["hashtag"] as? String where !seenCardIDs.contains(cardID) {
+                let posterDict = card["poster"] as? [String: AnyObject] ?? [String: AnyObject]()
+                let posterID = posterDict["uid"] as? String ?? ""
+                let posterName = posterDict["name"] as? String ?? ""
+                if Data.userIsBlocked(posterID) { continue }
+                
                 seenCardIDs.insert(cardID)
-                let posterName = (card["poster"] as? [String: AnyObject])?["name"] as? String ?? "??"
                 let text = NSAttributedString.smallText("\(posterName) in ") + NSAttributedString.smallBoldText(hashtag + " ›")
                 rows.append(RowModel.Caption(text: text, action: {
                     [weak self] in

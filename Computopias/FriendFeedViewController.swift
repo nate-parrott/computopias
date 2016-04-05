@@ -24,13 +24,13 @@ class FriendFeedViewController: CardFeedViewController {
         
         if Data.getUID() != nil {
             _friendsListSub = Data.friendFeed().subscribe({ [weak self] (let friendIDs) in
-                self?._friendIDs = friendIDs
+                self?._friendIDs = friendIDs.filter({ !Data.userIsBlocked($0) })
             })
         }
         
         _newFollowersSub = Data.firebase.childByAppendingPath("new_followers").childByAppendingPath(Data.getUID()!).pusher.subscribe({ [weak self] (let dict) in
             if let d = dict as? [String: AnyObject], let followers = Array<AnyObject>(d.values) as? [[String: AnyObject]] {
-                self?._newFollowers = followers
+                self?._newFollowers = followers.filter({ !Data.userIsBlocked($0["uid"] as? String ?? "") })
             } else {
                 self?._newFollowers = []
             }

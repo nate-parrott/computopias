@@ -13,6 +13,7 @@ class CardView: UIView {
     var cardFirebase: Firebase?
     var hashtag: String?
     var poster: String?
+    var posterName: String?
     
     let backgroundImageView = UIImageView()
     
@@ -35,8 +36,15 @@ class CardView: UIView {
             bounds = CGRectMake(0, 0, CGFloat(wf), CGFloat(hf))
         }*/
         
-        poster = (j["poster"] as? [String: AnyObject])?["uid"] as? String
-
+        if let posterDict = j["poster"] as? [String: AnyObject] {
+            poster = posterDict["uid"] as? String
+            posterName = posterDict["name"] as? String
+        }
+        
+        if let cardHashtag = j["hashtag"] as? String {
+            hashtag = cardHashtag
+        }
+        
         for item in items {
             item.removeFromSuperview()
         }
@@ -49,6 +57,8 @@ class CardView: UIView {
             }
         }
         drawingView.item = drawingItem
+        
+        _hideIfBlocked()
     }
     
     static let CardSize = CGSize(width: 300, height: 400)
@@ -76,7 +86,7 @@ class CardView: UIView {
                 addSubview(drawingView)
             }
             
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardView.setNeedsLayout), name: CMWindowGlobalTouchesEndedNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "_hideIfBlocked", name: Data.BlockedUsersChangedNotification, object: nil)
         }
     }
     
@@ -209,6 +219,9 @@ class CardView: UIView {
                 let link = Route.Card(hashtag: hashtag, id: key)
                 UIPasteboard.generalPasteboard().string = link.url.absoluteString
             }
+        }))
+        actions.addAction(UIAlertAction(title: "Flag or block", style: .Default, handler: { (let _) in
+            self.showFlagDialog()
         }))
         actions.addAction(UIAlertAction(title: "Never mind", style: .Cancel, handler: { (_) in
             

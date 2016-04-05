@@ -64,7 +64,8 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "NavHome"), style: .Plain, target: self, action: #selector(NavigableViewController.home))
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NavigableViewController._onLoggedIn), name: Data.LoginDidCompleteNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NavigableViewController._forceRefresh), name: Data.LoginDidCompleteNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NavigableViewController._forceRefresh), name: Data.BlockedUsersChangedNotification, object: nil)
     }
     
     var visible = false {
@@ -102,7 +103,7 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
     
     // Mark: Data observing
     
-    func _onLoggedIn() {
+    func _forceRefresh() {
         _updating = false
         _updating = visible && Data.getUID() != nil
     }
