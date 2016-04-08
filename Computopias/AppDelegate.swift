@@ -19,25 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Appearance.setup()
         
-        let nav = window!.rootViewController as! UINavigationController
-        nav.view.tintColor = Appearance.tint
+        window?.rootViewController?.view.tintColor = Appearance.tint
         
-        var defaultRoute = Data.lastHomeScreenShownWasFriendsList ? Route.ProfilesList : Route.HashtagsList
         if Data.getUID() == nil || Data.getPhone() == nil {
-            defaultRoute = Route.ProfilesList
             delay(0.5, closure: {
                 NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Onboarding"))
             })
         }
-        nav.viewControllers = [NavigableViewController.FromRoute(defaultRoute)]
         
         return true
-    }
-    
-    var navController: UINavigationController {
-        get {
-            return window!.rootViewController as! UINavigationController
-        }
     }
     
     static var Shared: AppDelegate {

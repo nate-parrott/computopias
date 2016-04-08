@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 
 class ActivityFeedViewController: CardFeedViewController {
+    
     override func startUpdating() {
         super.startUpdating()
         let q = Data.firebase.childByAppendingPath("inboxes").childByAppendingPath(Data.getUID()).queryOrderedByKey().queryLimitedToLast(80)

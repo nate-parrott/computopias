@@ -8,6 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		21141B7977D28E67D62F6732 /* Pods_Computopias.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F1389C7F54711D4F1B4F21 /* Pods_Computopias.framework */; };
+		5F29B49C1CB73E3F0060FFD7 /* CardNavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B49A1CB73E3F0060FFD7 /* CardNavigatorView.swift */; };
+		5F29B49D1CB73E3F0060FFD7 /* BlockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B49B1CB73E3F0060FFD7 /* BlockButton.swift */; };
+		5F29B4BB1CB73E830060FFD7 /* UIView+Elastic.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4A01CB73E830060FFD7 /* UIView+Elastic.m */; };
+		5F29B4BC1CB73E830060FFD7 /* UIView+ElasticLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4A21CB73E830060FFD7 /* UIView+ElasticLayout.m */; };
+		5F29B4BD1CB73E830060FFD7 /* ElasticValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4A41CB73E830060FFD7 /* ElasticValue.m */; };
+		5F29B4BE1CB73E830060FFD7 /* ElasticValueInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4A61CB73E830060FFD7 /* ElasticValueInput.m */; };
+		5F29B4BF1CB73E830060FFD7 /* ElasticReuseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4A81CB73E830060FFD7 /* ElasticReuseQueue.m */; };
+		5F29B4C01CB73E830060FFD7 /* ElasticRelativeLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4AA1CB73E830060FFD7 /* ElasticRelativeLayout.m */; };
+		5F29B4C11CB73E830060FFD7 /* UIGestureRecognizer+Elastic.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4AC1CB73E830060FFD7 /* UIGestureRecognizer+Elastic.m */; };
+		5F29B4C21CB73E830060FFD7 /* EVInterpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4AE1CB73E830060FFD7 /* EVInterpolation.m */; };
+		5F29B4C31CB73E830060FFD7 /* EVCATransform3DInterpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4B01CB73E830060FFD7 /* EVCATransform3DInterpolation.m */; };
+		5F29B4C41CB73E830060FFD7 /* EVCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4B21CB73E830060FFD7 /* EVCommon.m */; };
+		5F29B4C51CB73E830060FFD7 /* EVScrollViewWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4B41CB73E830060FFD7 /* EVScrollViewWrapper.m */; };
+		5F29B4C61CB73E830060FFD7 /* EVFakeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4B61CB73E830060FFD7 /* EVFakeData.m */; };
+		5F29B4C71CB73E830060FFD7 /* EVMotionEffectObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4B81CB73E830060FFD7 /* EVMotionEffectObserver.m */; };
+		5F29B4C81CB73E830060FFD7 /* EVComplexLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4BA1CB73E830060FFD7 /* EVComplexLayout.m */; };
+		5F29B4CC1CB73FE60060FFD7 /* CardNavigatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4CB1CB73FE60060FFD7 /* CardNavigatorViewController.swift */; };
+		5F508BFA1CB742ED005BF228 /* ActivityCardStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BF91CB742ED005BF228 /* ActivityCardStack.swift */; };
+		5F508BFC1CB74303005BF228 /* CardStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BFB1CB74303005BF228 /* CardStack.swift */; };
+		5F508BFE1CB743DC005BF228 /* ActivityFeedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */; };
+		5F508C021CB745D3005BF228 /* CardViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C011CB745D3005BF228 /* CardViewWrapper.swift */; };
+		5F508C041CB74715005BF228 /* CardFeedStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C031CB74715005BF228 /* CardFeedStack.swift */; };
+		5F508C061CB75F05005BF228 /* HashtagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C051CB75F05005BF228 /* HashtagListView.swift */; };
 		5F70981C1CA0EDF600B499BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F70981B1CA0EDF600B499BC /* AppDelegate.swift */; };
 		5F7098211CA0EDF600B499BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F70981F1CA0EDF600B499BC /* Main.storyboard */; };
 		5F7098231CA0EDF600B499BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7098221CA0EDF600B499BC /* Assets.xcassets */; };
@@ -76,6 +99,44 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F29B49A1CB73E3F0060FFD7 /* CardNavigatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNavigatorView.swift; sourceTree = "<group>"; };
+		5F29B49B1CB73E3F0060FFD7 /* BlockButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockButton.swift; sourceTree = "<group>"; };
+		5F29B49F1CB73E830060FFD7 /* UIView+Elastic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Elastic.h"; sourceTree = "<group>"; };
+		5F29B4A01CB73E830060FFD7 /* UIView+Elastic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Elastic.m"; sourceTree = "<group>"; };
+		5F29B4A11CB73E830060FFD7 /* UIView+ElasticLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ElasticLayout.h"; sourceTree = "<group>"; };
+		5F29B4A21CB73E830060FFD7 /* UIView+ElasticLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ElasticLayout.m"; sourceTree = "<group>"; };
+		5F29B4A31CB73E830060FFD7 /* ElasticValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElasticValue.h; sourceTree = "<group>"; };
+		5F29B4A41CB73E830060FFD7 /* ElasticValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElasticValue.m; sourceTree = "<group>"; };
+		5F29B4A51CB73E830060FFD7 /* ElasticValueInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElasticValueInput.h; sourceTree = "<group>"; };
+		5F29B4A61CB73E830060FFD7 /* ElasticValueInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElasticValueInput.m; sourceTree = "<group>"; };
+		5F29B4A71CB73E830060FFD7 /* ElasticReuseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElasticReuseQueue.h; sourceTree = "<group>"; };
+		5F29B4A81CB73E830060FFD7 /* ElasticReuseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElasticReuseQueue.m; sourceTree = "<group>"; };
+		5F29B4A91CB73E830060FFD7 /* ElasticRelativeLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElasticRelativeLayout.h; sourceTree = "<group>"; };
+		5F29B4AA1CB73E830060FFD7 /* ElasticRelativeLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElasticRelativeLayout.m; sourceTree = "<group>"; };
+		5F29B4AB1CB73E830060FFD7 /* UIGestureRecognizer+Elastic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+Elastic.h"; sourceTree = "<group>"; };
+		5F29B4AC1CB73E830060FFD7 /* UIGestureRecognizer+Elastic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+Elastic.m"; sourceTree = "<group>"; };
+		5F29B4AD1CB73E830060FFD7 /* EVInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVInterpolation.h; sourceTree = "<group>"; };
+		5F29B4AE1CB73E830060FFD7 /* EVInterpolation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVInterpolation.m; sourceTree = "<group>"; };
+		5F29B4AF1CB73E830060FFD7 /* EVCATransform3DInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCATransform3DInterpolation.h; sourceTree = "<group>"; };
+		5F29B4B01CB73E830060FFD7 /* EVCATransform3DInterpolation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCATransform3DInterpolation.m; sourceTree = "<group>"; };
+		5F29B4B11CB73E830060FFD7 /* EVCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCommon.h; sourceTree = "<group>"; };
+		5F29B4B21CB73E830060FFD7 /* EVCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCommon.m; sourceTree = "<group>"; };
+		5F29B4B31CB73E830060FFD7 /* EVScrollViewWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVScrollViewWrapper.h; sourceTree = "<group>"; };
+		5F29B4B41CB73E830060FFD7 /* EVScrollViewWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVScrollViewWrapper.m; sourceTree = "<group>"; };
+		5F29B4B51CB73E830060FFD7 /* EVFakeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVFakeData.h; sourceTree = "<group>"; };
+		5F29B4B61CB73E830060FFD7 /* EVFakeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVFakeData.m; sourceTree = "<group>"; };
+		5F29B4B71CB73E830060FFD7 /* EVMotionEffectObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVMotionEffectObserver.h; sourceTree = "<group>"; };
+		5F29B4B81CB73E830060FFD7 /* EVMotionEffectObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVMotionEffectObserver.m; sourceTree = "<group>"; };
+		5F29B4B91CB73E830060FFD7 /* EVComplexLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVComplexLayout.h; sourceTree = "<group>"; };
+		5F29B4BA1CB73E830060FFD7 /* EVComplexLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVComplexLayout.m; sourceTree = "<group>"; };
+		5F29B4CA1CB73EAA0060FFD7 /* Elastic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Elastic.h; sourceTree = "<group>"; };
+		5F29B4CB1CB73FE60060FFD7 /* CardNavigatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNavigatorViewController.swift; sourceTree = "<group>"; };
+		5F508BF91CB742ED005BF228 /* ActivityCardStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityCardStack.swift; sourceTree = "<group>"; };
+		5F508BFB1CB74303005BF228 /* CardStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardStack.swift; sourceTree = "<group>"; };
+		5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityFeedSource.swift; sourceTree = "<group>"; };
+		5F508C011CB745D3005BF228 /* CardViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewWrapper.swift; sourceTree = "<group>"; };
+		5F508C031CB74715005BF228 /* CardFeedStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFeedStack.swift; sourceTree = "<group>"; };
+		5F508C051CB75F05005BF228 /* HashtagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagListView.swift; sourceTree = "<group>"; };
 		5F7098181CA0EDF600B499BC /* Computopias.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Computopias.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F70981B1CA0EDF600B499BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F7098201CA0EDF600B499BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -173,6 +234,58 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5F29B49E1CB73E420060FFD7 /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				5F29B4CB1CB73FE60060FFD7 /* CardNavigatorViewController.swift */,
+				5F29B49A1CB73E3F0060FFD7 /* CardNavigatorView.swift */,
+				5F508BFB1CB74303005BF228 /* CardStack.swift */,
+				5F508C031CB74715005BF228 /* CardFeedStack.swift */,
+				5F508BF91CB742ED005BF228 /* ActivityCardStack.swift */,
+				5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */,
+				5F508C011CB745D3005BF228 /* CardViewWrapper.swift */,
+				5F508C051CB75F05005BF228 /* HashtagListView.swift */,
+			);
+			name = Cards;
+			sourceTree = "<group>";
+		};
+		5F29B4C91CB73E8A0060FFD7 /* Elastic */ = {
+			isa = PBXGroup;
+			children = (
+				5F29B49F1CB73E830060FFD7 /* UIView+Elastic.h */,
+				5F29B4A01CB73E830060FFD7 /* UIView+Elastic.m */,
+				5F29B4A11CB73E830060FFD7 /* UIView+ElasticLayout.h */,
+				5F29B4A21CB73E830060FFD7 /* UIView+ElasticLayout.m */,
+				5F29B4A31CB73E830060FFD7 /* ElasticValue.h */,
+				5F29B4A41CB73E830060FFD7 /* ElasticValue.m */,
+				5F29B4A51CB73E830060FFD7 /* ElasticValueInput.h */,
+				5F29B4A61CB73E830060FFD7 /* ElasticValueInput.m */,
+				5F29B4A71CB73E830060FFD7 /* ElasticReuseQueue.h */,
+				5F29B4A81CB73E830060FFD7 /* ElasticReuseQueue.m */,
+				5F29B4A91CB73E830060FFD7 /* ElasticRelativeLayout.h */,
+				5F29B4AA1CB73E830060FFD7 /* ElasticRelativeLayout.m */,
+				5F29B4AB1CB73E830060FFD7 /* UIGestureRecognizer+Elastic.h */,
+				5F29B4AC1CB73E830060FFD7 /* UIGestureRecognizer+Elastic.m */,
+				5F29B4AD1CB73E830060FFD7 /* EVInterpolation.h */,
+				5F29B4AE1CB73E830060FFD7 /* EVInterpolation.m */,
+				5F29B4AF1CB73E830060FFD7 /* EVCATransform3DInterpolation.h */,
+				5F29B4B01CB73E830060FFD7 /* EVCATransform3DInterpolation.m */,
+				5F29B4B11CB73E830060FFD7 /* EVCommon.h */,
+				5F29B4B21CB73E830060FFD7 /* EVCommon.m */,
+				5F29B4B31CB73E830060FFD7 /* EVScrollViewWrapper.h */,
+				5F29B4B41CB73E830060FFD7 /* EVScrollViewWrapper.m */,
+				5F29B4B51CB73E830060FFD7 /* EVFakeData.h */,
+				5F29B4B61CB73E830060FFD7 /* EVFakeData.m */,
+				5F29B4B71CB73E830060FFD7 /* EVMotionEffectObserver.h */,
+				5F29B4B81CB73E830060FFD7 /* EVMotionEffectObserver.m */,
+				5F29B4B91CB73E830060FFD7 /* EVComplexLayout.h */,
+				5F29B4BA1CB73E830060FFD7 /* EVComplexLayout.m */,
+				5F29B49B1CB73E3F0060FFD7 /* BlockButton.swift */,
+				5F29B4CA1CB73EAA0060FFD7 /* Elastic.h */,
+			);
+			name = Elastic;
+			sourceTree = "<group>";
+		};
 		5F70980F1CA0EDF600B499BC = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +315,7 @@
 				5FD360641CACFD9E0016D837 /* ContactsSync.swift */,
 				5FB976B91CAF292A00B92A16 /* Hashtags.swift */,
 				5FB976CB1CB42B6900B92A16 /* Flagging.swift */,
+				5F29B49E1CB73E420060FFD7 /* Cards */,
 				5FB2F2451CA20FB8001863C4 /* Screens */,
 				5FB2F2461CA20FC4001863C4 /* Card Items */,
 				5FB2F2471CA20FCB001863C4 /* Utils */,
@@ -264,6 +378,7 @@
 		5FB2F2471CA20FCB001863C4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5F29B4C91CB73E8A0060FFD7 /* Elastic */,
 				5FB976BB1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.h */,
 				5FB976BC1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m */,
 				5FD360581CAC70340016D837 /* Pusher.swift */,
@@ -444,44 +559,67 @@
 				5F7098341CA0EF7E00B499BC /* CardFeedViewController.swift in Sources */,
 				5F7098321CA0EEE200B499BC /* Data.swift in Sources */,
 				5FB976C21CB1C83100B92A16 /* Phony.m in Sources */,
+				5F29B4C51CB73E830060FFD7 /* EVScrollViewWrapper.m in Sources */,
+				5F508BFA1CB742ED005BF228 /* ActivityCardStack.swift in Sources */,
 				5FB2F2631CA257D2001863C4 /* CounterCardItemView.swift in Sources */,
 				5FD360691CAE16250016D837 /* UICollectionView+UpdateRows.swift in Sources */,
+				5F29B4C71CB73E830060FFD7 /* EVMotionEffectObserver.m in Sources */,
+				5F29B4BB1CB73E830060FFD7 /* UIView+Elastic.m in Sources */,
 				5FD3604A1CAB4FF10016D837 /* FriendFeedViewController.swift in Sources */,
 				5FD3604C1CAB7A850016D837 /* RandomContentCardItemView.swift in Sources */,
 				5FB2F2531CA2181C001863C4 /* ImageCardItemView.swift in Sources */,
+				5F29B4BF1CB73E830060FFD7 /* ElasticReuseQueue.m in Sources */,
+				5F29B4C21CB73E830060FFD7 /* EVInterpolation.m in Sources */,
 				5F70981C1CA0EDF600B499BC /* AppDelegate.swift in Sources */,
+				5F29B4C31CB73E830060FFD7 /* EVCATransform3DInterpolation.m in Sources */,
+				5F29B4C01CB73E830060FFD7 /* ElasticRelativeLayout.m in Sources */,
+				5F29B4BD1CB73E830060FFD7 /* ElasticValue.m in Sources */,
 				5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */,
 				5FB2F2591CA21E1C001863C4 /* String+Substring.swift in Sources */,
+				5F508C061CB75F05005BF228 /* HashtagListView.swift in Sources */,
 				5FB2F2611CA254D7001863C4 /* ProfileCardItemView.swift in Sources */,
 				5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */,
 				5FD360671CADFAD30016D837 /* ActivityFeedViewController.swift in Sources */,
+				5F508C021CB745D3005BF228 /* CardViewWrapper.swift in Sources */,
 				5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */,
 				5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */,
 				5FD360401CA72BED0016D837 /* CommentsCardItemView.swift in Sources */,
 				5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */,
+				5F29B4BE1CB73E830060FFD7 /* ElasticValueInput.m in Sources */,
 				5FD360531CABB1690016D837 /* NSString+MD5.m in Sources */,
 				5FB2F24F1CA217A2001863C4 /* UIImage+Resize.swift in Sources */,
+				5F29B4C81CB73E830060FFD7 /* EVComplexLayout.m in Sources */,
 				5FD360441CA9457A0016D837 /* OnboardingViewController.swift in Sources */,
 				5F7098301CA0EEB000B499BC /* CardView.swift in Sources */,
 				5FD3603C1CA4D5550016D837 /* DrawingCardItemView.swift in Sources */,
+				5F29B49C1CB73E3F0060FFD7 /* CardNavigatorView.swift in Sources */,
 				5FD360651CACFD9E0016D837 /* ContactsSync.swift in Sources */,
+				5F29B4C11CB73E830060FFD7 /* UIGestureRecognizer+Elastic.m in Sources */,
 				5FD360611CAC86160016D837 /* UserCardViewController.swift in Sources */,
+				5F29B49D1CB73E3F0060FFD7 /* BlockButton.swift in Sources */,
 				5FD360351CA3B5590016D837 /* GivePointsCardItemView.swift in Sources */,
 				5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */,
+				5F29B4C61CB73E830060FFD7 /* EVFakeData.m in Sources */,
 				5FD360551CAC6E670016D837 /* Users.swift in Sources */,
 				5FB2F2551CA21847001863C4 /* NPSoftModalPresentationController.swift in Sources */,
 				5FD360461CA9CA0D0016D837 /* HashtagViewController.swift in Sources */,
 				5FB2F24B1CA216B4001863C4 /* Assets.swift in Sources */,
+				5F29B4CC1CB73FE60060FFD7 /* CardNavigatorViewController.swift in Sources */,
 				5F7098381CA1167500B499BC /* TextCardItemView.swift in Sources */,
+				5F508C041CB74715005BF228 /* CardFeedStack.swift in Sources */,
 				5FD360571CAC6EC40016D837 /* Following.swift in Sources */,
 				5FD360591CAC70340016D837 /* Pusher.swift in Sources */,
 				5FD360421CA8A5A80016D837 /* CommentsViewController.swift in Sources */,
+				5F29B4C41CB73E830060FFD7 /* EVCommon.m in Sources */,
 				5FB976BA1CAF292A00B92A16 /* Hashtags.swift in Sources */,
 				5FB2F2571CA2184E001863C4 /* UIColor+Hex.swift in Sources */,
+				5F508BFE1CB743DC005BF228 /* ActivityFeedSource.swift in Sources */,
 				5F70982E1CA0EEA600B499BC /* CardEditor.swift in Sources */,
+				5F29B4BC1CB73E830060FFD7 /* UIView+ElasticLayout.m in Sources */,
 				5FB976BF1CB1A5B200B92A16 /* CreateGroupViewController.swift in Sources */,
 				5FB2F2511CA217CF001863C4 /* KeyboardAvoidance.swift in Sources */,
 				5FD360631CACECD50016D837 /* StarRatingCardItemView.swift in Sources */,
+				5F508BFC1CB74303005BF228 /* CardStack.swift in Sources */,
 				5FB976C61CB247D400B92A16 /* GroupEditor.swift in Sources */,
 				5FB976CC1CB42B6900B92A16 /* Flagging.swift in Sources */,
 				5FD3604E1CAB7A9A0016D837 /* FlipbookCardItemView.swift in Sources */,
