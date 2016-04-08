@@ -33,7 +33,7 @@ extension Data {
                                 pendingSearches += 1
                                 Data.findUserByPhone(val.stringValue, callback: { (userSnapshotOpt) in
                                     if let id = userSnapshotOpt?.key {
-                                        Data.setFollowing(id, following: true, isUser: true)
+                                        Data.setFollowing(id, following: true, type: .User)
                                     }
                                     pendingSearches -= 1
                                     if pendingSearches == 0 {

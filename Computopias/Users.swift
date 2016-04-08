@@ -74,7 +74,7 @@ extension Data {
             }
             // post-signup work:
             // follow self:
-            Data.setFollowing(Data.getUID()!, following: true, isUser: true)
+            Data.setFollowing(Data.getUID()!, following: true, type: .User)
             NSNotificationCenter.defaultCenter().postNotificationName(LoginDidCompleteNotification, object: nil)
             callback(true)
         })

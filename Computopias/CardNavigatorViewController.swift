@@ -17,11 +17,8 @@ class CardNavigatorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         cardNav.cardSize = CardView.CardSize
-        // cardNav.addStack(ActivityCardStack())
+        cardNav.addStack(ActivityCardStack())
         cardNav.backgroundColor = UIColor.whiteColor()
-        let stack = HashtagCardStack()
-        stack.hashtag = "profiles"
-        cardNav.addStack(stack)
     }
     override func prefersStatusBarHidden() -> Bool {
         return true

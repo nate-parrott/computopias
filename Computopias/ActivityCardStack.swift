@@ -24,7 +24,11 @@ class ActivityCardStack: CardFeedStack {
     
     override var cardModels: [String] {
         get {
-           return ["HashtagListView"] + super.cardModels
+            if Data.getUID() == nil {
+                return []
+            } else {
+                return ["HashtagListView"] + super.cardModels
+            }
         }
         set {}
     }
@@ -35,9 +39,21 @@ class ActivityCardStack: CardFeedStack {
     
     override func createCard(model: String) -> UIView {
         if model == "HashtagListView" {
-            return HashtagListView()
+            let v = HashtagListView()
+            v.onNavigate = {
+                [weak self] (route: Route) in
+                self?.navigate(route)
+            }
+            return v
         } else {
-            return super.createCard(model)
+            let v = CardViewWrapper()
+            v.cardView.onTap = {
+                [weak self, weak v] in
+                if let (_, hashtag) = v?.card where hashtag != nil {
+                    self?.navigate(Route.Hashtag(name: hashtag!))
+                }
+            }
+            return v
         }
     }
     

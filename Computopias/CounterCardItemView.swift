@@ -89,7 +89,7 @@ class CounterCardItemView: CardItemView {
         label.attributedText = NSAttributedString(string: text, attributes: attributes)
     }
     
-    override func tapped() {
+    override func tapped() -> Bool {
         super.tapped()
         if !editMode {
             let path = pathToObserve().childByAppendingPath(Data.getUID())
@@ -104,6 +104,7 @@ class CounterCardItemView: CardItemView {
         if templateEditMode {
             rotateEmoji()
         }
+        return true
     }
     
     func rotateEmoji() {

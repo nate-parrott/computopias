@@ -33,6 +33,8 @@ class HashtagCardStack: CardFeedStack {
                 let l = UILabel()
                 l.numberOfLines = 0
                 l.textAlignment = .Center
+                l.userInteractionEnabled = true
+                l.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(HashtagCardStack._editGroupInfo)))
                 return l
             }) as! UILabel
             label.attributedText = text
@@ -58,5 +60,9 @@ class HashtagCardStack: CardFeedStack {
         
         let pad: UIButton -> AnyObject = { [EVInset($0, UIEdgeInsetsMake(0, self.padding/2, 0, self.padding/2))] }
         EVComplexLayout(false, rect, [EVVertical(), EVLayoutAlignCenter(), [EVHorizontal(), EVLayoutAlignCenter(), pad(postButton), pad(followButton)]])
+    }
+    
+    @objc func _editGroupInfo() {
+        source?.editGroupInfo()
     }
 }

@@ -17,6 +17,8 @@ class CardView: UIView {
     
     let backgroundImageView = UIImageView()
     
+    var onTap: (() -> ())?
+    
     var items: [CardItemView] {
         get {
             return subviews.filter({ ($0 as? CardItemView) != nil }).map({ $0 as! CardItemView })
@@ -311,7 +313,7 @@ class CardView: UIView {
             if let item = _nearestItemToPoint(touches.first!.locationInView(self)) where item.templateEditMode {
                 editingItem = _nearestItemToPoint(touches.first!.locationInView(self))
             }
-            _tapStartPos = touches.first!.locationInView(self)
+            _tapStartPos = touches.first!.locationInView(self.window!)
         } else {
             _tapStartPos = nil
         }
@@ -320,7 +322,7 @@ class CardView: UIView {
     }
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touchRect = boundingRectOfTouches(_touchesDown)
-        if _tapStartPos != nil && (_tapStartPos! - touches.first!.locationInView(self)).magnitude > 5 {
+        if _tapStartPos != nil && (_tapStartPos! - touches.first!.locationInView(self.window!)).magnitude > 5 {
             _tapStartPos = nil // we've moved too much; no tap
         }
         if let prev = _prevTouchRect {
@@ -348,8 +350,14 @@ class CardView: UIView {
                     item.removeFromSuperview() // remove item
                 }
             }
-            if let pos = _tapStartPos, let tappedItem = _nearestItemToPoint(pos) where CGRectContainsPoint(tappedItem.frame, pos) {
-                tappedItem.tapped()
+            if let pos = _tapStartPos {
+                var handledTap = false
+                if let tappedItem = _nearestItemToPoint(pos) where CGRectContainsPoint(tappedItem.frame, pos) {
+                    handledTap = tappedItem.tapped()
+                }
+                if let t = onTap where !handledTap {
+                    t()
+                }
             }
             editingItem = nil
         }

@@ -13,6 +13,7 @@ enum Route {
     case Card(hashtag: String, id: String)
     case ProfilesList
     case HashtagsList
+    case Activity
     case CreateGroup
     case Nothing
     var string: String {
@@ -23,6 +24,7 @@ enum Route {
             case .HashtagsList: return "!hashtags"
             case .ProfilesList: return "!profiles"
             case .CreateGroup: return "!create"
+            case .Activity: return "!activity"
             default: return ""
             }
         }
@@ -50,16 +52,21 @@ enum Route {
                 urlComps.path = "/feed"
             case .CreateGroup:
                 urlComps.path = "/create"
+            case .Activity:
+                urlComps.path = "/activity"
             default: ()
             }
             return urlComps.URL!
         }
     }
+    // TOOD: remove this, replace w/ urls
     static func fromString(string: String) -> Route? {
         if string == "!hashtags" {
             return  Route.HashtagsList
         } else if string == "!profiles" {
             return Route.ProfilesList
+        } else if string == "!activity" {
+            return Route.Activity
         } else if string.characters.first! == "#".characters.first! {
             let parts = string.componentsSeparatedByString("/")
             if parts.count == 2 {
@@ -86,6 +93,8 @@ enum Route {
             return Route.ProfilesList
         } else if parts.count == 1 && parts[0] == "create" {
             return Route.CreateGroup
+        } else if parts.count == 1 && parts[0] == "activity" {
+            return Route.Activity
         }
         return nil
     }

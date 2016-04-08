@@ -16,10 +16,18 @@ extension Data {
         })
     }
     
-    static func setFollowing(item: String, following: Bool, isUser: Bool) {
+    enum FollowType {
+        case User
+        case Hashtag
+    }
+    
+    static func setFollowing(item: String, following: Bool, type: FollowType) {
         firebase.childByAppendingPath("followers").childByAppendingPath(item).childByAppendingPath(getUID()).setValue(following ? true : nil)
         firebase.childByAppendingPath("following").childByAppendingPath(getUID()).childByAppendingPath(item).setValue(following ? true : nil)
-        if isUser {
+        switch type {
+        case .Hashtag:
+            userInfoFirebase().childByAppendingPath("following_hashtags").childByAppendingPath(item).setValue(following ? true : nil)
+        case .User:
             userInfoFirebase().childByAppendingPath("following_users").childByAppendingPath(item).setValue(following ? true : nil)
             if item != getUID() {
                 firebase.childByAppendingPath("new_followers").childByAppendingPath(item).childByAppendingPath(getUID()!).setValue(following ? profileJson() : nil)

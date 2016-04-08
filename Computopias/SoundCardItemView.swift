@@ -120,7 +120,7 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
         duration = json["duration"] as? Double ?? duration
     }
     // MARK: Interaction
-    override func tapped() {
+    override func tapped() -> Bool {
         super.tapped()
         if editMode {
             delay(0.1, closure: {
@@ -143,6 +143,7 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
             })
         }
         togglePlayback()
+        return true
     }
     var _menuLastShown: CFAbsoluteTime?
     func _menuWillHide(notif: NSNotification) {

@@ -85,7 +85,7 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
         return size
     }
     
-    override func tapped() {
+    override func tapped() -> Bool {
         super.tapped()
         if editMode {
             map.removeFromSuperview()
@@ -111,6 +111,7 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
             vc.map.addAnnotation(CoordinateAnnotation(coord: self.map.centerCoordinate))
             NPSoftModalPresentationController.presentViewController(vc)
         }
+        return true
     }
     
     let map = MKMapView()

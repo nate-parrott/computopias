@@ -76,11 +76,12 @@ class CommentsCardItemView: CardItemView {
         label.text = "💬 " + text
     }
     
-    override func tapped() {
+    override func tapped() -> Bool {
         let chat = CommentsViewController()
         chat.chat = Data.firebase.childByAppendingPath("chats").childByAppendingPath(chatID!)
         let nav = UINavigationController(rootViewController: chat)
         NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(nav, animated: true, completion: nil)
+        return true
     }
     
     override func layoutSubviews() {

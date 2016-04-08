@@ -21,8 +21,8 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
         
     }
     
-    func tapped() {
-        
+    func tapped() -> Bool {
+        return false
     }
     
     func acceptsTouches() -> Bool {

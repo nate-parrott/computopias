@@ -15,5 +15,6 @@
 #import "UIGestureRecognizer+Elastic.h"
 #import "EVFakeData.h"
 #import "EVComplexLayout.h"
+#import "EVInterpolation.h"
 
 #endif /* Elastic_h */

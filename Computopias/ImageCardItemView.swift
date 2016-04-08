@@ -19,11 +19,13 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         imageView.clipsToBounds = true
     }
     
-    override func tapped() {
+    override func tapped() -> Bool {
         super.tapped()
         if editMode && !_uploadInProgress {
             insertMedia()
+            return true
         }
+        return false
     }
     
     override func onInsert() {

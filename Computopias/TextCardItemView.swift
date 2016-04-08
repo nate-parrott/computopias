@@ -62,12 +62,14 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         return size
     }
     
-    override func tapped() {
+    override func tapped() -> Bool {
         super.tapped()
         if templateEditMode || (editMode && !staticLabel) {
             field.userInteractionEnabled = true
             field.becomeFirstResponder()
+            return true
         }
+        return false
     }
     
     var staticLabel = false {

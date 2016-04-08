@@ -46,6 +46,27 @@ class CardStack {
     func renderBottomControls(view: UIView, rect: CGRect) {
         
     }
+    
+    weak var navigator: CardNavigatorView?
+    
+    func navigate(route: Route) {
+        if let stack = CardStack.FromRoute(route) {
+            navigator?.pushCardStack(stack, above: self)
+        }
+    }
+    
+    class func FromRoute(route: Route) -> CardStack? {
+        switch route {
+        case .Activity:
+            return ActivityCardStack()
+        case .Hashtag(name: let hashtag):
+            let s = HashtagCardStack()
+            s.hashtag = hashtag
+            return s
+        default:
+            return nil // TODO: individual cards
+        }
+    }
 }
 
 class FakeCardStack: CardStack {

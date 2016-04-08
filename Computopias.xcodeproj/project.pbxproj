@@ -243,8 +243,8 @@
 			children = (
 				5F29B4CB1CB73FE60060FFD7 /* CardNavigatorViewController.swift */,
 				5F29B49A1CB73E3F0060FFD7 /* CardNavigatorView.swift */,
-				5F508C0B1CB767A4005BF228 /* Sources */,
 				5F508C091CB76796005BF228 /* Stacks */,
+				5F508C0B1CB767A4005BF228 /* Sources */,
 				5F508C0A1CB7679C005BF228 /* Views */,
 			);
 			name = Cards;

@@ -120,7 +120,7 @@ class HashtagViewController: CardFeedViewController {
     var followButton: UIBarButtonItem!
     
     func toggleFollowing() {
-        Data.setFollowing(hashtag, following: !(following ?? false), isUser: false)
+        Data.setFollowing(hashtag, following: !(following ?? false), type: .Hashtag)
     }
     
     // MARK: Posting
@@ -137,7 +137,7 @@ class HashtagViewController: CardFeedViewController {
             editor.onPrePost = {
                 [weak self] in
                 if let s = self {
-                    Data.setFollowing(s.hashtag, following: true, isUser: false)
+                    Data.setFollowing(s.hashtag, following: true, type: .Hashtag)
                 }
             }
             editor.onPost = {

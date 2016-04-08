@@ -56,7 +56,7 @@ class FriendFeedViewController: CardFeedViewController {
                     Data.findUserByPhone(phone, callback: { (let snapshot) in
                         if let s = snapshot {
                             self.navigate(Route.forProfile(s.key))
-                            Data.setFollowing(s.key, following: true, isUser: true)
+                            Data.setFollowing(s.key, following: true, type: .User)
                         } else {
                             let a = UIAlertController(title: nil, message: "😯 Doesn't look like anyone with the phone number \(phone) has signed up yet.", preferredStyle: .Alert)
                             a.addAction(UIAlertAction(title: "😕 Okay", style: .Default, handler: nil))
@@ -152,7 +152,7 @@ class FriendFeedViewController: CardFeedViewController {
                     Data.firebase.childByAppendingPath("new_followers").childByAppendingPath(Data.getUID()!).childByAppendingPath(uid).setValue(nil)
                 }
                 let follow = { [weak self] in
-                    Data.setFollowing(uid, following: true, isUser: true)
+                    Data.setFollowing(uid, following: true, type: .User)
                     dismiss()
                     self?.navigate(Route.forProfile(uid))
                 }

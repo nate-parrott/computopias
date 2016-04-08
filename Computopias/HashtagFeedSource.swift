@@ -71,7 +71,7 @@ class HashtagFeedSource {
     var _followingSub: Subscription?
     
     func toggleFollowing() {
-        Data.setFollowing(hashtag, following: !(following ?? false), isUser: false)
+        Data.setFollowing(hashtag, following: !(following ?? false), type: .Hashtag)
     }
     
     // MARK: Posting
@@ -89,7 +89,7 @@ class HashtagFeedSource {
             editor.onPrePost = {
                 [weak self] in
                 if let s = self {
-                    Data.setFollowing(s.hashtag, following: true, isUser: false)
+                    Data.setFollowing(s.hashtag, following: true, type: .User)
                 }
             }
         }

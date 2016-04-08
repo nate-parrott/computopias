@@ -62,7 +62,7 @@ class CountdownCardItemView: CardItemView {
         }
     }
     
-    override func tapped() {
+    override func tapped() -> Bool {
         super.tapped()
         if editMode {
             let alert = UIAlertController(title: "Countdown Timer", message: "The card becomes blank after this amount of time:", preferredStyle: .Alert)
@@ -75,7 +75,9 @@ class CountdownCardItemView: CardItemView {
                 addOptionForSeconds(i)
             }
             presentViewController(alert)
+            return true
         }
+        return false
     }
     
     func _update() {

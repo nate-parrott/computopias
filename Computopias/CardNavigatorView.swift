@@ -18,6 +18,7 @@ class CardNavigatorView: UIView {
     let stackLevel = ElasticValue.pageValue()
     
     func addStack(stack: CardStack) {
+        stack.navigator = self
         let idx = _stackEntries.count
         let entry = StackEntry(stack: stack)
         entry.scroll.addInput(panRec) { [weak self] (let input) -> CGFloat in
@@ -47,6 +48,7 @@ class CardNavigatorView: UIView {
     func popStack() {
         let entry = _stackEntries.removeLast()
         entry.stack.visible = false
+        entry.stack.navigator = nil
         entry.scroll.removeInput(panRec)
     }
     
@@ -86,8 +88,11 @@ class CardNavigatorView: UIView {
         }
     }
     
+    var _cardCentersForThisRender = [String: CGPoint]()
+    
     override func elasticRender() {
         super.elasticRender()
+        _cardCentersForThisRender.removeAll()
         
         stackLevel.max = CGFloat(_stackEntries.count - 1)
         
@@ -136,11 +141,11 @@ class CardNavigatorView: UIView {
             
             let frameFunc = {
                 (index: Int) -> CGRect in
-                let cardCenter = CGPointMake(center.x + stride.width * CGFloat(index), center.y)
+                let cardCenter = CGPointMake(center.x + stride.width * CGFloat(index), background.bounds.height / 2)
                 return CGRectMake(cardCenter.x - self.cardSize.width/2, cardCenter.y - self.cardSize.height/2, self.cardSize.width, self.cardSize.height)
             }
             
-            elasticRenderModels(stack.cardModels, positionBlock: { (_, let index) -> ElasticLayoutModelPosition in
+            background.elasticRenderModels(stack.cardModels, positionBlock: { (_, let index) -> ElasticLayoutModelPosition in
                 let frame = frameFunc(index)
                 if CGRectIntersectsRect(frame, self.bounds) {
                     return ElasticLayoutModelPosition.Onscreen
@@ -151,12 +156,16 @@ class CardNavigatorView: UIView {
                 }
                 }, renderBlock: { (let model, let index) in
                     let frame = frameFunc(index)
-                    let view = self.elasticGetChildWithKey(model as! String, creationBlock: { () -> UIView! in
+                    let view = background.elasticGetChildWithKey(model as! String, creationBlock: { () -> UIView! in
                         let card = stack.createCard(model as! String)
                         stack.renderCard(model as! String, view: card)
                         return card
                     }) as! UIView
                     view.frame = frame
+                    /*if yOffset > 0, let prevPoint = self._cardCentersForThisRender[model as! String] {
+                        view.center = EVInterpolatePoint(prevPoint, frame.center, 1 - yOffset)
+                    }
+                    self._cardCentersForThisRender[model as! String] = view.frame.center*/
             })
         }
     }

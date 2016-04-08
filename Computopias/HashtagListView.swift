@@ -14,6 +14,8 @@ class HashtagListView: UIView, UITableViewDelegate, UITableViewDataSource, UISea
         if !_setup {
             _setup = true
             
+            tintColor = UIColor.whiteColor()
+            
             clipsToBounds = true
             layer.cornerRadius = CardView.rounding
             
@@ -29,9 +31,22 @@ class HashtagListView: UIView, UITableViewDelegate, UITableViewDataSource, UISea
             
             searchBar.frame = CGRectMake(0, 0, 10, 44)
             searchBar.searchBarStyle = .Minimal
+            searchBar.delegate = self
+            searchBar.autocorrectionType = .No
+            searchBar.autocapitalizationType = .None
             tableView.tableHeaderView = searchBar
+            
+            _sub = Data.userInfoFirebase().childByAppendingPath("following_hashtags").pusher.subscribe({ [weak self] (let data) in
+                if let hashtags = (data as? [String: AnyObject]) {
+                    self?.hashtags = Array(hashtags.keys)
+                } else {
+                    self?.hashtags = []
+                }
+            })
         }
     }
+    
+    var _sub: Subscription?
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -50,6 +65,35 @@ class HashtagListView: UIView, UITableViewDelegate, UITableViewDataSource, UISea
         }
     }
     
+    var onNavigate: (Route -> ())!
+    
+    // MARK: Searchbar
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        if let text = searchBar.text where text != "" && text.componentsSeparatedByString(" ").count == 1 {
+            delay(1, closure: { 
+                searchBar.text = ""
+            })
+            var t = text
+            if t.characters.first == "#".characters.first {
+                t = t[1..<t.utf16.count]
+            }
+            onNavigate(Route.Hashtag(name: t))
+        }
+    }
+    
     // MARK: TableView
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return hashtags.count
@@ -57,11 +101,15 @@ class HashtagListView: UIView, UITableViewDelegate, UITableViewDataSource, UISea
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell")!
+        cell.backgroundColor = UIColor.clearColor()
         cell.textLabel?.text = "#" + hashtags[indexPath.row]
+        cell.textLabel?.textColor = UIColor(white: 0.1, alpha: 0.8)
+        cell.textLabel?.font = UIFont(name: "AvenirNext-Regular", size: 16)
+        cell.selectionStyle = .None
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        onNavigate(Route.Hashtag(name: hashtags[indexPath.row]))
     }
 }

@@ -50,9 +50,11 @@ class DrawingCardItemView: CardItemView {
             path = p
         }
     }
-    override func tapped() {
+    override func tapped() -> Bool {
         if editMode {
             card?.startDrawing()
+            return true
         }
+        return false
     }
 }

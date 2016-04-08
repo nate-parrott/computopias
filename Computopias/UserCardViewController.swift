@@ -31,7 +31,7 @@ class UserCardViewController: CardFeedViewController {
     var _followingSub: Subscription?
     func toggleFollowing() {
         if let f = currentlyFollowing {
-            Data.setFollowing(userID, following: !f, isUser: true)
+            Data.setFollowing(userID, following: !f, type: .User)
         }
     }
 }

@@ -200,6 +200,8 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         if let p = onPost {
             p(CardID: card.key!)
         }
+        
+        Data.setFollowing(hashtag, following: true, type: .Hashtag)
     }
     
     @IBAction func cancel() {

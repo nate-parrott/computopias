@@ -58,9 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func navigateToRoute(route: Route) {
-        let nav = window!.rootViewController as! UINavigationController
-        let curPage = nav.viewControllers.last as? NavigableViewController
-        curPage?.navigate(route)
+        if let cardStack = CardStack.FromRoute(route) {
+            let navVC = window!.rootViewController! as! CardNavigatorViewController
+            navVC.cardNav.pushCardStack(cardStack, above: navVC.cardNav._stackEntries.last?.stack)
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {

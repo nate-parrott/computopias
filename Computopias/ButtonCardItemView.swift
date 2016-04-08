@@ -32,12 +32,13 @@ class ButtonCardItemView: CardItemView {
     
     var link = ""
     
-    override func tapped() {
+    override func tapped() -> Bool {
         if editMode {
             edit()
         } else {
             openLink()
         }
+        return true
     }
     
     func edit() {
