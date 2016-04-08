@@ -40,7 +40,7 @@ class CardStack {
     func noLongerVisible() {
         
     }
-    func renderTopRightControls(view: UIView, rect: CGRect) {
+    func renderTopControls(view: UIView, rect: CGRect) {
         
     }
     func renderBottomControls(view: UIView, rect: CGRect) {

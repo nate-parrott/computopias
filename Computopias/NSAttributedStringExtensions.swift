@@ -40,6 +40,10 @@ extension NSAttributedString {
     class func smallBoldText(text: String) -> NSAttributedString {
         return NSAttributedString(string: text, attributes: [NSFontAttributeName: defaultBoldFontAtSize(13)])
     }
+    
+    class func largeText(text: String) -> NSAttributedString {
+        return NSAttributedString(string: text, attributes: [NSFontAttributeName: UIFont.systemFontOfSize(22, weight: UIFontWeightLight)])
+    }
 }
 
 func +(lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {

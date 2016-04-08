@@ -31,6 +31,8 @@
 		5F508C021CB745D3005BF228 /* CardViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C011CB745D3005BF228 /* CardViewWrapper.swift */; };
 		5F508C041CB74715005BF228 /* CardFeedStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C031CB74715005BF228 /* CardFeedStack.swift */; };
 		5F508C061CB75F05005BF228 /* HashtagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C051CB75F05005BF228 /* HashtagListView.swift */; };
+		5F508C081CB7678E005BF228 /* HashtagCardStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C071CB7678E005BF228 /* HashtagCardStack.swift */; };
+		5F508C0D1CB767FF005BF228 /* HashtagFeedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C0C1CB767FF005BF228 /* HashtagFeedSource.swift */; };
 		5F70981C1CA0EDF600B499BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F70981B1CA0EDF600B499BC /* AppDelegate.swift */; };
 		5F7098211CA0EDF600B499BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F70981F1CA0EDF600B499BC /* Main.storyboard */; };
 		5F7098231CA0EDF600B499BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7098221CA0EDF600B499BC /* Assets.xcassets */; };
@@ -137,6 +139,8 @@
 		5F508C011CB745D3005BF228 /* CardViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewWrapper.swift; sourceTree = "<group>"; };
 		5F508C031CB74715005BF228 /* CardFeedStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFeedStack.swift; sourceTree = "<group>"; };
 		5F508C051CB75F05005BF228 /* HashtagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagListView.swift; sourceTree = "<group>"; };
+		5F508C071CB7678E005BF228 /* HashtagCardStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagCardStack.swift; sourceTree = "<group>"; };
+		5F508C0C1CB767FF005BF228 /* HashtagFeedSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagFeedSource.swift; sourceTree = "<group>"; };
 		5F7098181CA0EDF600B499BC /* Computopias.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Computopias.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F70981B1CA0EDF600B499BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F7098201CA0EDF600B499BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -239,12 +243,9 @@
 			children = (
 				5F29B4CB1CB73FE60060FFD7 /* CardNavigatorViewController.swift */,
 				5F29B49A1CB73E3F0060FFD7 /* CardNavigatorView.swift */,
-				5F508BFB1CB74303005BF228 /* CardStack.swift */,
-				5F508C031CB74715005BF228 /* CardFeedStack.swift */,
-				5F508BF91CB742ED005BF228 /* ActivityCardStack.swift */,
-				5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */,
-				5F508C011CB745D3005BF228 /* CardViewWrapper.swift */,
-				5F508C051CB75F05005BF228 /* HashtagListView.swift */,
+				5F508C0B1CB767A4005BF228 /* Sources */,
+				5F508C091CB76796005BF228 /* Stacks */,
+				5F508C0A1CB7679C005BF228 /* Views */,
 			);
 			name = Cards;
 			sourceTree = "<group>";
@@ -284,6 +285,35 @@
 				5F29B4CA1CB73EAA0060FFD7 /* Elastic.h */,
 			);
 			name = Elastic;
+			sourceTree = "<group>";
+		};
+		5F508C091CB76796005BF228 /* Stacks */ = {
+			isa = PBXGroup;
+			children = (
+				5F508BFB1CB74303005BF228 /* CardStack.swift */,
+				5F508C031CB74715005BF228 /* CardFeedStack.swift */,
+				5F508BF91CB742ED005BF228 /* ActivityCardStack.swift */,
+				5F508C071CB7678E005BF228 /* HashtagCardStack.swift */,
+			);
+			name = Stacks;
+			sourceTree = "<group>";
+		};
+		5F508C0A1CB7679C005BF228 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5F508C011CB745D3005BF228 /* CardViewWrapper.swift */,
+				5F508C051CB75F05005BF228 /* HashtagListView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		5F508C0B1CB767A4005BF228 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */,
+				5F508C0C1CB767FF005BF228 /* HashtagFeedSource.swift */,
+			);
+			name = Sources;
 			sourceTree = "<group>";
 		};
 		5F70980F1CA0EDF600B499BC = {
@@ -562,6 +592,7 @@
 				5F29B4C51CB73E830060FFD7 /* EVScrollViewWrapper.m in Sources */,
 				5F508BFA1CB742ED005BF228 /* ActivityCardStack.swift in Sources */,
 				5FB2F2631CA257D2001863C4 /* CounterCardItemView.swift in Sources */,
+				5F508C081CB7678E005BF228 /* HashtagCardStack.swift in Sources */,
 				5FD360691CAE16250016D837 /* UICollectionView+UpdateRows.swift in Sources */,
 				5F29B4C71CB73E830060FFD7 /* EVMotionEffectObserver.m in Sources */,
 				5F29B4BB1CB73E830060FFD7 /* UIView+Elastic.m in Sources */,
@@ -623,6 +654,7 @@
 				5FB976C61CB247D400B92A16 /* GroupEditor.swift in Sources */,
 				5FB976CC1CB42B6900B92A16 /* Flagging.swift in Sources */,
 				5FD3604E1CAB7A9A0016D837 /* FlipbookCardItemView.swift in Sources */,
+				5F508C0D1CB767FF005BF228 /* HashtagFeedSource.swift in Sources */,
 				5F70983C1CA11C5C00B499BC /* CGMath.swift in Sources */,
 				5FD360311CA355700016D837 /* SoundCardItemView.swift in Sources */,
 			);

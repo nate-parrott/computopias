@@ -131,7 +131,7 @@ class CardNavigatorView: UIView {
             title.frame = CGRectMake(0, 0, bounds.size.width, barHeight)
             
             // render controls:
-            stack.renderTopRightControls(background, rect: CGRectMake(background.bounds.width/2, 0, background.bounds.width/2, barHeight))
+            stack.renderTopControls(background, rect: CGRectMake(0, 0, background.bounds.width, barHeight))
             stack.renderBottomControls(background, rect: CGRectMake(0, background.bounds.height - barHeight, background.bounds.width, barHeight))
             
             let frameFunc = {
