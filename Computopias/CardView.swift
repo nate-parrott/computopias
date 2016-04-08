@@ -352,7 +352,7 @@ class CardView: UIView {
             }
             if let pos = _tapStartPos {
                 var handledTap = false
-                if let tappedItem = _nearestItemToPoint(pos) where CGRectContainsPoint(tappedItem.frame, pos) {
+                if let tappedItem = _nearestItemToPoint(pos) where CGRectContainsPoint(tappedItem.bounds, tappedItem.convertPoint(pos, fromView: window!)) {
                     handledTap = tappedItem.tapped()
                 }
                 if let t = onTap where !handledTap {
@@ -364,6 +364,7 @@ class CardView: UIView {
         setNeedsLayout()
     }
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        _tapStartPos = nil
         touchesEnded(touches ?? Set<UITouch>(), withEvent: event)
     }
 }

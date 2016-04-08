@@ -65,6 +65,11 @@ void _EVPositionLayoutable(id layoutable, CGRect frame) {
             _EVPositionLayoutable(childLayoutable, innerFrame);
         }
     } else if ([layoutable isKindOfClass:[UIView class]]) {
+        /*UIView *view = layoutable;
+        CGRect windowFrame = [view.window convertRect:frame fromView:view.superview];
+        windowFrame = CGRectIntegral(windowFrame);
+        CGRect localFrame = [view.superview convertRect:windowFrame fromView:view.window];
+        [layoutable setFrame:localFrame];*/
         [layoutable setFrame:frame];
     } else {
         NSCAssert(0, @"EVComplexLayout: can only lay out UIViews or NSArrays of views and attributes, but got: %@", layoutable);
