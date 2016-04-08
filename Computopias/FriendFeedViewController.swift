@@ -24,7 +24,7 @@ class FriendFeedViewController: CardFeedViewController {
         
         if Data.getUID() != nil {
             _friendsListSub = Data.friendFeed().subscribe({ [weak self] (let friendIDs) in
-                self?._friendIDs = friendIDs.filter({ !Data.userIsBlocked($0) })
+                self?._friendIDs = friendIDs.filter({ !Data.userIsBlocked($0) }).filter({ $0 != Data.getUID() })
             })
         }
         
@@ -188,7 +188,7 @@ class FriendFeedViewController: CardFeedViewController {
         if _friendIDs.count > 0 {
             let header = RowModel.Caption(text: NSAttributedString.smallText("People you follow"), action: nil)
             r.append(header)
-            r += _friendIDs.filter({ $0 != Data.getUID() }).map({ CardFeedViewController.RowModel.Card(id: $0, hashtag: "profiles") })
+            r += _friendIDs.map({ CardFeedViewController.RowModel.Card(id: $0, hashtag: "profiles") })
         }
         return r
     }

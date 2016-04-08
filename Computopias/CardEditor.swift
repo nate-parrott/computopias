@@ -48,7 +48,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         } else {
             // we're building a new template; add initial content:
             // addItemView(ProfileCardItemView())
-            prompt = "First Post in #\(hashtag)"
+            prompt = "First post in #\(hashtag)"
             collectionView.hidden = false
         }
         promptLabel.text = prompt

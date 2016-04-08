@@ -227,7 +227,7 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
     func _tryPlay() {
         if let path = localFilePath, let player_ = try? AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path)) {
             // play now:
-            _ = try? AVAudioSession.sharedInstance().setMode(AVAudioSessionCategoryPlayback)
+            _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             _ = try? AVAudioSession.sharedInstance().setActive(true)
             player = player_
             player_.delegate = self
