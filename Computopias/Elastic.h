@@ -16,5 +16,6 @@
 #import "EVFakeData.h"
 #import "EVComplexLayout.h"
 #import "EVInterpolation.h"
+#import "EVCommon.h"
 
 #endif /* Elastic_h */

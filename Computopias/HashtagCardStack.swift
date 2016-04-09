@@ -14,7 +14,9 @@ class HashtagCardStack: CardFeedStack {
     override func becameVisible() {
         super.becameVisible()
         source = HashtagFeedSource(hashtag: hashtag)
-        backgroundColor = UIColor(white: 0.97, alpha: 1)
+        backgroundColor = UIColor(white: 0.1, alpha: 1)
+        textColor = UIColor.whiteColor()
+        tintColor = UIColor.whiteColor()
     }
     override func noLongerVisible() {
         super.noLongerVisible()
@@ -38,6 +40,7 @@ class HashtagCardStack: CardFeedStack {
                 return l
             }) as! UILabel
             label.attributedText = text
+            label.textColor = textColor
             label.frame = CGRectInset(rect, rect.size.width * 0.15, 20)
         }
     }

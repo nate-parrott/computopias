@@ -41,10 +41,10 @@ class CardNavigatorView: UIView {
             val.snapToPosition(round(pos), completionBlock: popOnComplete)
         }
         entry.scroll.decelerationRate = 1.5
-        entry.scroll.dragEndBlock = {
+        /*entry.scroll.dragEndBlock = {
             (let val, let suggestedLandingPos) in
             val.snapToPosition(round(suggestedLandingPos), completionBlock: nil)
-        }
+        }*/
         _stackEntries.append(entry)
         stack.visible = true
         entry.appearance.max = 1
@@ -156,6 +156,7 @@ class CardNavigatorView: UIView {
             let scroll = entry.scroll
             let stride = cardStride
             let center = CGPointMake(bounds.center.x - scroll.rubberBandedPosition * stride.width, bounds.center.y + yOffset * stride.height)
+            let obscuredAmount = _getObscuredAmountForStackAtIndex(index)
             
             // render background:
             let background = elasticGetChildWithKey("background-\(index)", creationBlock: { () -> UIView! in
@@ -163,13 +164,16 @@ class CardNavigatorView: UIView {
             }) as! UIView
             background.backgroundColor = stack.backgroundColor
             background.frame = CGRectMake(0, yOffset * bounds.size.height, bounds.size.width, bounds.size.height)
+            if stack.tintColor != background.tintColor {
+                background.tintColor = stack.tintColor
+            }
             
             // render title:
             let barHeight = (bounds.size.height - cardSize.height)/2
             let title = background.elasticGetChildWithKey("title", creationBlock: { () -> UIView! in
                 let l = UILabel()
                 l.textAlignment = .Center
-                l.textColor = UIColor(white: 0.1, alpha: 0.5)
+                l.textColor = stack.textColor
                 l.font = UIFont.systemFontOfSize(21, weight: UIFontWeightLight)
                 return l
             }) as! UILabel
@@ -182,7 +186,8 @@ class CardNavigatorView: UIView {
             
             let frameFunc = {
                 (index: Int) -> CGRect in
-                let cardCenter = CGPointMake(center.x + stride.width * CGFloat(index), background.bounds.height / 2)
+                let offsetEased = EVQuadraticEaseOut(yOffset) * 0.5 + yOffset * 0.5
+                let cardCenter = CGPointMake(center.x + stride.width * CGFloat(index), background.bounds.height/2 - background.frame.origin.y + offsetEased * background.frame.size.height)
                 return CGRectMake(cardCenter.x - self.cardSize.width/2, cardCenter.y - self.cardSize.height/2, self.cardSize.width, self.cardSize.height)
             }
             
@@ -202,13 +207,23 @@ class CardNavigatorView: UIView {
                         stack.renderCard(model as! String, view: card)
                         return card
                     }) as! UIView
+                    view.transform = CGAffineTransformIdentity
                     view.frame = frame
+                    view.transform = CGAffineTransformMakeScale(1 - obscuredAmount * 0.3, 1 - obscuredAmount * 0.3)
                     /*if yOffset > 0, let prevPoint = self._cardCentersForThisRender[model as! String] {
                         view.center = EVInterpolatePoint(prevPoint, frame.center, 1 - yOffset)
                     }
                     self._cardCentersForThisRender[model as! String] = view.frame.center*/
             })
         }
+    }
+    
+    func _getObscuredAmountForStackAtIndex(index: Int) -> CGFloat {
+        var o: CGFloat = 0
+        for i in index+1..<_stackEntries.count {
+            o = max(o, _stackEntries[i].appearance.rubberBandedPosition)
+        }
+        return o
     }
 }
 

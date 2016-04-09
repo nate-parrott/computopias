@@ -20,7 +20,12 @@ class CardStack {
     func renderCard(model: String, view: UIView) {
         
     }
+    
     var backgroundColor = UIColor.whiteColor()
+    var backgroundColorAtStartOfDrag: UIColor?
+    var textColor = UIColor(white: 0, alpha: 0.6)
+    var tintColor: UIColor? = Appearance.tint
+    
     var title: String?
     var identifier = NSUUID().UUIDString
     var visible = false {
