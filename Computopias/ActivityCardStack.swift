@@ -78,4 +78,8 @@ class ActivityCardStack: CardFeedStack {
         button.sizeToFit()
         button.center = rect.center
     }
+    
+    override func createCardLabel(hashtag: String, posterName: String, date: Double) -> NSAttributedString {
+        return NSAttributedString.smallText(posterName + " in ") + NSAttributedString.smallBoldText(hashtag)
+    }
 }

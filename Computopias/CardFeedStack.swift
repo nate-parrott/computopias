@@ -15,10 +15,22 @@ class CardFeedStack: CardStack {
     
     override func renderCard(model: String, view: UIView) {
         let cv = view as! CardViewWrapper
-        if let dict = cardDictForID(model) {
-            let hashtag = dict["hashtag"] as! String
+        if let dict = cardDictForID(model),
+            let poster = dict["poster"] as? [String: AnyObject],
+            let posterName = poster["name"] as? String,
+            // let posterId = poster["uid"] as? String,
+            let hashtag = dict["hashtag"] as? String,
+            let date = dict["date"] as? Double {
+            // let hashtag = dict["hashtag"] as! String
             cv.card = (model, hashtag)
+            
+            cv.labelText = createCardLabel(hashtag, posterName: posterName, date: date)
         }
+    }
+    
+    func createCardLabel(hashtag: String, posterName: String, date: Double) -> NSAttributedString {
+        let dateString = NSDateFormatter.localizedStringFromDate(NSDate(timeIntervalSince1970: date), dateStyle: .ShortStyle, timeStyle: .ShortStyle)
+        return NSAttributedString.smallBoldText(posterName) + NSAttributedString.smallText(" on " + dateString)
     }
     
     override var cardModels: [String] {

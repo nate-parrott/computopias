@@ -24,9 +24,10 @@
 
 @interface ElasticValue () {
     void (^_snapCompletionBlock)(BOOL cancelled);
+    long long _tick;
 }
 
-@property (nonatomic) NSMutableArray *dragPositionSamples, *dragTimeSamples;
+@property (nonatomic) NSMutableArray *dragPositionSamples, *dragTimeSamples, *dragTickSamples;
 @property (nonatomic) CGFloat velocity;
 @property (nonatomic) CGFloat position;
 @property (nonatomic) CGFloat positionAtStartOfGesture;
@@ -119,6 +120,8 @@
             if (self.dragStartBlock) self.dragStartBlock();
         } else {
             self.velocity = [self _computeDragVelocity];
+            [self log:[NSString stringWithFormat:@"samples: %@", self.dragPositionSamples]];
+            [self log:[NSString stringWithFormat:@"velocity: %f", self.velocity]];
             if (self.dragEndBlock) self.dragEndBlock(self, [self estimatedStoppingPosition]);
         }
         [self _addPositionSample:self.position];
@@ -152,6 +155,7 @@
     self.position = position;
     [self.dragPositionSamples removeAllObjects];
     [self.dragTimeSamples removeAllObjects];
+    [self.dragTickSamples removeAllObjects];
     self.velocity = 0;
     [self _resetSnap];
 }
@@ -164,23 +168,55 @@
     }
 }
 
+- (CGFloat)rubberBandedPosition {
+    CGFloat p = self.position;
+    CGFloat dropOffDist = _isScreenValue ? 100 : 0.3;
+    if (p > self.max) {
+        return EVExponentialSlowdown(p - self.max, dropOffDist) + self.max;
+    } else if (p < self.min) {
+        return self.min - EVExponentialSlowdown(self.min - p, dropOffDist);
+    } else {
+        return p;
+    }
+}
+
 #pragma mark Velocity
 
 - (void)_addPositionSample:(CGFloat)position {
     if (!self.dragPositionSamples) {
         self.dragPositionSamples = [NSMutableArray new];
         self.dragTimeSamples = [NSMutableArray new];
+        self.dragTickSamples = [NSMutableArray new];
     }
     [self.dragPositionSamples addObject:@(position)];
     [self.dragTimeSamples addObject:@(CFAbsoluteTimeGetCurrent())];
+    [self.dragTickSamples addObject:@(_tick)];
     [self _trimDragSamples];
+    [self log:[NSString stringWithFormat:@"adding sample %f", position]];
 }
 
 - (void)_trimDragSamples {
-    while (self.dragTimeSamples.count && [self.dragTimeSamples.firstObject doubleValue] < CFAbsoluteTimeGetCurrent() - [self trailingVelocityCalculationTime]) {
+    /*while (self.dragTimeSamples.count && [self.dragTimeSamples.firstObject doubleValue] < CFAbsoluteTimeGetCurrent() - [self trailingVelocityCalculationTime]) {
         [self.dragTimeSamples removeObjectAtIndex:0];
         [self.dragPositionSamples removeObjectAtIndex:0];
+    }*/
+    while ([self _countUniqueTicksInDragSamples] > 3) {
+        [self.dragTimeSamples removeObjectAtIndex:0];
+        [self.dragPositionSamples removeObjectAtIndex:0];
+        [self.dragTickSamples removeObjectAtIndex:0];
     }
+}
+
+- (NSInteger)_countUniqueTicksInDragSamples {
+    long long lastTick = -1;
+    NSInteger count = 0;
+    for (NSNumber *n in self.dragTickSamples) {
+        if (n.longLongValue != lastTick) {
+            count++;
+            lastTick = n.longLongValue;
+        }
+    }
+    return count;
 }
 
 - (CGFloat)_computeDragVelocity {
@@ -192,7 +228,7 @@
 }
 
 - (CGFloat)_estimateDisplacementFromInitialSpeed:(CGFloat)s {
-    NSTimeInterval dt = 1 / 60.0;
+    NSTimeInterval dt = 0.5 / 60.0;
     CGFloat friction = [self frictionConstant];
     CGFloat epsilon = [self epsilon];
     CGFloat d = 0;
@@ -225,16 +261,17 @@
 }
 
 - (CGFloat)rubberBandCoefficient {
-    return 80 / self.extraBounce;
+    return 80 / self.extraBounce * self.decelerationRate;
 }
 
 - (NSTimeInterval)trailingVelocityCalculationTime {
-    return 3/60.0;
+    return 2/60.0;
 }
 
 #pragma mark Physics
 
 - (void)_tick:(NSTimeInterval)dt {
+    _tick++;
     CGFloat lastPos = self.position;
     
     if (!self.dragging) {
@@ -410,6 +447,12 @@
 
 - (ElasticValueInputState)elasticState {
     return self.inputProviderProxy.elasticState;
+}
+
+#pragma mark Debug
+
+- (void)log:(id)value {
+    if (_logName) NSLog(@"%@: %@", _logName, value);
 }
 
 @end

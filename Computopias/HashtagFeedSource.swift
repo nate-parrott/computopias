@@ -124,10 +124,10 @@ class HashtagFeedSource {
     
     @IBAction func editGroupInfo() {
         if ownerIsSelf ?? false {
-            /*let editor = storyboard!.instantiateViewControllerWithIdentifier("GroupEditor") as! GroupEditor
+            let editor = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("GroupEditor") as! GroupEditor
             editor.hashtag = hashtag
             let nav = UINavigationController(rootViewController: editor)
-            presentViewController(nav, animated: true, completion: nil)*/
+            NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(nav, animated: true, completion: nil)
         }
     }
 }

@@ -39,6 +39,10 @@ CATransform3D EVPerspectiveTransform(CGFloat perspective); // perspective=1 is a
 
 CGFloat EVRoundToScreenCoordinates(CGFloat val);
 
+CGFloat EVExponentialSlowdown(CGFloat x, CGFloat dropOffDist);
+
+CGFloat EVDropOff(CGFloat val, CGFloat dropOffDist);
+
 typedef void (^EVCallback)();
 
 

@@ -21,8 +21,11 @@ typedef void (^ElasticValueDragEndBlock)(ElasticValue *val, CGFloat suggestedLan
 + (ElasticValue *)pageValue;
 
 @property (nonatomic,readonly) CGFloat position;
+@property (nonatomic,readonly) CGFloat rubberBandedPosition;
 
 @property (nonatomic,readonly) BOOL dragging;
+
+@property (nonatomic) NSString *logName;
 
 - (void)startDragging;
 - (void)draggedToPosition:(CGFloat)position;

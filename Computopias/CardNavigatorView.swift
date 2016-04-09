@@ -59,6 +59,7 @@ class CardNavigatorView: UIView {
     override func elasticSetup() {
         super.elasticSetup()
         addGestureRecognizer(panRec)
+        // stackLevel.logName = "level"
         stackLevel.addInput(panRec) { [weak self] (let input) -> CGFloat in
             if let s = self {
                 return -(input as! UIPanGestureRecognizer).verticalTranslationInView(s) / s.bounds.size.height
@@ -100,11 +101,14 @@ class CardNavigatorView: UIView {
             entry.scroll.max = CGFloat(entry.stack.cardModels.count - 1)
         }
         
-        let lowerStackIndex = Int(floor(stackLevel.position))
+        let lowerStackIndex = max(0, Int(floor(stackLevel.rubberBandedPosition)))
+        /*for i in 0..<lowerStackIndex {
+            _renderStack(i, yOffset: 1) // render lower layers (should we?)
+        }*/
         let isTop = (lowerStackIndex + 1 == _stackEntries.count)
-        _renderStack(lowerStackIndex, yOffset: isTop ? CGFloat(lowerStackIndex) - stackLevel.position : 0)
-        if CGFloat(lowerStackIndex) != stackLevel.position {
-            _renderStack(lowerStackIndex+1, yOffset: CGFloat(lowerStackIndex+1) - stackLevel.position)
+        _renderStack(lowerStackIndex, yOffset: isTop ? CGFloat(lowerStackIndex) - stackLevel.rubberBandedPosition : 0)
+        if CGFloat(lowerStackIndex) != stackLevel.rubberBandedPosition {
+            _renderStack(lowerStackIndex+1, yOffset: CGFloat(lowerStackIndex+1) - stackLevel.rubberBandedPosition)
         }
     }
     
@@ -114,7 +118,7 @@ class CardNavigatorView: UIView {
             let stack = entry.stack
             let scroll = entry.scroll
             let stride = cardStride
-            let center = CGPointMake(bounds.center.x - scroll.position * stride.width, bounds.center.y + yOffset * stride.height)
+            let center = CGPointMake(bounds.center.x - scroll.rubberBandedPosition * stride.width, bounds.center.y + yOffset * stride.height)
             
             // render background:
             let background = elasticGetChildWithKey("background-\(index)", creationBlock: { () -> UIView! in

@@ -45,6 +45,18 @@ CGFloat EVRoundToScreenCoordinates(CGFloat val) {
     return round(val * [UIScreen mainScreen].scale) / [UIScreen mainScreen].scale;
 }
 
+CGFloat EVExponentialSlowdown(CGFloat x, CGFloat dropOffDist) {
+    // return x/2;
+    // evaluate the integral of 1 / (x/n + 1)
+    CGFloat n = dropOffDist;
+    return n * log(n + x) - n * log(n);
+}
+
+CGFloat EVDropOff(CGFloat val, CGFloat dropOffDist) {
+    CGFloat x = MIN(val, dropOffDist);
+    return x - pow(x, 2) / (2 * dropOffDist);
+}
+
 #pragma mark Easing
 
 // ported from https://github.com/warrenm/AHEasing/blob/master/AHEasing/easing.c

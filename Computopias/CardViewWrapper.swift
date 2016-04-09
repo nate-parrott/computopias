@@ -18,15 +18,27 @@ class CardViewWrapper: UIView {
         }
         if cardView.superview == nil {
             addSubview(cardView)
+            addSubview(label)
+            label.textAlignment = .Center
+            label.textColor = UIColor(white: 0.1, alpha: 0.5)
         }
     }
     
     let cardView = CardView()
+    private let label = UILabel()
+    var labelText: NSAttributedString? {
+        didSet {
+            label.attributedText = labelText
+            setNeedsLayout()
+        }
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         cardView.bounds = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
         cardView.center = bounds.center
+        let labelHeight = label.sizeThatFits(CGSizeMake(CardView.CardSize.width, 40)).height
+        label.frame = CGRectMake(0, -labelHeight-5, CardView.CardSize.width, labelHeight)
     }
     
     var card: (id: String, hashtag: String?)? {
