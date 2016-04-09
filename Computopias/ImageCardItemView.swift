@@ -8,15 +8,16 @@
 
 import UIKit
 import MobileCoreServices
+import AsyncDisplayKit
 
 class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     override func setup() {
         super.setup()
-        addSubview(imageView)
-        imageView.backgroundColor = UIColor(white: 0.1, alpha: 0.7)
-        imageView.contentMode = .ScaleAspectFill
-        imageView.clipsToBounds = true
+        addSubview(imageNode.view)
+        imageNode.backgroundColor = UIColor(white: 0.1, alpha: 0.7)
+        imageNode.contentMode = .ScaleAspectFill
+        imageNode.clipsToBounds = true
     }
     
     override func tapped() -> Bool {
@@ -35,7 +36,7 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        imageView.frame = bounds
+        imageNode.frame = bounds
     }
     
     override var defaultSize: GridSize {
@@ -48,7 +49,7 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         super.importJson(json)
         url = json["url"] as? String
         if let u = url, let uu = NSURL(string: u) {
-            imageView.url = uu
+            imageNode.URL = uu
         }
     }
     
@@ -62,7 +63,7 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
     }
     
     var url: String?
-    let imageView = NetImageView()
+    let imageNode = ASNetworkImageNode()
     
     func insertMedia() {
         let actionSheet = UIAlertController(title: NSLocalizedString("Insert photo from…", comment: ""), message: nil, preferredStyle: .ActionSheet)
@@ -100,7 +101,7 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
     
     var _uploadInProgress = false
     func insertImage(image: UIImage) {
-        imageView.image = nil
+        imageNode.image = nil
         url = nil
         let resized = image.resizedWithMaxDimension(600)
         _uploadInProgress = true
@@ -109,7 +110,7 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
                 self._uploadInProgress = false
                 if let u = url {
                     self.url = u.absoluteString
-                    self.imageView.image = resized
+                    self.imageNode.image = resized
                 }
             })
         }

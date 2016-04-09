@@ -32,7 +32,7 @@ class ViewBringUpQueue: NSObject {
         _timeElapsedWorkingThisFrame += CFAbsoluteTimeGetCurrent() - started
         _doingWork = false
     }
-    var _timeAllotmentPerFrame: CFAbsoluteTime = 0.0005
+    var _timeAllotmentPerFrame: CFAbsoluteTime = 0.0004
     typealias Task = () -> ()
     var _tasks = [Task]()
     func addTask(task: Task) {
