@@ -60,10 +60,11 @@ class CardViewWrapper: UIView {
         if let cardFirebase = cardView.cardFirebase {
             _cardDataSub = cardFirebase.pusher.subscribe({ [weak self] (let data) in
                 if let json = data as? [String: AnyObject] {
-                    self?.cardView.importJson(json)
-                    for item in self?.cardView.items ?? [] {
-                        item.prepareToPresent()
-                    }
+                    self?.cardView.importJson(json, callback: {
+                        for item in self?.cardView.items ?? [] {
+                            item.prepareToPresent()
+                        }
+                    })
                 }
                 })
         }

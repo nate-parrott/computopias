@@ -32,19 +32,21 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         if let t = template {
             prompt = "New Post"
             // we already have a template, so don't allow editing it:
-            cardView.importJson(t)
-            for item in cardView.items {
-                item.detachFromTemplate()
-                item.prepareToEditWithExistingTemplate()
-            }
+            cardView.importJson(t, callback: {
+                for item in self.cardView.items {
+                    item.detachFromTemplate()
+                    item.prepareToEditWithExistingTemplate()
+                }
+            })
         } else if let existing = existingContent {
             prompt = "Edit Card"
-            cardView.importJson(existing)
-            let allowTemplateEditing = hashtag == "profiles"
-            for item in cardView.items {
-                item.prepareToEditInPlace(allowTemplateEditing)
-            }
-            collectionView.hidden = !allowTemplateEditing
+            cardView.importJson(existing, callback: {
+                let allowTemplateEditing = self.hashtag == "profiles"
+                for item in self.cardView.items {
+                    item.prepareToEditInPlace(allowTemplateEditing)
+                }
+                self.collectionView.hidden = !allowTemplateEditing
+            })
         } else {
             // we're building a new template; add initial content:
             // addItemView(ProfileCardItemView())

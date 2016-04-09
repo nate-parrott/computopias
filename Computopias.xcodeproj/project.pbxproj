@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		21141B7977D28E67D62F6732 /* Pods_Computopias.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F1389C7F54711D4F1B4F21 /* Pods_Computopias.framework */; };
 		5F2925DA1CB8FC9C0096B739 /* GroupEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */; };
+		5F2925DC1CB9056B0096B739 /* ViewBringUpQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2925DB1CB9056B0096B739 /* ViewBringUpQueue.swift */; };
 		5F29B49C1CB73E3F0060FFD7 /* CardNavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B49A1CB73E3F0060FFD7 /* CardNavigatorView.swift */; };
 		5F29B49D1CB73E3F0060FFD7 /* BlockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B49B1CB73E3F0060FFD7 /* BlockButton.swift */; };
 		5F29B4BB1CB73E830060FFD7 /* UIView+Elastic.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4A01CB73E830060FFD7 /* UIView+Elastic.m */; };
@@ -94,6 +95,7 @@
 
 /* Begin PBXFileReference section */
 		5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupEditor.swift; sourceTree = "<group>"; };
+		5F2925DB1CB9056B0096B739 /* ViewBringUpQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewBringUpQueue.swift; sourceTree = "<group>"; };
 		5F29B49A1CB73E3F0060FFD7 /* CardNavigatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNavigatorView.swift; sourceTree = "<group>"; };
 		5F29B49B1CB73E3F0060FFD7 /* BlockButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockButton.swift; sourceTree = "<group>"; };
 		5F29B49F1CB73E830060FFD7 /* UIView+Elastic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Elastic.h"; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				5FB976CB1CB42B6900B92A16 /* Flagging.swift */,
 				5F508C0E1CB8E786005BF228 /* FriendListViewController.swift */,
 				5F508C101CB8E78E005BF228 /* FriendListDataSource.swift */,
+				5F2925DB1CB9056B0096B739 /* ViewBringUpQueue.swift */,
 				5F29B49E1CB73E420060FFD7 /* Cards */,
 				5FB2F2451CA20FB8001863C4 /* Screens */,
 				5FB2F2461CA20FC4001863C4 /* Card Items */,
@@ -548,6 +551,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FB2F24D1CA21774001863C4 /* NetImageView.swift in Sources */,
+				5F2925DC1CB9056B0096B739 /* ViewBringUpQueue.swift in Sources */,
 				5FB976BD1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m in Sources */,
 				5FB2F25F1CA242FD001863C4 /* CMWindow.m in Sources */,
 				5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */,

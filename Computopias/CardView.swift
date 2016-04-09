@@ -33,7 +33,7 @@ class CardView: UIView {
         return j
     }
     
-    func importJson(j: [String: AnyObject]) {
+    func importJson(j: [String: AnyObject], callback: (() -> ())?) {
         /*if let w = j["width"] as? String, let h = j["height"] as? String, let wf = Float(w), let hf = Float(h) {
             bounds = CGRectMake(0, 0, CGFloat(wf), CGFloat(hf))
         }*/
@@ -53,14 +53,22 @@ class CardView: UIView {
         
         if let items = j["items"] as? [[String: AnyObject]] {
             for item in items {
-                if let itemView = CardItemView.FromJson(item) {
-                    addSubview(itemView)
+                ViewBringUpQueue.Shared.addTask {
+                    if let itemView = CardItemView.FromJson(item) {
+                        self.addSubview(itemView)
+                    }
                 }
             }
         }
-        drawingView.item = drawingItem
+        ViewBringUpQueue.Shared.addTask { 
+            self.drawingView.item = self.drawingItem
+        }
         
         _hideIfBlocked()
+        
+        if let cb = callback {
+            ViewBringUpQueue.Shared.addTask(cb)
+        }
     }
     
     static let CardSize = CGSize(width: 300, height: 400)
