@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AsyncDisplayKit
 
 class CardViewWrapper: UIView {
     override func willMoveToWindow(newWindow: UIWindow?) {
@@ -18,18 +19,24 @@ class CardViewWrapper: UIView {
         }
         if cardView.superview == nil {
             addSubview(cardView)
-            addSubview(label)
-            label.textAlignment = .Center
-            label.textColor = UIColor(white: 0.1, alpha: 0.5)
+            layer.addSublayer(label.layer)
         }
     }
     
     let cardView = CardView()
-    private let label = UILabel()
+    private let label = ASTextNode()
     var labelText: NSAttributedString? {
         didSet {
-            label.attributedText = labelText
-            setNeedsLayout()
+            let mText = (labelText?.mutableCopy() ?? NSMutableAttributedString()) as! NSMutableAttributedString
+            let para = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+            para.alignment = .Center
+            mText.addAttribute(NSParagraphStyleAttributeName, value: para, range: NSMakeRange(0, mText.length))
+            mText.addAttribute(NSForegroundColorAttributeName, value: UIColor(white: 0.1, alpha: 0.5), range: NSMakeRange(0, mText.length))
+            label.attributedString = mText
+            backgroundThread { 
+                let height = self.label.measure(CGSizeMake(CardView.CardSize.width, 50)).height
+                self.label.frame = CGRectMake(0, -height - 5, CardView.CardSize.width, height)
+            }
         }
     }
     
@@ -37,8 +44,6 @@ class CardViewWrapper: UIView {
         super.layoutSubviews()
         cardView.bounds = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
         cardView.center = bounds.center
-        let labelHeight = label.sizeThatFits(CGSizeMake(CardView.CardSize.width, 40)).height
-        label.frame = CGRectMake(0, -labelHeight-5, CardView.CardSize.width, labelHeight)
     }
     
     var card: (id: String, hashtag: String?)? {

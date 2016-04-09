@@ -17,6 +17,7 @@ class DrawingCardItemView: CardItemView {
         icon.image = UIImage(named: "Pencil")
         icon.tintColor = UIColor(white: 0, alpha: 0.5)
         icon.contentMode = .Center
+        icon.hidden = !editMode
     }
     
     override var defaultSize: GridSize{
