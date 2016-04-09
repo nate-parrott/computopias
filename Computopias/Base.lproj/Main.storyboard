@@ -328,7 +328,7 @@
                                             </constraints>
                                             <state key="normal" title="✕"/>
                                             <connections>
-                                                <action selector="dismiss" destination="I7e-jP-YN9" eventType="touchUpOutside" id="e0v-PH-TVb"/>
+                                                <action selector="dismiss" destination="I7e-jP-YN9" eventType="touchUpInside" id="CYi-1S-oib"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yBD-5q-BPr">
@@ -338,7 +338,7 @@
                                             </constraints>
                                             <state key="normal" title="Follow"/>
                                             <connections>
-                                                <action selector="dismiss" destination="I7e-jP-YN9" eventType="touchUpInside" id="FKi-9i-0GA"/>
+                                                <action selector="follow" destination="I7e-jP-YN9" eventType="touchUpInside" id="WHM-K9-4fC"/>
                                             </connections>
                                         </button>
                                     </subviews>

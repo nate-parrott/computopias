@@ -31,19 +31,22 @@ class FriendListViewController: UITableViewController {
         sections.append(friendsSec)
         friendsSec.title = "Friends"
         for id in source._friendIDs {
-            friendsSec.rows.append(BasicTextSection.Row(title: "", action: nil, dim: false, center: false, titleFirebase: Data.firebase.childByAppendingPath("users").childByAppendingPath(id).childByAppendingPath("name")))
+            let unfollow: () -> () = {
+                Data.setFollowing(id, following: false, type: .User)
+            }
+            friendsSec.rows.append(BasicTextSection.Row(title: "", action: nil, dim: false, center: false, titleFirebase: Data.firebase.childByAppendingPath("users").childByAppendingPath(id).childByAppendingPath("name"), deleteAction: unfollow))
         }
         if source._searchingContactsInProgress {
-            friendsSec.rows.append(BasicTextSection.Row(title: "⏳ Searching for friends", action: nil, dim: true, center: true, titleFirebase: nil))
+            friendsSec.rows.append(BasicTextSection.Row(title: "⏳ Searching for friends", action: nil, dim: true, center: true, titleFirebase: nil, deleteAction: nil))
         } else if Data.shouldPromptToDoContactSync() {
             let sync: () -> () = {
                 [weak self] in
                 self?.source._doContactsSync()
             }
-            friendsSec.rows.append(BasicTextSection.Row(title: "👫 Search for friends in contacts", action: sync, dim: false, center: true, titleFirebase: nil))
+            friendsSec.rows.append(BasicTextSection.Row(title: "👫 Search for friends in contacts", action: sync, dim: false, center: true, titleFirebase: nil, deleteAction: nil))
         }
         if friendsSec.rows.count == 0 {
-            friendsSec.rows.append(BasicTextSection.Row(title: "No friends 😕", action: nil, dim: true, center: true, titleFirebase: nil))
+            friendsSec.rows.append(BasicTextSection.Row(title: "No friends 😕", action: nil, dim: true, center: true, titleFirebase: nil, deleteAction: nil))
         }
         self.sections = sections
     }
@@ -61,6 +64,12 @@ class FriendListViewController: UITableViewController {
             return nil
         }
         func clickedCell(model: AnyObject, parent: FriendListViewController) {
+            
+        }
+        func canDeleteModel(model: AnyObject) -> Bool {
+            return false
+        }
+        func deleteModel(model: AnyObject) {
             
         }
     }
@@ -82,6 +91,7 @@ class FriendListViewController: UITableViewController {
             var dim: Bool
             var center: Bool
             var titleFirebase: Firebase?
+            var deleteAction: (() -> ())? = nil
         }
         var rows = [Row]() {
             didSet {
@@ -101,6 +111,14 @@ class FriendListViewController: UITableViewController {
         override func clickedCell(model: AnyObject, parent: FriendListViewController) {
             let row = rows[model as! Int]
             row.action?()
+        }
+        override func canDeleteModel(model: AnyObject) -> Bool {
+            let row = rows[model as! Int]
+            return row.deleteAction != nil
+        }
+        override func deleteModel(model: AnyObject) {
+            let row = rows[model as! Int]
+            row.deleteAction!()
         }
     }
     var sections = [Section]() {
@@ -131,6 +149,24 @@ class FriendListViewController: UITableViewController {
         let model = section.models[indexPath.row]
         section.clickedCell(model, parent: self)
     }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        let section = sections[indexPath.section]
+        let model = section.models[indexPath.row]
+        return section.canDeleteModel(model)
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        let section = sections[indexPath.section]
+        let model = section.models[indexPath.row]
+        
+        switch editingStyle {
+        case .Delete:
+            section.deleteModel(model)
+        default: ()
+        }
+    }
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -161,6 +197,7 @@ class NewFollowerCell: UITableViewCell {
     @IBAction func follow() {
         if let uid = follower?["uid"] as? String {
             Data.setFollowing(uid, following: true, type: .User)
+            Data.firebase.childByAppendingPath("new_followers").childByAppendingPath(Data.getUID()!).childByAppendingPath(uid).setValue(nil)
         }
     }
     var follower: [String: AnyObject]? {
