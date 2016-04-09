@@ -12,21 +12,33 @@ class CardNavigatorView: UIView {
     struct StackEntry {
         let stack: CardStack
         let scroll = ElasticValue.pageValue()
+        let appearance = ElasticValue.pageValue()
     }
     
     var _stackEntries = [StackEntry]()
-    let stackLevel = ElasticValue.pageValue()
     
     func addStack(stack: CardStack) {
         stack.navigator = self
-        let idx = _stackEntries.count
         let entry = StackEntry(stack: stack)
         entry.scroll.addInput(panRec) { [weak self] (let input) -> CGFloat in
-            if let s = self where Int(round(s.stackLevel.position)) == idx {
+            if let s = self where s._stacksToRender().last?.stack === entry.stack {
                 return -(input as! UIPanGestureRecognizer).horizontalTranslationInView(s) / s.cardStride.width
             } else {
                 return 0
             }
+        }
+        entry.appearance.addInput(panRec) { [weak self] (let input) -> CGFloat in
+            if let s = self where s._stacksToRender().last?.stack === entry.stack {
+                return -(input as! UIPanGestureRecognizer).verticalTranslationInView(s) / s.bounds.size.height
+            } else {
+                return 0
+            }
+        }
+        
+        let popOnComplete: Bool -> () = {[weak self] (_) in self?._popUnusedEntries() }
+        entry.appearance.dragEndBlock = {
+            (val: ElasticValue!, pos: CGFloat) in
+            val.snapToPosition(round(pos), completionBlock: popOnComplete)
         }
         entry.scroll.decelerationRate = 1.5
         entry.scroll.dragEndBlock = {
@@ -35,14 +47,20 @@ class CardNavigatorView: UIView {
         }
         _stackEntries.append(entry)
         stack.visible = true
+        entry.appearance.max = 1
+        if _stackEntries.count == 1 {
+            entry.appearance.snapToPosition(1, completionBlock: nil)
+            entry.appearance.min = 1
+        }
     }
     
+    // MARK: Public
     func pushCardStack(stack: CardStack, above: CardStack?) {
         while _stackEntries.last?.stack !== above {
             popStack()
         }
         addStack(stack)
-        stackLevel.snapToPosition(CGFloat(_stackEntries.count-1), spring: true, completionBlock: nil)
+        showStackEntryAtIndex(_stackEntries.count - 1)
     }
     
     func popStack() {
@@ -50,6 +68,29 @@ class CardNavigatorView: UIView {
         entry.stack.visible = false
         entry.stack.navigator = nil
         entry.scroll.removeInput(panRec)
+    }
+    
+    // MARK: Internal
+    func _stacksToRender() -> [StackEntry] {
+        var toRender = [StackEntry]()
+        for entry in _stackEntries {
+            if entry.appearance.rubberBandedPosition >= 1 {
+                toRender.removeAll()
+            }
+            if entry.appearance.rubberBandedPosition > 0 {
+                toRender.append(entry)
+            }
+        }
+        return toRender
+    }
+    
+    func showStackEntryAtIndex(index: Int) {
+        _stackEntries[index].appearance.snapToPosition(1, spring: true, completionBlock: nil)
+        var i = index+1
+        while i < _stackEntries.count {
+            _stackEntries[i].appearance.snapToPosition(0, spring: false, completionBlock: nil)
+            i += 1
+        }
     }
     
     
@@ -60,7 +101,7 @@ class CardNavigatorView: UIView {
         super.elasticSetup()
         addGestureRecognizer(panRec)
         // stackLevel.logName = "level"
-        stackLevel.addInput(panRec) { [weak self] (let input) -> CGFloat in
+        /*stackLevel.addInput(panRec) { [weak self] (let input) -> CGFloat in
             if let s = self {
                 return -(input as! UIPanGestureRecognizer).verticalTranslationInView(s) / s.bounds.size.height
             } else {
@@ -74,7 +115,7 @@ class CardNavigatorView: UIView {
                 self?._popUnusedEntries()
             })
         }
-        stackLevel.decelerationRate = 2
+        stackLevel.decelerationRate = 2*/
     }
     
     var cardStride: CGSize {
@@ -84,7 +125,7 @@ class CardNavigatorView: UIView {
     }
     
     func _popUnusedEntries() {
-        while _stackEntries.count - 1 > Int(ceil(stackLevel.position)) {
+        while _stackEntries.last?.appearance.position <= 0 && _stackEntries.count > 1 {
             popStack()
         }
     }
@@ -95,20 +136,16 @@ class CardNavigatorView: UIView {
         super.elasticRender()
         _cardCentersForThisRender.removeAll()
         
-        stackLevel.max = CGFloat(_stackEntries.count - 1)
-        
         for entry in _stackEntries {
             entry.scroll.max = CGFloat(entry.stack.cardModels.count - 1)
         }
         
-        let lowerStackIndex = max(0, Int(floor(stackLevel.rubberBandedPosition)))
         /*for i in 0..<lowerStackIndex {
             _renderStack(i, yOffset: 1) // render lower layers (should we?)
         }*/
-        let isTop = (lowerStackIndex + 1 == _stackEntries.count)
-        _renderStack(lowerStackIndex, yOffset: isTop ? CGFloat(lowerStackIndex) - stackLevel.rubberBandedPosition : 0)
-        if CGFloat(lowerStackIndex) != stackLevel.rubberBandedPosition {
-            _renderStack(lowerStackIndex+1, yOffset: CGFloat(lowerStackIndex+1) - stackLevel.rubberBandedPosition)
+        for entry in _stacksToRender() {
+            let i = _stackEntries.indexOf({ $0.stack === entry.stack })!
+            _renderStack(i, yOffset: 1 - entry.appearance.rubberBandedPosition)
         }
     }
     
