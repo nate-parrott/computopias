@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController?.view.tintColor = Appearance.tint
         
         if Data.getUID() == nil || Data.getPhone() == nil {
+            Data.firebase.unauth()
             delay(0.5, closure: {
                 NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Onboarding"))
             })

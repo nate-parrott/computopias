@@ -33,6 +33,8 @@
 		5F508C061CB75F05005BF228 /* HashtagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C051CB75F05005BF228 /* HashtagListView.swift */; };
 		5F508C081CB7678E005BF228 /* HashtagCardStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C071CB7678E005BF228 /* HashtagCardStack.swift */; };
 		5F508C0D1CB767FF005BF228 /* HashtagFeedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C0C1CB767FF005BF228 /* HashtagFeedSource.swift */; };
+		5F508C0F1CB8E786005BF228 /* FriendListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C0E1CB8E786005BF228 /* FriendListViewController.swift */; };
+		5F508C111CB8E78E005BF228 /* FriendListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C101CB8E78E005BF228 /* FriendListDataSource.swift */; };
 		5F70981C1CA0EDF600B499BC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F70981B1CA0EDF600B499BC /* AppDelegate.swift */; };
 		5F7098211CA0EDF600B499BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F70981F1CA0EDF600B499BC /* Main.storyboard */; };
 		5F7098231CA0EDF600B499BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7098221CA0EDF600B499BC /* Assets.xcassets */; };
@@ -141,6 +143,8 @@
 		5F508C051CB75F05005BF228 /* HashtagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagListView.swift; sourceTree = "<group>"; };
 		5F508C071CB7678E005BF228 /* HashtagCardStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagCardStack.swift; sourceTree = "<group>"; };
 		5F508C0C1CB767FF005BF228 /* HashtagFeedSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagFeedSource.swift; sourceTree = "<group>"; };
+		5F508C0E1CB8E786005BF228 /* FriendListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListViewController.swift; sourceTree = "<group>"; };
+		5F508C101CB8E78E005BF228 /* FriendListDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendListDataSource.swift; sourceTree = "<group>"; };
 		5F7098181CA0EDF600B499BC /* Computopias.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Computopias.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F70981B1CA0EDF600B499BC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F7098201CA0EDF600B499BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -345,6 +349,8 @@
 				5FD360641CACFD9E0016D837 /* ContactsSync.swift */,
 				5FB976B91CAF292A00B92A16 /* Hashtags.swift */,
 				5FB976CB1CB42B6900B92A16 /* Flagging.swift */,
+				5F508C0E1CB8E786005BF228 /* FriendListViewController.swift */,
+				5F508C101CB8E78E005BF228 /* FriendListDataSource.swift */,
 				5F29B49E1CB73E420060FFD7 /* Cards */,
 				5FB2F2451CA20FB8001863C4 /* Screens */,
 				5FB2F2461CA20FC4001863C4 /* Card Items */,
@@ -633,6 +639,7 @@
 				5F29B4C61CB73E830060FFD7 /* EVFakeData.m in Sources */,
 				5FD360551CAC6E670016D837 /* Users.swift in Sources */,
 				5FB2F2551CA21847001863C4 /* NPSoftModalPresentationController.swift in Sources */,
+				5F508C0F1CB8E786005BF228 /* FriendListViewController.swift in Sources */,
 				5FD360461CA9CA0D0016D837 /* HashtagViewController.swift in Sources */,
 				5FB2F24B1CA216B4001863C4 /* Assets.swift in Sources */,
 				5F29B4CC1CB73FE60060FFD7 /* CardNavigatorViewController.swift in Sources */,
@@ -646,6 +653,7 @@
 				5FB2F2571CA2184E001863C4 /* UIColor+Hex.swift in Sources */,
 				5F508BFE1CB743DC005BF228 /* ActivityFeedSource.swift in Sources */,
 				5F70982E1CA0EEA600B499BC /* CardEditor.swift in Sources */,
+				5F508C111CB8E78E005BF228 /* FriendListDataSource.swift in Sources */,
 				5F29B4BC1CB73E830060FFD7 /* UIView+ElasticLayout.m in Sources */,
 				5FB976BF1CB1A5B200B92A16 /* CreateGroupViewController.swift in Sources */,
 				5FB2F2511CA217CF001863C4 /* KeyboardAvoidance.swift in Sources */,

@@ -44,7 +44,7 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
         let toVC = transitionContext!.viewControllerForKey(UITransitionContextToViewControllerKey)!
         if toVC === self.presentedViewController {
             // we're presenting a modal:
-            return 0.7
+            return 0.5
         } else {
             // we're dismissing:
             return 0.3
@@ -104,7 +104,7 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
         view.alpha = 0
         view.transform = CGAffineTransformMakeTranslation(0, translation + 20)
         let duration = transitionDuration(transitionContext)
-        UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.2, options: [], animations: {
+        UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [], animations: {
             view.transform = CGAffineTransformIdentity
             view.alpha = 1
             }) { (completed) in
@@ -177,7 +177,9 @@ extension UIViewController {
         /*let contentWidth = bounds.size.width - 40
          let contentHeight = min(contentWidth, bounds.size.height)*/
         let widthInset: CGFloat = traitCollection.horizontalSizeClass == .Compact ? 40 : 60
-        let heightInset: CGFloat = traitCollection.verticalSizeClass == .Compact ? 10 : 70
+        let width = bounds.size.width - widthInset * 2
+        let preferredHeight = width * 1.6
+        let heightInset: CGFloat = traitCollection.verticalSizeClass == .Compact ? 10 : (bounds.size.height - preferredHeight)/2
         let contentSize = CGSizeMake(bounds.size.width - widthInset * 2, bounds.size.height - heightInset * 2)
         return contentSize
     }

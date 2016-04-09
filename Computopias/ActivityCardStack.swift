@@ -72,7 +72,7 @@ class ActivityCardStack: CardFeedStack {
     override func renderBottomControls(view: UIView, rect: CGRect) {
         let button = view.elasticGetChildWithKey("friends") { () -> UIView! in
             return CUButton(title: "Friends", action: {
-                // TODO
+                NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Friends"))
             })
             } as! CUButton
         button.sizeToFit()
