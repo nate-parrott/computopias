@@ -7,45 +7,48 @@
 //
 
 import UIKit
+import AsyncDisplayKit
 
-class TextCardItemView: CardItemView, UITextViewDelegate {
+class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
     override func setup() {
         super.setup()
-        addSubview(field)
-        field.text = "Tap to edit"
-        field.delegate = self
-        field.userInteractionEnabled = false
-        field.backgroundColor = UIColor.clearColor()
-        field.scrollEnabled = false
-        field.font = TextCardItemView.font
-        field.textContainer.lineFragmentPadding = 0
-        field.dataDetectorTypes = .All
+        addSubview(fieldNode.view)
+        setText("Tap to edit")
+        fieldNode.delegate = self
+        fieldNode.userInteractionEnabled = false
+        fieldNode.backgroundColor = UIColor.clearColor()
+        fieldNode.scrollEnabled = false
+        
+        // field.textContainer.lineFragmentPadding = 0
+        // field.dataDetectorTypes = .All
         self.staticLabel = false
-        field.tintColor = UIColor.whiteColor()
+        tintColor = UIColor.whiteColor()
+        _updateAppearance()
+    }
+    
+    func setTextAttributes(attrs: [String: AnyObject]) {
+        if let mText = fieldNode.attributedText?.mutableCopy() as? NSMutableAttributedString {
+            mText.addAttributes(attrs, range: NSMakeRange(0, mText.length))
+            fieldNode.attributedText = mText
+        }
+        fieldNode.typingAttributes = attrs
     }
     
     override func acceptsTouches() -> Bool {
-        return field.isFirstResponder()
+        return fieldNode.textView.isFirstResponder()
     }
     
     static let font = UIFont(name: "AvenirNext-Medium", size: 15)!
     static let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 15)!
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if text == "\n" {
-            textView.resignFirstResponder()
-            return false
-        }
-        return true
+    func setText(text: String) {
+        fieldNode.attributedText = NSAttributedString(string: text, attributes: fieldNode.typingAttributes ?? [String: AnyObject]())
     }
     
-    func textViewDidBeginEditing(textView: UITextView) {
-        textView.selectedRange = NSMakeRange(0, (textView.text as NSString).length)
-    }
-    
-    func textViewDidChange(textView: UITextView) {
-        delay(0) { 
-            if !self.backgrounded && textView.numberOfLines > 1 {
+    // MARK: Text delegate
+    func editableTextNodeDidUpdateText(editableTextNode: ASEditableTextNode) {
+        delay(0) {
+            if !self.backgrounded && self.fieldNode.textView.numberOfLines > 1 {
                 // can we extend this horizontally?
                 if let newFrame = self.card?.frameForHorizontalExpansionOfView(self) {
                     self.frame = newFrame
@@ -53,9 +56,18 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
             }
         }
     }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        field.userInteractionEnabled = false
+    func editableTextNodeDidBeginEditing(editableTextNode: ASEditableTextNode) {
+        editableTextNode.textView.selectedRange = NSMakeRange(0, editableTextNode.attributedText?.length ?? 0)
+    }
+    func editableTextNodeDidFinishEditing(editableTextNode: ASEditableTextNode) {
+        fieldNode.userInteractionEnabled = false
+    }
+    func editableTextNode(editableTextNode: ASEditableTextNode, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            editableTextNode.textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
     override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
@@ -65,8 +77,8 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     override func tapped() -> Bool {
         super.tapped()
         if templateEditMode || (editMode && !staticLabel) {
-            field.userInteractionEnabled = true
-            field.becomeFirstResponder()
+            fieldNode.userInteractionEnabled = true
+            fieldNode.textView.becomeFirstResponder()
             return true
         }
         return false
@@ -91,8 +103,11 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     }
     
     func _updateAppearance() {
-        field.backgroundColor = backgrounded ? Appearance.transparentWhite : nil
-        field.font = backgrounded ? TextCardItemView.font : TextCardItemView.boldFont
+        let font = backgrounded ? TextCardItemView.font : TextCardItemView.boldFont
+        let para = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        para.alignment = _textAlignment
+        setTextAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.blackColor(), NSParagraphStyleAttributeName: para])
+        fieldNode.backgroundColor = backgrounded ? Appearance.transparentWhite : nil
     }
     
     override var defaultSize: GridSize {
@@ -105,21 +120,21 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         scrollView.contentOffset = CGPointZero
     }
     
-    let field = UITextView()
+    let fieldNode = ASEditableTextNode()
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        field.frame = insetBounds
+        fieldNode.frame = insetBounds
         var inset = UIEdgeInsetsMake(textMargin - margin, textMargin - margin, textMargin - margin, textMargin - margin)
-        inset.top = (card!.gridCellSize.height - field.font!.pointSize)/2 - 4
-        field.textContainerInset = inset
-        field.layer.cornerRadius = CardView.rounding
+        inset.top = (card!.gridCellSize.height - TextCardItemView.font.pointSize)/2 - 4
+        fieldNode.textContainerInset = inset
+        fieldNode.cornerRadius = CardView.rounding
     }
     
     override func toJson() -> [String : AnyObject] {
         var j = super.toJson()
         j["type"] = "text"
-        j["text"] = field.text ?? ""
+        j["text"] = fieldNode.attributedText?.string ?? ""
         j["staticLabel"] = staticLabel
         j["backgrounded"] = backgrounded
         return j
@@ -127,7 +142,7 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
     
     override func importJson(json: [String : AnyObject]) {
         super.importJson(json)
-        field.text = json["text"] as? String ?? ""
+        setText(json["text"] as? String ?? "")
         staticLabel = json["staticLabel"] as? Bool ?? false
         backgrounded = json["backgrounded"] as? Bool ?? !staticLabel
     }
@@ -136,10 +151,18 @@ class TextCardItemView: CardItemView, UITextViewDelegate {
         didSet {
             switch alignment.x {
             case .Middle:
-                field.textAlignment = .Center
+                _textAlignment = .Center
             case .Trailing:
-                field.textAlignment = .Right
-            default: field.textAlignment = .Left
+                _textAlignment = .Right
+            default: _textAlignment = .Left
+            }
+        }
+    }
+    
+    var _textAlignment = NSTextAlignment.Center {
+        didSet {
+            if _textAlignment.rawValue != oldValue.rawValue {
+                _updateAppearance()
             }
         }
     }

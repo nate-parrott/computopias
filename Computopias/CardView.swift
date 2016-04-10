@@ -360,7 +360,8 @@ class CardView: UIView {
             }
             if let pos = _tapStartPos {
                 var handledTap = false
-                if let tappedItem = _nearestItemToPoint(pos) where CGRectContainsPoint(tappedItem.bounds, tappedItem.convertPoint(pos, fromView: window!)) {
+                let posInViewCoords = convertPoint(pos, fromView: window!)
+                if let tappedItem = _nearestItemToPoint(posInViewCoords) where CGRectContainsPoint(tappedItem.frame, posInViewCoords) {
                     handledTap = tappedItem.tapped()
                 }
                 if let t = onTap where !handledTap {
