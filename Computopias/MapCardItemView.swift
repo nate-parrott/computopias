@@ -14,26 +14,27 @@ import AsyncDisplayKit
 class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     override func toJson() -> [String : AnyObject] {
         var j = super.toJson()
-        let map = mapNode.view as! MKMapView
+        let region = mapNode.region
         j["type"] = "map"
-        j["lat"] = map.centerCoordinate.latitude
-        j["lon"] = map.centerCoordinate.longitude
-        j["lat_delta"] = map.region.span.latitudeDelta
-        j["lon_delta"] =  map.region.span.longitudeDelta
+        j["lat"] = region.center.latitude
+        j["lon"] = region.center.longitude
+        j["lat_delta"] = region.span.latitudeDelta
+        j["lon_delta"] =  region.span.longitudeDelta
         return j
     }
     override func importJson(json: [String : AnyObject]) {
         super.importJson(json)
-        mainThread {
-            let map = self.mapNode.view as! MKMapView
-            if let lat = json["lat"] as? Double, let lon = json["lon"] as? Double, let latDelta = json["lat_delta"] as? Double, let lonDelta = json["lon_delta"] as? Double {
-                let region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(lat, lon), MKCoordinateSpanMake(latDelta, lonDelta))
-                map.setRegion(region, animated: false)
-            }
+        if let lat = json["lat"] as? Double, let lon = json["lon"] as? Double, let latDelta = json["lat_delta"] as? Double, let lonDelta = json["lon_delta"] as? Double {
+            let region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(lat, lon), MKCoordinateSpanMake(latDelta, lonDelta))
+            mapNode.region = region
         }
     }
     override func setup() {
         super.setup()
+        mapNode.frame = CGRectMake(0, 0, 100, 100)
+        mapNode.preferredFrameSize = CGSizeMake(100, 100)
+        mapNode.measure(CGSizeMake(100, 100))
+        
         addSubnode(mapNode)
         addSubnode(pin)
         pin.frame = CGRectMake(0, 0, 8, 8)
@@ -63,12 +64,10 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     
     let locationMgr = CLLocationManager()
     func _locate() {
-        let map = mapNode.view as! MKMapView
         locationMgr.delegate = self
         locationMgr.requestWhenInUseAuthorization()
         if let loc = locationMgr.location {
-            let region = MKCoordinateRegionMake(loc.coordinate, MKCoordinateSpanMake(0.01, 0.01))
-            map.setRegion(region, animated: false)
+            mapNode.region = MKCoordinateRegionMake(loc.coordinate, MKCoordinateSpanMake(0.01, 0.01))
         } else {
             locationMgr.requestLocation()
         }
@@ -114,16 +113,14 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
         return true
     }
     
-    let mapNode = ASDisplayNode { () -> UIView in
-        let map = MKMapView()
-        map.showsUserLocation = true
-        return map
-    }
+    let mapNode = ASMapNode()
     let pin = ASDisplayNode()
     
     override func layout() {
         super.layout()
-        mapNode.frame = insetBounds
+        if !CGSizeEqualToSize(insetBounds.size, CGSizeZero) {
+            mapNode.frame = insetBounds
+        }
         pin.position = bounds.center
     }
     
