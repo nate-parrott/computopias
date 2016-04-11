@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import AsyncDisplayKit
 
 class DrawingCardItemView: CardItemView {
-    let icon = UIImageView()
+    let icon = ASImageNode()
     
     override func setup() {
         super.setup()
-        addSubview(icon)
+        addSubnode(icon)
         icon.image = UIImage(named: "Pencil")
         icon.tintColor = UIColor(white: 0, alpha: 0.5)
         icon.contentMode = .Center
@@ -26,7 +27,8 @@ class DrawingCardItemView: CardItemView {
         }
     }
     
-    override func layoutSubviews() {
+    override func layout() {
+        super.layout()
         icon.frame = insetBounds
     }
     

@@ -44,6 +44,19 @@ extension NSAttributedString {
     class func largeText(text: String) -> NSAttributedString {
         return NSAttributedString(string: text, attributes: [NSFontAttributeName: UIFont.systemFontOfSize(22, weight: UIFontWeightLight)])
     }
+    
+    class func paragraphStyleWithTextAlignment(align: NSTextAlignment) -> NSParagraphStyle {
+        let m = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        m.alignment = align
+        return m
+    }
+    
+    func drawVerticallyCenteredInRect(rect: CGRect) {
+        let size = boundingRectWithSize(rect.size, options: [.UsesLineFragmentOrigin], context: nil)
+        var d = CGRectMake(0, 0, rect.size.width, size.height)
+        d.center = rect.center
+        drawInRect(d)
+    }
 }
 
 func +(lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {

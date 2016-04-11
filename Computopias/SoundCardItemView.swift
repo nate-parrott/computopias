@@ -10,7 +10,8 @@ import UIKit
 import IQAudioRecorderController
 import AVFoundation
 
-class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudioPlayerDelegate {
+class SoundCardItemView: CardItemView /*, IQAudioRecorderControllerDelegate, AVAudioPlayerDelegate*/ {
+    /*
     // MARK: Data
     var url: String? {
         didSet {
@@ -48,7 +49,7 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
     override func setup() {
         super.setup()
         label.font = TextCardItemView.font
-        addSubview(label)
+        view.addSubview(label)
         label.textAlignment = .Center
         label.layer.cornerRadius = CardView.rounding
         label.clipsToBounds = true
@@ -69,8 +70,8 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
     // MARK: Layout/UI
     let label = UILabel()
     let loader = UIActivityIndicatorView()
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func layout() {
+        super.layout()
         label.frame = textInsetBounds
         label.layer.cornerRadius = CardView.rounding
         label.font = TextCardItemView.font.fontWithSize(generousFontSize)
@@ -137,7 +138,7 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
                 self.becomeFirstResponder()
                 
                 menuController.menuItems = [recordAudioMenuItem, clearAudioMenuItem, enableLoop, disableLoop]
-                menuController.setTargetRect(self.bounds, inView: self)
+                // menuController.setTargetRect(self.bounds, inView: self)
                 menuController.setMenuVisible(true, animated: true)
                 
             })
@@ -206,7 +207,7 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
                 return loop
             }
         }
-        return super.canPerformAction(action, withSender: sender)
+        return super.canPerformAction(action, withSender: sender!)
     }
     // MARK: Playback
     var _shouldPlayWhenAvailable = false
@@ -274,5 +275,5 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
         } else {
             nowPlaying = false
         }
-    }
+    }*/
 }

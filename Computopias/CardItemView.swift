@@ -8,25 +8,28 @@
 
 import UIKit
 import Firebase
+import AsyncDisplayKit
 
-class CardItemView: UIView, UIGestureRecognizerDelegate {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+class CardItemView: ASDisplayNode, UIGestureRecognizerDelegate {
+    override init() {
+        super.init()
         setup()
     }
     
     var cardPath: Firebase?
     
     func setup() {
-        
+        acceptsTouches = false
     }
     
     func tapped() -> Bool {
         return false
     }
     
-    func acceptsTouches() -> Bool {
-        return false
+    var acceptsTouches = false {
+        didSet {
+            userInteractionEnabled = acceptsTouches
+        }
     }
     
     var defaultSize: GridSize {
@@ -37,16 +40,12 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
         return defaultSize
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     var editMode = true
     var templateEditMode = true
     
     var card: CardView? {
         get {
-            return superview as? CardView
+            return supernode?.supernode as? CardView
         }
     }
     
@@ -57,9 +56,15 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
     }
     
     // MARK: Layout
-    var margin: CGFloat {
+    class var margin: CGFloat {
         get {
             return 2
+        }
+    }
+    
+    var margin: CGFloat {
+        get {
+            return CounterCardItemView.margin
         }
     }
     
@@ -69,7 +74,17 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    class func insetBoundsForBounds(bounds: CGRect) -> CGRect {
+        return CGRectInset(bounds, margin, margin)
+    }
+    
     var textMargin: CGFloat {
+        get {
+            return CardItemView.textMargin
+        }
+    }
+    
+    class var textMargin: CGFloat {
         get {
             return margin + 3
         }
@@ -79,6 +94,10 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
         get {
             return CGRectInset(bounds, textMargin, textMargin)
         }
+    }
+    
+    class func textInsetBoundsForBounds(bounds: CGRect) -> CGRect {
+        return CGRectInset(bounds, textMargin, textMargin)
     }
     
     var generousFontSize: CGFloat {
@@ -99,8 +118,6 @@ class CardItemView: UIView, UIGestureRecognizerDelegate {
             item = TextCardItemView()
         case "image":
             item = ImageCardItemView()
-        case "profile":
-            item = ProfileCardItemView()
         case "counter":
             item = CounterCardItemView()
         case "likes":

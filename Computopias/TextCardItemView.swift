@@ -12,10 +12,9 @@ import AsyncDisplayKit
 class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
     override func setup() {
         super.setup()
-        addSubview(fieldNode.view)
-        setText("Tap to edit")
+        addSubnode(fieldNode)
+        setText("Tap to edit...")
         fieldNode.delegate = self
-        fieldNode.userInteractionEnabled = false
         fieldNode.backgroundColor = UIColor.clearColor()
         fieldNode.scrollEnabled = false
         
@@ -32,10 +31,6 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
             fieldNode.attributedText = mText
         }
         fieldNode.typingAttributes = attrs
-    }
-    
-    override func acceptsTouches() -> Bool {
-        return fieldNode.textView.isFirstResponder()
     }
     
     static let font = UIFont(name: "AvenirNext-Medium", size: 15)!
@@ -60,7 +55,7 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
         editableTextNode.textView.selectedRange = NSMakeRange(0, editableTextNode.attributedText?.length ?? 0)
     }
     func editableTextNodeDidFinishEditing(editableTextNode: ASEditableTextNode) {
-        fieldNode.userInteractionEnabled = false
+        acceptsTouches = false
     }
     func editableTextNode(editableTextNode: ASEditableTextNode, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
@@ -77,7 +72,7 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
     override func tapped() -> Bool {
         super.tapped()
         if templateEditMode || (editMode && !staticLabel) {
-            fieldNode.userInteractionEnabled = true
+            acceptsTouches = true
             fieldNode.textView.becomeFirstResponder()
             return true
         }
@@ -122,11 +117,11 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
     
     let fieldNode = ASEditableTextNode()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func layout() {
+        super.layout()
         fieldNode.frame = insetBounds
         var inset = UIEdgeInsetsMake(textMargin - margin, textMargin - margin, textMargin - margin, textMargin - margin)
-        inset.top = (card!.gridCellSize.height - TextCardItemView.font.pointSize)/2 - 4
+        inset.top = (CardView.gridCellSize.height - TextCardItemView.font.pointSize)/2 - 4
         fieldNode.textContainerInset = inset
         fieldNode.cornerRadius = CardView.rounding
     }

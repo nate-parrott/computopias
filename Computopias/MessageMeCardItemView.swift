@@ -16,7 +16,7 @@ class MessageMeCardItemView: ButtonCardItemView {
     }
     override func setup() {
         super.setup()
-        button.setTitle("💬 Message", forState: .Normal)
+        title = "💬 Message"
         setCurrentPhone()
     }
     override func detachFromTemplate() {

@@ -8,12 +8,17 @@
 
 import UIKit
 import Firebase
+import AsyncDisplayKit
 
 class CounterCardItemView: CardItemView {
-    var counterID = NSUUID().UUIDString
+    var counterID = NSUUID().UUIDString {
+        didSet {
+            _updateDataObservers()
+        }
+    }
     var emoji: String = CounterCardItemView.randomEmoji() {
         didSet {
-            _updateText()
+            setNeedsDisplay()
         }
     }
     static let someEmoji = "🌟 🔥 👌 💸 🌀 📣 🍃 👍 😀 😈 👻 👀 🎅 💋 👍 🌎 😉 🎃 🌴 🐳 🍔 🌶 🍺 ☕️ ⚽️ 🎯 🚀 🎉 🎁 💯".componentsSeparatedByString(" ")
@@ -25,14 +30,24 @@ class CounterCardItemView: CardItemView {
         super.setup()
         selectedByMe = false
         count = 0
-        addSubview(label)
-        label.font = TextCardItemView.font
-        label.layer.cornerRadius = CardView.rounding
-        label.clipsToBounds = true
+        opaque = false
+        _updateDataObservers()
     }
     
     override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
         return size
+    }
+    
+    func _updateDataObservers() {
+        _observer = pathToObserve().observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot: FDataSnapshot!) -> Void in
+            if let dict = snapshot.value as? [String: AnyObject], let uid = Data.getUID() {
+                self?.selectedByMe = dict[uid] != nil
+                self?.count = dict.count
+            } else {
+                self?.selectedByMe = false
+                self?.count = 0
+            }
+            })
     }
     
     override func importJson(json: [String : AnyObject]) {
@@ -49,35 +64,24 @@ class CounterCardItemView: CardItemView {
         return j
     }
     
-    override func willMoveToSuperview(newSuperview: UIView?) {
-        super.willMoveToSuperview(newSuperview)
-        
-        _observer = pathToObserve().observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot: FDataSnapshot!) -> Void in
-            if let dict = snapshot.value as? [String: AnyObject], let uid = Data.getUID() {
-                self?.selectedByMe = dict[uid] != nil
-                self?.count = dict.count
-            } else {
-                self?.selectedByMe = false
-                self?.count = 0
-            }
-            })
-    }
-    
     var selectedByMe = false {
         didSet {
-            _updateText()
+            setNeedsDisplay()
         }
     }
     var count: Int = 0 {
         didSet {
-            _updateText()
+            setNeedsDisplay()
         }
     }
     
-    func _updateText() {
+    override func drawParametersForAsyncLayer(layer: _ASDisplayLayer) -> NSObjectProtocol? {
         var attributes = [String: AnyObject]()
         attributes[NSForegroundColorAttributeName] = UIColor.blackColor()
         attributes[NSFontAttributeName] = TextCardItemView.font.fontWithSize(generousFontSize)
+        let para = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        para.alignment = textAlignment
+        attributes[NSParagraphStyleAttributeName] = para
         if selectedByMe {
             let shadow = NSShadow()
             shadow.shadowBlurRadius = 8
@@ -86,7 +90,15 @@ class CounterCardItemView: CardItemView {
             attributes[NSShadowAttributeName] = shadow
         }
         let text = " \(emoji) \(count)"
-        label.attributedText = NSAttributedString(string: text, attributes: attributes)
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    // + (void)drawRect:(CGRect)bounds withParameters:(nullable id <NSObject>)parameters
+    // isCancelled:(asdisplaynode_iscancelled_block_t)isCancelledBlock
+    // isRasterizing:(BOOL)isRasterizing;
+    override class func drawRect(bounds: CGRect, withParameters: NSObjectProtocol?, isCancelled: asdisplaynode_iscancelled_block_t, isRasterizing: Bool) {
+        let string = withParameters as! NSAttributedString
+        string.drawVerticallyCenteredInRect(CardItemView.textInsetBoundsForBounds(bounds))
     }
     
     override func tapped() -> Bool {
@@ -126,14 +138,6 @@ class CounterCardItemView: CardItemView {
         
     }
     
-    let label = UILabel()
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        label.frame = textInsetBounds
-        _updateText()
-    }
-    
     func pathToObserve() -> Firebase {
         return Data.firebase.childByAppendingPath("counters").childByAppendingPath(counterID)
     }
@@ -158,14 +162,20 @@ class CounterCardItemView: CardItemView {
         didSet {
             switch alignment.x {
             case .Middle:
-                label.textAlignment = .Center
+                textAlignment = .Center
             case .Full:
-                label.textAlignment = .Center
+                textAlignment = .Center
             case .Trailing:
-                label.textAlignment = .Right
+                textAlignment = .Right
             case .Leading:
-                label.textAlignment = .Left
+                textAlignment = .Left
             }
+        }
+    }
+    
+    var textAlignment = NSTextAlignment.Center {
+        didSet {
+            setNeedsDisplay()
         }
     }
 }

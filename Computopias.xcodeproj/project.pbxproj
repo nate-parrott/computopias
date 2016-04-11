@@ -27,6 +27,7 @@
 		5F29B4C71CB73E830060FFD7 /* EVMotionEffectObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4B81CB73E830060FFD7 /* EVMotionEffectObserver.m */; };
 		5F29B4C81CB73E830060FFD7 /* EVComplexLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4BA1CB73E830060FFD7 /* EVComplexLayout.m */; };
 		5F29B4CC1CB73FE60060FFD7 /* CardNavigatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4CB1CB73FE60060FFD7 /* CardNavigatorViewController.swift */; };
+		5F3435EC1CB9E193009E5F86 /* ASLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3435EB1CB9E193009E5F86 /* ASLabelNode.swift */; };
 		5F508BFA1CB742ED005BF228 /* ActivityCardStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BF91CB742ED005BF228 /* ActivityCardStack.swift */; };
 		5F508BFC1CB74303005BF228 /* CardStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BFB1CB74303005BF228 /* CardStack.swift */; };
 		5F508BFE1CB743DC005BF228 /* ActivityFeedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */; };
@@ -57,7 +58,6 @@
 		5FB2F2591CA21E1C001863C4 /* String+Substring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2581CA21E1C001863C4 /* String+Substring.swift */; };
 		5FB2F25B1CA223C0001863C4 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F25A1CA223C0001863C4 /* Appearance.swift */; };
 		5FB2F25F1CA242FD001863C4 /* CMWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F25E1CA242FD001863C4 /* CMWindow.m */; };
-		5FB2F2611CA254D7001863C4 /* ProfileCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2601CA254D7001863C4 /* ProfileCardItemView.swift */; };
 		5FB2F2631CA257D2001863C4 /* CounterCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */; };
 		5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */; };
 		5FB976BA1CAF292A00B92A16 /* Hashtags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976B91CAF292A00B92A16 /* Hashtags.swift */; };
@@ -128,6 +128,7 @@
 		5F29B4BA1CB73E830060FFD7 /* EVComplexLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVComplexLayout.m; sourceTree = "<group>"; };
 		5F29B4CA1CB73EAA0060FFD7 /* Elastic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Elastic.h; sourceTree = "<group>"; };
 		5F29B4CB1CB73FE60060FFD7 /* CardNavigatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNavigatorViewController.swift; sourceTree = "<group>"; };
+		5F3435EB1CB9E193009E5F86 /* ASLabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASLabelNode.swift; sourceTree = "<group>"; };
 		5F508BF91CB742ED005BF228 /* ActivityCardStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityCardStack.swift; sourceTree = "<group>"; };
 		5F508BFB1CB74303005BF228 /* CardStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardStack.swift; sourceTree = "<group>"; };
 		5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityFeedSource.swift; sourceTree = "<group>"; };
@@ -162,7 +163,6 @@
 		5FB2F25C1CA242FC001863C4 /* Computopias-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Computopias-Bridging-Header.h"; sourceTree = "<group>"; };
 		5FB2F25D1CA242FD001863C4 /* CMWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMWindow.h; sourceTree = "<group>"; };
 		5FB2F25E1CA242FD001863C4 /* CMWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMWindow.m; sourceTree = "<group>"; };
-		5FB2F2601CA254D7001863C4 /* ProfileCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCardItemView.swift; sourceTree = "<group>"; };
 		5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterCardItemView.swift; sourceTree = "<group>"; };
 		5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeCounterCardItemView.swift; sourceTree = "<group>"; };
 		5FB976B91CAF292A00B92A16 /* Hashtags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hashtags.swift; sourceTree = "<group>"; };
@@ -365,7 +365,6 @@
 				5F7098351CA115E800B499BC /* CardItemView.swift */,
 				5F7098371CA1167500B499BC /* TextCardItemView.swift */,
 				5FB2F2521CA2181C001863C4 /* ImageCardItemView.swift */,
-				5FB2F2601CA254D7001863C4 /* ProfileCardItemView.swift */,
 				5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */,
 				5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */,
 				5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */,
@@ -413,6 +412,7 @@
 				5FD360521CABB1690016D837 /* NSString+MD5.m */,
 				5FB976C01CB1C83100B92A16 /* Phony.h */,
 				5FB976C11CB1C83100B92A16 /* Phony.m */,
+				5F3435EB1CB9E193009E5F86 /* ASLabelNode.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -584,7 +584,7 @@
 				5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */,
 				5FB2F2591CA21E1C001863C4 /* String+Substring.swift in Sources */,
 				5F508C061CB75F05005BF228 /* HashtagListView.swift in Sources */,
-				5FB2F2611CA254D7001863C4 /* ProfileCardItemView.swift in Sources */,
+				5F3435EC1CB9E193009E5F86 /* ASLabelNode.swift in Sources */,
 				5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */,
 				5F508C021CB745D3005BF228 /* CardViewWrapper.swift in Sources */,
 				5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */,

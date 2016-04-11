@@ -15,7 +15,8 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var existingID: String?
     var existingContent: [String: AnyObject]?
     
-    @IBOutlet var cardView: CardView!
+    @IBOutlet var cardViewContainer: UIView!
+    var cardView: CardView!
     @IBOutlet var collectionView: UICollectionView!
     
     @IBOutlet var promptLabel: UILabel!
@@ -25,8 +26,10 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        cardView.backgroundImageView.image = Appearance.gradientForHashtag(hashtag, cardID: nil)
-        view.tintColor = cardView.backgroundColor
+        cardView = CardView()
+        cardViewContainer.addSubnode(cardView)
+        cardViewContainer.backgroundColor = nil
+        view.tintColor = UIColor.whiteColor()
         collectionView.hidden = true
         var prompt = ""
         if let t = template {
@@ -143,7 +146,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         if size.height < 0 { size.height = cardView.bounds.size.height }
         itemView.frame = findFrameForItemWithSize(size)
             
-        cardView.addSubview(itemView)
+        cardView.itemsNode.addSubnode(itemView)
         
         delay(0, closure: { () -> () in
             itemView.onInsert()
@@ -226,6 +229,8 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         let leftPadding = padding + max(0, (collectionView.bounds.size.width - contentWidth)/2)
         
         collectionView.contentInset = UIEdgeInsetsMake(padding, leftPadding, padding, padding)
+        
+        cardView.frame = cardViewContainer.bounds
     }
     
 }

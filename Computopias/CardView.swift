@@ -8,20 +8,26 @@
 
 import UIKit
 import Firebase
+import AsyncDisplayKit
 
-class CardView: UIView {
+class CardView: ASDisplayNode {
+    override init() {
+        super.init()
+        setup()
+    }
+    
     var cardFirebase: Firebase?
     var hashtag: String?
     var poster: String?
     var posterName: String?
     
-    let backgroundImageView = UIImageView()
-    
+    let importJsonQueue = dispatch_queue_create("CardViewImportJson", nil)
+        
     var onTap: (() -> ())?
     
     var items: [CardItemView] {
         get {
-            return subviews.filter({ ($0 as? CardItemView) != nil }).map({ $0 as! CardItemView })
+            return itemsNode.subnodes.filter({ ($0 as? CardItemView) != nil }).map({ $0 as! CardItemView })
         }
     }
     
@@ -48,55 +54,63 @@ class CardView: UIView {
         }
         
         for item in items {
-            item.removeFromSuperview()
+            item.removeFromSupernode()
         }
         
-        if let items = j["items"] as? [[String: AnyObject]] {
-            for item in items {
-                ViewBringUpQueue.Shared.addTask {
+        let createItems: () -> () = {
+            let itemsNode = ASDisplayNode()
+            itemsNode.frame = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
+            
+            if let items = j["items"] as? [[String: AnyObject]] {
+                for item in items {
                     if let itemView = CardItemView.FromJson(item) {
-                        self.addSubview(itemView)
+                        itemsNode.addSubnode(itemView)
                     }
                 }
             }
-        }
-        ViewBringUpQueue.Shared.addTask { 
             self.drawingView.item = self.drawingItem
+            
+            self._hideIfBlocked()
+            
+            mainThread({
+                self.itemsNode = itemsNode
+                if let cb = callback { cb() }
+            })
         }
         
-        _hideIfBlocked()
-        
-        if let cb = callback {
-            ViewBringUpQueue.Shared.addTask(cb)
-        }
+        dispatch_async(importJsonQueue, createItems)
     }
     
     static let CardSize = CGSize(width: 300, height: 400)
     
-    var _setupYet = false
-    override func willMoveToWindow(newWindow: UIWindow?) {
-        super.willMoveToWindow(newWindow)
-        if !_setupYet {
-            _setupYet = true
-            
-            multipleTouchEnabled = true
-            
-            insertSubview(backgroundImageView, atIndex: 0)
-            
-            layer.cornerRadius = CardView.rounding
-            clipsToBounds = true
-            
-            addSubview(ellipsesButton)
-            ellipsesButton.setImage(UIImage(named: "ellipses"), forState: .Normal)
-            ellipsesButton.addTarget(self, action: #selector(CardView._cardActions(_:)), forControlEvents: .TouchUpInside)
-            ellipsesButton.tintColor = UIColor.blackColor()
-            ellipsesButton.alpha = 0.7
-            
-            if drawingView.superview == nil {
-                addSubview(drawingView)
-            }
-            
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardView._hideIfBlocked), name: Data.BlockedUsersChangedNotification, object: nil)
+    func setup() {
+        addSubnode(itemsNode)
+        
+        opaque = false
+        
+        addSubnode(ellipsesButton)
+        ellipsesButton.setImage(UIImage(named: "ellipses"), forState: .Normal)
+        ellipsesButton.addTarget(self, action: #selector(CardView._cardActions(_:)), forControlEvents: .TouchUpInside)
+        ellipsesButton.tintColor = UIColor.blackColor()
+        ellipsesButton.alpha = 0.7
+        
+        if drawingView.supernode == nil {
+            addSubnode(drawingView)
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardView._hideIfBlocked), name: Data.BlockedUsersChangedNotification, object: nil)
+    }
+    
+    override func didLoad() {
+        super.didLoad()
+        view.multipleTouchEnabled = true
+        // exclusiveTouch = true
+    }
+    
+    var itemsNode = ASDisplayNode() {
+        didSet {
+            oldValue.removeFromSupernode()
+            insertSubnode(itemsNode, atIndex: 0)
         }
     }
     
@@ -104,11 +118,16 @@ class CardView: UIView {
     
     // MARK: Grid
     
-    var gridCellSize: CGSize {
+    class var gridCellSize: CGSize {
         get {
             let hCells = Int(floor(CardView.CardSize.width/50))
             let vCells = Int(floor(CardView.CardSize.height/50))
             return CGSizeMake(CardView.CardSize.width / CGFloat(hCells), CardView.CardSize.height / CGFloat(vCells))
+        }
+    }
+    var gridCellSize: CGSize {
+        get {
+            return CardView.gridCellSize
         }
     }
     
@@ -141,29 +160,29 @@ class CardView: UIView {
         return CGRectIntegral(rect)
     }
     
-    var _proposalRect: UIView?
-    var _outlineRect: UIView?
+    var _proposalRect: ASDisplayNode?
+    var _outlineRect: ASDisplayNode?
     func showProposalRectForView(view: CardItemView?) {
         if let v = view {
             if _proposalRect == nil {
-                _proposalRect = UIView()
-                insertSubview(_proposalRect!, aboveSubview: backgroundImageView)
+                _proposalRect = ASDisplayNode()
+                insertSubnode(_proposalRect!, atIndex: 0)
                 _proposalRect!.backgroundColor = UIColor(white: 1, alpha: 0.5)
                 _proposalRect!.layer.cornerRadius = CardView.rounding
             }
             if _outlineRect == nil {
-                _outlineRect = UIView()
-                insertSubview(_outlineRect!, aboveSubview: _proposalRect!)
-                _outlineRect!.layer.cornerRadius = CardView.rounding
-                _outlineRect!.layer.borderColor = UIColor(white: 1, alpha: 0.5).CGColor
-                _outlineRect!.layer.borderWidth = 1.5
+                _outlineRect = ASDisplayNode()
+                insertSubnode(_outlineRect!, aboveSubnode: _proposalRect!)
+                _outlineRect!.cornerRadius = CardView.rounding
+                _outlineRect!.borderColor = UIColor(white: 1, alpha: 0.5).CGColor
+                _outlineRect!.borderWidth = 1.5
             }
             _proposalRect!.frame = proposedFrameForView(v)
             _outlineRect!.frame = v.frame
         } else {
-            _proposalRect?.removeFromSuperview()
+            _proposalRect?.removeFromSupernode()
             _proposalRect = nil
-            _outlineRect?.removeFromSuperview()
+            _outlineRect?.removeFromSupernode()
             _outlineRect = nil
         }
     }
@@ -179,17 +198,15 @@ class CardView: UIView {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        backgroundImageView.frame = bounds
-        
+    override func layout() {
+        super.layout()
+        itemsNode.frame = bounds
         ellipsesButton.frame = CGRectMake(bounds.size.width - gridCellSize.width, bounds.size.height - gridCellSize.height, gridCellSize.width, gridCellSize.height)
-        if ellipsesButton.superview != nil {
-            bringSubviewToFront(ellipsesButton)
+        if ellipsesButton.supernode != nil {
+            // bringSubviewToFront(ellipsesButton)
         }
         drawingView.frame = bounds
-        bringSubviewToFront(drawingView)
+        // bringSubviewToFront(drawingView)
         
         for item in items {
             if item != editingItem {
@@ -210,7 +227,7 @@ class CardView: UIView {
         return poster != nil && poster! == Data.getUID()
     }
     
-    let ellipsesButton = UIButton()
+    let ellipsesButton = ASButtonNode()
     func _cardActions(sender: UIButton) {
         if cardFirebase == nil { return }
         let actions = UIAlertController(title: "Card Actions", message: nil, preferredStyle: .ActionSheet)
@@ -269,7 +286,10 @@ class CardView: UIView {
             drawingView.drawingModeActive = false
         }
     }
-    let drawingView = DrawingView()
+    lazy var drawingView: DrawingView = {
+        let v = DrawingView()
+        return v
+    }()
     var drawingItem: DrawingCardItemView? {
         get {
             for item in items {
@@ -285,21 +305,24 @@ class CardView: UIView {
     override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
         let result = super.hitTest(point, withEvent: event)
         if let v = result, let parent = _itemParentOfView(v) {
-            if parent.isFirstResponder() || parent.acceptsTouches() {
+            if parent.userInteractionEnabled {
                 return result
             } else {
-                return self // ignore the individual item
+                return self.view // ignore the individual item
             }
+        }
+        if result == itemsNode.view {
+            return self.view
         }
         return result
     }
-    func _itemParentOfView(view: UIView) -> CardItemView? {
+    func _itemParentOfView(view: UIView) -> UIView? {
         var v: UIView? = view
         while v != nil {
-            if let item = (v as? CardItemView) {
-                return item
+            if v!.superview == itemsNode.view {
+                return v
             } else {
-                v = v?.superview
+                v = v!.superview
             }
         }
         return nil
@@ -318,10 +341,10 @@ class CardView: UIView {
     var _tapStartPos: CGPoint?
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if _touchesDown.count == 0 {
-            if let item = _nearestItemToPoint(touches.first!.locationInView(self)) where item.templateEditMode {
-                editingItem = _nearestItemToPoint(touches.first!.locationInView(self))
+            if let item = _nearestItemToPoint(touches.first!.locationInView(self.view)) where item.templateEditMode {
+                editingItem = _nearestItemToPoint(touches.first!.locationInView(self.view))
             }
-            _tapStartPos = touches.first!.locationInView(self.window!)
+            _tapStartPos = touches.first!.locationInView(self.view.window!)
         } else {
             _tapStartPos = nil
         }
@@ -330,7 +353,7 @@ class CardView: UIView {
     }
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touchRect = boundingRectOfTouches(_touchesDown)
-        if _tapStartPos != nil && (_tapStartPos! - touches.first!.locationInView(self.window!)).magnitude > 5 {
+        if _tapStartPos != nil && (_tapStartPos! - touches.first!.locationInView(self.view.window!)).magnitude > 5 {
             _tapStartPos = nil // we've moved too much; no tap
         }
         if let prev = _prevTouchRect {
@@ -339,7 +362,7 @@ class CardView: UIView {
             let dw = touchRect.size.width - prev.size.width
             let dh = touchRect.size.height - prev.size.height
             if let item = editingItem {
-                let newCenter = CGPointMake(item.center.x + dx, item.center.y + dy)
+                let newCenter = CGPointMake(item.position.x + dx, item.position.y + dy)
                 let newSize = CGSizeMake(item.bounds.size.width + dw, item.bounds.size.height + dh)
                 item.frame = CGRectMake(newCenter.x - newSize.width/2, newCenter.y - newSize.height/2, newSize.width, newSize.height)
                 showProposalRectForView(item)
@@ -355,12 +378,12 @@ class CardView: UIView {
                 if CGRectIntersectsRect(item.frame, bounds) {
                     item.frame = proposedFrameForView(item)
                 } else {
-                    item.removeFromSuperview() // remove item
+                    item.removeFromSupernode() // remove item
                 }
             }
             if let pos = _tapStartPos {
                 var handledTap = false
-                let posInViewCoords = convertPoint(pos, fromView: window!)
+                let posInViewCoords = view.convertPoint(pos, fromView: view.window!)
                 if let tappedItem = _nearestItemToPoint(posInViewCoords) where CGRectContainsPoint(tappedItem.frame, posInViewCoords) {
                     handledTap = tappedItem.tapped()
                 }
@@ -376,11 +399,22 @@ class CardView: UIView {
         _tapStartPos = nil
         touchesEnded(touches ?? Set<UITouch>(), withEvent: event)
     }
+    // MARK: Drawing
+    override func drawParametersForAsyncLayer(layer: _ASDisplayLayer) -> NSObjectProtocol? {
+        opaque = false
+        return (hashtag ?? "") + (cardFirebase?.key ?? "") as NSString
+    }
+    override class func drawRect(bounds: CGRect, withParameters: NSObjectProtocol?, isCancelled: asdisplaynode_iscancelled_block_t, isRasterizing: Bool) {
+        let string = withParameters as! NSString
+        let gradient = Appearance.gradientForString(string as String)
+        UIBezierPath(roundedRect: bounds, cornerRadius: CardView.rounding).addClip()
+        gradient.drawInRect(bounds)
+    }
 }
 
-extension UIView {
+extension ASDisplayNode {
     func boundingRectOfTouches(touches: Set<UITouch>) -> CGRect! {
-        let positions = touches.map({ $0.locationInView(self) })
+        let positions = touches.map({ $0.locationInView(self.view) })
         if var minPt = positions.first {
             var maxPt = minPt
             for pos in positions {

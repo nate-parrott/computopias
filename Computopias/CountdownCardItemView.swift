@@ -9,7 +9,7 @@
 import UIKit
 
 class CountdownCardItemView: CardItemView {
-    let label = UILabel()
+    /*let label = UILabel()
     let imageView = UIImageView(image: UIImage(named: "stopwatch"))
     
     override func setup() {
@@ -93,5 +93,5 @@ class CountdownCardItemView: CardItemView {
                 self.countdown()
             })
         }
-    }
+    }*/
 }

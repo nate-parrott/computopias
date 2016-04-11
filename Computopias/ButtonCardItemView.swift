@@ -8,18 +8,17 @@
 
 import UIKit
 import SafariServices
+import AsyncDisplayKit
 
 class ButtonCardItemView: CardItemView {
-    let button = UIButton()
+    let button = ASButtonNode()
     override func setup() {
         super.setup()
-        addSubview(button)
-        button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        addSubnode(button)
         button.backgroundColor = Appearance.transparentWhite
-        button.layer.cornerRadius = CardView.rounding
+        button.cornerRadius = CardView.rounding
         button.userInteractionEnabled = false
-        button.setTitle("Tap to edit...", forState: .Normal)
-        button.titleLabel!.font = TextCardItemView.font.fontWithSize(12)
+        self.title = "Tap to edit..."
     }
     
     override var defaultSize: GridSize {
@@ -45,7 +44,7 @@ class ButtonCardItemView: CardItemView {
         let editor = UIAlertController(title: "Edit Button", message: "Choose a title and a link", preferredStyle: .Alert)
         editor.addTextFieldWithConfigurationHandler({ (let field) in
             field.placeholder = "Button title"
-            field.text = self.button.titleForState(.Normal) ?? ""
+            field.text = self.title
             if field.text == "Tap to edit..." {
                 field.text = ""
             }
@@ -57,8 +56,7 @@ class ButtonCardItemView: CardItemView {
             field.clearButtonMode = .Always
         })
         editor.addAction(UIAlertAction(title: "Done", style: .Default, handler: { (_) in
-            let title = editor.textFields![0].text!
-            self.button.setTitle(title, forState: .Normal)
+            self.title = editor.textFields![0].text!
             self.link = editor.textFields![1].text ?? ""
         }))
         presentViewController(editor)
@@ -114,19 +112,25 @@ class ButtonCardItemView: CardItemView {
     override func importJson(json: [String : AnyObject]) {
         super.importJson(json)
         link = json["link"] as? String ?? ""
-        button.setTitle(json["title"] as? String ?? "", forState: .Normal)
+        title = json["title"] as? String ?? ""
     }
     
     override func toJson() -> [String : AnyObject] {
         var j = super.toJson()
         j["type"] = "button"
-        j["title"] = button.titleForState(.Normal) ?? ""
+        j["title"] = title
         j["link"] = link
         return j
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    var title: String = "" {
+        didSet {
+            button.setTitle(title, withFont: TextCardItemView.font.fontWithSize(12), withColor: UIColor.blackColor(), forState: .Normal)
+        }
+    }
+    
+    override func layout() {
+        super.layout()
         button.frame = insetBounds
     }
 }

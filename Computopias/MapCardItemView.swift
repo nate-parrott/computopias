@@ -9,10 +9,12 @@
 import UIKit
 import MapKit
 import CoreLocation
+import AsyncDisplayKit
 
 class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     override func toJson() -> [String : AnyObject] {
         var j = super.toJson()
+        let map = mapNode.view as! MKMapView
         j["type"] = "map"
         j["lat"] = map.centerCoordinate.latitude
         j["lon"] = map.centerCoordinate.longitude
@@ -22,24 +24,25 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     }
     override func importJson(json: [String : AnyObject]) {
         super.importJson(json)
-        if let lat = json["lat"] as? Double, let lon = json["lon"] as? Double, let latDelta = json["lat_delta"] as? Double, let lonDelta = json["lon_delta"] as? Double {
-            let region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(lat, lon), MKCoordinateSpanMake(latDelta, lonDelta))
-            map.setRegion(region, animated: false)
+        mainThread {
+            let map = self.mapNode.view as! MKMapView
+            if let lat = json["lat"] as? Double, let lon = json["lon"] as? Double, let latDelta = json["lat_delta"] as? Double, let lonDelta = json["lon_delta"] as? Double {
+                let region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(lat, lon), MKCoordinateSpanMake(latDelta, lonDelta))
+                map.setRegion(region, animated: false)
+            }
         }
     }
     override func setup() {
         super.setup()
-        addSubview(map)
-        map.showsUserLocation = true
-        map.userInteractionEnabled = false
-        addSubview(pin)
+        addSubnode(mapNode)
+        addSubnode(pin)
         pin.frame = CGRectMake(0, 0, 8, 8)
         pin.backgroundColor = UIColor.redColor()
-        pin.layer.borderWidth = 2
-        pin.layer.borderColor = UIColor.whiteColor().CGColor
-        pin.layer.cornerRadius = 4
+        pin.borderWidth = 2
+        pin.borderColor = UIColor.whiteColor().CGColor
+        pin.cornerRadius = 4
         
-        map.layer.cornerRadius = CardView.rounding
+        mapNode.cornerRadius = CardView.rounding
     }
     
     override var defaultSize: GridSize {
@@ -60,6 +63,7 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     
     let locationMgr = CLLocationManager()
     func _locate() {
+        let map = mapNode.view as! MKMapView
         locationMgr.delegate = self
         locationMgr.requestWhenInUseAuthorization()
         if let loc = locationMgr.location {
@@ -71,6 +75,7 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let map = mapNode.view as! MKMapView
         if let l = locations.first {
             let region = MKCoordinateRegionMake(l.coordinate, MKCoordinateSpanMake(0.01, 0.01))
             map.setRegion(region, animated: false)
@@ -87,40 +92,39 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     
     override func tapped() -> Bool {
         super.tapped()
+        let map = mapNode.view as! MKMapView
         if editMode {
-            map.removeFromSuperview()
             
             let vc = MapEditVC()
-            vc.map = map
-            map.userInteractionEnabled = true
+            vc.map = MKMapView()
             vc.showRadius = true
             NPSoftModalPresentationController.presentViewController(vc)
             vc.onHide = {
-                let region = self.map.region
-                self.map.removeFromSuperview()
-                self.insertSubview(self.map, atIndex: 0)
-                self.layoutIfNeeded()
-                self.map.setRegion(region, animated: false)
-                self.map.userInteractionEnabled = false
+                let region = map.region
+                map.setRegion(region, animated: false)
             }
         } else {
             let vc = MapEditVC()
             vc.map = MKMapView()
-            vc.map.region = self.map.region
+            vc.map.region = map.region
             vc.showShare = true
-            vc.map.addAnnotation(CoordinateAnnotation(coord: self.map.centerCoordinate))
+            vc.map.addAnnotation(CoordinateAnnotation(coord: map.centerCoordinate))
             NPSoftModalPresentationController.presentViewController(vc)
         }
         return true
     }
     
-    let map = MKMapView()
-    let pin = UIView()
+    let mapNode = ASDisplayNode { () -> UIView in
+        let map = MKMapView()
+        map.showsUserLocation = true
+        return map
+    }
+    let pin = ASDisplayNode()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        map.frame = insetBounds
-        pin.center = bounds.center
+    override func layout() {
+        super.layout()
+        mapNode.frame = insetBounds
+        pin.position = bounds.center
     }
     
     class CoordinateAnnotation: NSObject, MKAnnotation {

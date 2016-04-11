@@ -14,10 +14,11 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
     
     override func setup() {
         super.setup()
-        addSubview(imageNode.view)
+        addSubnode(imageNode)
         imageNode.backgroundColor = UIColor(white: 0.1, alpha: 0.7)
         imageNode.contentMode = .ScaleAspectFill
         imageNode.clipsToBounds = true
+        imageNode.layerBacked = true
     }
     
     override func tapped() -> Bool {
@@ -34,8 +35,8 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         insertMedia()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func layout() {
+        super.layout()
         imageNode.frame = bounds
     }
     
@@ -95,7 +96,7 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         picker.dismissViewControllerAnimated(true, completion: nil)
         if url == nil {
-            removeFromSuperview()
+            removeFromSupernode()
         }
     }
     

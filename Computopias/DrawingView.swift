@@ -7,28 +7,31 @@
 //
 
 import UIKit
+import AsyncDisplayKit
 
-class DrawingView: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(snapshotContainer)
-        snapshotContainer.addSubview(imageView)
-        snapshotContainer.layer.addSublayer(strokeLayer)
-        addSubview(toolbar)
-        imageView.contentMode = .ScaleAspectFit
+class DrawingView: ASDisplayNode {
+    override init() {
+        super.init()
+        
+        addSubnode(snapshotContainer)
+        
+        addSubnode(toolbar)
         toolbar.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
         toolbar.tintColor = UIColor.whiteColor()
         
-        toolbar.addSubview(doneButton)
+        toolbar.addSubnode(doneButton)
         doneButton.setImage(UIImage(named: "Checkmark"), forState: .Normal)
         doneButton.addTarget(self, action: #selector(DrawingView.done(_:)), forControlEvents: .TouchUpInside)
         
-        toolbar.addSubview(clearButton)
-        clearButton.setTitle("Clear", forState: .Normal)
+        let font = UIFont.systemFontOfSize(16)
+        let color = UIColor.whiteColor()
+        
+        toolbar.addSubnode(clearButton)
+        clearButton.setTitle("Clear", withFont: font, withColor: color, forState: .Normal)
         clearButton.addTarget(self, action: #selector(DrawingView.clear), forControlEvents: .TouchUpInside)
         
-        toolbar.addSubview(undoButton)
-        undoButton.setTitle("Undo", forState: .Normal)
+        toolbar.addSubnode(undoButton)
+        undoButton.setTitle("Undo", withFont: font, withColor: color, forState: .Normal)
         undoButton.addTarget(self, action: #selector(DrawingView.undo), forControlEvents: .TouchUpInside)
         
         strokeLayer.fillColor = nil
@@ -39,37 +42,40 @@ class DrawingView: UIView {
         userInteractionEnabled = false
     }
     
+    override func didLoad() {
+        super.didLoad()
+        snapshotContainer.layer.addSublayer(strokeLayer)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    let imageView = UIImageView()
-    let snapshotContainer = UIView()
+    let snapshotContainer = ASDisplayNode()
     let strokeLayer = CAShapeLayer()
-    let toolbar = UIView()
-    let doneButton = UIButton()
-    let undoButton = UIButton()
-    let clearButton = UIButton()
+    let toolbar = ASDisplayNode()
+    let doneButton = ASButtonNode()
+    let undoButton = ASButtonNode()
+    let clearButton = ASButtonNode()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func layout() {
+        super.layout()
         toolbar.frame = CGRectMake(0, bounds.size.height-44, bounds.size.width, 44)
         doneButton.frame = CGRectMake(toolbar.bounds.size.width-44, 0, 44, 44)
         snapshotContainer.frame = bounds
         strokeLayer.frame = snapshotContainer.bounds
-        imageView.frame = bounds
         
         var x: CGFloat = 0
         for btn in [clearButton, undoButton] {
-            btn.sizeToFit()
-            btn.frame = CGRectMake(x, 0, btn.frame.size.width + 20, 44)
+            let buttonSize = btn.measure(toolbar.frame.size)
+            btn.frame = CGRectMake(x, 0, buttonSize.width + 20, 44)
             x = btn.frame.right
         }
     }
     
     func getImage() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.mainScreen().scale)
-        snapshotContainer.drawViewHierarchyInRect(bounds, afterScreenUpdates: false)
+        snapshotContainer.view.drawViewHierarchyInRect(bounds, afterScreenUpdates: false)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
@@ -80,14 +86,6 @@ class DrawingView: UIView {
             d(self)
         }
     }
-    
-    var item: DrawingCardItemView? {
-        didSet {
-            _path = item?.path ?? UIBezierPath()
-        }
-    }
-    
-    var onDone: (DrawingView -> ())?
     
     var _prevPaths = [UIBezierPath]() {
         didSet {
@@ -116,11 +114,11 @@ class DrawingView: UIView {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         _prevPaths.append(_path.copy() as! UIBezierPath)
-        _path.moveToPoint(touches.first!.locationInView(self))
+        _path.moveToPoint(touches.first!.locationInView(view))
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        _path.addLineToPoint(touches.first!.locationInView(self))
+        _path.addLineToPoint(touches.first!.locationInView(view))
         strokeLayer.path = _path.CGPath
         item?.path = _path
     }
@@ -131,6 +129,13 @@ class DrawingView: UIView {
             userInteractionEnabled = drawingModeActive
         }
     }
+    var item: DrawingCardItemView? {
+        didSet {
+            _path = item?.path ?? UIBezierPath()
+        }
+    }
+    
+    var onDone: (DrawingView -> ())?
 }
 
 extension UIBezierPath {

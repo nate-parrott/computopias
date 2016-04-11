@@ -17,8 +17,8 @@ class CardViewWrapper: UIView {
         } else {
             _cardDataSub = nil
         }
-        if cardView.superview == nil {
-            addSubview(cardView)
+        if cardView.view.superview == nil {
+            addSubview(cardView.view)
             layer.addSublayer(label.layer)
         }
     }
@@ -43,7 +43,7 @@ class CardViewWrapper: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         cardView.bounds = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
-        cardView.center = bounds.center
+        cardView.position = bounds.center
     }
     
     var card: (id: String, hashtag: String?)? {
@@ -52,7 +52,6 @@ class CardViewWrapper: UIView {
                 let cardFirebase = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id)
                 cardView.cardFirebase = cardFirebase
                 cardView.hashtag = hashtag
-                cardView.backgroundImageView.image = Appearance.gradientForHashtag(hashtag ?? "", cardID: id)
                 if window != nil {
                     _subscribeToCardData()
                 }

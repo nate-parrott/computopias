@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AsyncDisplayKit
 
 class CardNavigatorView: UIView {
     struct StackEntry {
@@ -167,6 +168,9 @@ class CardNavigatorView: UIView {
             if stack.tintColor != background.tintColor {
                 background.tintColor = stack.tintColor
             }
+            if index == 0 || entry.appearance.rubberBandedPosition >= 1 {
+                backgroundColor = entry.stack.backgroundColor
+            }
             
             // render title:
             let barHeight = (bounds.size.height - cardSize.height)/2
@@ -193,9 +197,10 @@ class CardNavigatorView: UIView {
             
             background.elasticRenderModels(stack.cardModels, positionBlock: { (_, let index) -> ElasticLayoutModelPosition in
                 let frame = frameFunc(index)
-                if CGRectIntersectsRect(frame, self.bounds) {
+                let boundsToRenderInside = CGRectInset(self.bounds, -500, 0)
+                if CGRectIntersectsRect(frame, boundsToRenderInside) {
                     return ElasticLayoutModelPosition.Onscreen
-                } else if frame.origin.x < self.bounds.origin.x {
+                } else if frame.origin.x < boundsToRenderInside.origin.x {
                     return ElasticLayoutModelPosition.BeforeScreen
                 } else {
                     return ElasticLayoutModelPosition.AfterScreen

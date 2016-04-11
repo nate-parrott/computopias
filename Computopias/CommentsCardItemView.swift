@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import AsyncDisplayKit
 
 class CommentsCardItemView: CardItemView {
     // MARK: Data
@@ -27,7 +28,7 @@ class CommentsCardItemView: CardItemView {
     var _fbHandle: UInt?
     var _count: Int? {
         didSet {
-            _updateUI()
+            setNeedsDisplay()
         }
     }
     
@@ -54,17 +55,17 @@ class CommentsCardItemView: CardItemView {
         chatID = NSUUID().UUIDString
     }
     
-    // MARK: Lifecycle
     override func setup() {
         super.setup()
-        addSubview(label)
+        opaque = false
     }
+    
+    // MARK: Lifecycle
     deinit {
         chatID = nil
     }
     // MARK: UI
-    let label = UILabel()
-    func _updateUI() {
+    override func drawParametersForAsyncLayer(layer: _ASDisplayLayer) -> NSObjectProtocol? {
         var text = "Comments"
         if let c = _count {
             if c == 1 {
@@ -73,7 +74,16 @@ class CommentsCardItemView: CardItemView {
                 text = "\(c) comments"
             }
         }
-        label.text = "💬 " + text
+        text = "💬 " + text
+        var attrs = [String: AnyObject]()
+        attrs[NSFontAttributeName] = TextCardItemView.font.fontWithSize(12)
+        attrs[NSParagraphStyleAttributeName] = NSAttributedString.paragraphStyleWithTextAlignment(.Center)
+        return NSAttributedString(string: text, attributes: attrs)
+    }
+    
+    override class func drawRect(bounds: CGRect, withParameters: NSObjectProtocol?, isCancelled: asdisplaynode_iscancelled_block_t, isRasterizing: Bool) {
+        let string = withParameters as! NSAttributedString
+        string.drawVerticallyCenteredInRect(textInsetBoundsForBounds(bounds))
     }
     
     override func tapped() -> Bool {
@@ -82,12 +92,6 @@ class CommentsCardItemView: CardItemView {
         let nav = UINavigationController(rootViewController: chat)
         NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(nav, animated: true, completion: nil)
         return true
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        label.frame = textInsetBounds
-        label.font = TextCardItemView.font.fontWithSize(12)
     }
     
     override var defaultSize: GridSize{

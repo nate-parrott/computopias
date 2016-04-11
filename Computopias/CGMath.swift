@@ -45,6 +45,10 @@ extension CGRect {
         get {
             return CGPoint(x: CGRectGetMidX(self), y: CGRectGetMidY(self))
         }
+        set {
+            origin.x = newValue.x - size.width/2
+            origin.y = newValue.y - size.height/2
+        }
     }
     var bottom: CGFloat {
         get {
