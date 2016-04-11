@@ -31,7 +31,7 @@ class HashtagCardStack: CardFeedStack {
     override func renderTopControls(view: UIView, rect: CGRect) {
         super.renderTopControls(view, rect: rect)
         if let text = source?.groupInfoText {
-            let label = view.elasticGetChildWithKey("label", creationBlock: { () -> UIView! in
+            let label = view.elasticGetChildWithKey("label", creationBlock: { () -> UIView in
                 let l = UILabel()
                 l.numberOfLines = 0
                 l.textAlignment = .Center
@@ -47,7 +47,7 @@ class HashtagCardStack: CardFeedStack {
     override func renderBottomControls(view: UIView, rect: CGRect) {
         super.renderBottomControls(view, rect: rect)
         
-        let followButton = view.elasticGetChildWithKey("follow") { [weak self] () -> UIView! in
+        let followButton = view.elasticGetChildWithKey("follow") { [weak self] () -> UIView in
             return CUButton(title: "", action: {
                 self?.source?.toggleFollowing()
             })
@@ -55,7 +55,7 @@ class HashtagCardStack: CardFeedStack {
         let following = source?.following ?? false
         followButton.setTitle(following ? "Following" : "Follow", forState: .Normal)
         
-        let postButton = view.elasticGetChildWithKey("post") { [weak self] () -> UIView! in
+        let postButton = view.elasticGetChildWithKey("post") { [weak self] () -> UIView in
             return CUButton(title: "Post", action: { 
                 self?.source?.addPost()
             })

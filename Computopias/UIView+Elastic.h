@@ -18,8 +18,9 @@
 - (void)elasticRender;
 - (void)elasticTick; // called before -elasticRender; useful for sending callbacks that should alter superviews' layout in the current frame
 
-- (id)elasticGetChildWithKey:(NSString *)key creationBlock:(UIView*(^)())creationBlock;
-- (id)elasticGetChildWithKeyIfPresent:(NSString *)key;
+- (_Nonnull id)elasticGetChildWithKey:(NSString * _Nonnull)key creationBlock:(UIView*_Nonnull(^_Nonnull)())creationBlock;
+- (_Nullable id)elasticGetChildWithKeyIfPresent:(NSString  * _Nonnull )key;
+- (_Nullable id)elasticGetChildWithKey:(NSString * _Nonnull)key possiblyCreateWithCost:(double)cost block:(UIView*_Nonnull(^_Nonnull)())creationBlock;
 
 - (ElasticReuseQueue *)elasticReuseQueueForIdentifier:(NSString *)reuseIdentifier;
 

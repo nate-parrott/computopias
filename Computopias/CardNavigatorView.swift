@@ -160,7 +160,7 @@ class CardNavigatorView: UIView {
             let obscuredAmount = _getObscuredAmountForStackAtIndex(index)
             
             // render background:
-            let background = elasticGetChildWithKey("background-\(index)", creationBlock: { () -> UIView! in
+            let background = elasticGetChildWithKey("background-\(index)", creationBlock: { () -> UIView in
                 return UIView()
             }) as! UIView
             background.backgroundColor = stack.backgroundColor
@@ -174,7 +174,7 @@ class CardNavigatorView: UIView {
             
             // render title:
             let barHeight = (bounds.size.height - cardSize.height)/2
-            let title = background.elasticGetChildWithKey("title", creationBlock: { () -> UIView! in
+            let title = background.elasticGetChildWithKey("title", creationBlock: { () -> UIView in
                 let l = UILabel()
                 l.textAlignment = .Center
                 l.textColor = stack.textColor
@@ -207,18 +207,15 @@ class CardNavigatorView: UIView {
                 }
                 }, renderBlock: { (let model, let index) in
                     let frame = frameFunc(index)
-                    let view = background.elasticGetChildWithKey(model as! String, creationBlock: { () -> UIView! in
+                    if let view = background.elasticGetChildWithKey(model as! String, possiblyCreateWithCost: 1, block: { () -> UIView in
                         let card = stack.createCard(model as! String)
                         stack.renderCard(model as! String, view: card)
                         return card
-                    }) as! UIView
-                    view.transform = CGAffineTransformIdentity
-                    view.frame = frame
-                    view.transform = CGAffineTransformMakeScale(1 - obscuredAmount * 0.3, 1 - obscuredAmount * 0.3)
-                    /*if yOffset > 0, let prevPoint = self._cardCentersForThisRender[model as! String] {
-                        view.center = EVInterpolatePoint(prevPoint, frame.center, 1 - yOffset)
+                    }) as? UIView {
+                        view.transform = CGAffineTransformIdentity
+                        view.frame = frame
+                        view.transform = CGAffineTransformMakeScale(1 - obscuredAmount * 0.3, 1 - obscuredAmount * 0.3)
                     }
-                    self._cardCentersForThisRender[model as! String] = view.frame.center*/
             })
         }
     }

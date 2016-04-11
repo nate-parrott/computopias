@@ -49,6 +49,7 @@
 
 @interface _ElasticManager : NSObject {
     NSMutableArray *_viewsToRender;
+    double _costOfViewsCreatedThisFrame;
 }
 
 @property (nonatomic) BOOL running;
@@ -100,6 +101,7 @@
 
 - (void)render {
     // TODO: optimize this
+    _costOfViewsCreatedThisFrame = 0;
     [self _performBlockOnParticipatingViews:^(UIView *view) {
         _ElasticInfo *info = [_elasticViewInfo objectForKey:view];
         info.keysAccessedThisFrame = [NSMutableSet new]; // reset keys before render()
@@ -108,6 +110,16 @@
     [self _performBlockOnParticipatingViews:^(UIView *view) {
         [self render:view];
     }];
+}
+
+- (BOOL)shouldCreateViewWithAssociatedCostThisFrame:(double)cost {
+    if (cost == 0) return YES;
+    if (_costOfViewsCreatedThisFrame + cost <= 1) {
+        _costOfViewsCreatedThisFrame += cost;
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (void)_performBlockOnParticipatingViews:(void (^)(UIView *))block {
@@ -196,12 +208,20 @@
 }
 
 - (id)elasticGetChildWithKey:(NSString *)key creationBlock:(UIView*(^)())creationBlock {
+    return [self elasticGetChildWithKey:key possiblyCreateWithCost:0 block:creationBlock];
+}
+
+- (_Nullable id)elasticGetChildWithKey:(NSString * _Nonnull)key possiblyCreateWithCost:(double)cost block:(UIView*_Nonnull(^_Nonnull)())creationBlock {
     [self _elasticAssertMidRender];
+    
     _ElasticInfo *info = [self _getElasticInfo];
     // create/keep this view:
     if (!info.childViewsForKey[key]) {
-        info.childViewsForKey[key] = creationBlock();
-        [self addSubview:info.childViewsForKey[key]];
+        // create this view:
+        if ([[_ElasticManager shared] shouldCreateViewWithAssociatedCostThisFrame:cost]) {
+            info.childViewsForKey[key] = creationBlock();
+            [self addSubview:info.childViewsForKey[key]];
+        }
     } else {
         [self bringSubviewToFront:info.childViewsForKey[key]];
     }
