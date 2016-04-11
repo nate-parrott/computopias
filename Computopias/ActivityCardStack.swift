@@ -39,7 +39,7 @@ class ActivityCardStack: CardFeedStack {
     
     override func createCard(model: String) -> UIView {
         if model == "HashtagListView" {
-            let v = HashtagListView()
+            let v = HashtagListView.Shared
             v.onNavigate = {
                 [weak self] (route: Route) in
                 self?.navigate(route)

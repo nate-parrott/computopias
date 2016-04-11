@@ -9,6 +9,10 @@
 import UIKit
 
 class HashtagListView: UIView, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+    static var Shared: HashtagListView = {
+        return HashtagListView()
+    }()
+    
     override func willMoveToWindow(newWindow: UIWindow?) {
         super.willMoveToSuperview(newWindow)
         if !_setup {
@@ -36,13 +40,22 @@ class HashtagListView: UIView, UITableViewDelegate, UITableViewDataSource, UISea
             searchBar.autocapitalizationType = .None
             tableView.tableHeaderView = searchBar
             
+            _updateSubscription()
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HashtagListView._updateSubscription), name: Data.LoginDidCompleteNotification, object: nil)
+        }
+    }
+    
+    func _updateSubscription() {
+        if Data.getUID() != nil {
             _sub = Data.userInfoFirebase().childByAppendingPath("following_hashtags").pusher.subscribe({ [weak self] (let data) in
                 if let hashtags = (data as? [String: AnyObject]) {
                     self?.hashtags = Array(hashtags.keys)
                 } else {
                     self?.hashtags = []
                 }
-            })
+                })
+        } else {
+            _sub = nil
         }
     }
     
