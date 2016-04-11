@@ -144,10 +144,15 @@ class CardNavigatorView: UIView {
         /*for i in 0..<lowerStackIndex {
             _renderStack(i, yOffset: 1) // render lower layers (should we?)
         }*/
+        var bgColor = UIColor.whiteColor()
         for entry in _stacksToRender() {
             let i = _stackEntries.indexOf({ $0.stack === entry.stack })!
             _renderStack(i, yOffset: 1 - entry.appearance.rubberBandedPosition)
+            if i == 0 || entry.appearance.rubberBandedPosition >= 1 {
+                bgColor = entry.stack.backgroundColor
+            }
         }
+        backgroundColor = bgColor
     }
     
     func _renderStack(index: Int, yOffset: CGFloat) {
@@ -167,9 +172,6 @@ class CardNavigatorView: UIView {
             background.frame = CGRectMake(0, yOffset * bounds.size.height, bounds.size.width, bounds.size.height)
             if stack.tintColor != background.tintColor {
                 background.tintColor = stack.tintColor
-            }
-            if index == 0 || entry.appearance.rubberBandedPosition >= 1 {
-                backgroundColor = stack.backgroundColor
             }
             
             // render title:

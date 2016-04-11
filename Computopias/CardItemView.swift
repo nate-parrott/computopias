@@ -196,6 +196,14 @@ class CardItemView: ASDisplayNode, UIGestureRecognizerDelegate {
             case (false, false): return .Middle
             }
         }
+        var textAlignment: NSTextAlignment {
+            switch self {
+            case .Leading: return .Left
+            case .Middle: return .Center
+            case .Trailing: return .Right
+            case .Full: return .Center
+            }
+        }
     }
     var alignment = (x: Alignment.Middle, y: Alignment.Middle)
 }

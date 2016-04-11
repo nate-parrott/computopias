@@ -9,30 +9,34 @@
 import UIKit
 import IQAudioRecorderController
 import AVFoundation
+import AsyncDisplayKit
 
-class SoundCardItemView: CardItemView /*, IQAudioRecorderControllerDelegate, AVAudioPlayerDelegate*/ {
-    /*
+class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudioPlayerDelegate {
+    
     // MARK: Data
     var url: String? {
         didSet {
-            _updateText()
+            setNeedsDisplay()
         }
     }
-    var duration: Double?
+    var duration: Double? {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
     var loop = false {
         didSet {
-            _updateText()
-            UIMenuController.sharedMenuController().update()
+            setNeedsDisplay()
         }
     }
     var localFilePath: String? {
         didSet {
-            _updateText()
+            setNeedsDisplay()
         }
     }
     var uploadInProgress = false {
         didSet {
-            _updateText()
+            setNeedsDisplay()
         }
     }
     var downloadTask: NSURLSessionDataTask? {
@@ -40,27 +44,14 @@ class SoundCardItemView: CardItemView /*, IQAudioRecorderControllerDelegate, AVA
             if let o = oldValue {
                 o.cancel()
             }
-            _updateText()
+            setNeedsDisplay()
         }
     }
     
     // MARK: Lifecycke
-    
     override func setup() {
         super.setup()
-        label.font = TextCardItemView.font
-        view.addSubview(label)
-        label.textAlignment = .Center
-        label.layer.cornerRadius = CardView.rounding
-        label.clipsToBounds = true
-        
-        addSubview(loader)
-        loader.hidesWhenStopped =  true
-        loader.stopAnimating()
-        
-        _updateText()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SoundCardItemView._menuWillHide), name: UIMenuControllerWillHideMenuNotification, object: UIMenuController.sharedMenuController())
+        opaque = false
     }
     
     deinit {
@@ -68,37 +59,12 @@ class SoundCardItemView: CardItemView /*, IQAudioRecorderControllerDelegate, AVA
     }
     
     // MARK: Layout/UI
-    let label = UILabel()
-    let loader = UIActivityIndicatorView()
-    override func layout() {
-        super.layout()
-        label.frame = textInsetBounds
-        label.layer.cornerRadius = CardView.rounding
-        label.font = TextCardItemView.font.fontWithSize(generousFontSize)
-        loader.center = bounds.center
-    }
     override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
-        return size
-    }
-    func _updateText() {
-        UIMenuController.sharedMenuController().update()
-        if nowPlaying {
-            label.text = "🔊"
-        } else if url != nil || localFilePath != nil {
-            label.text = "🔈"
-        } else {
-            label.text = "🔇"
-        }
-        backgroundColor = nowPlaying ? Appearance.transparentWhite : nil
-        if uploadInProgress || downloadTask != nil {
-            loader.startAnimating()
-        } else {
-            loader.stopAnimating()
-        }
+        return CGSizeMake(max(2, size.width), size.height)
     }
     var nowPlaying = false {
         didSet {
-            _updateText()
+            setNeedsDisplay()
         }
     }
     // MARK: Json
@@ -123,35 +89,43 @@ class SoundCardItemView: CardItemView /*, IQAudioRecorderControllerDelegate, AVA
     // MARK: Interaction
     override func tapped() -> Bool {
         super.tapped()
-        if editMode {
-            delay(0.1, closure: {
-                let menuController = UIMenuController.sharedMenuController()
-                                
-                let recordAudioMenuItem = UIMenuItem(title: "Record", action: #selector(SoundCardItemView.recordAudio))
-                let clearAudioMenuItem = UIMenuItem(title: "Clear recording", action: #selector(SoundCardItemView.clearAudio))
-                let enableLoop = UIMenuItem(title: "Loop", action: #selector(SoundCardItemView.enableLoop))
-                let disableLoop = UIMenuItem(title: "✅ Loop", action: #selector(SoundCardItemView.disableLoop))
+        if editMode && !nowPlaying {
+            let actions = UIAlertController(title: "Recording", message: nil, preferredStyle: .ActionSheet)
+            let hasAudio = url != nil || localFilePath != nil
+            if hasAudio {
+                actions.addAction(UIAlertAction(title: "🔈 Play", style: .Default, handler: { (let action) in
+                    self.startPlaying()
+                }))
+            }
+            actions.addAction(UIAlertAction(title: "Record", style: .Default, handler: { (let action) in
+                self.recordAudio(nil)
+            }))
+            if hasAudio {
+                actions.addAction(UIAlertAction(title: "Clear recording", style: .Default, handler: { (let action) in
+                    self.url = nil
+                    self.localFilePath = nil
+                }))
+            }
+            
+            if loop {
+                actions.addAction(UIAlertAction(title: "Disable looping", style: .Default, handler: { (let action) in
+                    self.loop = false
+                }))
+            } else {
+                actions.addAction(UIAlertAction(title: "Enable looping", style: .Default, handler: { (let action) in
+                    self.loop = true
+                }))
+            }
+            actions.actions.last!.enabled = hasAudio
+            
+            actions.addAction(UIAlertAction(title: "Never mind", style: .Cancel, handler: { (let action) in
                 
-                menuController.setMenuVisible(false, animated: true)
-
-                self._menuLastShown = CFAbsoluteTimeGetCurrent()
-                self.becomeFirstResponder()
-                
-                menuController.menuItems = [recordAudioMenuItem, clearAudioMenuItem, enableLoop, disableLoop]
-                // menuController.setTargetRect(self.bounds, inView: self)
-                menuController.setMenuVisible(true, animated: true)
-                
-            })
+            }))
+            NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(actions, animated: true, completion: nil)
+        } else {
+            togglePlayback()
         }
-        togglePlayback()
         return true
-    }
-    var _menuLastShown: CFAbsoluteTime?
-    func _menuWillHide(notif: NSNotification) {
-        if let m = _menuLastShown where CFAbsoluteTimeGetCurrent() - m < 1 {
-            let menu = notif.object as! UIMenuController
-            menu.menuVisible = true
-        }
     }
     // TODO: let people change the title?
     
@@ -163,22 +137,10 @@ class SoundCardItemView: CardItemView /*, IQAudioRecorderControllerDelegate, AVA
         return super.resignFirstResponder()
     }
     
-    func recordAudio(sender: AnyObject) {
+    func recordAudio(sender: AnyObject?) {
         let controller = IQAudioRecorderController()
         controller.delegate = self
         NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(controller, animated: true, completion: nil)
-    }
-    
-    func clearAudio(sender:  AnyObject) {
-        url = nil
-    }
-    
-    func enableLoop(sender: AnyObject) {
-        loop = true
-    }
-    
-    func disableLoop(sender: AnyObject) {
-        loop = false
     }
     
     func audioRecorderController(controller: IQAudioRecorderController!, didFinishWithAudioAtPath filePath: String!) {
@@ -190,26 +152,16 @@ class SoundCardItemView: CardItemView /*, IQAudioRecorderControllerDelegate, AVA
             }
             self?.uploadInProgress = false
         }
-    }
-    
-    override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
-        if editMode {
-            if action == #selector(SoundCardItemView.recordAudio) {
-                return true
-            }
-            if action == #selector(SoundCardItemView.clearAudio) {
-                return url != nil
-            }
-            if action == #selector(SoundCardItemView.enableLoop) {
-                return !loop
-            }
-            if action == #selector(SoundCardItemView.disableLoop) {
-                return loop
-            }
-        }
-        return super.canPerformAction(action, withSender: sender!)
+        let asset = AVAsset(URL: NSURL(fileURLWithPath: filePath))
+        duration = Double(CMTimeGetSeconds(asset.duration))
     }
     // MARK: Playback
+    func startPlaying() {
+        if !nowPlaying { togglePlayback() }
+    }
+    func stopPlaying() {
+        if nowPlaying { togglePlayback() }
+    }
     var _shouldPlayWhenAvailable = false
     func togglePlayback() {
         if player?.playing ?? false || _shouldPlayWhenAvailable {
@@ -235,6 +187,7 @@ class SoundCardItemView: CardItemView /*, IQAudioRecorderControllerDelegate, AVA
             player_.delegate = self
             player_.play()
             _shouldPlayWhenAvailable = false
+            _startPlaybackTimePolling()
         } else if let url_ = url {
             // download, then play
             _shouldPlayWhenAvailable = true
@@ -275,5 +228,61 @@ class SoundCardItemView: CardItemView /*, IQAudioRecorderControllerDelegate, AVA
         } else {
             nowPlaying = false
         }
-    }*/
+    }
+    func _startPlaybackTimePolling() {
+        if nowPlaying {
+            setNeedsDisplay()
+            delay(1, closure: { 
+                self._startPlaybackTimePolling()
+            })
+        }
+    }
+    
+    // MARK: Rendering
+    override func drawParametersForAsyncLayer(layer: _ASDisplayLayer) -> NSObjectProtocol? {
+        var attributes = [String: AnyObject]()
+        attributes[NSForegroundColorAttributeName] = UIColor.blackColor()
+        attributes[NSFontAttributeName] = TextCardItemView.font.fontWithSize(generousFontSize)
+        attributes[NSParagraphStyleAttributeName] = NSAttributedString.paragraphStyleWithTextAlignment(alignment.x.textAlignment)
+        
+        var text = ""
+        if nowPlaying {
+            if uploadInProgress {
+                text = "🔈 Uploading..."
+            } else {
+                let d = FormatDuration(player?.currentTime ?? 0)
+                text = "🔊 \(d)"
+            }
+        } else if url != nil || localFilePath != nil {
+            if downloadTask != nil {
+                text = "🔈 Loading..."
+            } else {
+                let d = FormatDuration(self.duration ?? 0)
+                text = "🔈 \(d)"
+            }
+        } else if editMode {
+            text = "🎙 Record"
+        } else {
+            text = "🔇 Empty"
+        }
+        
+        return NSAttributedString(string: text, attributes: attributes)
+    }
+    
+    override var alignment: (x: CardItemView.Alignment, y: CardItemView.Alignment) {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    override class func drawRect(bounds: CGRect, withParameters: NSObjectProtocol?, isCancelled: asdisplaynode_iscancelled_block_t, isRasterizing: Bool) {
+        let string = withParameters as! NSAttributedString
+        string.drawVerticallyCenteredInRect(CardItemView.textInsetBoundsForBounds(bounds))
+    }
+}
+
+private func FormatDuration(d: NSTimeInterval) -> String {
+    let minutes = floor(d/60)
+    let seconds = d - minutes * 60
+    return String(format: "%d:%02d", Int(minutes), Int(seconds))
 }
