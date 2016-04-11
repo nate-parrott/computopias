@@ -85,17 +85,21 @@ class CardView: ASDisplayNode {
     
     func setup() {
         addSubnode(itemsNode)
-        
         opaque = false
         
-        addSubnode(ellipsesButton)
-        ellipsesButton.setImage(UIImage(named: "ellipses"), forState: .Normal)
-        ellipsesButton.addTarget(self, action: #selector(CardView._cardActions(_:)), forControlEvents: .TouchUpInside)
-        ellipsesButton.tintColor = UIColor.blackColor()
-        ellipsesButton.alpha = 0.7
-        
-        if drawingView.supernode == nil {
-            addSubnode(drawingView)
+        backgroundThread {
+            let drawing = self.drawingView // instantiate the lazy prop
+            let e = self.ellipsesButton
+            e.userInteractionEnabled = true
+            e.image = UIImage(named: "ellipses")
+            e.contentMode = .Center
+            e.addTarget(self, action: #selector(CardView._cardActions(_:)), forControlEvents: .TouchUpInside)
+            e.tintColor = UIColor.blackColor()
+            e.alpha = 0.7
+            mainThread({ 
+                self.addSubnode(drawing)
+                self.addSubnode(e)
+            })
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardView._hideIfBlocked), name: Data.BlockedUsersChangedNotification, object: nil)
@@ -227,7 +231,9 @@ class CardView: ASDisplayNode {
         return poster != nil && poster! == Data.getUID()
     }
     
-    let ellipsesButton = ASButtonNode()
+    lazy var ellipsesButton: ASImageNode = {
+        return ASImageNode()
+    }()
     func _cardActions(sender: UIButton) {
         if cardFirebase == nil { return }
         let actions = UIAlertController(title: "Card Actions", message: nil, preferredStyle: .ActionSheet)

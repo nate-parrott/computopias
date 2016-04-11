@@ -9,6 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "ElasticReuseQueue.h"
 
+@protocol ElasticRenderedObject <NSObject>
+
+- (void)elastic_addToSuperview:(UIView  * _Nonnull )superview;
+- (void)elastic_removeFromSuperview;
+- (void)elastic_moveToFront;
+
+@end
+
+@interface UIView (ElasticRenderedObject) <ElasticRenderedObject>
+
+@end
+
 // TODO: make private
 @class _ElasticMetadata;
 
@@ -18,9 +30,9 @@
 - (void)elasticRender;
 - (void)elasticTick; // called before -elasticRender; useful for sending callbacks that should alter superviews' layout in the current frame
 
-- (_Nonnull id)elasticGetChildWithKey:(NSString * _Nonnull)key creationBlock:(UIView*_Nonnull(^_Nonnull)())creationBlock;
+- (_Nonnull id)elasticGetChildWithKey:(NSString * _Nonnull)key creationBlock:(id<ElasticRenderedObject> _Nonnull(^_Nonnull)())creationBlock;
 - (_Nullable id)elasticGetChildWithKeyIfPresent:(NSString  * _Nonnull )key;
-- (_Nullable id)elasticGetChildWithKey:(NSString * _Nonnull)key possiblyCreateWithCost:(double)cost block:(UIView*_Nonnull(^_Nonnull)())creationBlock;
+- (_Nullable id)elasticGetChildWithKey:(NSString * _Nonnull)key possiblyCreateWithCost:(double)cost block:(id<ElasticRenderedObject> _Nonnull(^_Nonnull)())creationBlock;
 
 - (ElasticReuseQueue *)elasticReuseQueueForIdentifier:(NSString *)reuseIdentifier;
 

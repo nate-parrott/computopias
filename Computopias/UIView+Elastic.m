@@ -151,11 +151,14 @@
     for (NSString *key in info.childViewsForKey.allKeys) {
         if (![info.keysAccessedThisFrame containsObject:key]) {
             // remove this child:
-            UIView *childView = info.childViewsForKey[key];
-            [childView removeFromSuperview];
+            id<ElasticRenderedObject> child = info.childViewsForKey[key];
+            [child elastic_removeFromSuperview];
             [info.childViewsForKey removeObjectForKey:key];
-            [_viewsToRender removeObject:childView]; // TODO: improve time complexity of this operation
-            [[[childView _getElasticMetadata:NO] belongsToReuseQueue] addView:childView];
+            [_viewsToRender removeObject:child]; // TODO: improve time complexity of this operation
+            if ([child isKindOfClass:[UIView class]]) {
+                UIView *childView = (UIView *)child;
+                [[[childView _getElasticMetadata:NO] belongsToReuseQueue] addView:childView];
+            }
         }
     }
 }
@@ -207,11 +210,11 @@
     return info;
 }
 
-- (id)elasticGetChildWithKey:(NSString *)key creationBlock:(UIView*(^)())creationBlock {
+- (_Nonnull id)elasticGetChildWithKey:(NSString * _Nonnull)key creationBlock:(id<ElasticRenderedObject> _Nonnull(^_Nonnull)())creationBlock {
     return [self elasticGetChildWithKey:key possiblyCreateWithCost:0 block:creationBlock];
 }
 
-- (_Nullable id)elasticGetChildWithKey:(NSString * _Nonnull)key possiblyCreateWithCost:(double)cost block:(UIView*_Nonnull(^_Nonnull)())creationBlock {
+- (_Nullable id)elasticGetChildWithKey:(NSString * _Nonnull)key possiblyCreateWithCost:(double)cost block:(id<ElasticRenderedObject> _Nonnull(^_Nonnull)())creationBlock {
     [self _elasticAssertMidRender];
     
     _ElasticInfo *info = [self _getElasticInfo];
@@ -220,10 +223,10 @@
         // create this view:
         if ([[_ElasticManager shared] shouldCreateViewWithAssociatedCostThisFrame:cost]) {
             info.childViewsForKey[key] = creationBlock();
-            [self addSubview:info.childViewsForKey[key]];
+            [info.childViewsForKey[key] elastic_addToSuperview:self];
         }
     } else {
-        [self bringSubviewToFront:info.childViewsForKey[key]];
+        [info.childViewsForKey[key] elastic_moveToFront];
     }
     [info.keysAccessedThisFrame addObject:key];
     return info.childViewsForKey[key];
@@ -294,6 +297,22 @@
 
 - (void)_elasticSetReuseQueue:(ElasticReuseQueue *)queue {
     [self _getElasticMetadata:YES].belongsToReuseQueue = queue;
+}
+
+@end
+
+@implementation UIView (ElasticRenderedObject)
+
+- (void)elastic_addToSuperview:(UIView  * _Nonnull )superview {
+    [superview addSubview:self];
+}
+
+- (void)elastic_removeFromSuperview {
+    [self removeFromSuperview];
+}
+
+- (void)elastic_moveToFront {
+    [self.superview bringSubviewToFront:self];
 }
 
 @end

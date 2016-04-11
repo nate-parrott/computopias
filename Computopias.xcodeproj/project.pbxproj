@@ -28,6 +28,8 @@
 		5F29B4C81CB73E830060FFD7 /* EVComplexLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4BA1CB73E830060FFD7 /* EVComplexLayout.m */; };
 		5F29B4CC1CB73FE60060FFD7 /* CardNavigatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4CB1CB73FE60060FFD7 /* CardNavigatorViewController.swift */; };
 		5F3435EC1CB9E193009E5F86 /* ASLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3435EB1CB9E193009E5F86 /* ASLabelNode.swift */; };
+		5F3435EE1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3435ED1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift */; };
+		5F3435F01CBB67BE009E5F86 /* SignaturesCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3435EF1CBB67BE009E5F86 /* SignaturesCardItemView.swift */; };
 		5F508BFA1CB742ED005BF228 /* ActivityCardStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BF91CB742ED005BF228 /* ActivityCardStack.swift */; };
 		5F508BFC1CB74303005BF228 /* CardStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BFB1CB74303005BF228 /* CardStack.swift */; };
 		5F508BFE1CB743DC005BF228 /* ActivityFeedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */; };
@@ -129,6 +131,8 @@
 		5F29B4CA1CB73EAA0060FFD7 /* Elastic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Elastic.h; sourceTree = "<group>"; };
 		5F29B4CB1CB73FE60060FFD7 /* CardNavigatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNavigatorViewController.swift; sourceTree = "<group>"; };
 		5F3435EB1CB9E193009E5F86 /* ASLabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASLabelNode.swift; sourceTree = "<group>"; };
+		5F3435ED1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ASDisplayNode+Elastic.swift"; sourceTree = "<group>"; };
+		5F3435EF1CBB67BE009E5F86 /* SignaturesCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignaturesCardItemView.swift; sourceTree = "<group>"; };
 		5F508BF91CB742ED005BF228 /* ActivityCardStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityCardStack.swift; sourceTree = "<group>"; };
 		5F508BFB1CB74303005BF228 /* CardStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardStack.swift; sourceTree = "<group>"; };
 		5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityFeedSource.swift; sourceTree = "<group>"; };
@@ -334,6 +338,7 @@
 				5F508C0E1CB8E786005BF228 /* FriendListViewController.swift */,
 				5F508C101CB8E78E005BF228 /* FriendListDataSource.swift */,
 				5F2925DB1CB9056B0096B739 /* ViewBringUpQueue.swift */,
+				5F3435ED1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift */,
 				5F29B49E1CB73E420060FFD7 /* Cards */,
 				5FB2F2451CA20FB8001863C4 /* Screens */,
 				5FB2F2461CA20FC4001863C4 /* Card Items */,
@@ -377,6 +382,7 @@
 				5FD3603F1CA72BED0016D837 /* CommentsCardItemView.swift */,
 				5FD360621CACECD50016D837 /* StarRatingCardItemView.swift */,
 				5FD3604B1CAB7A850016D837 /* RandomContentCardItemView.swift */,
+				5F3435EF1CBB67BE009E5F86 /* SignaturesCardItemView.swift */,
 				5FD3604D1CAB7A9A0016D837 /* FlipbookCardItemView.swift */,
 				5FB976C71CB24E3700B92A16 /* ResolvedCardItemView.swift */,
 			);
@@ -559,6 +565,7 @@
 				5FB976C81CB24E3700B92A16 /* ResolvedCardItemView.swift in Sources */,
 				5FD3605B1CAC70BE0016D837 /* Pusher+Firebase.swift in Sources */,
 				5F7098361CA115E800B499BC /* CardItemView.swift in Sources */,
+				5F3435F01CBB67BE009E5F86 /* SignaturesCardItemView.swift in Sources */,
 				5FD3603A1CA4D1490016D837 /* DrawingView.swift in Sources */,
 				5FD360501CABA1DB0016D837 /* NSAttributedStringExtensions.swift in Sources */,
 				5FB2F25B1CA223C0001863C4 /* Appearance.swift in Sources */,
@@ -572,6 +579,7 @@
 				5FD360691CAE16250016D837 /* UICollectionView+UpdateRows.swift in Sources */,
 				5F29B4C71CB73E830060FFD7 /* EVMotionEffectObserver.m in Sources */,
 				5F2925DA1CB8FC9C0096B739 /* GroupEditor.swift in Sources */,
+				5F3435EE1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift in Sources */,
 				5F29B4BB1CB73E830060FFD7 /* UIView+Elastic.m in Sources */,
 				5FD3604C1CAB7A850016D837 /* RandomContentCardItemView.swift in Sources */,
 				5FB2F2531CA2181C001863C4 /* ImageCardItemView.swift in Sources */,
