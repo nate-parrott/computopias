@@ -19,12 +19,14 @@ class DrawingView: ASDisplayNode {
         toolbar.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
         toolbar.tintColor = UIColor.whiteColor()
         
-        toolbar.addSubnode(doneButton)
-        doneButton.setImage(UIImage(named: "Checkmark"), forState: .Normal)
-        doneButton.addTarget(self, action: #selector(DrawingView.done(_:)), forControlEvents: .TouchUpInside)
-        
-        let font = UIFont.systemFontOfSize(16)
+        let font = UIFont.boldSystemFontOfSize(16)
         let color = UIColor.whiteColor()
+        
+        toolbar.addSubnode(doneButton)
+        // doneButton.setImage(UIImage(named: "Checkmark"), forState: .Normal)
+        doneButton.setTitle("Done", withFont: font, withColor: color, forState: .Normal)
+        doneButton.addTarget(self, action: #selector(DrawingView.done(_:)), forControlEvents: .TouchUpInside)
+        doneButton.tintColor = UIColor.whiteColor()
         
         toolbar.addSubnode(clearButton)
         clearButton.setTitle("Clear", withFont: font, withColor: color, forState: .Normal)
@@ -61,15 +63,20 @@ class DrawingView: ASDisplayNode {
     override func layout() {
         super.layout()
         toolbar.frame = CGRectMake(0, bounds.size.height-44, bounds.size.width, 44)
-        doneButton.frame = CGRectMake(toolbar.bounds.size.width-44, 0, 44, 44)
+        let doneSize = doneButton.measure(toolbar.bounds.size)
+        let padding = (toolbar.bounds.height - doneSize.height)/2
+        doneButton.frame = CGRectMake(toolbar.bounds.size.width-doneSize.width-padding*2, padding, doneSize.width, doneSize.height)
+        doneButton.hitTestSlop = UIEdgeInsetsMake(-padding, -padding, -padding, -padding)
         snapshotContainer.frame = bounds
         strokeLayer.frame = snapshotContainer.bounds
         
         var x: CGFloat = 0
         for btn in [clearButton, undoButton] {
             let buttonSize = btn.measure(toolbar.frame.size)
-            btn.frame = CGRectMake(x, 0, buttonSize.width + 20, 44)
-            x = btn.frame.right
+            let slop = (toolbar.bounds.height - buttonSize.height)/2
+            btn.frame = CGRectMake(x + slop, (toolbar.bounds.height - buttonSize.height)/2, buttonSize.width, buttonSize.height)
+            btn.hitTestSlop = UIEdgeInsetsMake(-slop, -slop, -slop, -slop)
+            x = btn.frame.right+slop
         }
     }
     
@@ -97,7 +104,9 @@ class DrawingView: ASDisplayNode {
     }
     var _path = UIBezierPath() {
         didSet(oldVal) {
-            strokeLayer.path = _path.CGPath
+            mainThread { 
+                self.strokeLayer.path = self._path.CGPath
+            }
         }
     }
     

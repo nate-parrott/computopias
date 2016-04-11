@@ -169,7 +169,7 @@ class CardNavigatorView: UIView {
                 background.tintColor = stack.tintColor
             }
             if index == 0 || entry.appearance.rubberBandedPosition >= 1 {
-                backgroundColor = entry.stack.backgroundColor
+                backgroundColor = stack.backgroundColor
             }
             
             // render title:

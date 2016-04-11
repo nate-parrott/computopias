@@ -68,12 +68,12 @@ class CardView: ASDisplayNode {
                     }
                 }
             }
-            self.drawingView.item = self.drawingItem
             
             self._hideIfBlocked()
             
             mainThread({
                 self.itemsNode = itemsNode
+                self.drawingView.item = self.drawingItem
                 if let cb = callback { cb() }
             })
         }
