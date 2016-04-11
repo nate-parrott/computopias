@@ -11,14 +11,13 @@ import SafariServices
 import AsyncDisplayKit
 
 class ButtonCardItemView: CardItemView {
-    let button = ASButtonNode()
     override func setup() {
         super.setup()
-        addSubnode(button)
-        button.backgroundColor = Appearance.transparentWhite
-        button.cornerRadius = CardView.rounding
-        button.userInteractionEnabled = false
+        backgroundColor = Appearance.transparentWhite
+        cornerRadius = CardView.rounding
         self.title = "Tap to edit..."
+        opaque = false
+        needsDisplayOnBoundsChange = true
     }
     
     override var defaultSize: GridSize {
@@ -125,12 +124,20 @@ class ButtonCardItemView: CardItemView {
     
     var title: String = "" {
         didSet {
-            button.setTitle(title, withFont: TextCardItemView.font.fontWithSize(12), withColor: UIColor.blackColor(), forState: .Normal)
+            setNeedsDisplay()
         }
     }
     
-    override func layout() {
-        super.layout()
-        button.frame = insetBounds
+    override func drawParametersForAsyncLayer(layer: _ASDisplayLayer) -> NSObjectProtocol? {
+        var attributes = [String: AnyObject]()
+        attributes[NSForegroundColorAttributeName] = UIColor.blackColor()
+        attributes[NSFontAttributeName] = TextCardItemView.font.fontWithSize(generousFontSize)
+        attributes[NSParagraphStyleAttributeName] = NSAttributedString.paragraphStyleWithTextAlignment(.Center)
+        return NSAttributedString(string: title, attributes: attributes)
+    }
+    
+    override class func drawRect(bounds: CGRect, withParameters: NSObjectProtocol?, isCancelled: asdisplaynode_iscancelled_block_t, isRasterizing: Bool) {
+        let string = withParameters as! NSAttributedString
+        string.drawVerticallyCenteredInRect(CardItemView.textInsetBoundsForBounds(bounds))
     }
 }

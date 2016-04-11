@@ -7,6 +7,7 @@
 #import "NSString+MD5.h"
 #import "UIBarButtonItem+BorderedButton.h"
 #import "Phony.h"
+#import "NSAttributedString+ResizeToFit.h"
 
 #import "Elastic.h"
 #import <AsyncDisplayKit/AsyncDisplayKit.h>

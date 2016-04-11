@@ -108,6 +108,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         Item(title: "Drawing", image: UIImage(named: "drawing"), callback: { () -> CardItemView! in
             return DrawingCardItemView()
         }),
+        Item(title: "Random", image: nil, callback: { () -> CardItemView! in
+            return RandomContentCardItemView()
+        })
         /*Item(title: "Timer", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
             return nil
         }),*/
@@ -188,6 +191,7 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         var cardJson = cardView.toJson()
         cardJson["hashtag"] = hashtag
         cardJson["poster"] = Data.profileJson()
+        cardJson["date"] = NSDate().timeIntervalSince1970
         let card = existingID != nil ? Data.firebase.childByAppendingPath("cards").childByAppendingPath(existingID!) : Data.firebase.childByAppendingPath("cards").childByAutoId()
         card.setValue(cardJson)
         

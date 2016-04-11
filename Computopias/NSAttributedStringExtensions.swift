@@ -57,6 +57,14 @@ extension NSAttributedString {
         d.center = rect.center
         drawInRect(d)
     }
+    
+    func drawFillingRect(rect: CGRect) {
+        let text = resizeToFitInside(rect.size)
+        let size = text.boundingRectWithSize(rect.size, options: [.UsesLineFragmentOrigin], context: nil)
+        var d = CGRectMake(0, 0, rect.size.width, size.height)
+        d.center = rect.center
+        text.drawInRect(d)
+    }
 }
 
 func +(lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {

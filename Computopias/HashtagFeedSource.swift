@@ -89,7 +89,7 @@ class HashtagFeedSource {
             editor.onPrePost = {
                 [weak self] in
                 if let s = self {
-                    Data.setFollowing(s.hashtag, following: true, type: .User)
+                    Data.setFollowing(s.hashtag, following: true, type: .Hashtag)
                 }
             }
         }

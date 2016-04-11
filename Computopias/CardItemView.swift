@@ -136,6 +136,8 @@ class CardItemView: ASDisplayNode, UIGestureRecognizerDelegate {
             item = DrawingCardItemView()
         case "comments":
             item = CommentsCardItemView()
+        case "random":
+            item = RandomContentCardItemView()
         default: ()
         }
         item?.importJson(j)

@@ -19,9 +19,9 @@ class CardFeedStack: CardStack {
             let poster = dict["poster"] as? [String: AnyObject],
             let posterName = poster["name"] as? String,
             // let posterId = poster["uid"] as? String,
-            let hashtag = dict["hashtag"] as? String,
-            let date = dict["date"] as? Double {
+            let hashtag = dict["hashtag"] as? String {
             // let hashtag = dict["hashtag"] as! String
+            let date = dict["date"] as? Double ?? 0
             cv.card = (model, hashtag)
             
             cv.labelText = createCardLabel(hashtag, posterName: posterName, date: date)

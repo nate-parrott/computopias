@@ -39,7 +39,11 @@ class CardNavigatorView: UIView {
         let popOnComplete: Bool -> () = {[weak self] (_) in self?._popUnusedEntries() }
         entry.appearance.dragEndBlock = {
             (val: ElasticValue!, pos: CGFloat) in
-            val.snapToPosition(round(pos), completionBlock: popOnComplete)
+            var landingPos = round(pos)
+            if val.velocity() < -1 {
+                landingPos = 0
+            }
+            val.snapToPosition(landingPos, completionBlock: popOnComplete)
         }
         entry.scroll.decelerationRate = 1.5
         /*entry.scroll.dragEndBlock = {

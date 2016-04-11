@@ -68,6 +68,8 @@ class CardStack {
             let s = HashtagCardStack()
             s.hashtag = hashtag
             return s
+        case .Card(hashtag: let hashtag, id: let id):
+            return SingleCardStack(id: id, hashtag: hashtag)
         default:
             return nil // TODO: individual cards
         }
