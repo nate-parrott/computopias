@@ -164,15 +164,18 @@ class CardNavigatorView: UIView {
             
             // render title:
             let barHeight = (bounds.size.height - cardSize.height)/2
-            let title = background.elasticGetChildWithKey("title", creationBlock: { () -> UIView in
-                let l = UILabel()
-                l.textAlignment = .Center
-                l.textColor = stack.textColor
-                l.font = UIFont.systemFontOfSize(21, weight: UIFontWeightLight)
-                return l
-            }) as! UILabel
-            title.text = stack.title
-            title.frame = CGRectMake(0, 0, bounds.size.width, barHeight)
+            if let titleText = stack.title where titleText != "" {
+                let l = background.elasticGetChildWithKey("title", creationBlock: { () -> ASDisplayNode in
+                    return LabelNode()
+                }) as! LabelNode
+                //                 l.font = UIFont.systemFontOfSize(21, weight: UIFontWeightLight)
+                let font = UIFont.systemFontOfSize(21, weight: UIFontWeightLight)
+                let color = stack.textColor
+                let para = NSAttributedString.paragraphStyleWithTextAlignment(.Center)
+                let attributedString = NSAttributedString(string: titleText, attributes: [NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: para, NSFontAttributeName: font])
+                l.attributedString = attributedString
+                l.frame = CGRectMake(0, 0, bounds.size.width, barHeight)
+            }
             
             // render controls:
             stack.renderTopControls(background, rect: CGRectMake(0, 0, background.bounds.width, barHeight))

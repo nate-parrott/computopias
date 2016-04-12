@@ -91,7 +91,6 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     
     override func tapped() -> Bool {
         super.tapped()
-        let map = mapNode.view as! MKMapView
         if editMode {
             
             let vc = MapEditVC()
@@ -99,15 +98,15 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
             vc.showRadius = true
             NPSoftModalPresentationController.presentViewController(vc)
             vc.onHide = {
-                let region = map.region
-                map.setRegion(region, animated: false)
+                let region = vc.map.region
+                self.mapNode.region = region
             }
         } else {
             let vc = MapEditVC()
             vc.map = MKMapView()
-            vc.map.region = map.region
+            vc.map.region = mapNode.region
             vc.showShare = true
-            vc.map.addAnnotation(CoordinateAnnotation(coord: map.centerCoordinate))
+            vc.map.addAnnotation(CoordinateAnnotation(coord: mapNode.region.center))
             NPSoftModalPresentationController.presentViewController(vc)
         }
         return true
