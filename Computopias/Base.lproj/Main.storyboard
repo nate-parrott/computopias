@@ -301,7 +301,6 @@
         <!--Card Editor-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="Editor" id="BYZ-38-t0r" customClass="CardEditor" customModule="Computopias" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PNB-0J-zXU"/>
@@ -438,6 +437,7 @@
                         <outlet property="promptLabel" destination="aBj-PR-FBQ" id="u82-t0-i1Z"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1511" y="312"/>
         </scene>

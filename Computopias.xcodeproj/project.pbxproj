@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		21141B7977D28E67D62F6732 /* Pods_Computopias.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F1389C7F54711D4F1B4F21 /* Pods_Computopias.framework */; };
 		5F1EE5CD1CBD805F003C1C2B /* LabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1EE5CC1CBD805F003C1C2B /* LabelNode.swift */; };
+		5F1EE5CF1CBD89A0003C1C2B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1EE5CE1CBD89A0003C1C2B /* OnboardingViewController.swift */; };
 		5F2925DA1CB8FC9C0096B739 /* GroupEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */; };
 		5F2925DC1CB9056B0096B739 /* ViewBringUpQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2925DB1CB9056B0096B739 /* ViewBringUpQueue.swift */; };
 		5F29B49C1CB73E3F0060FFD7 /* CardNavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B49A1CB73E3F0060FFD7 /* CardNavigatorView.swift */; };
@@ -103,6 +104,7 @@
 
 /* Begin PBXFileReference section */
 		5F1EE5CC1CBD805F003C1C2B /* LabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelNode.swift; sourceTree = "<group>"; };
+		5F1EE5CE1CBD89A0003C1C2B /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupEditor.swift; sourceTree = "<group>"; };
 		5F2925DB1CB9056B0096B739 /* ViewBringUpQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewBringUpQueue.swift; sourceTree = "<group>"; };
 		5F29B49A1CB73E3F0060FFD7 /* CardNavigatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNavigatorView.swift; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 			children = (
 				5F70982D1CA0EEA600B499BC /* CardEditor.swift */,
 				5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */,
+				5F1EE5CE1CBD89A0003C1C2B /* OnboardingViewController.swift */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				5F3435F01CBB67BE009E5F86 /* SignaturesCardItemView.swift in Sources */,
 				5FD3603A1CA4D1490016D837 /* DrawingView.swift in Sources */,
 				5FD360501CABA1DB0016D837 /* NSAttributedStringExtensions.swift in Sources */,
+				5F1EE5CF1CBD89A0003C1C2B /* OnboardingViewController.swift in Sources */,
 				5FB2F25B1CA223C0001863C4 /* Appearance.swift in Sources */,
 				5FB976CE1CB42F7400B92A16 /* CardView+Flag.swift in Sources */,
 				5F7098321CA0EEE200B499BC /* Data.swift in Sources */,
