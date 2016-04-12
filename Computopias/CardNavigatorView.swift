@@ -106,22 +106,6 @@ class CardNavigatorView: UIView {
     override func elasticSetup() {
         super.elasticSetup()
         addGestureRecognizer(panRec)
-        // stackLevel.logName = "level"
-        /*stackLevel.addInput(panRec) { [weak self] (let input) -> CGFloat in
-            if let s = self {
-                return -(input as! UIPanGestureRecognizer).verticalTranslationInView(s) / s.bounds.size.height
-            } else {
-                return 0
-            }
-        }
-        stackLevel.dragEndBlock = {
-            (let val, let suggestedLandingPos) in
-            val.snapToPosition(round(suggestedLandingPos), completionBlock: {
-                [weak self] _ in
-                self?._popUnusedEntries()
-            })
-        }
-        stackLevel.decelerationRate = 2*/
     }
     
     var cardStride: CGSize {
@@ -175,6 +159,8 @@ class CardNavigatorView: UIView {
             if stack.tintColor != background.tintColor {
                 background.tintColor = stack.tintColor
             }
+            
+            stack.renderUnderlay(background, rect: background.bounds)
             
             // render title:
             let barHeight = (bounds.size.height - cardSize.height)/2

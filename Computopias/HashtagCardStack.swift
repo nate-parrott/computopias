@@ -68,4 +68,18 @@ class HashtagCardStack: CardFeedStack {
     @objc func _editGroupInfo() {
         source?.editGroupInfo()
     }
+    // MARK: Empty state content
+    override func renderUnderlay(view: UIView, rect: CGRect) {
+        super.renderUnderlay(view, rect: rect)
+        if let (str, action) = source?.emptyStateContent {
+            let label = view.elasticGetChildWithKey("emptyState", creationBlock: { () -> ElasticRenderedObject in
+                let l = LabelNode()
+                l.percentWidth = 0.7
+                return l
+            }) as! LabelNode
+            label.frame = rect
+            label.attributedString = str
+            label.onTap = action
+        }
+    }
 }

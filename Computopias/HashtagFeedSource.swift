@@ -30,6 +30,19 @@ class HashtagFeedSource {
                 }
                 s.cardsByID = cardsByID
                 s.cardIDs = cardIDs
+                if cardIDs.count == 0 {
+                    let emptyStateText = NSMutableAttributedString()
+                    emptyStateText.appendAttributedString(NSAttributedString(string: "#\(s.hashtag) is empty\n", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(21, weight: UIFontWeightLight), NSForegroundColorAttributeName: UIColor.whiteColor()]))
+                    emptyStateText.appendAttributedString(NSAttributedString(string: "Design the first post", attributes: [NSFontAttributeName: UIFont.boldSystemFontOfSize(UIFont.systemFontSize()), NSForegroundColorAttributeName: Appearance.tint]))
+                    let onEmptyStateTapped: () -> () = {
+                        [weak self] in
+                        self?.addPost()
+                    }
+                    emptyStateText.addAttribute(NSParagraphStyleAttributeName, value: NSAttributedString.paragraphStyleWithTextAlignment(.Center), range: NSMakeRange(0, emptyStateText.length))
+                    s.emptyStateContent = (emptyStateText, onEmptyStateTapped)
+                } else {
+                    s.emptyStateContent = nil
+                }
             }
             })
         _followingSub = Data.isFollowingItem(hashtag).subscribe({ [weak self] (let following) in
@@ -130,4 +143,7 @@ class HashtagFeedSource {
             NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(nav, animated: true, completion: nil)
         }
     }
+    
+    // MARK: Empty state
+    var emptyStateContent: (NSAttributedString, () -> ())?
 }

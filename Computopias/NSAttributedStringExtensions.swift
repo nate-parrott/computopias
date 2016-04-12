@@ -55,7 +55,7 @@ extension NSAttributedString {
         let size = boundingRectWithSize(rect.size, options: [.UsesLineFragmentOrigin], context: nil)
         var d = CGRectMake(0, 0, rect.size.width, size.height)
         d.center = rect.center
-        drawInRect(d)
+        drawInRect(CGRectIntegral(d))
     }
     
     func drawFillingRect(rect: CGRect) {
@@ -63,7 +63,7 @@ extension NSAttributedString {
         let size = text.boundingRectWithSize(rect.size, options: [.UsesLineFragmentOrigin], context: nil)
         var d = CGRectMake(0, 0, rect.size.width, size.height)
         d.center = rect.center
-        text.drawInRect(d)
+        text.drawInRect(CGRectIntegral(d))
     }
 }
 

@@ -45,12 +45,6 @@ class CardStack {
     func noLongerVisible() {
         
     }
-    func renderTopControls(view: UIView, rect: CGRect) {
-        
-    }
-    func renderBottomControls(view: UIView, rect: CGRect) {
-        
-    }
     
     weak var navigator: CardNavigatorView?
     
@@ -73,6 +67,17 @@ class CardStack {
         default:
             return nil // TODO: individual cards
         }
+    }
+    
+    // MARK: Control rendering
+    func renderTopControls(view: UIView, rect: CGRect) {
+        
+    }
+    func renderBottomControls(view: UIView, rect: CGRect) {
+        
+    }
+    func renderUnderlay(view: UIView, rect: CGRect) {
+        
     }
 }
 
