@@ -45,7 +45,7 @@ class CardNavigatorView: UIView {
             }
             val.snapToPosition(landingPos, completionBlock: popOnComplete)
         }
-        entry.scroll.decelerationRate = 1.5
+        //entry.scroll.decelerationRate = 1.5
         /*entry.scroll.dragEndBlock = {
             (let val, let suggestedLandingPos) in
             val.snapToPosition(round(suggestedLandingPos), completionBlock: nil)

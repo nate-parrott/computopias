@@ -19,6 +19,7 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         imageNode.contentMode = .ScaleAspectFill
         imageNode.clipsToBounds = true
         imageNode.layerBacked = true
+        imageNode.cornerRadius = CardView.rounding
     }
     
     override func tapped() -> Bool {

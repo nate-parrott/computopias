@@ -13,11 +13,15 @@ import AsyncDisplayKit
 class ButtonCardItemView: CardItemView {
     override func setup() {
         super.setup()
-        backgroundColor = Appearance.transparentWhite
-        cornerRadius = CardView.rounding
         self.title = "Tap to edit..."
         opaque = false
         needsDisplayOnBoundsChange = true
+    }
+    
+    override var needsNoView: Bool {
+        get {
+            return true
+        }
     }
     
     override var defaultSize: GridSize {
@@ -137,6 +141,8 @@ class ButtonCardItemView: CardItemView {
     }
     
     override class func drawRect(bounds: CGRect, withParameters: NSObjectProtocol?, isCancelled: asdisplaynode_iscancelled_block_t, isRasterizing: Bool) {
+        Appearance.transparentWhite.setFill()
+        UIBezierPath(roundedRect: bounds, cornerRadius: CardView.rounding).fill()
         let string = withParameters as! NSAttributedString
         string.drawVerticallyCenteredInRect(CardItemView.textInsetBoundsForBounds(bounds))
     }

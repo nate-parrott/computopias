@@ -103,6 +103,7 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
         para.alignment = _textAlignment
         setTextAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.blackColor(), NSParagraphStyleAttributeName: para])
         fieldNode.backgroundColor = backgrounded ? Appearance.transparentWhite : nil
+        fieldNode.cornerRadius = backgrounded ? CardView.rounding : 0
     }
     
     override var defaultSize: GridSize {
@@ -123,7 +124,6 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
         var inset = UIEdgeInsetsMake(textMargin - margin, textMargin - margin, textMargin - margin, textMargin - margin)
         inset.top = (CardView.gridCellSize.height - TextCardItemView.font.pointSize)/2 - 4
         fieldNode.textContainerInset = inset
-        fieldNode.cornerRadius = CardView.rounding
     }
     
     override func toJson() -> [String : AnyObject] {

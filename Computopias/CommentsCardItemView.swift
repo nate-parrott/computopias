@@ -58,6 +58,7 @@ class CommentsCardItemView: CardItemView {
     override func setup() {
         super.setup()
         opaque = false
+        needsDisplayOnBoundsChange = true
     }
     
     // MARK: Lifecycle

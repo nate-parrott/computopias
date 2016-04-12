@@ -86,21 +86,7 @@ class CardView: ASDisplayNode {
     func setup() {
         addSubnode(itemsNode)
         opaque = false
-        
-        backgroundThread {
-            let drawing = self.drawingView // instantiate the lazy prop
-            let e = self.ellipsesButton
-            e.userInteractionEnabled = true
-            e.image = UIImage(named: "ellipses")
-            e.contentMode = .Center
-            e.addTarget(self, action: #selector(CardView._cardActions(_:)), forControlEvents: .TouchUpInside)
-            e.tintColor = UIColor.blackColor()
-            e.alpha = 0.7
-            mainThread({ 
-                self.addSubnode(drawing)
-                self.addSubnode(e)
-            })
-        }
+        _loadAuxiliaryViewsInBackground()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CardView._hideIfBlocked), name: Data.BlockedUsersChangedNotification, object: nil)
     }
@@ -205,12 +191,15 @@ class CardView: ASDisplayNode {
     override func layout() {
         super.layout()
         itemsNode.frame = bounds
-        ellipsesButton.frame = CGRectMake(bounds.size.width - gridCellSize.width, bounds.size.height - gridCellSize.height, gridCellSize.width, gridCellSize.height)
-        if ellipsesButton.supernode != nil {
-            // bringSubviewToFront(ellipsesButton)
+        
+        if _auxiliaryViewsLoaded {
+            ellipsesButton.frame = CGRectMake(bounds.size.width - gridCellSize.width, bounds.size.height - gridCellSize.height, gridCellSize.width, gridCellSize.height)
+            if ellipsesButton.supernode != nil {
+                // bringSubviewToFront(ellipsesButton)
+            }
+            drawingView.frame = bounds
+            // bringSubviewToFront(drawingView)
         }
-        drawingView.frame = bounds
-        // bringSubviewToFront(drawingView)
         
         for item in items {
             if item != editingItem {
@@ -231,9 +220,6 @@ class CardView: ASDisplayNode {
         return poster != nil && poster! == Data.getUID()
     }
     
-    lazy var ellipsesButton: ASImageNode = {
-        return ASImageNode()
-    }()
     func _cardActions(sender: UIButton) {
         if cardFirebase == nil { return }
         let actions = UIAlertController(title: "Card Actions", message: nil, preferredStyle: .ActionSheet)
@@ -283,6 +269,33 @@ class CardView: ASDisplayNode {
         })
     }
     
+    // MARK: AuxiliaryViews
+    var _auxiliaryViewsLoaded = false
+    func _loadAuxiliaryViewsInBackground() {
+        backgroundThread {
+            let drawing = self.drawingView // instantiate the lazy prop
+            let e = self.ellipsesButton
+            e.userInteractionEnabled = true
+            e.image = UIImage(named: "ellipses")
+            e.contentMode = .Center
+            e.addTarget(self, action: #selector(CardView._cardActions(_:)), forControlEvents: .TouchUpInside)
+            e.tintColor = UIColor.blackColor()
+            e.alpha = 0.7
+            mainThread({
+                self.addSubnode(drawing)
+                self.addSubnode(e)
+                self._auxiliaryViewsLoaded = true
+            })
+        }
+    }
+    lazy var ellipsesButton: ASImageNode = {
+        return ASImageNode()
+    }()
+    lazy var drawingView: DrawingView = {
+        let v = DrawingView()
+        return v
+    }()
+    
     // MARK: Drawing mode
     func startDrawing() {
         drawingView.item = drawingItem // make sure it's set
@@ -292,10 +305,6 @@ class CardView: ASDisplayNode {
             drawingView.drawingModeActive = false
         }
     }
-    lazy var drawingView: DrawingView = {
-        let v = DrawingView()
-        return v
-    }()
     var drawingItem: DrawingCardItemView? {
         get {
             for item in items {

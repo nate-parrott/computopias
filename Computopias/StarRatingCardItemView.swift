@@ -141,4 +141,10 @@ class StarRatingCardItemView: CardItemView {
             }
         }
     }
+    
+    override var needsNoView: Bool {
+        get {
+            return true
+        }
+    }
 }

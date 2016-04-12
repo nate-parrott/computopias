@@ -122,6 +122,12 @@ class RandomContentCardItemView: CardItemView {
         return NSAttributedString(string: "", attributes: attributes)
     }
     
+    override var needsNoView: Bool {
+        get {
+            return true
+        }
+    }
+    
     override class func drawRect(bounds: CGRect, withParameters: NSObjectProtocol?, isCancelled: asdisplaynode_iscancelled_block_t, isRasterizing: Bool) {
         let string = withParameters as! NSAttributedString
         string.drawFillingRect(CardItemView.textInsetBoundsForBounds(bounds))

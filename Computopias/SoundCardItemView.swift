@@ -129,12 +129,10 @@ class SoundCardItemView: CardItemView, IQAudioRecorderControllerDelegate, AVAudi
     }
     // TODO: let people change the title?
     
-    override func canBecomeFirstResponder() -> Bool {
-        return true
-    }
-    
-    override func resignFirstResponder() -> Bool {
-        return super.resignFirstResponder()
+    override var needsNoView: Bool {
+        get {
+            return true
+        }
     }
     
     func recordAudio(sender: AnyObject?) {

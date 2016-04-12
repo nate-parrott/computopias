@@ -92,11 +92,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Computopias/CardView.swift"
-            timestampString = "482046554.290115"
+            timestampString = "482141584.394187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "363"
-            endingLineNumber = "363"
+            startingLineNumber = "372"
+            endingLineNumber = "372"
             landmarkName = "touchesMoved(_:withEvent:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -108,11 +108,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Computopias/CardView.swift"
-            timestampString = "482046554.290115"
+            timestampString = "482141584.394187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
+            startingLineNumber = "373"
+            endingLineNumber = "373"
             landmarkName = "touchesMoved(_:withEvent:)"
             landmarkType = "5">
             <Locations>
@@ -156,11 +156,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Computopias/CardView.swift"
-            timestampString = "482046554.290115"
+            timestampString = "482141584.394187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
+            startingLineNumber = "371"
+            endingLineNumber = "371"
             landmarkName = "touchesMoved(_:withEvent:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -204,11 +204,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Computopias/SoundCardItemView.swift"
-            timestampString = "482050495.632388"
+            timestampString = "482141584.394187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
+            startingLineNumber = "255"
+            endingLineNumber = "255"
             landmarkName = "drawParametersForAsyncLayer(_:)"
             landmarkType = "5">
          </BreakpointContent>

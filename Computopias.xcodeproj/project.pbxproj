@@ -386,7 +386,6 @@
 				5FB2F2621CA257D2001863C4 /* CounterCardItemView.swift */,
 				5FB2F2641CA2637E001863C4 /* LikeCounterCardItemView.swift */,
 				5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */,
-				5FD360341CA3B5590016D837 /* GivePointsCardItemView.swift */,
 				5FD360281CA319940016D837 /* MessageMeCardItemView.swift */,
 				5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */,
 				5FD3602C1CA331E60016D837 /* MapCardItemView.swift */,
@@ -396,6 +395,7 @@
 				5FD360621CACECD50016D837 /* StarRatingCardItemView.swift */,
 				5FD3604B1CAB7A850016D837 /* RandomContentCardItemView.swift */,
 				5F3435EF1CBB67BE009E5F86 /* SignaturesCardItemView.swift */,
+				5FD360341CA3B5590016D837 /* GivePointsCardItemView.swift */,
 				5FD3604D1CAB7A9A0016D837 /* FlipbookCardItemView.swift */,
 				5FB976C71CB24E3700B92A16 /* ResolvedCardItemView.swift */,
 			);

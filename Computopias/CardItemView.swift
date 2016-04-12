@@ -13,7 +13,14 @@ import AsyncDisplayKit
 class CardItemView: ASDisplayNode, UIGestureRecognizerDelegate {
     override init() {
         super.init()
+        layerBacked = needsNoView
         setup()
+    }
+    
+    var needsNoView: Bool {
+        get {
+            return false
+        }
     }
     
     var cardPath: Firebase?

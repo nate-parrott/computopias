@@ -75,6 +75,12 @@ class CounterCardItemView: CardItemView {
         }
     }
     
+    override var needsNoView: Bool {
+        get {
+            return true
+        }
+    }
+    
     override func drawParametersForAsyncLayer(layer: _ASDisplayLayer) -> NSObjectProtocol? {
         var attributes = [String: AnyObject]()
         attributes[NSForegroundColorAttributeName] = UIColor.blackColor()
