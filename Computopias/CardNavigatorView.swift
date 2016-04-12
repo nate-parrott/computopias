@@ -12,7 +12,7 @@ import AsyncDisplayKit
 class CardNavigatorView: UIView {
     struct StackEntry {
         let stack: CardStack
-        let scroll = ElasticValue.pageValue()
+        let scroll = ElasticValue.screenValue()
         let appearance = ElasticValue.pageValue()
     }
     
@@ -23,7 +23,7 @@ class CardNavigatorView: UIView {
         let entry = StackEntry(stack: stack)
         entry.scroll.addInput(panRec) { [weak self] (let input) -> CGFloat in
             if let s = self where s._stacksToRender().last?.stack === entry.stack {
-                return -(input as! UIPanGestureRecognizer).horizontalTranslationInView(s) / s.cardStride.width
+                return -(input as! UIPanGestureRecognizer).horizontalTranslationInView(s)
             } else {
                 return 0
             }
@@ -73,6 +73,7 @@ class CardNavigatorView: UIView {
         entry.stack.visible = false
         entry.stack.navigator = nil
         entry.scroll.removeInput(panRec)
+        entry.appearance.removeInput(panRec)
     }
     
     // MARK: Internal
@@ -135,14 +136,11 @@ class CardNavigatorView: UIView {
         }
     }
     
-    var _cardCentersForThisRender = [String: CGPoint]()
-    
     override func elasticRender() {
         super.elasticRender()
-        _cardCentersForThisRender.removeAll()
         
         for entry in _stackEntries {
-            entry.scroll.max = CGFloat(entry.stack.cardModels.count - 1)
+            entry.scroll.max = CGFloat(entry.stack.cardModels.count - 1) * cardStride.width
         }
         
         /*for i in 0..<lowerStackIndex {
@@ -165,7 +163,7 @@ class CardNavigatorView: UIView {
             let stack = entry.stack
             let scroll = entry.scroll
             let stride = cardStride
-            let center = CGPointMake(bounds.center.x - scroll.rubberBandedPosition * stride.width, bounds.center.y + yOffset * stride.height)
+            let center = CGPointMake(bounds.center.x - scroll.rubberBandedPosition, bounds.center.y + yOffset * stride.height)
             let obscuredAmount = _getObscuredAmountForStackAtIndex(index)
             
             // render background:
