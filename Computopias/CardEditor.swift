@@ -110,6 +110,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }),
         Item(title: "Random", image: nil, callback: { () -> CardItemView! in
             return RandomContentCardItemView()
+        }),
+        Item(title: "Rating", image: nil, callback: { () -> CardItemView! in
+            return StarRatingCardItemView()
         })
         /*Item(title: "Timer", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
             return nil

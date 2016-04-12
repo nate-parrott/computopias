@@ -391,7 +391,9 @@ class CardView: ASDisplayNode {
                 var handledTap = false
                 let posInViewCoords = view.convertPoint(pos, fromView: view.window!)
                 if let tappedItem = _nearestItemToPoint(posInViewCoords) where CGRectContainsPoint(tappedItem.frame, posInViewCoords) {
-                    handledTap = tappedItem.tapped()
+                    let tapPoint = tappedItem.convertPoint(posInViewCoords, fromNode: self)
+                    let tapInfo = CardItemView.TapInfo(position: tapPoint)
+                    handledTap = tappedItem.tapped(tapInfo)
                 }
                 if let t = onTap where !handledTap {
                     t()

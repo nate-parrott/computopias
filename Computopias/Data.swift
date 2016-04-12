@@ -34,7 +34,9 @@ cardJson:
   - height
   - poster: userJson
  
-/counters/uuid/<uid>
+/counters/<uuid>/<uid>
+
+/ratings/<uuid>/<uid>/<int>
  
 /users/<uid>/
   - name

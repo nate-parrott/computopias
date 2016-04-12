@@ -54,6 +54,7 @@
 		5F93EE2D1CBB8CCE00FF2E2B /* ArrayRandomChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F93EE2C1CBB8CCE00FF2E2B /* ArrayRandomChoice.swift */; };
 		5F93EE2F1CBB908900FF2E2B /* Nouns.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5F93EE2E1CBB908900FF2E2B /* Nouns.txt */; };
 		5F93EE321CBB964D00FF2E2B /* NSAttributedString+ResizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F93EE311CBB964D00FF2E2B /* NSAttributedString+ResizeToFit.m */; };
+		5F93EE341CBB98F300FF2E2B /* TaggingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F93EE331CBB98F300FF2E2B /* TaggingOverlayView.swift */; };
 		5FB2F24B1CA216B4001863C4 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F24A1CA216B4001863C4 /* Assets.swift */; };
 		5FB2F24D1CA21774001863C4 /* NetImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F24C1CA21774001863C4 /* NetImageView.swift */; };
 		5FB2F24F1CA217A2001863C4 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB2F24E1CA217A2001863C4 /* UIImage+Resize.swift */; };
@@ -164,6 +165,7 @@
 		5F93EE2E1CBB908900FF2E2B /* Nouns.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Nouns.txt; sourceTree = "<group>"; };
 		5F93EE301CBB964D00FF2E2B /* NSAttributedString+ResizeToFit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+ResizeToFit.h"; sourceTree = "<group>"; };
 		5F93EE311CBB964D00FF2E2B /* NSAttributedString+ResizeToFit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+ResizeToFit.m"; sourceTree = "<group>"; };
+		5F93EE331CBB98F300FF2E2B /* TaggingOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaggingOverlayView.swift; sourceTree = "<group>"; };
 		5FB2F24A1CA216B4001863C4 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		5FB2F24C1CA21774001863C4 /* NetImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetImageView.swift; sourceTree = "<group>"; };
 		5FB2F24E1CA217A2001863C4 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 			children = (
 				5F508C011CB745D3005BF228 /* CardViewWrapper.swift */,
 				5F508C051CB75F05005BF228 /* HashtagListView.swift */,
+				5F93EE331CBB98F300FF2E2B /* TaggingOverlayView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 				5F508C111CB8E78E005BF228 /* FriendListDataSource.swift in Sources */,
 				5F29B4BC1CB73E830060FFD7 /* UIView+ElasticLayout.m in Sources */,
 				5FB2F2511CA217CF001863C4 /* KeyboardAvoidance.swift in Sources */,
+				5F93EE341CBB98F300FF2E2B /* TaggingOverlayView.swift in Sources */,
 				5FD360631CACECD50016D837 /* StarRatingCardItemView.swift in Sources */,
 				5F508BFC1CB74303005BF228 /* CardStack.swift in Sources */,
 				5FB976CC1CB42B6900B92A16 /* Flagging.swift in Sources */,

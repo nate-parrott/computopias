@@ -22,8 +22,16 @@ class CardItemView: ASDisplayNode, UIGestureRecognizerDelegate {
         acceptsTouches = false
     }
     
+    struct TapInfo {
+        var position: CGPoint
+    }
+    
     func tapped() -> Bool {
         return false
+    }
+    
+    func tapped(info: TapInfo) -> Bool {
+        return tapped()
     }
     
     var acceptsTouches = false {
@@ -138,6 +146,8 @@ class CardItemView: ASDisplayNode, UIGestureRecognizerDelegate {
             item = CommentsCardItemView()
         case "random":
             item = RandomContentCardItemView()
+        case "starRating":
+            item = StarRatingCardItemView()
         default: ()
         }
         item?.importJson(j)
