@@ -107,8 +107,8 @@ class CounterCardItemView: CardItemView {
         string.drawVerticallyCenteredInRect(CardItemView.textInsetBoundsForBounds(bounds))
     }
     
-    override func tapped() -> Bool {
-        super.tapped()
+    override func tapped(info: TapInfo) -> Bool {
+        super.tapped(info)
         if !editMode {
             let path = pathToObserve().childByAppendingPath(Data.getUID())
             if selectedByMe {
@@ -117,6 +117,7 @@ class CounterCardItemView: CardItemView {
             } else {
                 willModifyCount(1)
                 path.setValue(NSDate().timeIntervalSince1970)
+                self.card?.view.fireTouchParticleEffectAtPoint(convertPoint(info.position, toNode: supernode!), image: UIImage.fromEmoji(self.emoji, approxSize: 60))
             }
         }
         if templateEditMode {

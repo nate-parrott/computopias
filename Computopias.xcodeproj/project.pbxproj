@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		21141B7977D28E67D62F6732 /* Pods_Computopias.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F1389C7F54711D4F1B4F21 /* Pods_Computopias.framework */; };
+		5F0D378D1CBE0A180033E83C /* UIView+ParticleEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0D378B1CBE0A180033E83C /* UIView+ParticleEffects.swift */; };
+		5F0D378E1CBE0A180033E83C /* UIImage+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0D378C1CBE0A180033E83C /* UIImage+Emoji.swift */; };
 		5F1EE5CD1CBD805F003C1C2B /* LabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1EE5CC1CBD805F003C1C2B /* LabelNode.swift */; };
 		5F1EE5CF1CBD89A0003C1C2B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1EE5CE1CBD89A0003C1C2B /* OnboardingViewController.swift */; };
 		5F2925DA1CB8FC9C0096B739 /* GroupEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */; };
@@ -103,6 +105,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F0D378B1CBE0A180033E83C /* UIView+ParticleEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ParticleEffects.swift"; sourceTree = "<group>"; };
+		5F0D378C1CBE0A180033E83C /* UIImage+Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Emoji.swift"; sourceTree = "<group>"; };
 		5F1EE5CC1CBD805F003C1C2B /* LabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelNode.swift; sourceTree = "<group>"; };
 		5F1EE5CE1CBD89A0003C1C2B /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupEditor.swift; sourceTree = "<group>"; };
@@ -410,6 +414,8 @@
 		5FB2F2471CA20FCB001863C4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5F0D378B1CBE0A180033E83C /* UIView+ParticleEffects.swift */,
+				5F0D378C1CBE0A180033E83C /* UIImage+Emoji.swift */,
 				5F93EE301CBB964D00FF2E2B /* NSAttributedString+ResizeToFit.h */,
 				5F93EE311CBB964D00FF2E2B /* NSAttributedString+ResizeToFit.m */,
 				5F29B4C91CB73E8A0060FFD7 /* Elastic */,
@@ -608,6 +614,7 @@
 				5F1EE5CD1CBD805F003C1C2B /* LabelNode.swift in Sources */,
 				5F3435EE1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift in Sources */,
 				5F29B4BB1CB73E830060FFD7 /* UIView+Elastic.m in Sources */,
+				5F0D378E1CBE0A180033E83C /* UIImage+Emoji.swift in Sources */,
 				5FD3604C1CAB7A850016D837 /* RandomContentCardItemView.swift in Sources */,
 				5FB2F2531CA2181C001863C4 /* ImageCardItemView.swift in Sources */,
 				5F29B4BF1CB73E830060FFD7 /* ElasticReuseQueue.m in Sources */,
@@ -627,6 +634,7 @@
 				5FD360401CA72BED0016D837 /* CommentsCardItemView.swift in Sources */,
 				5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */,
 				5F29B4BE1CB73E830060FFD7 /* ElasticValueInput.m in Sources */,
+				5F0D378D1CBE0A180033E83C /* UIView+ParticleEffects.swift in Sources */,
 				5FD360531CABB1690016D837 /* NSString+MD5.m in Sources */,
 				5FB2F24F1CA217A2001863C4 /* UIImage+Resize.swift in Sources */,
 				5F29B4C81CB73E830060FFD7 /* EVComplexLayout.m in Sources */,

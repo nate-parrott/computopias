@@ -71,6 +71,7 @@ class StarRatingCardItemView: CardItemView {
                 rate(score)
                 return true
             }
+            self.card?.view.fireTouchParticleEffectAtPoint(convertPoint(info.position, toNode: supernode!), image: UIImage.fromEmoji("⭐️", approxSize: 60))
         }
         return false
     }
