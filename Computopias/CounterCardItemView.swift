@@ -40,12 +40,14 @@ class CounterCardItemView: CardItemView {
     
     func _updateDataObservers() {
         _observer = pathToObserve().observeEventType(FEventType.Value, withBlock: { [weak self] (let snapshot: FDataSnapshot!) -> Void in
-            if let dict = snapshot.value as? [String: AnyObject], let uid = Data.getUID() {
-                self?.selectedByMe = dict[uid] != nil
-                self?.count = dict.count
-            } else {
-                self?.selectedByMe = false
-                self?.count = 0
+            if self?.counterID == snapshot.key {
+                if let dict = snapshot.value as? [String: AnyObject], let uid = Data.getUID() {
+                    self?.selectedByMe = dict[uid] != nil
+                    self?.count = dict.count
+                } else {
+                    self?.selectedByMe = false
+                    self?.count = 0
+                }
             }
             })
     }

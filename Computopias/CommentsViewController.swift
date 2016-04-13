@@ -57,6 +57,11 @@ class CommentsViewController: JSQMessagesViewController {
         _fbHandle = nil
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        inputToolbar.contentView.textView.becomeFirstResponder()
+    }
+    
     // MARK: Messaging
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
