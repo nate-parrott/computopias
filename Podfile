@@ -9,6 +9,7 @@ pod 'Firebase'
 pod 'IQAudioRecorderController'
 pod 'JSQMessagesViewController'
 pod 'AsyncDisplayKit'
+pod 'QuadratTouch'
 
 end
 

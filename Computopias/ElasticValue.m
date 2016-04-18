@@ -120,8 +120,8 @@
             if (self.dragStartBlock) self.dragStartBlock();
         } else {
             self.velocity = [self _computeDragVelocity];
-            [self log:[NSString stringWithFormat:@"samples: %@", self.dragPositionSamples]];
-            [self log:[NSString stringWithFormat:@"velocity: %f", self.velocity]];
+            // [self log:[NSString stringWithFormat:@"samples: %@", self.dragPositionSamples]];
+            // [self log:[NSString stringWithFormat:@"velocity: %f", self.velocity]];
             if (self.dragEndBlock) self.dragEndBlock(self, [self estimatedStoppingPosition]);
         }
         [self _addPositionSample:self.position];
@@ -192,7 +192,7 @@
     [self.dragTimeSamples addObject:@(CFAbsoluteTimeGetCurrent())];
     [self.dragTickSamples addObject:@(_tick)];
     [self _trimDragSamples];
-    [self log:[NSString stringWithFormat:@"adding sample %f", position]];
+    // [self log:[NSString stringWithFormat:@"adding sample %f", position]];
 }
 
 - (void)_trimDragSamples {
