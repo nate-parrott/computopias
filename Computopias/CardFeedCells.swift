@@ -12,7 +12,7 @@ import Firebase
 class CardCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(cardView)
+        addSubview(cardView.view)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,7 +33,7 @@ class CardCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         cardView.bounds = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
-        cardView.center = bounds.center
+        cardView.position = bounds.center
     }
     
     var card: (id: String, hashtag: String?)? {
@@ -42,7 +42,6 @@ class CardCell: UICollectionViewCell {
                 let cardFirebase = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id)
                 cardView.cardFirebase = cardFirebase
                 cardView.hashtag = hashtag
-                cardView.backgroundImageView.image = Appearance.gradientForHashtag(hashtag ?? "", cardID: id)
                 if window != nil {
                     _subscribeToCardData()
                 }
@@ -55,9 +54,10 @@ class CardCell: UICollectionViewCell {
         if let cardFirebase = cardView.cardFirebase {
             _cardDataSub = cardFirebase.pusher.subscribe({ [weak self] (let data) in
                 if let json = data as? [String: AnyObject] {
-                    self?.cardView.importJson(json)
-                    for item in self?.cardView.items ?? [] {
-                        item.prepareToPresent()
+                    self?.cardView.importJson(json) {
+                        for item in self?.cardView.items ?? [] {
+                            item.prepareToPresent()
+                        }
                     }
                 }
             })

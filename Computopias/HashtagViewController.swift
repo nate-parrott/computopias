@@ -14,6 +14,7 @@ class HashtagViewController: CardFeedViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "#" + hashtag
         createToolbar()
     }
     

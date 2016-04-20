@@ -15,23 +15,14 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
         var vc: NavigableViewController!
         switch route {
         case .Card(hashtag: let hashtag, id: let id):
-            if hashtag == "profiles" {
-                vc = storyboard.instantiateViewControllerWithIdentifier("UserCardViewController") as! UserCardViewController
-                (vc as! UserCardViewController).userID = id
-            } else {
-                vc = storyboard.instantiateViewControllerWithIdentifier("CardFeedViewController") as! CardFeedViewController
-            }
+            vc = storyboard.instantiateViewControllerWithIdentifier("CardFeedViewController") as! CardFeedViewController
             vc!.route = route
             (vc as! CardFeedViewController).rows = [CardFeedViewController.RowModel.Card(id: id, hashtag: hashtag)]
         case .Hashtag(name: let hashtag):
             vc = storyboard.instantiateViewControllerWithIdentifier("HashtagViewController") as! HashtagViewController
             (vc as! HashtagViewController).hashtag = hashtag
         case .HashtagsList:
-            vc = storyboard.instantiateViewControllerWithIdentifier("ActivityFeed") as! ActivityFeedViewController
-        case .ProfilesList:
-            vc = storyboard.instantiateViewControllerWithIdentifier("FriendFeedViewController") as! FriendFeedViewController
-        case .CreateGroup:
-            vc = storyboard.instantiateViewControllerWithIdentifier("CreateGroupViewController") as! CreateGroupViewController
+            vc = storyboard.instantiateViewControllerWithIdentifier("GroupsList") as! GroupsListViewController
         default:
             vc = storyboard.instantiateViewControllerWithIdentifier("NavigableViewController") as! NavigableViewController
         }
@@ -45,25 +36,6 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.text = route.titleStringForNav
-        searchBar.placeholder = "Search…"
-        navigationItem.titleView = searchBar
-        searchBar.frame = CGRectMake(0, 0, 200, searchBar.bounds.size.height)
-        searchBar.delegate = self
-        searchBar.setImage(UIImage(), forSearchBarIcon: .Clear, state: .Normal)
-        searchBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        searchBar.barTintColor = UIColor.clearColor()
-        searchBar.backgroundColor = UIColor.clearColor()
-        searchBar.setSearchFieldBackgroundImage(UIImage(named: "searchfield"), forState: .Normal)
-        // searchBar.searchBarStyle = .Minimal
-        searchBar.autocapitalizationType = .None
-        searchBar.autocorrectionType = .No
-        searchBar.backgroundImage = UIImage()
-        
-        if !isHome {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "NavHome"), style: .Plain, target: self, action: #selector(NavigableViewController.home))
-        }
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NavigableViewController._forceRefresh), name: Data.LoginDidCompleteNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NavigableViewController._forceRefresh), name: Data.BlockedUsersChangedNotification, object: nil)
     }
@@ -77,19 +49,7 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         _setupBarsAnimated(animated)
-        searchBar.alpha = 0
         visible = true
-        if navigationController?.viewControllers.count > 1 {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "NavBack"), style: .Plain, target: self, action: #selector(NavigableViewController.back))
-            navigationController!.interactivePopGestureRecognizer!.delegate = self
-        }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        UIView.animateWithDuration(0.2, delay: 0, options: .AllowUserInteraction, animations: {
-            self.searchBar.alpha = 1
-            }, completion: nil)
     }
     
     func back() {
@@ -150,10 +110,6 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
         navigationController?.setToolbarHidden(!hasToolbar, animated: animated)
     }
     
-    let searchBar = UISearchBar()
-    func home(sender: AnyObject) {
-        navigate(Route.HashtagsList)
-    }
     func navigate(route: Route) -> NavigableViewController {
         let vc =  NavigableViewController.FromRoute(route)
         navigationController!.pushViewController(vc, animated: true)
@@ -204,19 +160,6 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
     
     class func homeTabs() -> [(String, Route)] {
         return [("Activity", Route.HashtagsList), ("Friends", Route.ProfilesList), ("New Stack", Route.CreateGroup)]
-    }
-    
-    // MARK: Memory warnings
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        let maxPages = 5
-        if let nav = navigationController where nav.viewControllers.first === self && nav.viewControllers.count > maxPages {
-            var vcs = nav.viewControllers
-            while vcs.count > maxPages {
-                vcs.removeAtIndex(0)
-            }
-            nav.viewControllers = vcs
-        }
     }
     
     // MARK: Convenience

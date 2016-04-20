@@ -141,6 +141,8 @@ class ActivityFeedSource: NSObject {
         }
     }
     func _updateCards() {
+        _updateGroupsList()
+        
         let cards = _activityCards + _randomCards
         cardIDs.removeAll()
         cardsByID.removeAll()
@@ -157,4 +159,45 @@ class ActivityFeedSource: NSObject {
     
     var cardIDs = [String]()
     var cardsByID = [String: [String: AnyObject]]()
+    
+    // MARK: Group lists
+    class Model {
+        var title: String!
+        var subtitle: String!
+        var route: Route!
+    }
+    let groupsListModels = Observable<[Model]>(val: [])
+    func _updateGroupsList() {
+        struct HashtagInfo {
+            let hashtag: String
+            let date: NSDate
+            var names = [String]()
+            var namesSet = Set<String>()
+            func toModel() -> Model {
+                let m = Model()
+                m.title = "#" + hashtag
+                m.subtitle = names.joinWithSeparator(", ") + " posted • " + NSDateFormatter.localizedStringFromDate(date, dateStyle: .ShortStyle, timeStyle: .ShortStyle)
+                m.route = Route.Hashtag(name: hashtag)
+                return m
+            }
+        }
+        var hashtags = [String]()
+        var hashtagInfo = [String: HashtagInfo]()
+        for card in _activityCards + _randomCards {
+            if let tag = card["hashtag"] as? String,
+                let poster = card["poster"] as? [String: AnyObject],
+                let name = poster["name"] as? String,
+                let date = card["date"] as? Double {
+                if hashtagInfo[tag] == nil {
+                    hashtags.append(tag)
+                    hashtagInfo[tag] = HashtagInfo(hashtag: tag, date: NSDate.init(timeIntervalSince1970: date), names: [], namesSet: Set<String>())
+                }
+                if !hashtagInfo[tag]!.namesSet.contains(name) {
+                    hashtagInfo[tag]!.namesSet.insert(name)
+                    hashtagInfo[tag]!.names.append(name)
+                }
+            }
+        }
+        groupsListModels.val = hashtags.map({ hashtagInfo[$0]!.toModel() })
+    }
 }
