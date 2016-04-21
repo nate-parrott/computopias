@@ -46,6 +46,11 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
         let xInset = (view.bounds.size.width - layout.itemSize.width)/2
         let yInset = (view.bounds.size.height - layout.itemSize.height)/2
         collectionView.contentInset = UIEdgeInsetsMake(yInset, xInset, yInset, xInset)
+        
+        // layout buttons:
+        let buttonFrame = CGRectMake(0, view.bounds.size.height - yInset, view.bounds.size.width, yInset)
+        let paddedButtons = buttons.map({ EVInset($0, UIEdgeInsetsMake(4, 4, 4, 4)) })
+        EVComplexLayout(false, buttonFrame, [EVVertical(), EVLayoutAlignCenter(), [EVHorizontal(), EVLayoutAlignCenter()] + paddedButtons])
     }
     
     // MARK: Models
@@ -96,6 +101,18 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
     var modelItems = [Item]() {
         didSet {
             collectionView.reloadData()
+        }
+    }
+    
+    // MARK: Buttons
+    var buttons = [UIButton]() {
+        didSet {
+            for b in oldValue {
+                b.removeFromSuperview()
+            }
+            for b in buttons {
+                view.addSubview(b)
+            }
         }
     }
 }

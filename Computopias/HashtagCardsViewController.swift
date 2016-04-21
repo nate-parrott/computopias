@@ -11,6 +11,24 @@ import UIKit
 class HashtagCardsViewController: CardsViewController {
     var hashtag: String!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "#" + hashtag
+        
+        followButton = CUButton(title: following ?? false ? "Following" : "Follow", action: { 
+            [weak self] in
+            self?.toggleFollowing()
+        })
+        _followingSub = Data.isFollowingItem(hashtag).subscribe({ [weak self] (let following) in
+            self?.following = following
+        })
+        let addPostButton = CUButton(title: "Post") { 
+            [weak self] in
+            self?.source?.addPost()
+        }
+        buttons = [addPostButton, followButton]
+    }
+    
     override func startUpdating() {
         super.startUpdating()
         source = HashtagFeedSource(hashtag: hashtag)
@@ -35,5 +53,18 @@ class HashtagCardsViewController: CardsViewController {
             }
         }
         modelItems = items
+    }
+    // MARK: Following
+    var following: Bool? {
+        didSet {
+            followButton.setTitle(following ?? false ? "Following" : "Follow", forState: .Normal)
+            view.setNeedsLayout()
+        }
+    }
+    var _followingSub: Subscription?
+    var followButton: CUButton!
+    
+    func toggleFollowing() {
+        Data.setFollowing(hashtag, following: !(following ?? false), type: .Hashtag)
     }
 }

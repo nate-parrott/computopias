@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Appearance.setup()
         
+        hideNavBarBackground()
+        
         window?.rootViewController?.view.tintColor = Appearance.tint
         
         if Data.getUID() == nil || Data.getPhone() == nil {
@@ -35,6 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         get {
             return UIApplication.sharedApplication().delegate as! AppDelegate
         }
+    }
+    
+    func hideNavBarBackground() {
+        let nav = window!.rootViewController! as! UINavigationController
+        nav.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        nav.navigationBar.shadowImage = UIImage()
+        nav.navigationBar.translucent = true
     }
     
     var _window: CMWindow?
