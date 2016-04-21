@@ -78,6 +78,7 @@
 		5FB976CE1CB42F7400B92A16 /* CardView+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB976CD1CB42F7400B92A16 /* CardView+Flag.swift */; };
 		5FC84B7B1CA2795100E6F5F7 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7A1CA2795100E6F5F7 /* Route.swift */; };
 		5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */; };
+		5FCB7B7A1CC82237008E8AFF /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B791CC82237008E8AFF /* CardsViewController.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
 		5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */; };
 		5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602C1CA331E60016D837 /* MapCardItemView.swift */; };
@@ -195,6 +196,7 @@
 		5FB976CD1CB42F7400B92A16 /* CardView+Flag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardView+Flag.swift"; sourceTree = "<group>"; };
 		5FC84B7A1CA2795100E6F5F7 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCardItemView.swift; sourceTree = "<group>"; };
+		5FCB7B791CC82237008E8AFF /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602C1CA331E60016D837 /* MapCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCardItemView.swift; sourceTree = "<group>"; };
@@ -361,6 +363,7 @@
 			children = (
 				5F97EE861CC46D9900124FA8 /* NavigableViewController.swift */,
 				5F97EE831CC4645100124FA8 /* GroupsListViewController.swift */,
+				5FCB7B791CC82237008E8AFF /* CardsViewController.swift */,
 				5F97EE851CC46D9900124FA8 /* CardFeedViewController.swift */,
 				5F97EE8B1CC46E2F00124FA8 /* HashtagViewController.swift */,
 				5F97EE891CC46DB300124FA8 /* CardFeedCells.swift */,
@@ -620,6 +623,7 @@
 				5F97EE8C1CC46E2F00124FA8 /* HashtagViewController.swift in Sources */,
 				5F29B4BD1CB73E830060FFD7 /* ElasticValue.m in Sources */,
 				5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */,
+				5FCB7B7A1CC82237008E8AFF /* CardsViewController.swift in Sources */,
 				5FB2F2591CA21E1C001863C4 /* String+Substring.swift in Sources */,
 				5F508C061CB75F05005BF228 /* HashtagListView.swift in Sources */,
 				5F3435EC1CB9E193009E5F86 /* ASLabelNode.swift in Sources */,

@@ -17,9 +17,6 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
         view.backgroundColor = UIColor.whiteColor()
         
         collectionView.registerClass(CardCell.self, forCellWithReuseIdentifier: "Card")
-        collectionView.registerClass(TextCell.self, forCellWithReuseIdentifier: "Text")
-        collectionView.registerClass(DescriptionCell.self, forCellWithReuseIdentifier: "Description")
-        collectionView.registerClass(ButtonFeedCell.self, forCellWithReuseIdentifier: "ButtonFeedCell")
         
         (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).sectionInset = UIEdgeInsetsMake(lineSpacing, 0, 0, 0)
         (collectionView.collectionViewLayout as! UICollectionViewFlowLayout).minimumLineSpacing = lineSpacing
@@ -28,21 +25,9 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
     static let LineSpacing: CGFloat = 10
     let lineSpacing: CGFloat = CardFeedViewController.LineSpacing
     
-    var _timeViewAppeared: CFAbsoluteTime?
-    var _viewAppearedVeryRecently: Bool {
-        get {
-            let THRESHOLD: CFAbsoluteTime = 1
-            if let t = _timeViewAppeared {
-                return CFAbsoluteTimeGetCurrent() - t < THRESHOLD
-            } else {
-                return false
-            }
-        }
-    }
-    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        _timeViewAppeared = CFAbsoluteTimeGetCurrent()
+        // _timeViewAppeared = CFAbsoluteTimeGetCurrent()
     }
     
     var rows = [RowModel]() {
@@ -100,38 +85,13 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
         case Caption(text: NSAttributedString, action: (() -> ())?)
         case ButtonCell(text: NSAttributedString, action: (() -> ())?, buttons: [(String, () -> ())])
         case Description(text: NSAttributedString, action: (() -> ())?)
-        
-        func sizeForWidth(width: CGFloat) -> CGSize {
-            switch self {
-            case .Card(id: _, hashtag: _):
-                return CardView.CardSize
-            case .Caption(text: let text, action: _):
-                let height = text.boundingRectWithSize(CGSizeMake(CardView.CardSize.width, 500), options: [.UsesLineFragmentOrigin], context: nil).size.height
-                return CGSizeMake(CardView.CardSize.width, height)
-            case .Description(text: let text, _):
-                let height = text.boundingRectWithSize(CGSizeMake(width, 500), options: [.UsesLineFragmentOrigin], context: nil).size.height
-                return CGSizeMake(width, height + DescriptionCell.VerticalPadding)
-            case .ButtonCell(text: let text, action: _, buttons: let buttons):
-                let width = CardView.CardSize.width - CGFloat(buttons.count) * ButtonFeedCell.ButtonSize.width
-                let textHeight = text.boundingRectWithSize(CGSizeMake(width, 500), options: [.UsesLineFragmentOrigin], context: nil).size.height
-                return CGSizeMake(CardView.CardSize.width, max(ButtonFeedCell.ButtonSize.height, textHeight))
-            }
-        }
+        case CaptionedCard(id: String, hashtag: String?, caption: NSAttributedString, captionAction: (() -> ())?)
     }
     
     @IBOutlet var collectionView: UICollectionView!
     
     func scrollOffsetForRowAtIndex(i: Int, rows: [RowModel]) -> CGFloat {
-        var y = lineSpacing
-        var j = 0
-        for row in rows {
-            if j == i {
-                return y
-            } else {
-                y += row.sizeForWidth(collectionView.bounds.size.width).height + lineSpacing
-                j += 1
-            }
-        }
+        // TODO
         return 0
     }
     
@@ -155,32 +115,15 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
         return _rows.count
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let width = collectionView.bounds.size.width
-        return _rows[indexPath.item].sizeForWidth(width)
-    }
-    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         switch _rows[indexPath.item] {
-        case .Card(id: let id, hashtag: let hashtag):
+        case .CaptionedCard(id: let id, hashtag: let hashtag, caption: let caption, captionAction: let captionAction):
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Card", forIndexPath: indexPath) as! CardCell
             cell.card = (id: id, hashtag: hashtag)
+            cell.label.attributedText = caption
+            cell.captionTapAction = captionAction
             return cell
-        case .Caption(text: let text, action: let action):
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Text", forIndexPath: indexPath) as! TextCell
-            cell.label.attributedText = text
-            cell.onTap = action
-            return cell
-        case .Description(text: let text, action: let action):
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Description", forIndexPath: indexPath) as! DescriptionCell
-            cell.label.attributedText = text
-            cell.onTap = action
-            return cell
-        case .ButtonCell(text: let text, action: let action, buttons: let buttons):
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ButtonFeedCell", forIndexPath: indexPath) as! ButtonFeedCell
-            cell.value = (text, buttons)
-            cell.tapAction = action
-            return cell
+        default: fatalError()
         }
     }
     

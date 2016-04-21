@@ -13,6 +13,9 @@ class CardCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(cardView.view)
+        addSubview(label)
+        label.textAlignment = .Center
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CardCell._tappedCaption)))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,11 +32,19 @@ class CardCell: UICollectionViewCell {
     }
     
     let cardView = CardView()
+    let label = UILabel()
+    var captionTapAction: (() -> ())?
+    func _tappedCaption() {
+        if let c = captionTapAction { c() }
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         cardView.bounds = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
         cardView.position = bounds.center
+        
+        let labelHeight = label.sizeThatFits(CGSizeMake(bounds.size.width - 20, 100)).height
+        label.bounds = CGRectMake(20, (cardView.frame.origin.y - labelHeight)/2, bounds.size.width - 20, labelHeight)
     }
     
     var card: (id: String, hashtag: String?)? {
