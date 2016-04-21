@@ -33,6 +33,9 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
     @IBAction func showFriends() {
         NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Friends"))
     }
+    @IBAction func createGroup() {
+        NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("GroupNamePicker"))
+    }
     // MARK: Table
     @IBOutlet var tableView: UITableView!
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

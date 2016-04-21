@@ -25,4 +25,11 @@ extension Data {
             }
         }
     }
+    
+    static func doesHashtagExist(tag: String, callback: (String, Bool) -> ()) {
+        Data.firebase.childByAppendingPath("all_hashtags").childByAppendingPath(tag).observeSingleEventOfType(FEventType.Value) { (let snapshot: FDataSnapshot!) in
+            let available = (snapshot.value as? NSNull) != nil
+            callback(tag, !available)
+        }
+    }
 }

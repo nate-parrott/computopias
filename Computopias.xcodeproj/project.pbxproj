@@ -81,6 +81,7 @@
 		5FCB7B7A1CC82237008E8AFF /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B791CC82237008E8AFF /* CardsViewController.swift */; };
 		5FCB7B7C1CC89FB9008E8AFF /* HashtagCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B7B1CC89FB9008E8AFF /* HashtagCardsViewController.swift */; };
 		5FCB7B7F1CC8B375008E8AFF /* SingleCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B7E1CC8B375008E8AFF /* SingleCardViewController.swift */; };
+		5FCB7B811CC8B7D7008E8AFF /* GroupNamePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B801CC8B7D7008E8AFF /* GroupNamePickerViewController.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
 		5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */; };
 		5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602C1CA331E60016D837 /* MapCardItemView.swift */; };
@@ -201,6 +202,7 @@
 		5FCB7B791CC82237008E8AFF /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		5FCB7B7B1CC89FB9008E8AFF /* HashtagCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagCardsViewController.swift; sourceTree = "<group>"; };
 		5FCB7B7E1CC8B375008E8AFF /* SingleCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleCardViewController.swift; sourceTree = "<group>"; };
+		5FCB7B801CC8B7D7008E8AFF /* GroupNamePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupNamePickerViewController.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602C1CA331E60016D837 /* MapCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCardItemView.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 				5F70982D1CA0EEA600B499BC /* CardEditor.swift */,
 				5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */,
 				5F1EE5CE1CBD89A0003C1C2B /* OnboardingViewController.swift */,
+				5FCB7B801CC8B7D7008E8AFF /* GroupNamePickerViewController.swift */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				5F93EE321CBB964D00FF2E2B /* NSAttributedString+ResizeToFit.m in Sources */,
 				5FB976BA1CAF292A00B92A16 /* Hashtags.swift in Sources */,
 				5FB2F2571CA2184E001863C4 /* UIColor+Hex.swift in Sources */,
+				5FCB7B811CC8B7D7008E8AFF /* GroupNamePickerViewController.swift in Sources */,
 				5F508BFE1CB743DC005BF228 /* ActivityFeedSource.swift in Sources */,
 				5F70982E1CA0EEA600B499BC /* CardEditor.swift in Sources */,
 				5F508C111CB8E78E005BF228 /* FriendListDataSource.swift in Sources */,

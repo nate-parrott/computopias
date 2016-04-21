@@ -32,6 +32,7 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
     var collectionView: UICollectionView!
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        collectionView.collectionViewLayout.invalidateLayout() // http://stackoverflow.com/questions/18339030/uicollectionview-assertion-error-on-stale-data
         return modelItems.count
     }
     

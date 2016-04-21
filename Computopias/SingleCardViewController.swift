@@ -14,7 +14,7 @@ class SingleCardViewController: CardsViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "#" + hashtag
-        _cardDictSub = Data.firebase.childByAppendingPath("cards").childByAppendingPath(hashtag).childByAppendingPath(cardID).pusher.subscribe({ [weak self] (let data) in
+        _cardDictSub = Data.firebase.childByAppendingPath("hashtags").childByAppendingPath(hashtag).childByAppendingPath("cards").childByAppendingPath(cardID).pusher.subscribe({ [weak self] (let data) in
             self?.cardDict = data as? [String: AnyObject]
         })
     }
