@@ -36,10 +36,15 @@ class HashtagCardsViewController: CardsViewController {
             self?._updateCards()
         })
         _updateCards()
+        _groupInfoSub = source?.groupInfoText.subscribe({ [weak self] (let text) in
+            self?.descriptionLabel.attributedText = text
+        })
     }
     override func stopUpdating() {
         super.stopUpdating()
         source = nil
+        _cardsSub = nil
+        _groupInfoSub = nil
     }
     var source: HashtagFeedSource?
     var _cardsSub: Subscription?
@@ -66,5 +71,12 @@ class HashtagCardsViewController: CardsViewController {
     
     func toggleFollowing() {
         Data.setFollowing(hashtag, following: !(following ?? false), type: .Hashtag)
+    }
+    
+    // MARK: Group info
+    var _groupInfoSub: Subscription?
+    override func tappedDescriptionLabel() {
+        super.tappedDescriptionLabel()
+        source?.editGroupInfo()
     }
 }

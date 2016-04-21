@@ -20,6 +20,12 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
         collectionView.alwaysBounceHorizontal = true
         view.addSubview(collectionView)
         collectionView.backgroundColor = UIColor.whiteColor()
+        
+        view.addSubview(descriptionLabel)
+        descriptionLabel.userInteractionEnabled = true
+        descriptionLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CardsViewController.tappedDescriptionLabel)))
+        descriptionLabel.textAlignment = .Center
+        descriptionLabel.numberOfLines = 0
     }
     
     // MARK: CollectionView
@@ -45,12 +51,17 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
         layout.minimumLineSpacing = 15
         let xInset = (view.bounds.size.width - layout.itemSize.width)/2
         let yInset = (view.bounds.size.height - layout.itemSize.height)/2
-        collectionView.contentInset = UIEdgeInsetsMake(yInset, xInset, yInset, xInset)
+        let extraCellHeightBeyondCard = CardCell.Size.height - CardView.CardSize.height
+        collectionView.contentInset = UIEdgeInsetsMake(yInset - extraCellHeightBeyondCard/2, xInset, yInset + extraCellHeightBeyondCard/2, xInset)
         
-        // layout buttons:
+        // lay out buttons:
         let buttonFrame = CGRectMake(0, view.bounds.size.height - yInset, view.bounds.size.width, yInset)
         let paddedButtons = buttons.map({ EVInset($0, UIEdgeInsetsMake(4, 4, 4, 4)) })
         EVComplexLayout(false, buttonFrame, [EVVertical(), EVLayoutAlignCenter(), [EVHorizontal(), EVLayoutAlignCenter()] + paddedButtons])
+        
+        // lay out description label:
+        let descHeight = descriptionLabel.sizeThatFits(CGSizeMake(view.bounds.size.width-40, collectionView.contentInset.top - topLayoutGuide.length - 4)).height
+        descriptionLabel.frame = CGRectMake(20, topLayoutGuide.length + 4, view.bounds.size.width-40, descHeight)
     }
     
     // MARK: Models
@@ -114,5 +125,11 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
                 view.addSubview(b)
             }
         }
+    }
+    
+    // MARK: Description
+    let descriptionLabel = UILabel()
+    func tappedDescriptionLabel() {
+        
     }
 }

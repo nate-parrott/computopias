@@ -117,7 +117,7 @@ class HashtagFeedSource {
     func _updateGroupInfo() {
         let text = NSMutableAttributedString()
         
-        text.appendAttributedString(NSAttributedString.largeText("#" + hashtag + "\n"))
+        // text.appendAttributedString(NSAttributedString.largeText("#" + hashtag + "\n"))
         
         let colon = (hashtagDescription ?? "") != "" ? ":" : ""
         if ownerIsSelf ?? false {
@@ -130,10 +130,10 @@ class HashtagFeedSource {
             text.appendAttributedString(NSAttributedString.smallText("\n" + trimmed))
         }
         text.addAttributes([NSForegroundColorAttributeName: UIColor(white: 0.1, alpha: 0.5)], range: NSMakeRange(0, text.length))
-        groupInfoText = text
+        groupInfoText.val = text
     }
     
-    var groupInfoText: NSAttributedString?
+    let groupInfoText = Observable<NSAttributedString?>(val: nil)
     
     @IBAction func editGroupInfo() {
         if ownerIsSelf ?? false {
