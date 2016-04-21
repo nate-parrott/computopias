@@ -83,7 +83,7 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
                 caption = NSAttributedString.smallBoldText(posterName + " ›") + NSAttributedString.smallText(" on " + dateString)
                 captionAction = {
                     [weak vc] in
-                    vc?.navigate(Route.forProfile(posterId))
+                    vc?.navigate(Route.Profile(id: posterId))
                 }
                 self.cardID = cardID
                 self.hashtag = hashtag

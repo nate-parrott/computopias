@@ -155,7 +155,7 @@ class CardFeedViewController: NavigableViewController, UICollectionViewDataSourc
                 let text = NSAttributedString.smallBoldText(posterName + " ›") + NSAttributedString.smallText(" on " + dateString)
                 let caption = RowModel.Caption(text: text, action: { 
                     [weak self] in
-                    self?.navigate(Route.forProfile(posterId))
+                    self?.navigate(Route.Profile(id: posterId))
                 })
                 let card = RowModel.Card(id: cardID, hashtag: hashtag)
                 rows += [caption, card]

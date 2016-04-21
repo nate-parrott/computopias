@@ -68,6 +68,8 @@ dates are unix timestamps
  - negativeDate
  - card: cardJson
 [ also: inboxes/all ]
+
+/outboxes/<target>
  
 /new_followers/<uid>/<new_follower_uid>
     - userJson

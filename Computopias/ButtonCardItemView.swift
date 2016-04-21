@@ -69,7 +69,8 @@ class ButtonCardItemView: CardItemView {
         print("opening link: \(link)")
         if let firstChar = link.characters.first {
             if firstChar == "#".characters.first! {
-                (UIApplication.sharedApplication().delegate as! AppDelegate).navigateToRoute(Route.fromString(link)!)
+                let s = link[1..<link.characters.count]
+                (UIApplication.sharedApplication().delegate as! AppDelegate).navigateToRoute(Route.Hashtag(name: s))
             } else {
                 var isURL = false
                 if link.componentsSeparatedByString(" ").count > 1 {

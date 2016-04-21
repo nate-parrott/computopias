@@ -15,10 +15,9 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
         var vc: NavigableViewController!
         switch route {
         case .Card(hashtag: let hashtag, id: let id): ()
-            // TODO
-            // vc = storyboard.instantiateViewControllerWithIdentifier("CardFeedViewController") as! CardFeedViewController
-            // vc!.route = route
-            // (vc as! CardFeedViewController).rows = [CardFeedViewController.RowModel.Card(id: id, hashtag: hashtag)]
+            vc = SingleCardViewController()
+            (vc as! SingleCardViewController).hashtag = hashtag
+            (vc as! SingleCardViewController).cardID = id
         case .Hashtag(name: let hashtag):
             vc = HashtagCardsViewController()
             (vc as! HashtagCardsViewController).hashtag = hashtag
@@ -104,7 +103,7 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
             _tabBarButtonItems = tabs.map({ UIBarButtonItem(title: $0.0, style: .Plain, target: self, action: #selector(NavigableViewController.switchTab)) })
             _tabRoutes = tabs.map({ $0.1 })
             for (item, route) in zip(_tabBarButtonItems!, _tabRoutes!) {
-                item.tintColor = (route.string == self.route.string) ? nil : UIColor.grayColor()
+                // item.tintColor = (route.string == self.route.string) ? nil : UIColor.grayColor()
             }
             toolbarItems = [flex1] + _tabBarButtonItems! + [flex2]
         }
@@ -123,23 +122,6 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
         vcs[vcs.count-1] = vc
         nav.viewControllers = vcs
         return vc
-    }
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        if let text = searchBar.text where text != "" {
-            navigate(Route.fromString(text) ?? Route.Nothing)
-        }
-        searchBar.resignFirstResponder()
-    }
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.setShowsCancelButton(true, animated: true)
-    }
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        searchBar.text = route.titleStringForNav
-        searchBar.setShowsCancelButton(false, animated: true)
-    }
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
     }
     
     var isHome: Bool {

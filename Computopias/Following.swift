@@ -51,6 +51,7 @@ extension Data {
                 }
             }
         }
+        firebase.childByAppendingPath("outboxes").childByAppendingPath(ofItem).childByAutoId().setValue(d)
     }
     
     static func broadcastCardUpdate(cardID: String, hashtag: String) {

@@ -80,6 +80,7 @@
 		5FC84B7D1CA27B0D00E6F5F7 /* ButtonCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */; };
 		5FCB7B7A1CC82237008E8AFF /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B791CC82237008E8AFF /* CardsViewController.swift */; };
 		5FCB7B7C1CC89FB9008E8AFF /* HashtagCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B7B1CC89FB9008E8AFF /* HashtagCardsViewController.swift */; };
+		5FCB7B7F1CC8B375008E8AFF /* SingleCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B7E1CC8B375008E8AFF /* SingleCardViewController.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
 		5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */; };
 		5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602C1CA331E60016D837 /* MapCardItemView.swift */; };
@@ -199,6 +200,7 @@
 		5FC84B7C1CA27B0D00E6F5F7 /* ButtonCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCardItemView.swift; sourceTree = "<group>"; };
 		5FCB7B791CC82237008E8AFF /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		5FCB7B7B1CC89FB9008E8AFF /* HashtagCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagCardsViewController.swift; sourceTree = "<group>"; };
+		5FCB7B7E1CC8B375008E8AFF /* SingleCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleCardViewController.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602C1CA331E60016D837 /* MapCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCardItemView.swift; sourceTree = "<group>"; };
@@ -367,9 +369,9 @@
 				5F97EE831CC4645100124FA8 /* GroupsListViewController.swift */,
 				5FCB7B791CC82237008E8AFF /* CardsViewController.swift */,
 				5FCB7B7B1CC89FB9008E8AFF /* HashtagCardsViewController.swift */,
-				5F97EE851CC46D9900124FA8 /* CardFeedViewController.swift */,
-				5F97EE8B1CC46E2F00124FA8 /* HashtagViewController.swift */,
+				5FCB7B7E1CC8B375008E8AFF /* SingleCardViewController.swift */,
 				5F97EE891CC46DB300124FA8 /* CardFeedCells.swift */,
+				5FCB7B7D1CC8B359008E8AFF /* Old */,
 			);
 			name = "Route screens";
 			sourceTree = "<group>";
@@ -450,6 +452,15 @@
 				5F93EE2E1CBB908900FF2E2B /* Nouns.txt */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		5FCB7B7D1CC8B359008E8AFF /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				5F97EE851CC46D9900124FA8 /* CardFeedViewController.swift */,
+				5F97EE8B1CC46E2F00124FA8 /* HashtagViewController.swift */,
+			);
+			name = Old;
 			sourceTree = "<group>";
 		};
 		F826A03134E2FA1475D7E722 /* Pods */ = {
@@ -628,6 +639,7 @@
 				5F29B4BD1CB73E830060FFD7 /* ElasticValue.m in Sources */,
 				5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */,
 				5FCB7B7A1CC82237008E8AFF /* CardsViewController.swift in Sources */,
+				5FCB7B7F1CC8B375008E8AFF /* SingleCardViewController.swift in Sources */,
 				5FB2F2591CA21E1C001863C4 /* String+Substring.swift in Sources */,
 				5F508C061CB75F05005BF228 /* HashtagListView.swift in Sources */,
 				5F3435EC1CB9E193009E5F86 /* ASLabelNode.swift in Sources */,

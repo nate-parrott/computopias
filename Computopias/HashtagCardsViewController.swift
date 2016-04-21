@@ -38,6 +38,7 @@ class HashtagCardsViewController: CardsViewController {
         _updateCards()
         _groupInfoSub = source?.groupInfoText.subscribe({ [weak self] (let text) in
             self?.descriptionLabel.attributedText = text
+            self?.view.setNeedsLayout()
         })
     }
     override func stopUpdating() {

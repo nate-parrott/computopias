@@ -77,7 +77,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="Iwa-5Z-x7o"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <state key="normal" title="Done">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -88,25 +88,25 @@
                                     <action selector="done:" destination="s1F-Qp-nJH" eventType="touchUpInside" id="gJG-cg-Kzu"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CfR-Hi-r8P">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CfR-Hi-r8P">
                                 <rect key="frame" x="16" y="135" width="248" height="44"/>
                                 <color key="backgroundColor" red="0.91572516025641026" green="0.91572516025641026" blue="0.91572516025641026" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="NKg-NP-TbO"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="s1F-Qp-nJH" id="udF-vx-KwE"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yF8-DY-bxH">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yF8-DY-bxH">
                                 <rect key="frame" x="16" y="40" width="248" height="44"/>
                                 <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="WzT-r8-9Bs"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Verify your phone number">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -114,19 +114,19 @@
                                     <action selector="verifyPhone:" destination="s1F-Qp-nJH" eventType="touchUpInside" id="gAi-gw-TAP"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PHONE NUMBER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ol-mI-kkK">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PHONE NUMBER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ol-mI-kkK">
                                 <rect key="frame" x="16" y="16" width="115" height="18.5"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YOUR NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EqX-34-JFV">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="YOUR NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EqX-34-JFV">
                                 <rect key="frame" x="16" y="108" width="87.5" height="18.5"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Zay-Nt-2df">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Zay-Nt-2df">
                                 <rect key="frame" x="237" y="52" width="20" height="20"/>
                             </activityIndicatorView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="FEV-JL-owh">
@@ -168,6 +168,116 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qCu-M3-6OY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-635" y="-560"/>
+        </scene>
+        <!--Onboarding View Controller-->
+        <scene sceneID="Q8T-7U-O0I">
+            <objects>
+                <viewController storyboardIdentifier="Onboarding" id="gxX-ZV-Lo3" customClass="OnboardingViewController" customModule="Computopias" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Tww-eL-JMw"/>
+                        <viewControllerLayoutGuide type="bottom" id="QwS-sL-Jq1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Iqg-ZO-lU9">
+                        <rect key="frame" x="0.0" y="0.0" width="280" height="265"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CyC-5A-KIY">
+                                <rect key="frame" x="0.0" y="209" width="280" height="56"/>
+                                <color key="backgroundColor" red="0.21960784310000001" green="0.47058823529999999" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="Itb-mP-XVu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled">
+                                    <color key="titleColor" red="1" green="0.99997437" blue="0.99999129769999995" alpha="0.4551185345" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="done:" destination="gxX-ZV-Lo3" eventType="touchUpInside" id="N8b-Y5-IAV"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="J5I-rR-4Mv">
+                                <rect key="frame" x="16" y="135" width="248" height="44"/>
+                                <color key="backgroundColor" red="0.91572516029999995" green="0.91572516029999995" blue="0.91572516029999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="LfN-vJ-IOQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="gxX-ZV-Lo3" id="SlM-2F-JiL"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ppS-aD-Vm4">
+                                <rect key="frame" x="16" y="40" width="248" height="44"/>
+                                <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.8980392157" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ofN-Yw-BnP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Verify your phone number">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="verifyPhone:" destination="gxX-ZV-Lo3" eventType="touchUpInside" id="3uo-rb-WQj"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PHONE NUMBER" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zb4-Oc-ZWT">
+                                <rect key="frame" x="16" y="16" width="115" height="18.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="YOUR NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBz-Zc-tSe">
+                                <rect key="frame" x="16" y="108" width="87.5" height="18.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="vli-pp-O3s">
+                                <rect key="frame" x="237" y="52" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="OwS-8X-0nv">
+                                <rect key="frame" x="244" y="227" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OwS-8X-0nv" firstAttribute="trailing" secondItem="Iqg-ZO-lU9" secondAttribute="trailingMargin" id="9yQ-a6-XoO"/>
+                            <constraint firstItem="ppS-aD-Vm4" firstAttribute="centerX" secondItem="Iqg-ZO-lU9" secondAttribute="centerX" id="AQq-Q2-khY"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="ppS-aD-Vm4" secondAttribute="leading" id="Eq7-TE-ucc"/>
+                            <constraint firstItem="OwS-8X-0nv" firstAttribute="centerY" secondItem="CyC-5A-KIY" secondAttribute="centerY" id="L6r-vP-0ip"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vli-pp-O3s" secondAttribute="trailing" constant="7" id="MuO-cv-6JS"/>
+                            <constraint firstItem="J5I-rR-4Mv" firstAttribute="top" secondItem="EBz-Zc-tSe" secondAttribute="bottom" constant="8" id="NZz-rx-y8a"/>
+                            <constraint firstItem="J5I-rR-4Mv" firstAttribute="leading" secondItem="EBz-Zc-tSe" secondAttribute="leading" id="SX0-bt-q6L"/>
+                            <constraint firstItem="QwS-sL-Jq1" firstAttribute="top" secondItem="CyC-5A-KIY" secondAttribute="bottom" id="Sam-nb-V3k"/>
+                            <constraint firstItem="CyC-5A-KIY" firstAttribute="leading" secondItem="Iqg-ZO-lU9" secondAttribute="leading" id="W7c-wr-pb7"/>
+                            <constraint firstItem="EBz-Zc-tSe" firstAttribute="top" secondItem="ppS-aD-Vm4" secondAttribute="bottom" constant="24" id="YVF-0H-6N2"/>
+                            <constraint firstAttribute="trailing" secondItem="CyC-5A-KIY" secondAttribute="trailing" id="abO-mv-dfn"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="J5I-rR-4Mv" secondAttribute="leading" id="dj4-tT-L8G"/>
+                            <constraint firstItem="ppS-aD-Vm4" firstAttribute="leading" secondItem="Zb4-Oc-ZWT" secondAttribute="leading" id="fGN-OL-SxP"/>
+                            <constraint firstItem="Zb4-Oc-ZWT" firstAttribute="top" secondItem="Tww-eL-JMw" secondAttribute="bottom" constant="16" id="gXf-jR-Uif"/>
+                            <constraint firstItem="ppS-aD-Vm4" firstAttribute="top" secondItem="Zb4-Oc-ZWT" secondAttribute="bottom" constant="6" id="jA6-9b-y1U"/>
+                            <constraint firstItem="J5I-rR-4Mv" firstAttribute="centerX" secondItem="Iqg-ZO-lU9" secondAttribute="centerX" id="qWF-Px-Ujk"/>
+                            <constraint firstItem="vli-pp-O3s" firstAttribute="centerY" secondItem="ppS-aD-Vm4" secondAttribute="centerY" id="uRE-vf-BHX"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="280" height="265"/>
+                    <connections>
+                        <outlet property="doneButton" destination="CyC-5A-KIY" id="VOB-nq-WsH"/>
+                        <outlet property="loader" destination="vli-pp-O3s" id="GdB-If-9Dr"/>
+                        <outlet property="loginLoader" destination="OwS-8X-0nv" id="DZd-VX-r5X"/>
+                        <outlet property="nameField" destination="J5I-rR-4Mv" id="z5X-VH-L9R"/>
+                        <outlet property="phoneButton" destination="ppS-aD-Vm4" id="ahv-ss-KIE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pDa-67-fig" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-320" y="-560.5"/>
         </scene>
         <!--Friends table-->
         <scene sceneID="Ir9-WU-NwI">

@@ -22,10 +22,10 @@ extension CardView {
         sheet.addAction(UIAlertAction(title: "Report and block \(name)", style: .Default, handler: { (_) in
             Data.blockUser(self.poster!)
             self.showMessage("\(name) has been blocked. You won't see posts from them in the app anymore.")
-            self.showReportDialogForItem(Route.forProfile(self.poster!).url.absoluteString)
+            self.showReportDialogForItem(Route.Profile(id: self.poster!).url.absoluteString)
         }))
         sheet.addAction(UIAlertAction(title: "Report \(name)", style: .Default, handler: { (_) in
-            self.showReportDialogForItem(Route.forProfile(self.poster!).url.absoluteString)
+            self.showReportDialogForItem(Route.Profile(id: self.poster!).url.absoluteString)
         }))
         sheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(sheet, animated: true, completion: nil)
