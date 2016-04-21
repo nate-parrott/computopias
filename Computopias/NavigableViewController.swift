@@ -14,13 +14,14 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         var vc: NavigableViewController!
         switch route {
-        case .Card(hashtag: let hashtag, id: let id):
-            vc = storyboard.instantiateViewControllerWithIdentifier("CardFeedViewController") as! CardFeedViewController
-            vc!.route = route
-            (vc as! CardFeedViewController).rows = [CardFeedViewController.RowModel.Card(id: id, hashtag: hashtag)]
+        case .Card(hashtag: let hashtag, id: let id): ()
+            // TODO
+            // vc = storyboard.instantiateViewControllerWithIdentifier("CardFeedViewController") as! CardFeedViewController
+            // vc!.route = route
+            // (vc as! CardFeedViewController).rows = [CardFeedViewController.RowModel.Card(id: id, hashtag: hashtag)]
         case .Hashtag(name: let hashtag):
-            vc = storyboard.instantiateViewControllerWithIdentifier("HashtagViewController") as! HashtagViewController
-            (vc as! HashtagViewController).hashtag = hashtag
+            vc = HashtagCardsViewController()
+            (vc as! HashtagCardsViewController).hashtag = hashtag
         case .HashtagsList:
             vc = storyboard.instantiateViewControllerWithIdentifier("GroupsList") as! GroupsListViewController
         default:

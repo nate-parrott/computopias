@@ -31,6 +31,8 @@ class CardCell: UICollectionViewCell {
         }
     }
     
+    static let Size = CGSizeMake(CardView.CardSize.width, CardView.CardSize.height + 30)
+    
     let cardView = CardView()
     let label = UILabel()
     var captionTapAction: (() -> ())?
@@ -44,7 +46,7 @@ class CardCell: UICollectionViewCell {
         cardView.position = bounds.center
         
         let labelHeight = label.sizeThatFits(CGSizeMake(bounds.size.width - 20, 100)).height
-        label.bounds = CGRectMake(20, (cardView.frame.origin.y - labelHeight)/2, bounds.size.width - 20, labelHeight)
+        label.frame = CGRectMake(20, cardView.frame.origin.y - labelHeight - 4, bounds.size.width - 40, labelHeight)
     }
     
     var card: (id: String, hashtag: String?)? {

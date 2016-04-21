@@ -29,7 +29,7 @@ class HashtagFeedSource {
                     }
                 }
                 s.cardsByID = cardsByID
-                s.cardIDs = cardIDs
+                s.cardIDs.val = cardIDs
                 if cardIDs.count == 0 {
                     let emptyStateText = NSMutableAttributedString()
                     emptyStateText.appendAttributedString(NSAttributedString(string: "#\(s.hashtag) is empty\n", attributes: [NSFontAttributeName: UIFont.systemFontOfSize(21, weight: UIFontWeightLight), NSForegroundColorAttributeName: UIColor.whiteColor()]))
@@ -74,7 +74,7 @@ class HashtagFeedSource {
     
     // MARK: Data
     
-    var cardIDs = [String]()
+    var cardIDs = Observable<[String]>(val: [])
     var cardsByID = [String: [String: AnyObject]]()
     
     var _cardsSub: Subscription?
