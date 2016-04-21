@@ -10,6 +10,7 @@
 		21141B7977D28E67D62F6732 /* Pods_Computopias.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F1389C7F54711D4F1B4F21 /* Pods_Computopias.framework */; };
 		5F0D378D1CBE0A180033E83C /* UIView+ParticleEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0D378B1CBE0A180033E83C /* UIView+ParticleEffects.swift */; };
 		5F0D378E1CBE0A180033E83C /* UIImage+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0D378C1CBE0A180033E83C /* UIImage+Emoji.swift */; };
+		5F1118851CC9944F007D917F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1118841CC9944F007D917F /* ProfileViewController.swift */; };
 		5F1EE5CD1CBD805F003C1C2B /* LabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1EE5CC1CBD805F003C1C2B /* LabelNode.swift */; };
 		5F1EE5CF1CBD89A0003C1C2B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F1EE5CE1CBD89A0003C1C2B /* OnboardingViewController.swift */; };
 		5F2925DA1CB8FC9C0096B739 /* GroupEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */; };
@@ -109,6 +110,7 @@
 /* Begin PBXFileReference section */
 		5F0D378B1CBE0A180033E83C /* UIView+ParticleEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ParticleEffects.swift"; sourceTree = "<group>"; };
 		5F0D378C1CBE0A180033E83C /* UIImage+Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Emoji.swift"; sourceTree = "<group>"; };
+		5F1118841CC9944F007D917F /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5F1EE5CC1CBD805F003C1C2B /* LabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelNode.swift; sourceTree = "<group>"; };
 		5F1EE5CE1CBD89A0003C1C2B /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupEditor.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				5F97EE861CC46D9900124FA8 /* NavigableViewController.swift */,
 				5F97EE831CC4645100124FA8 /* GroupsListViewController.swift */,
 				5FCB7B791CC82237008E8AFF /* CardsViewController.swift */,
+				5F1118841CC9944F007D917F /* ProfileViewController.swift */,
 				5FCB7B7B1CC89FB9008E8AFF /* HashtagCardsViewController.swift */,
 				5FCB7B7E1CC8B375008E8AFF /* SingleCardViewController.swift */,
 				5F97EE891CC46DB300124FA8 /* CardFeedCells.swift */,
@@ -638,6 +641,7 @@
 				5F70981C1CA0EDF600B499BC /* AppDelegate.swift in Sources */,
 				5F29B4C31CB73E830060FFD7 /* EVCATransform3DInterpolation.m in Sources */,
 				5F29B4C01CB73E830060FFD7 /* ElasticRelativeLayout.m in Sources */,
+				5F1118851CC9944F007D917F /* ProfileViewController.swift in Sources */,
 				5F97EE8C1CC46E2F00124FA8 /* HashtagViewController.swift in Sources */,
 				5F29B4BD1CB73E830060FFD7 /* ElasticValue.m in Sources */,
 				5FB2F2651CA2637E001863C4 /* LikeCounterCardItemView.swift in Sources */,

@@ -18,6 +18,9 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
             vc = SingleCardViewController()
             (vc as! SingleCardViewController).hashtag = hashtag
             (vc as! SingleCardViewController).cardID = id
+        case .Profile(id: let id):
+            vc = ProfileViewController()
+            (vc as! ProfileViewController).userID = id
         case .Hashtag(name: let hashtag):
             vc = HashtagCardsViewController()
             (vc as! HashtagCardsViewController).hashtag = hashtag

@@ -15,6 +15,7 @@ class CardCell: UICollectionViewCell {
         addSubview(cardView.view)
         addSubview(label)
         label.textAlignment = .Center
+        label.userInteractionEnabled = true
         label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(CardCell._tappedCaption)))
     }
     

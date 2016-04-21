@@ -43,11 +43,6 @@ cardJson:
   - phone (hashed)
   /hashtags/<hashtag> TODO
   /following_users/<uid>
-  /posts/ TODO
-    - negativeDate
-    - cardID
-    - hashtag
-    - sender: userJson
  
 /chats/<id>
     - count
