@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuadratTouch
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         srandom(UInt32(time(nil)))
         
         Appearance.setup()
+        
+        setupFoursquare()
         
         hideNavBarBackground()
         
@@ -44,6 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nav.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         nav.navigationBar.shadowImage = UIImage()
         nav.navigationBar.translucent = true
+    }
+    
+    func setupFoursquare() {
+        let client = Client(clientID:       "BPQYG4XQC3DPLXNN2GGIKL1JTTAA5JBQ10N4LCC5SZWLDE1Q",
+                            clientSecret:   "A2RSQ2G2OHBS4OTCI0YVTQMDTQEJUFGVF1MSYAGB5LTZ5WN5",
+                            redirectURL:    "testapp123://foursquare")
+        let configuration = Configuration(client:client)
+        Session.setupSharedSessionWithConfiguration(configuration)
     }
     
     var _window: CMWindow?

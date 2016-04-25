@@ -44,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>QuadratTouch.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SCSiriWaveformView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -53,6 +58,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>38B2474207004164BABDA2224ECB3965</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>73F9B5E8CA41592E4AF879F4013CAC4E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -68,11 +78,6 @@
 			<true/>
 		</dict>
 		<key>B7AC9326D819482593FE118E915409D7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DB65184A39FC2D5CE69C98CD4171EAD0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -93,6 +98,11 @@
 			<true/>
 		</dict>
 		<key>F2C78BAB48D3C0DAB91B130331E22FCC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F37D6D53E987621F3C76EBFE3EFAE6B1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

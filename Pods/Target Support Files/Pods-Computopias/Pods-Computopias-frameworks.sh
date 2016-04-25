@@ -91,6 +91,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Computopias/JSQSystemSoundPlayer.framework"
   install_framework "Pods-Computopias/PINCache.framework"
   install_framework "Pods-Computopias/PINRemoteImage.framework"
+  install_framework "Pods-Computopias/QuadratTouch.framework"
   install_framework "Pods-Computopias/SCSiriWaveformView.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -101,5 +102,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Computopias/JSQSystemSoundPlayer.framework"
   install_framework "Pods-Computopias/PINCache.framework"
   install_framework "Pods-Computopias/PINRemoteImage.framework"
+  install_framework "Pods-Computopias/QuadratTouch.framework"
   install_framework "Pods-Computopias/SCSiriWaveformView.framework"
 fi

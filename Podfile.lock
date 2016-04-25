@@ -16,6 +16,7 @@ PODS:
     - PINCache (>= 2.1)
   - PINRemoteImage/iOS (2.1.2):
     - PINRemoteImage/Core
+  - QuadratTouch (1.1.1)
   - SCSiriWaveformView (1.0.3)
 
 DEPENDENCIES:
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - Firebase
   - IQAudioRecorderController
   - JSQMessagesViewController
+  - QuadratTouch
 
 SPEC CHECKSUMS:
   AsyncDisplayKit: 2b52f841e384e7326d4f59323b1bf35d00696e17
@@ -32,6 +34,7 @@ SPEC CHECKSUMS:
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   PINCache: 078426d356ab95ef875e9e62e5c35a2ea3333c28
   PINRemoteImage: 2ce3f1fcc52f0360a3821f91f1a1bc653c5d2338
+  QuadratTouch: 296d83c63a4328f6f40af9fc728fe24f0e3b00d4
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
 
 COCOAPODS: 0.39.0
