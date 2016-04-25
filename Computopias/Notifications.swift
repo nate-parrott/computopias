@@ -73,6 +73,7 @@ class NotificationsSource: NSObject {
     override init() {
         super.init()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NotificationsSource._updateSubscription), name: Data.LoginDidCompleteNotification, object: nil)
+        _updateSubscription()
     }
     
     func _updateSubscription() {

@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Group Editor-->
@@ -492,14 +493,22 @@
                                 <action selector="showFriends" destination="s59-v8-8IT" id="NgU-ad-K39"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="DB2-c8-6qP">
-                            <connections>
-                                <action selector="createGroup" destination="s59-v8-8IT" id="Zgm-02-xFq"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="DB2-c8-6qP">
+                                <connections>
+                                    <action selector="createGroup" destination="s59-v8-8IT" id="Zgm-02-xFq"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="NotificationsEmpty" id="7WJ-oA-7EK">
+                                <connections>
+                                    <action selector="showNotifications" destination="s59-v8-8IT" id="Zx5-3s-ejK"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="notificationIcon" destination="7WJ-oA-7EK" id="D07-t3-1GT"/>
                         <outlet property="tableView" destination="w1I-3s-h7v" id="ScO-m9-1bp"/>
                     </connections>
                 </viewController>
@@ -735,6 +744,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="NotificationsEmpty" width="20" height="18"/>
         <image name="WhiteGradient" width="125" height="125"/>
     </resources>
 </document>

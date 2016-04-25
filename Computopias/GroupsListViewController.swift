@@ -15,8 +15,9 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         super.viewDidLoad()
         tableView.registerClass(GroupCell.self, forCellReuseIdentifier: "GroupCell")
         tableView.rowHeight = round(CardView.CardSize.height * GroupCell.cardScale) + GroupCell.padding
-        // tableView.separatorColor = UIColor(patternImage: UIImage())
         tableView.separatorStyle = .None
+        
+        _updateNotificationsButton()
     }
     // MARK: Data
     override func startUpdating() {
@@ -27,10 +28,14 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         if source!.groupsListModels.val.count > 0 {
             models = source!.groupsListModels.val
         }
+        _notificationCounterSub = NotificationsSource.Shared.unreadCount.subscribe({ [weak self] (let count) in
+            self?._updateNotificationsButton()
+        })
         super.startUpdating()
     }
     override func stopUpdating() {
         source = nil
+        _notificationCounterSub = nil
         super.stopUpdating()
     }
     var source: ActivityFeedSource?
@@ -40,12 +45,37 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         }
     }
     var _modelsSub: Subscription?
+    var _notificationCounterSub: Subscription?
+    // MARK: Notifications
+    @IBOutlet var notificationIcon: UIBarButtonItem!
+    func _updateNotificationsButton() {
+        let unreadCount = NotificationsSource.Shared.unreadCount.val
+        notificationIcon.image = GroupsListViewController.RenderNotificationsIconWithCount(unreadCount)
+        // notificationsButton.setTitle("\(unreadCount)", forState: .Normal)
+    }
+    static func RenderNotificationsIconWithCount(count: Int) -> UIImage {
+        if (count == 0) {
+            return UIImage(named: "NotificationsEmpty")!
+        } else {
+            let bg = UIImage(named: "NotificationsFull")!
+            let text = NSAttributedString(string: "\(count)", attributes: [NSFontAttributeName: UIFont.boldSystemFontOfSize(10), NSForegroundColorAttributeName: UIColor.whiteColor(), NSParagraphStyleAttributeName: NSAttributedString.paragraphStyleWithTextAlignment(.Center)])
+            UIGraphicsBeginImageContextWithOptions(bg.size, false, UIScreen.mainScreen().scale)
+            bg.drawAtPoint(CGPointZero)
+            text.drawVerticallyCenteredInRect(CGRectMake(0, 0, bg.size.width, bg.size.height))
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return image.imageWithRenderingMode(.AlwaysOriginal)
+        }
+    }
     // MARK: Actions
     @IBAction func showFriends() {
         NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Friends"))
     }
     @IBAction func createGroup() {
         NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("GroupNamePicker"))
+    }
+    @IBAction func showNotifications() {
+        
     }
     // MARK: Table
     @IBOutlet var tableView: UITableView!
