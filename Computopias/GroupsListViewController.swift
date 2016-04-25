@@ -24,7 +24,9 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         _modelsSub = source?.groupsListModels.subscribe({ [weak self] (let models) in
             self?.models = models
         })
-        models = source!.groupsListModels.val
+        if source!.groupsListModels.val.count > 0 {
+            models = source!.groupsListModels.val
+        }
         super.startUpdating()
     }
     override func stopUpdating() {
