@@ -29,8 +29,8 @@ extension Data {
             userInfoFirebase().childByAppendingPath("following_hashtags").childByAppendingPath(item).setValue(following ? true : nil)
         case .User:
             userInfoFirebase().childByAppendingPath("following_users").childByAppendingPath(item).setValue(following ? true : nil)
-            if item != getUID() {
-                firebase.childByAppendingPath("new_followers").childByAppendingPath(item).childByAppendingPath(getUID()!).setValue(following ? profileJson() : nil)
+            if item != getUID() && following {
+                notifyFollowed(item)
             }
         }
     }

@@ -120,6 +120,9 @@ class CounterCardItemView: CardItemView {
                 willModifyCount(1)
                 path.setValue(NSDate().timeIntervalSince1970)
                 self.card?.view.fireTouchParticleEffectAtPoint(convertPoint(info.position, toNode: supernode!), image: UIImage.fromEmoji(self.emoji, approxSize: 60))
+                if let id = card?.cardFirebase?.key, let hashtag = card?.hashtag {
+                    Data.notifyLike(emoji, cardID: id, hashtag: hashtag)
+                }
             }
         }
         if templateEditMode {

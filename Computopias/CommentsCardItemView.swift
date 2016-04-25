@@ -89,6 +89,11 @@ class CommentsCardItemView: CardItemView {
     
     override func tapped() -> Bool {
         let chat = CommentsViewController()
+        if let cardID = card?.cardFirebase?.key, let hashtag = card?.hashtag, let theChatID = chatID {
+            chat.onComment = {
+                Data.notifyComment(theChatID, cardID: cardID, hashtag: hashtag)
+            }
+        }
         chat.chat = Data.firebase.childByAppendingPath("chats").childByAppendingPath(chatID!)
         let nav = UINavigationController(rootViewController: chat)
         NPSoftModalPresentationController.getViewControllerForPresentation().presentViewController(nav, animated: true, completion: nil)

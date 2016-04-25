@@ -72,6 +72,9 @@ class StarRatingCardItemView: CardItemView {
                 return true
             }
             self.card?.view.fireTouchParticleEffectAtPoint(convertPoint(info.position, toNode: supernode!), image: UIImage.fromEmoji("⭐️", approxSize: 60))
+            if let id = card?.cardFirebase?.key, let hashtag = card?.hashtag {
+                Data.notifyLike("⭐️", cardID: id, hashtag: hashtag)
+            }
         }
         return false
     }

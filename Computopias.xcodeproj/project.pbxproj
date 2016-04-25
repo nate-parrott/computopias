@@ -34,6 +34,8 @@
 		5F3435EE1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3435ED1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift */; };
 		5F3435F01CBB67BE009E5F86 /* SignaturesCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3435EF1CBB67BE009E5F86 /* SignaturesCardItemView.swift */; };
 		5F3700EA1CCDB8F20034CEE9 /* CheckinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3700E91CCDB8F20034CEE9 /* CheckinViewController.swift */; };
+		5F3700EE1CCE93BE0034CEE9 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3700ED1CCE93BE0034CEE9 /* Notifications.swift */; };
+		5F3700F01CCE98A00034CEE9 /* Firebase+Get.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3700EF1CCE98A00034CEE9 /* Firebase+Get.swift */; };
 		5F508BFE1CB743DC005BF228 /* ActivityFeedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */; };
 		5F508C021CB745D3005BF228 /* CardViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C011CB745D3005BF228 /* CardViewWrapper.swift */; };
 		5F508C061CB75F05005BF228 /* HashtagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C051CB75F05005BF228 /* HashtagListView.swift */; };
@@ -150,6 +152,8 @@
 		5F3435ED1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ASDisplayNode+Elastic.swift"; sourceTree = "<group>"; };
 		5F3435EF1CBB67BE009E5F86 /* SignaturesCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignaturesCardItemView.swift; sourceTree = "<group>"; };
 		5F3700E91CCDB8F20034CEE9 /* CheckinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckinViewController.swift; sourceTree = "<group>"; };
+		5F3700ED1CCE93BE0034CEE9 /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		5F3700EF1CCE98A00034CEE9 /* Firebase+Get.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Firebase+Get.swift"; sourceTree = "<group>"; };
 		5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityFeedSource.swift; sourceTree = "<group>"; };
 		5F508C011CB745D3005BF228 /* CardViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewWrapper.swift; sourceTree = "<group>"; };
 		5F508C051CB75F05005BF228 /* HashtagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagListView.swift; sourceTree = "<group>"; };
@@ -301,6 +305,30 @@
 			name = Elastic;
 			sourceTree = "<group>";
 		};
+		5F3700EB1CCE93A40034CEE9 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				5F7098311CA0EEE200B499BC /* Data.swift */,
+				5FD360541CAC6E670016D837 /* Users.swift */,
+				5FD3605C1CAC72FD0016D837 /* Cards.swift */,
+				5FD360561CAC6EC40016D837 /* Following.swift */,
+				5FD360641CACFD9E0016D837 /* ContactsSync.swift */,
+				5FB976B91CAF292A00B92A16 /* Hashtags.swift */,
+				5FB976CB1CB42B6900B92A16 /* Flagging.swift */,
+				5F3700ED1CCE93BE0034CEE9 /* Notifications.swift */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		5F3700EC1CCE93B20034CEE9 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				5F2925DB1CB9056B0096B739 /* ViewBringUpQueue.swift */,
+				5F3435ED1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
 		5F508C0A1CB7679C005BF228 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,17 +370,10 @@
 			isa = PBXGroup;
 			children = (
 				5F70981B1CA0EDF600B499BC /* AppDelegate.swift */,
-				5F7098311CA0EEE200B499BC /* Data.swift */,
-				5FD360541CAC6E670016D837 /* Users.swift */,
-				5FD3605C1CAC72FD0016D837 /* Cards.swift */,
-				5FD360561CAC6EC40016D837 /* Following.swift */,
-				5FD360641CACFD9E0016D837 /* ContactsSync.swift */,
-				5FB976B91CAF292A00B92A16 /* Hashtags.swift */,
-				5FB976CB1CB42B6900B92A16 /* Flagging.swift */,
+				5F3700EB1CCE93A40034CEE9 /* Data */,
 				5F508C0E1CB8E786005BF228 /* FriendListViewController.swift */,
 				5F508C101CB8E78E005BF228 /* FriendListDataSource.swift */,
-				5F2925DB1CB9056B0096B739 /* ViewBringUpQueue.swift */,
-				5F3435ED1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift */,
+				5F3700EC1CCE93B20034CEE9 /* Misc */,
 				5F97EE8D1CC4733A00124FA8 /* Route screens */,
 				5F29B49E1CB73E420060FFD7 /* Cards */,
 				5FB2F2451CA20FB8001863C4 /* Screens */,
@@ -386,6 +407,7 @@
 		5FB2F2451CA20FB8001863C4 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				5FD360411CA8A5A80016D837 /* CommentsViewController.swift */,
 				5F70982D1CA0EEA600B499BC /* CardEditor.swift */,
 				5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */,
 				5F1EE5CE1CBD89A0003C1C2B /* OnboardingViewController.swift */,
@@ -434,6 +456,7 @@
 				5FB976BC1CB19CF400B92A16 /* UIBarButtonItem+BorderedButton.m */,
 				5FD360581CAC70340016D837 /* Pusher.swift */,
 				5FD3605A1CAC70BE0016D837 /* Pusher+Firebase.swift */,
+				5F3700EF1CCE98A00034CEE9 /* Firebase+Get.swift */,
 				5FD360681CAE16250016D837 /* UICollectionView+UpdateRows.swift */,
 				5FD8FE531CA1BEB3006A7191 /* Queues.swift */,
 				5FD360391CA4D1490016D837 /* DrawingView.swift */,
@@ -450,7 +473,6 @@
 				5FB2F2561CA2184E001863C4 /* UIColor+Hex.swift */,
 				5FB2F25D1CA242FD001863C4 /* CMWindow.h */,
 				5FB2F25E1CA242FD001863C4 /* CMWindow.m */,
-				5FD360411CA8A5A80016D837 /* CommentsViewController.swift */,
 				5FD3604F1CABA1DB0016D837 /* NSAttributedStringExtensions.swift */,
 				5FD360511CABB1690016D837 /* NSString+MD5.h */,
 				5FD360521CABB1690016D837 /* NSString+MD5.m */,
@@ -653,7 +675,9 @@
 				5FB2F2591CA21E1C001863C4 /* String+Substring.swift in Sources */,
 				5F508C061CB75F05005BF228 /* HashtagListView.swift in Sources */,
 				5F3435EC1CB9E193009E5F86 /* ASLabelNode.swift in Sources */,
+				5F3700F01CCE98A00034CEE9 /* Firebase+Get.swift in Sources */,
 				5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */,
+				5F3700EE1CCE93BE0034CEE9 /* Notifications.swift in Sources */,
 				5F508C021CB745D3005BF228 /* CardViewWrapper.swift in Sources */,
 				5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */,
 				5FD8FE541CA1BEB3006A7191 /* Queues.swift in Sources */,

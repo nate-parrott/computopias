@@ -46,6 +46,7 @@ cardJson:
  
 /chats/<id>
     - count
+    - participants/<uid>: true
     /messages/<id>
         - text: string
         - sender: userJson
@@ -68,6 +69,12 @@ dates are unix timestamps
  
 /new_followers/<uid>/<new_follower_uid>
     - userJson
+ 
+ 
+/notifications/<target>/<id>
+ - negativeDate
+ - url
+ - text
  
 */
 

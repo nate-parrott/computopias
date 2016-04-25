@@ -22,6 +22,8 @@ class CommentsViewController: JSQMessagesViewController {
     }
     var messages = [JSQMessage]()
     
+    var onComment: (() -> ())?
+    
     // MARK: Lifecycle
     
     override func viewDidLoad() {
@@ -80,7 +82,11 @@ class CommentsViewController: JSQMessagesViewController {
             return FTransactionResult.successWithValue(data)
         }
         
+        chat.childByAppendingPath("participants").childByAppendingPath(Data.getUID()!).setValue(true)
+        
         finishSendingMessageAnimated(true)
+        
+        if let c = onComment { c() }
     }
     
     let outgoingBubbleImage = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
