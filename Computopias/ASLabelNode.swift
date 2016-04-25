@@ -21,6 +21,7 @@ class ASLabelNode: ASDisplayNode {
     override init() {
         super.init()
         opaque = false
+        backgroundColor = UIColor.clearColor()
     }
     
     var padding: CGFloat = 0 {

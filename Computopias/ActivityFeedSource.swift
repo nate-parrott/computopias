@@ -165,6 +165,7 @@ class ActivityFeedSource: NSObject {
         var title: String!
         var subtitle: String!
         var route: Route!
+        var cardID: String?
     }
     let groupsListModels = Observable<[Model]>(val: [])
     func _updateGroupsList() {
@@ -173,11 +174,13 @@ class ActivityFeedSource: NSObject {
             let date: NSDate
             var names = [String]()
             var namesSet = Set<String>()
+            var anyCard: String?
             func toModel() -> Model {
                 let m = Model()
                 m.title = "#" + hashtag
                 m.subtitle = names.joinWithSeparator(", ") + " posted • " + NSDateFormatter.localizedStringFromDate(date, dateStyle: .ShortStyle, timeStyle: .ShortStyle)
                 m.route = Route.Hashtag(name: hashtag)
+                m.cardID = anyCard
                 return m
             }
         }
@@ -187,10 +190,11 @@ class ActivityFeedSource: NSObject {
             if let tag = card["hashtag"] as? String,
                 let poster = card["poster"] as? [String: AnyObject],
                 let name = poster["name"] as? String,
-                let date = card["date"] as? Double {
+                let date = card["date"] as? Double,
+                let cardID = card["cardID"] as? String {
                 if hashtagInfo[tag] == nil {
                     hashtags.append(tag)
-                    hashtagInfo[tag] = HashtagInfo(hashtag: tag, date: NSDate.init(timeIntervalSince1970: date), names: [], namesSet: Set<String>())
+                    hashtagInfo[tag] = HashtagInfo(hashtag: tag, date: NSDate.init(timeIntervalSince1970: date), names: [], namesSet: Set<String>(), anyCard: cardID)
                 }
                 if !hashtagInfo[tag]!.namesSet.contains(name) {
                     hashtagInfo[tag]!.namesSet.insert(name)

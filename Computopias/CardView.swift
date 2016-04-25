@@ -16,7 +16,11 @@ class CardView: ASDisplayNode {
         setup()
     }
     
-    var cardFirebase: Firebase?
+    var cardFirebase: Firebase? {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
     var hashtag: String?
     var poster: String?
     var posterName: String?
@@ -79,6 +83,14 @@ class CardView: ASDisplayNode {
         }
         
         dispatch_async(importJsonQueue, createItems)
+    }
+    
+    func presentJson(json: [String: AnyObject]) {
+        importJson(json) {
+            for item in self.items ?? [] {
+                item.prepareToPresent()
+            }
+        }
     }
     
     static let CardSize = CGSize(width: 300, height: 400)
@@ -419,7 +431,8 @@ class CardView: ASDisplayNode {
     // MARK: Drawing
     override func drawParametersForAsyncLayer(layer: _ASDisplayLayer) -> NSObjectProtocol? {
         opaque = false
-        return (hashtag ?? "") + (cardFirebase?.key ?? "") as NSString
+        return cardFirebase?.key ?? "" as NSString
+        // return (hashtag ?? "") + (cardFirebase?.key ?? "") as NSString
     }
     override class func drawRect(bounds: CGRect, withParameters: NSObjectProtocol?, isCancelled: asdisplaynode_iscancelled_block_t, isRasterizing: Bool) {
         let string = withParameters as! NSString
