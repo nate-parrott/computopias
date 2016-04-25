@@ -96,7 +96,7 @@ class CheckinViewController: UIViewController, MKMapViewDelegate, CLLocationMana
     func updateGeolocation() {
         let g = CLGeocoder()
         let coord = map.centerCoordinate
-        g.reverseGeocodeLocation(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { (let placemarksOpt, _) in
+        /*g.reverseGeocodeLocation(CLLocation(latitude: coord.latitude, longitude: coord.longitude)) { (let placemarksOpt, _) in
             if let p = placemarksOpt where coord.latitude == self.map.centerCoordinate.latitude && coord.longitude == map.centerCoordinate.longitude {
                 var pairs = [(CLLocationCoordinate2D, String)]()
                 for placemark in p {
@@ -107,7 +107,7 @@ class CheckinViewController: UIViewController, MKMapViewDelegate, CLLocationMana
                 self.geocodedLocations = pairs
                 self.checkin.text = pairs.first?.1 ?? ""
             }
-        }
+        }*/
     }
     
     class func moveMap(map: MKMapView, toPoint: CLLocationCoordinate2D) {
@@ -159,7 +159,7 @@ class CheckinViewController: UIViewController, MKMapViewDelegate, CLLocationMana
         if let loc = locationMgr.location {
             checkin.lat = loc.coordinate.latitude
             checkin.lon = loc.coordinate.longitude
-            checkin.geolocate()
+            // checkin.geolocate()
             _updateUI()
         } else {
             locationMgr.requestLocation()

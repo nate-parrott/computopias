@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import AsyncDisplayKit
+import LocationPicker
 
 class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     override func toJson() -> [String : AnyObject] {
@@ -20,6 +21,12 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
         j["lon"] = region.center.longitude
         j["lat_delta"] = region.span.latitudeDelta
         j["lon_delta"] =  region.span.longitudeDelta
+        if let t = labelText {
+            j["label_text"] = t
+        }
+        if let u = locationURL {
+            j["location_url"] = u
+        }
         return j
     }
     override func importJson(json: [String : AnyObject]) {
@@ -28,12 +35,17 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
             let region = MKCoordinateRegionMake(CLLocationCoordinate2DMake(lat, lon), MKCoordinateSpanMake(latDelta, lonDelta))
             mapNode.region = region
         }
+        labelText = json["label_text"] as? String
+        locationURL = json["location_url"] as? String
     }
     override func setup() {
         super.setup()
         mapNode.frame = CGRectMake(0, 0, 100, 100)
         mapNode.preferredFrameSize = CGSizeMake(100, 100)
         mapNode.measure(CGSizeMake(100, 100))
+        
+        let t = labelText
+        labelText = t
         
         addSubnode(mapNode)
         addSubnode(pin)
@@ -43,7 +55,14 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
         pin.borderColor = UIColor.whiteColor().CGColor
         pin.cornerRadius = 4
         
+        label.layerBacked = true
+        mapNode.addSubnode(label)
+        label.backgroundColor = UIColor(white: 0.1, alpha: 0.4)
+        label.padding = 4
+        
         mapNode.cornerRadius = CardView.rounding
+        
+        clipsToBounds = true
     }
     
     override var defaultSize: GridSize {
@@ -64,6 +83,8 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     
     let locationMgr = CLLocationManager()
     func _locate() {
+        labelText = nil
+        locationURL = nil
         locationMgr.delegate = self
         locationMgr.requestWhenInUseAuthorization()
         if let loc = locationMgr.location {
@@ -74,10 +95,8 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let map = mapNode.view as! MKMapView
         if let l = locations.first {
-            let region = MKCoordinateRegionMake(l.coordinate, MKCoordinateSpanMake(0.01, 0.01))
-            map.setRegion(region, animated: false)
+            centerOnCoordinate(l.coordinate)
         }
     }
     
@@ -92,15 +111,30 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
     override func tapped() -> Bool {
         super.tapped()
         if editMode {
-            
-            let vc = MapEditVC()
+            /*let vc = MapEditVC()
             vc.map = MKMapView()
             vc.showRadius = true
             NPSoftModalPresentationController.presentViewController(vc)
             vc.onHide = {
                 let region = vc.map.region
                 self.mapNode.region = region
+            }*/
+            let picker = LocationPickerViewController()
+            
+            let loc = CLLocation(latitude: mapNode.region.center.latitude, longitude: mapNode.region.center.longitude)
+            picker.location = Location(name: labelText ?? "", placemark: MKPlacemark(coordinate: loc.coordinate, addressDictionary: nil))
+            picker.searchBarPlaceholder = "Search or long-press the map"
+            picker.showCurrentLocationInitially = false
+            picker.useCurrentLocationAsHint = true
+            picker.showCurrentLocationButton = true
+            picker.mapType = .Standard
+            picker.completion = { [weak self] locationOpt in
+                if let s = self, loc = locationOpt {
+                    s.centerOnCoordinate(loc.coordinate)
+                    s.labelText = loc.name
+                }
             }
+            NPSoftModalPresentationController.presentViewController(UINavigationController(rootViewController: picker))
         } else {
             let vc = MapEditVC()
             vc.map = MKMapView()
@@ -112,8 +146,26 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
         return true
     }
     
+    func centerOnCoordinate(coord: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegionMake(coord, MKCoordinateSpanMake(0.01, 0.01))
+        let options = mapNode.options.copy() as! MKMapSnapshotOptions
+        options.region = region
+        mapNode.options = options
+    }
+    
     let mapNode = ASMapNode()
     let pin = ASDisplayNode()
+    let label = ASLabelNode()
+    
+    var labelText: String? {
+        didSet {
+            label.hidden = labelText == nil || labelText == ""
+            if !label.hidden {
+                label.content = ASLabelNode.Content(font: TextCardItemView.boldFont.fontWithSize(13), color: UIColor.whiteColor(), alignment: .Center, text: labelText ?? "")
+            }
+        }
+    }
+    var locationURL: String?
     
     override func layout() {
         super.layout()
@@ -121,6 +173,9 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
             mapNode.frame = insetBounds
         }
         pin.position = bounds.center
+        
+        let labelHeight: CGFloat = min(mapNode.bounds.size.height, 60)
+        label.frame = CGRectMake(0, mapNode.bounds.size.height - labelHeight, mapNode.bounds.size.width, labelHeight)
     }
     
     class CoordinateAnnotation: NSObject, MKAnnotation {
@@ -154,6 +209,9 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
                 toolbar.sizeToFit()
                 view.addSubview(toolbar)
                 toolbar.items = [UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(MapEditVC.share(_:)))]
+                let item = UIBarButtonItem(borderedWithTitle: "Open in Maps", target: nil, action: #selector(MapEditVC.share(_:)))
+                // toolbar.items = [UIBarButtonItem(ti)]
+                toolbar.items = [item]
             }
             if showRadius {
                 radiusView.backgroundColor = UIColor.clearColor()
@@ -167,9 +225,14 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
             if let annotation = map.annotations.first as? CoordinateAnnotation {
                 let placemark = MKPlacemark(coordinate: annotation.coordinate, addressDictionary: nil)
                 let mapItem = MKMapItem(placemark: placemark)
+                mapItem.openInMapsWithLaunchOptions(nil)
                 
-                let activity = UIActivityViewController(activityItems: [mapItem], applicationActivities: nil)
-                presentViewController(activity, animated: true, completion: nil)
+                /*let lat = annotation.coordinate.latitude
+                let lon = annotation.coordinate.longitude
+                let item = NSURL(string: "https://maps.apple.com?q=\(lat),\(lon)")!
+                
+                let activity = UIActivityViewController(activityItems: [item], applicationActivities: nil)
+                presentViewController(activity, animated: true, completion: nil)*/
             }
         }
         override func loadView() {
@@ -195,5 +258,9 @@ class MapCardItemView: CardItemView, CLLocationManagerDelegate {
             }
         }
         var onHide: (() -> ())!
+        
+        override func prefersStatusBarHidden() -> Bool {
+            return true
+        }
     }
 }

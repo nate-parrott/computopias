@@ -10,6 +10,7 @@ pod 'IQAudioRecorderController'
 pod 'JSQMessagesViewController'
 pod 'AsyncDisplayKit'
 pod 'QuadratTouch'
+pod 'LocationPicker'
 
 end
 

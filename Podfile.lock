@@ -11,6 +11,7 @@ PODS:
   - JSQMessagesViewController (7.2.0):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
+  - LocationPicker (0.6.0)
   - PINCache (2.2.2)
   - PINRemoteImage/Core (2.1.2):
     - PINCache (>= 2.1)
@@ -24,6 +25,7 @@ DEPENDENCIES:
   - Firebase
   - IQAudioRecorderController
   - JSQMessagesViewController
+  - LocationPicker
   - QuadratTouch
 
 SPEC CHECKSUMS:
@@ -32,6 +34,7 @@ SPEC CHECKSUMS:
   IQAudioRecorderController: 3a39f09c589c420b0bad09297b8294af08089f5c
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  LocationPicker: 93ea916c48fef7b561fc4ecc2457cbb4ac58d7cf
   PINCache: 078426d356ab95ef875e9e62e5c35a2ea3333c28
   PINRemoteImage: 2ce3f1fcc52f0360a3821f91f1a1bc653c5d2338
   QuadratTouch: 296d83c63a4328f6f40af9fc728fe24f0e3b00d4

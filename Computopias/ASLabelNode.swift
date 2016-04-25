@@ -9,7 +9,7 @@
 import AsyncDisplayKit
 import UIKit
 
-class ASLabelNode: ASTextNode {
+class ASLabelNode: ASDisplayNode {
     struct Content {
         var font: UIFont
         var color: UIColor
@@ -17,6 +17,29 @@ class ASLabelNode: ASTextNode {
         var text: String
         static let Default = Content(font: UIFont.systemFontOfSize(UIFont.systemFontSize()), color: UIColor.blackColor(), alignment: .Center, text: "")
     }
+    
+    override init() {
+        super.init()
+        opaque = false
+    }
+    
+    var padding: CGFloat = 0 {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    class DrawParams: NSObject {
+        var str: NSAttributedString?
+        var padding: CGFloat = 0
+    }
+    
+    var attributedString: NSAttributedString? {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
     var content: Content = Content.Default {
         didSet {
             if !(content == oldValue) {
@@ -26,6 +49,19 @@ class ASLabelNode: ASTextNode {
                 let str = NSAttributedString(string: content.text, attributes: attrs)
                 attributedString = str
             }
+        }
+    }
+    
+    override func drawParametersForAsyncLayer(layer: _ASDisplayLayer) -> NSObjectProtocol? {
+        let p = DrawParams()
+        p.str = attributedString
+        p.padding = padding
+        return p
+    }
+    
+    override class func drawRect(bounds: CGRect, withParameters: NSObjectProtocol?, isCancelled: asdisplaynode_iscancelled_block_t, isRasterizing: Bool) {
+        if let p = withParameters as? DrawParams, let s = p.str {
+            s.drawVerticallyCenteredInRect(CGRectInset(bounds, p.padding, p.padding))
         }
     }
 }
