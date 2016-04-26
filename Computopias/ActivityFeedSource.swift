@@ -130,29 +130,36 @@ class ActivityFeedSource: NSObject {
     }
     
     // MARK: Cards and rows
-    var _activityCards = [[String: AnyObject]]() {
+    var _activityCards: [[String: AnyObject]]? {
         didSet {
             _updateCards()
         }
     }
-    var _randomCards = [[String: AnyObject]]() {
+    var _randomCards: [[String: AnyObject]]? {
         didSet {
             _updateCards()
+        }
+    }
+    var fullyLoaded: Bool {
+        get {
+            return _activityCards != nil && _randomCards != nil
         }
     }
     func _updateCards() {
         _updateGroupsList()
         
-        let cards = _activityCards + _randomCards
-        cardIDs.removeAll()
-        cardsByID.removeAll()
-        var seenCards = Set<String>()
-        for card in cards {
-            let id = card["cardID"] as! String
-            if !seenCards.contains(id) {
-                seenCards.insert(id)
-                cardIDs.append(id)
-                cardsByID[id] = card
+        if let a = _activityCards, let r = _randomCards {
+            let cards = a + r
+            cardIDs.removeAll()
+            cardsByID.removeAll()
+            var seenCards = Set<String>()
+            for card in cards {
+                let id = card["cardID"] as! String
+                if !seenCards.contains(id) {
+                    seenCards.insert(id)
+                    cardIDs.append(id)
+                    cardsByID[id] = card
+                }
             }
         }
     }
@@ -186,22 +193,24 @@ class ActivityFeedSource: NSObject {
         }
         var hashtags = [String]()
         var hashtagInfo = [String: HashtagInfo]()
-        for card in _activityCards + _randomCards {
-            if let tag = card["hashtag"] as? String,
-                let poster = card["poster"] as? [String: AnyObject],
-                let name = poster["name"] as? String,
-                let date = card["date"] as? Double,
-                let cardID = card["cardID"] as? String {
-                if hashtagInfo[tag] == nil {
-                    hashtags.append(tag)
-                    hashtagInfo[tag] = HashtagInfo(hashtag: tag, date: NSDate.init(timeIntervalSince1970: date), names: [], namesSet: Set<String>(), anyCard: cardID)
-                }
-                if !hashtagInfo[tag]!.namesSet.contains(name) {
-                    hashtagInfo[tag]!.namesSet.insert(name)
-                    hashtagInfo[tag]!.names.append(name)
+        if let a = _activityCards, let r = _randomCards {
+            for card in a + r {
+                if let tag = card["hashtag"] as? String,
+                    let poster = card["poster"] as? [String: AnyObject],
+                    let name = poster["name"] as? String,
+                    let date = card["date"] as? Double,
+                    let cardID = card["cardID"] as? String {
+                    if hashtagInfo[tag] == nil {
+                        hashtags.append(tag)
+                        hashtagInfo[tag] = HashtagInfo(hashtag: tag, date: NSDate.init(timeIntervalSince1970: date), names: [], namesSet: Set<String>(), anyCard: cardID)
+                    }
+                    if !hashtagInfo[tag]!.namesSet.contains(name) {
+                        hashtagInfo[tag]!.namesSet.insert(name)
+                        hashtagInfo[tag]!.names.append(name)
+                    }
                 }
             }
+            groupsListModels.val = hashtags.map({ hashtagInfo[$0]!.toModel() })
         }
-        groupsListModels.val = hashtags.map({ hashtagInfo[$0]!.toModel() })
     }
 }

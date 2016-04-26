@@ -23,9 +23,11 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
     override func startUpdating() {
         source = ActivityFeedSource()
         _modelsSub = source?.groupsListModels.subscribe({ [weak self] (let models) in
-            self?.models = models
+            if self?.source?.fullyLoaded ?? false {
+                self?.models = models
+            }
         })
-        if source!.groupsListModels.val.count > 0 {
+        if source?.fullyLoaded ?? false {
             models = source!.groupsListModels.val
         }
         _notificationCounterSub = NotificationsSource.Shared.unreadCount.subscribe({ [weak self] (let count) in
