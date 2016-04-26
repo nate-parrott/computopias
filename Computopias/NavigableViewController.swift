@@ -43,7 +43,7 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NavigableViewController._forceRefresh), name: Data.BlockedUsersChangedNotification, object: nil)
         if underlayNavBar {
             let underlay = UIView()
-            underlay.backgroundColor = UIColor(white: 1, alpha: 0.8)
+            underlay.backgroundColor = UIColor(white: 1, alpha: 0.9)
             view.addSubview(underlay)
             _navBarUnderlay = underlay
         }

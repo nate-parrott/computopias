@@ -9,13 +9,27 @@
 import UIKit
 import Firebase
 
-class GroupsListViewController: NavigableViewController, UITableViewDataSource, UITableViewDelegate {
+class GroupsListViewController: NavigableViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.registerClass(GroupCell.self, forCellReuseIdentifier: "GroupCell")
         tableView.rowHeight = round(CardView.CardSize.height * GroupCell.cardScale) + GroupCell.padding
         tableView.separatorStyle = .None
+        
+        searchField.frame = CGRectMake(0, 0, 100, 40)
+        tableView.tableHeaderView = searchField
+        searchField.textAlignment = .Center
+        searchField.placeholder = "Search…"
+        searchField.autocorrectionType = .No
+        searchField.autocapitalizationType = .None
+        searchField.delegate = self
+        searchOverlay.hidden = true
+        view.addSubview(searchOverlay)
+        searchOverlay.addSubview(searchOverlayDismissButton)
+        searchOverlayDismissButton.backgroundColor = UIColor(white: 0.1, alpha: 0.5)
+        searchOverlayDismissButton.addTarget(self, action: #selector(GroupsListViewController.endSearch), forControlEvents: .TouchUpInside)
+        searchOverlay.addSubview(searchVC.view)
     }
     // MARK: Data
     override func startUpdating() {
@@ -47,6 +61,35 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
     }
     var _modelsSub: Subscription?
     var _notificationCounterSub: Subscription?
+    // MARK: Search
+    let searchField = UITextField()
+    func searchChanged(text: String) {
+        searchVC.query = text
+        searchOverlayVisible = (text != "")
+        view.setNeedsLayout()
+    }
+    let searchOverlay = UIView()
+    let searchVC = SearchViewController()
+    let searchOverlayDismissButton = UIButton()
+    var searchOverlayVisible = false {
+        didSet {
+            searchOverlay.hidden = !searchOverlayVisible
+        }
+    }
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let text = ((textField.text ?? "") as NSString).stringByReplacingCharactersInRange(range, withString: string).sanitizedForFirebase.lowercaseString
+        searchChanged(text)
+        return true
+    }
+    func endSearch() {
+        searchField.resignFirstResponder()
+    }
+    func textFieldDidBeginEditing(textField: UITextField) {
+        if searchVC.query != "" { searchOverlayVisible = true }
+    }
+    func textFieldDidEndEditing(textField: UITextField) {
+        searchOverlayVisible = false
+    }
     // MARK: Notifications
     @IBOutlet var notificationIcon: UIBarButtonItem!
     func _updateNotificationsButton() {
@@ -92,6 +135,19 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         navigate(models[indexPath.row].route)
+    }
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        searchField.resignFirstResponder()
+    }
+    // MARK: Layout
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let y = view.convertPoint(CGPointZero, fromView: searchField).y + searchField.frame.size.height
+        searchOverlay.frame = CGRectMake(0, y, view.bounds.size.width, view.bounds.size.height - y)
+        searchOverlayDismissButton.frame = searchOverlay.bounds
+        let w: CGFloat = 260
+        let x = (searchOverlay.frame.size.width - w) / 2
+        searchVC.view.frame = CGRectMake(x, 10, w, 120)
     }
 }
 
