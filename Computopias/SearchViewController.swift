@@ -52,7 +52,7 @@ class SearchViewController: UITableViewController {
         }
     }
     // MARK: API
-    var parent: NavigableViewController!
+    weak var parent: NavigableViewController!
     // MARK: Loading data
     var query: String = "" {
         didSet {
@@ -73,7 +73,7 @@ class SearchViewController: UITableViewController {
             }
             if q != "" {
                 Data.firebase.childByAppendingPath("all_hashtags").childByAppendingPath(q.lowercaseString.sanitizedForFirebase).get({ (let objOpt) in
-                    let hashtagTaken = (objOpt as? NSNull) != nil
+                    let hashtagTaken = (objOpt as? NSNull) == nil
                     if q == self.query {
                         self._currentHashtagIsTaken = hashtagTaken
                         self._updateContent()

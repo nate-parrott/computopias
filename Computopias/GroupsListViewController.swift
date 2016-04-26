@@ -21,6 +21,7 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         tableView.tableHeaderView = searchField
         searchField.textAlignment = .Center
         searchField.placeholder = "Search…"
+        searchField.font = UIFont.italicSystemFontOfSize(16)
         searchField.autocorrectionType = .No
         searchField.autocapitalizationType = .None
         searchField.delegate = self
@@ -30,6 +31,7 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         searchOverlayDismissButton.backgroundColor = UIColor(white: 0.1, alpha: 0.5)
         searchOverlayDismissButton.addTarget(self, action: #selector(GroupsListViewController.endSearch), forControlEvents: .TouchUpInside)
         searchOverlay.addSubview(searchVC.view)
+        searchVC.parent = self
     }
     // MARK: Data
     override func startUpdating() {
