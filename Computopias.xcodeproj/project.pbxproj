@@ -542,6 +542,11 @@
 					5F7098171CA0EDF600B499BC = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = VPN8ZW6EAC;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

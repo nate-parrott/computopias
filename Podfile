@@ -11,6 +11,7 @@ pod 'JSQMessagesViewController'
 pod 'AsyncDisplayKit'
 pod 'QuadratTouch'
 pod 'LocationPicker'
+pod 'Batch'
 
 end
 

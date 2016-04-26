@@ -8,6 +8,7 @@
 
 import UIKit
 import QuadratTouch
+import Batch
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,7 +34,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
+        Batch.startWithAPIKey("DEV571EFB103BD2CD4462B18AE8C44") // dev
+        // Batch.startWithAPIKey("571EFB103A6A8E349B6E0F9F23D8AC") // live
+        // Register for push notifications
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.loginCompleted), name: Data.LoginDidCompleteNotification, object: nil)
+        
         return true
+    }
+    
+    func loginCompleted() {
+        BatchPush.registerForRemoteNotifications()
     }
     
     static var Shared: AppDelegate {

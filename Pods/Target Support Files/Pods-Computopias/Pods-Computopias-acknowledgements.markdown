@@ -35,6 +35,11 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
+## Batch
+
+Copyright © 2015 Batch.com
+
+
 ## Firebase
 
 https://www.firebase.com/terms/terms-of-service.html

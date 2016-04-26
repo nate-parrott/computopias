@@ -5,6 +5,7 @@ PODS:
   - AsyncDisplayKit/PINRemoteImage (1.9.7.1):
     - AsyncDisplayKit/ASDealloc2MainObject
     - PINRemoteImage/iOS (>= 2.1.2)
+  - Batch (1.5.3)
   - Firebase (2.5.1)
   - IQAudioRecorderController (1.1.0):
     - SCSiriWaveformView
@@ -22,6 +23,7 @@ PODS:
 
 DEPENDENCIES:
   - AsyncDisplayKit
+  - Batch
   - Firebase
   - IQAudioRecorderController
   - JSQMessagesViewController
@@ -30,6 +32,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AsyncDisplayKit: 2b52f841e384e7326d4f59323b1bf35d00696e17
+  Batch: e8b878faad90083e572812d725da0e6e536490a7
   Firebase: 3565ea88b830f28f2c77ecc524622bc71a20d085
   IQAudioRecorderController: 3a39f09c589c420b0bad09297b8294af08089f5c
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5

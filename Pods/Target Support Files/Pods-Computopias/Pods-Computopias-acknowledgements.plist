@@ -52,6 +52,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright &#169; 2015 Batch.com
+</string>
+			<key>Title</key>
+			<string>Batch</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>https://www.firebase.com/terms/terms-of-service.html</string>
 			<key>Title</key>
 			<string>Firebase</string>
