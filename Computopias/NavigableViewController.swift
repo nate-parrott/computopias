@@ -41,6 +41,12 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
         super.viewDidLoad()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NavigableViewController._forceRefresh), name: Data.LoginDidCompleteNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(NavigableViewController._forceRefresh), name: Data.BlockedUsersChangedNotification, object: nil)
+        if underlayNavBar {
+            let underlay = UIView()
+            underlay.backgroundColor = UIColor(white: 1, alpha: 0.8)
+            view.addSubview(underlay)
+            _navBarUnderlay = underlay
+        }
     }
     
     var visible = false {
@@ -133,6 +139,13 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
         }
     }
     
+    var underlayNavBar: Bool {
+        get {
+            return false
+        }
+    }
+    var _navBarUnderlay: UIView?
+    
     // MARK: Tabs
     var _tabBarButtonItems: [UIBarButtonItem]?
     var _tabRoutes: [Route]?
@@ -159,5 +172,13 @@ class NavigableViewController: UIViewController, UISearchBarDelegate, UIGestureR
     
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if let v = _navBarUnderlay {
+            v.frame = CGRectMake(0, 0, view.bounds.size.width, topLayoutGuide.length)
+            view.bringSubviewToFront(v)
+        }
     }
 }

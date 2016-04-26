@@ -16,8 +16,6 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         tableView.registerClass(GroupCell.self, forCellReuseIdentifier: "GroupCell")
         tableView.rowHeight = round(CardView.CardSize.height * GroupCell.cardScale) + GroupCell.padding
         tableView.separatorStyle = .None
-        
-        _updateNotificationsButton()
     }
     // MARK: Data
     override func startUpdating() {
@@ -33,6 +31,7 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         _notificationCounterSub = NotificationsSource.Shared.unreadCount.subscribe({ [weak self] (let count) in
             self?._updateNotificationsButton()
         })
+        _updateNotificationsButton()
         super.startUpdating()
     }
     override func stopUpdating() {
@@ -77,7 +76,7 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         NPSoftModalPresentationController.presentViewController(UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("GroupNamePicker"))
     }
     @IBAction func showNotifications() {
-        
+        navigationController?.pushViewController(storyboard!.instantiateViewControllerWithIdentifier("Notifications"), animated: true)
     }
     // MARK: Table
     @IBOutlet var tableView: UITableView!

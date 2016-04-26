@@ -411,6 +411,62 @@
             </objects>
             <point key="canvasLocation" x="-548" y="317"/>
         </scene>
+        <!--Notifications-->
+        <scene sceneID="O3q-Gn-iS6">
+            <objects>
+                <viewController storyboardIdentifier="Notifications" title="Notifications" id="hq1-Dd-aNC" customClass="NotificationsViewController" customModule="Computopias" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nCP-42-sZi"/>
+                        <viewControllerLayoutGuide type="bottom" id="5PD-AN-RnT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tTu-tZ-Iac">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9j8-Is-MIx">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="UA4-4D-BHb" style="IBUITableViewCellStyleDefault" id="QII-yH-der">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QII-yH-der" id="rBF-xO-VOS">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UA4-4D-BHb">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="hq1-Dd-aNC" id="Niz-Dr-4aA"/>
+                                    <outlet property="delegate" destination="hq1-Dd-aNC" id="t8Z-cC-F3e"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="9j8-Is-MIx" secondAttribute="trailing" id="GMq-IO-NIy"/>
+                            <constraint firstItem="9j8-Is-MIx" firstAttribute="leading" secondItem="tTu-tZ-Iac" secondAttribute="leading" id="KcE-Om-R7O"/>
+                            <constraint firstItem="9j8-Is-MIx" firstAttribute="top" secondItem="tTu-tZ-Iac" secondAttribute="top" id="q81-sl-n4m"/>
+                            <constraint firstItem="5PD-AN-RnT" firstAttribute="top" secondItem="9j8-Is-MIx" secondAttribute="bottom" id="tbG-gO-naJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="table" destination="9j8-Is-MIx" id="VxN-ox-AEW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jpp-5f-INN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-548" y="946"/>
+        </scene>
         <!--Stacks-->
         <scene sceneID="Ags-4t-HPN">
             <objects>

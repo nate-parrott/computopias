@@ -53,7 +53,7 @@ extension Data {
     }
     static func notifyFollowed(userID: String) {
         let message = "\(userDisplayName) followed you."
-        let url = Route.Profile(id: userID).url.absoluteString
+        let url = Route.Profile(id: getUID()!).url.absoluteString
         sendNotification(message, url: url, toUsers: [userID])
     }
     static func sendNotification(notif: String, url: String?, toUsers: [String]) {
@@ -80,6 +80,7 @@ class NotificationsSource: NSObject {
         if let uid = Data.getUID() {
             _subscription = Data.firebase.childByAppendingPath("notifications").childByAppendingPath(uid).queryOrderedByChild("negativeDate").queryLimitedToFirst(50).snapshotPusher.subscribe({ [weak self] (let snapshot: FDataSnapshot?) in
                 self?._updateWithNotifications(snapshot?.childDictionaries ?? [])
+                self?.notificationIDs = snapshot?.children.map({ ($0 as! FDataSnapshot).key }) ?? []
             })
         } else {
             _subscription = nil
@@ -88,6 +89,7 @@ class NotificationsSource: NSObject {
     var _subscription: Subscription?
     
     let notificationDicts = Observable<[[String: AnyObject]]>(val: [])
+    var notificationIDs = [String]()
     let unreadCount = Observable<Int>(val: 0)
     
     func  _updateWithNotifications(notifs: [[String: AnyObject]]) {
@@ -96,4 +98,13 @@ class NotificationsSource: NSObject {
     }
     
     static let Shared = NotificationsSource()
+    
+    func markAllAsRead() {
+        if let uid = Data.getUID() {
+            let notifs = Data.firebase.childByAppendingPath("notifications").childByAppendingPath(uid)
+            for id in notificationIDs {
+                notifs.childByAppendingPath(id).childByAppendingPath("read").setValue(true)
+            }
+        }
+    }
 }
