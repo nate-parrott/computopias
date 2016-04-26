@@ -43,7 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func loginCompleted() {
-        BatchPush.registerForRemoteNotifications()
+        if let id = Data.getUID() {
+            BatchPush.registerForRemoteNotifications()
+            let e = BatchUser.editor()
+            e.setIdentifier(id)
+            e.save()
+        }
     }
     
     static var Shared: AppDelegate {

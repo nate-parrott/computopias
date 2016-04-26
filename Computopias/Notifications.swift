@@ -20,7 +20,7 @@ extension Data {
         let cardURL = Route.Card(hashtag: hashtag, id: cardID).url.absoluteString
         firebase.childByAppendingPath("cards").childByAppendingPath(cardID).childByAppendingPath("poster").childByAppendingPath("uid").get { (let id) in
             if let uid = id as? String {
-                Data.sendNotification(message, url: cardURL, toUsers: [uid])
+                Data.sendNotification(Notification(message: message, url: cardURL, recipients: [uid]))
             }
         }
     }
@@ -43,10 +43,9 @@ extension Data {
                     cardPoster = uid
                     notify.remove(uid)
                 }
-                
-                Data.sendNotification(message, url: cardURL, toUsers: Array(notify))
+                Data.sendNotification(Notification(message: message, url: cardURL, recipients: Array(notify)))
                 if let id = cardPoster {
-                    Data.sendNotification(messageToOriginalPoster, url: cardURL, toUsers: [id])
+                    Data.sendNotification(Notification(message: messageToOriginalPoster, url: cardURL, recipients: [id]))
                 }
             }
         }
@@ -54,18 +53,46 @@ extension Data {
     static func notifyFollowed(userID: String) {
         let message = "\(userDisplayName) followed you."
         let url = Route.Profile(id: getUID()!).url.absoluteString
-        sendNotification(message, url: url, toUsers: [userID])
+        sendNotification(Notification(message: message, url: url, recipients: [userID]))
     }
-    static func sendNotification(notif: String, url: String?, toUsers: [String]) {
-        var dict: [String: AnyObject] = ["text": notif, "negativeDate": -NSDate().timeIntervalSince1970]
-        if let u = url { dict["url"] = u }
+    struct Notification {
+        var message: String
+        var url: String?
+        var recipients: [String]
         
+        func toJson() -> [String: AnyObject] {
+            let pushes = recipients.map({ self.pushJsonWithRecipient($0) })
+            return ["pushes": pushes]
+        }
+        
+        func pushJsonWithRecipient(recip: String) -> [String: AnyObject] {
+            var j = [String: AnyObject]()
+            j["text"] = message
+            if let u = url { j["link"] = u }
+            j["recipient"] = recip
+            return j
+        }
+    }
+    static func sendNotification(notification: Notification) {
+        var notif = notification
         let selfID = getUID()
-        for uid in toUsers {
-            if uid != selfID {
+        notif.recipients = notif.recipients.filter({ $0 != selfID })
+        if notif.recipients.count > 0 {
+            var dict: [String: AnyObject] = ["text": notif.message, "negativeDate": -NSDate().timeIntervalSince1970]
+            if let u = notif.url { dict["url"] = u }
+            
+            for uid in notif.recipients {
                 Data.firebase.childByAppendingPath("notifications").childByAppendingPath(uid).childByAutoId().setValue(dict)
             }
         }
+        
+        // send it:
+        let url = NSURL(string: "http://localhost:20080/push")!
+        let req = NSMutableURLRequest(URL: url)
+        req.HTTPMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(notif.toJson(), options: [])
+        NSURLSession.sharedSession().dataTaskWithRequest(req).resume()
     }
 }
 
