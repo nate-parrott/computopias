@@ -20,8 +20,8 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         searchField.frame = CGRectMake(0, 0, 100, 40)
         tableView.tableHeaderView = searchField
         searchField.textAlignment = .Center
-        searchField.placeholder = "Search…"
-        searchField.font = UIFont.italicSystemFontOfSize(16)
+        searchField.placeholder = "  Search…"
+        searchField.font = UIFont.systemFontOfSize(16) // UIFont.italicSystemFontOfSize(16)
         searchField.autocorrectionType = .No
         searchField.autocapitalizationType = .None
         searchField.delegate = self

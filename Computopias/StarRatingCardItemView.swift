@@ -125,7 +125,7 @@ class StarRatingCardItemView: CardItemView {
             CGContextSetAlpha(ctx, 1)
             
             var attrs = [String: AnyObject]()
-            attrs[NSFontAttributeName] = UIFont.boldSystemFontOfSize(20)
+            attrs[NSFontAttributeName] = UIFont.systemFontOfSize(14)
             attrs[NSParagraphStyleAttributeName] = NSAttributedString.paragraphStyleWithTextAlignment(.Center)
             let text = NSAttributedString(string: "\(info.numVotes)", attributes: attrs)
             var rect = CGRectMake(0, 0, bounds.size.width/7, bounds.size.height)
