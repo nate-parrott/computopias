@@ -220,6 +220,7 @@ class GroupCell: UITableViewCell {
     var _cardID: String? {
         didSet {
             if let id = _cardID {
+                cardView.view.alpha = 0
                 let cardFirebase = Data.firebase.childByAppendingPath("cards").childByAppendingPath(id)
                 cardView.cardFirebase = cardFirebase
                 cardFirebase.observeSingleEventOfType(.Value, withBlock: { [weak self] (let snapshot: FDataSnapshot!) in
@@ -228,6 +229,9 @@ class GroupCell: UITableViewCell {
                     {
                         s.cardView.presentJson(json)
                     }
+                    UIView.animateWithDuration(0.15, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
+                        self?.cardView.view.alpha = 1
+                        }, completion: nil)
                 })
             }
         }
