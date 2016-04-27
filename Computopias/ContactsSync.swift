@@ -11,12 +11,20 @@ import Firebase
 import Contacts
 
 extension Data {
+    static let ContactSyncRequestStatusChangedNotification = "ContactSyncRequestStatusChangedNotification"
+    
     static func hasRequestedContactSync() -> Bool {
         return NSUserDefaults.standardUserDefaults().boolForKey("HasRequestedContactSync") ?? false
     }
     
+    static func noThanksNoContactSyncForMe() {
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasRequestedContactSync")
+        NSNotificationCenter.defaultCenter().postNotificationName(ContactSyncRequestStatusChangedNotification, object: nil)
+    }
+    
     static func doContactsSync(callback: (Bool -> ())) {
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "HasRequestedContactSync")
+        NSNotificationCenter.defaultCenter().postNotificationName(ContactSyncRequestStatusChangedNotification, object: nil)
         let store = CNContactStore()
         store.requestAccessForEntityType(.Contacts) { (granted, _) in
             if !granted {

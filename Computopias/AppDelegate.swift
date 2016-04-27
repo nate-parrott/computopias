@@ -86,6 +86,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        if url.scheme == "bubble" && url.path == "/link_contacts" {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Friends") as! UINavigationController
+            let friendsVC = vc.viewControllers.first! as! FriendListViewController
+            NPSoftModalPresentationController.presentViewController(vc)
+            delay(1, closure: { 
+                friendsVC.source._doContactsSync()
+            })
+        } else if url.scheme == "bubble" && url.path == "/no_thanks_dont_link_contacts" {
+            Data.noThanksNoContactSyncForMe()
+        }
         if url.scheme == "bubble", let route = Route.fromURL(url) where Data.getUID() != nil {
             navigateToRoute(route)
             return true
@@ -95,7 +105,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func navigateToRoute(route: Route) {
         let vc = window!.rootViewController! as! UINavigationController
-        vc.pushViewController(NavigableViewController.FromRoute(route), animated: true)
+        if let presented = vc.presentedViewController {
+            presented.dismissViewControllerAnimated(true, completion: { 
+                self.navigateToRoute(route)
+            })
+        } else {
+            vc.pushViewController(NavigableViewController.FromRoute(route), animated: true)
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {

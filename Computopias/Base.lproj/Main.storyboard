@@ -531,6 +531,49 @@
                                     <constraint firstItem="591-C9-OsS" firstAttribute="leading" secondItem="6II-e1-Blx" secondAttribute="leading" id="znu-cp-laV"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v5Q-8z-7io">
+                                <rect key="frame" x="0.0" y="507" width="320" height="61"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YlA-Wr-vZ2">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="61"/>
+                                        <connections>
+                                            <action selector="pressedActionBar" destination="s59-v8-8IT" eventType="touchUpInside" id="D2l-Af-Uew"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMf-ec-qWB">
+                                        <rect key="frame" x="270" y="0.0" width="50" height="61"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="hKj-mh-mCz"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                        <state key="normal" title="✕">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismissActionBar" destination="s59-v8-8IT" eventType="touchUpInside" id="c4i-B5-Q6L"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync and follow your contacts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gj3-dp-Drd">
+                                        <rect key="frame" x="53" y="21.5" width="214.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.78078012299999999" green="0.356694964" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="61" id="7Op-Wu-Wqg"/>
+                                    <constraint firstAttribute="bottom" secondItem="YlA-Wr-vZ2" secondAttribute="bottom" id="E71-CX-0Zd"/>
+                                    <constraint firstAttribute="trailing" secondItem="KMf-ec-qWB" secondAttribute="trailing" id="Jlx-G8-ROa"/>
+                                    <constraint firstItem="KMf-ec-qWB" firstAttribute="top" secondItem="v5Q-8z-7io" secondAttribute="top" id="R60-gM-TAM"/>
+                                    <constraint firstAttribute="bottom" secondItem="KMf-ec-qWB" secondAttribute="bottom" id="W5n-6F-LOc"/>
+                                    <constraint firstItem="YlA-Wr-vZ2" firstAttribute="top" secondItem="v5Q-8z-7io" secondAttribute="top" id="WK7-sc-RN8"/>
+                                    <constraint firstAttribute="trailing" secondItem="YlA-Wr-vZ2" secondAttribute="trailing" id="dbN-Lq-fPK"/>
+                                    <constraint firstItem="YlA-Wr-vZ2" firstAttribute="leading" secondItem="v5Q-8z-7io" secondAttribute="leading" id="geh-OP-fn0"/>
+                                    <constraint firstItem="gj3-dp-Drd" firstAttribute="centerX" secondItem="v5Q-8z-7io" secondAttribute="centerX" id="mrx-Jd-Nng"/>
+                                    <constraint firstItem="gj3-dp-Drd" firstAttribute="centerY" secondItem="v5Q-8z-7io" secondAttribute="centerY" id="vDb-SJ-ace"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -538,9 +581,12 @@
                             <constraint firstAttribute="trailing" secondItem="w1I-3s-h7v" secondAttribute="trailing" id="L6y-Ts-Oub"/>
                             <constraint firstItem="2vB-CR-S7f" firstAttribute="top" secondItem="w1I-3s-h7v" secondAttribute="bottom" id="OdI-ap-jdY"/>
                             <constraint firstItem="6II-e1-Blx" firstAttribute="top" secondItem="ad7-db-7O3" secondAttribute="top" id="T4a-ru-K2q"/>
+                            <constraint firstItem="v5Q-8z-7io" firstAttribute="leading" secondItem="ad7-db-7O3" secondAttribute="leading" id="YL5-s5-9Rh"/>
+                            <constraint firstAttribute="trailing" secondItem="v5Q-8z-7io" secondAttribute="trailing" id="cr5-vZ-ubQ"/>
                             <constraint firstAttribute="trailing" secondItem="6II-e1-Blx" secondAttribute="trailing" id="gGb-x8-ATq"/>
                             <constraint firstItem="w1I-3s-h7v" firstAttribute="top" secondItem="ad7-db-7O3" secondAttribute="top" id="w5e-SH-Vqn"/>
                             <constraint firstItem="w1I-3s-h7v" firstAttribute="leading" secondItem="ad7-db-7O3" secondAttribute="leading" id="wGi-LT-Z8a"/>
+                            <constraint firstItem="2vB-CR-S7f" firstAttribute="top" secondItem="v5Q-8z-7io" secondAttribute="bottom" id="yox-6I-KKy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Stacks" id="t3F-js-aVw">
@@ -564,6 +610,8 @@
                     </navigationItem>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="actionBar" destination="v5Q-8z-7io" id="5Gz-Tj-8Vh"/>
+                        <outlet property="actionBarTitle" destination="gj3-dp-Drd" id="4e5-2t-9jL"/>
                         <outlet property="notificationIcon" destination="7WJ-oA-7EK" id="D07-t3-1GT"/>
                         <outlet property="tableView" destination="w1I-3s-h7v" id="ScO-m9-1bp"/>
                     </connections>

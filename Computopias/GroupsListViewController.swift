@@ -32,6 +32,8 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         searchOverlayDismissButton.addTarget(self, action: #selector(GroupsListViewController.endSearch), forControlEvents: .TouchUpInside)
         searchOverlay.addSubview(searchVC.view)
         searchVC.parent = self
+        
+        actionBarContent = nil
     }
     // MARK: Data
     override func startUpdating() {
@@ -48,6 +50,13 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
             self?._updateNotificationsButton()
         })
         _updateNotificationsButton()
+        if Data.shouldPromptToDoContactSync() {
+            actionBarContent = ActionBarContent(title: "Follow friends from your contacts", action: { [weak self] in
+                self?.syncContacts()
+                }, onDismiss: { 
+                    Data.noThanksNoContactSyncForMe()
+            })
+        }
         super.startUpdating()
     }
     override func stopUpdating() {
@@ -63,6 +72,7 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
     }
     var _modelsSub: Subscription?
     var _notificationCounterSub: Subscription?
+    
     // MARK: Search
     let searchField = UITextField()
     func searchChanged(text: String) {
@@ -150,6 +160,45 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         let w: CGFloat = 260
         let x = (searchOverlay.frame.size.width - w) / 2
         searchVC.view.frame = CGRectMake(x, 10, w, 120)
+    }
+    // MARK: ActionBar
+    @IBAction func pressedActionBar() {
+        if let a = actionBarContent?.action {
+            a()
+        }
+        actionBarContent = nil
+    }
+    @IBAction func dismissActionBar() {
+        if let o = actionBarContent?.onDismiss {
+            o()
+        }
+        actionBarContent = nil
+    }
+    @IBOutlet var actionBar: UIView!
+    @IBOutlet var actionBarTitle: UILabel!
+    struct ActionBarContent {
+        var title: String
+        var action: (() -> ())?
+        var onDismiss: (() -> ())?
+    }
+    var actionBarContent: ActionBarContent? {
+        didSet {
+            if let a = actionBarContent {
+                actionBar.hidden = false
+                actionBarTitle.text = a.title
+            } else {
+                actionBar.hidden = true
+            }
+        }
+    }
+    // MARK: Sync contacts
+    func syncContacts() {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Friends") as! UINavigationController
+        let friendsVC = vc.viewControllers.first! as! FriendListViewController
+        NPSoftModalPresentationController.presentViewController(vc)
+        delay(1, closure: {
+            friendsVC.source._doContactsSync()
+        })
     }
 }
 
