@@ -26,18 +26,29 @@ class NotificationsViewController: NavigableViewController, UITableViewDelegate,
     }
     @IBOutlet var table: UITableView!
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return NotificationsSource.Shared.notificationDicts.val.count
+        if _notificationDicts.count == 0 {
+            return 1
+        } else {
+            return _notificationDicts.count
+        }
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell")!
-        cell.textLabel?.text = _notificationDicts[indexPath.row]["text"] as? String
-        return cell
+        if _notificationDicts.count == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("EmptyCell")!
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("Cell")!
+            cell.textLabel?.text = _notificationDicts[indexPath.row]["text"] as? String
+            return cell
+        }
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let urlString = _notificationDicts[indexPath.row]["url"] as? String,
-            let url = NSURL(string: urlString),
-            let route = Route.fromURL(url) {
-            navigate(route)
+        if _notificationDicts.count > 0 {
+            if let urlString = _notificationDicts[indexPath.row]["url"] as? String,
+                let url = NSURL(string: urlString),
+                let route = Route.fromURL(url) {
+                navigate(route)
+            }
         }
     }
     override var underlayNavBar: Bool {
