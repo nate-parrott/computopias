@@ -14,8 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        Batch.startWithAPIKey("DEV571EFB103BD2CD4462B18AE8C44") // dev
-        //Batch.startWithAPIKey("571EFB103A6A8E349B6E0F9F23D8AC") // live
+        //Batch.startWithAPIKey("DEV571EFB103BD2CD4462B18AE8C44") // dev
+        Batch.startWithAPIKey("571EFB103A6A8E349B6E0F9F23D8AC") // live
         
         Phony.initWithAppKey("YL8BDC2SGY8FC3A", secret: "UTL284BKZOHS04KJ9D6XKXO8NV11GQFGB96VZO8NDHWALTOC45TBD4EDH3M0")
         
@@ -47,6 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let e = BatchUser.editor()
             e.setIdentifier(id)
             e.save()
+            if let p = BatchPush.lastKnownPushToken() {
+                Data.firebase.childByAppendingPath("push_tokens").childByAppendingPath(id).childByAutoId().setValue(p)
+            }
         }
     }
     

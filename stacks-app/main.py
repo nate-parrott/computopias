@@ -17,6 +17,7 @@
 import webapp2
 import json
 import urllib2
+import urllib
 
 BATCH_REST_KEY = '3a4af5d74cca3752a5f479484be5c75b'
 BATCH_APP_KEY = 'DEV571EFB103BD2CD4462B18AE8C44'
@@ -24,6 +25,11 @@ BATCH_APP_KEY = 'DEV571EFB103BD2CD4462B18AE8C44'
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello world!')
+
+def tokens_for_user_id(uid):
+    url = 'https://computopias.firebaseio.com/push_tokens/' + urllib.quote(uid) + '.json'
+    d = json.loads(urllib2.urlopen(url).read())
+    return d.values() if isinstance(d, dict) else []
 
 class PushHandler(webapp2.RequestHandler):
     def post(self):
@@ -33,34 +39,39 @@ class PushHandler(webapp2.RequestHandler):
             text = push.get('text')
             recipient = push.get('recipient')
             link = push.get('link')
-            payload = {
-                "group_id": "notification",
-                "recipients": {
-                    "custom_ids": [recipient]
-                },
-                "message": {
-                    "body": text
-                },
-                "custom_payload": "{}"
-            }
-            if link:
-                payload['deeplink'] = link
+            tokens = tokens_for_user_id(recipient)
+            print tokens
+            print recipient
+            if len(tokens) > 0:
+                payload = {
+                    "group_id": "notification",
+                    "recipients": {
+                        # "custom_ids": [recipient]
+                        "tokens": tokens
+                    },
+                    "message": {
+                        "body": text
+                    },
+                    "custom_payload": "{}"
+                }
+                if link:
+                    payload['deeplink'] = link
             
-            post_body = json.dumps(payload)
-            print post_body
-            headers = {
-                "X-Authorization": BATCH_REST_KEY,
-                "Content-Type": "application/json"
-            }
-            req = urllib2.Request("https://api.batch.com/1.0/{0}/transactional/send".format(BATCH_APP_KEY), post_body, headers)
-            try:
-                f = urllib2.urlopen(req)
-                response = f.read()
-                f.close()
-            except urllib2.HTTPError as e:
-                print "Error delivering push:", e
-                print e.read()
-                success = False
+                post_body = json.dumps(payload)
+                print post_body
+                headers = {
+                    "X-Authorization": BATCH_REST_KEY,
+                    "Content-Type": "application/json"
+                }
+                req = urllib2.Request("https://api.batch.com/1.0/{0}/transactional/send".format(BATCH_APP_KEY), post_body, headers)
+                try:
+                    f = urllib2.urlopen(req)
+                    response = f.read()
+                    f.close()
+                except urllib2.HTTPError as e:
+                    print "Error delivering push:", e
+                    print e.read()
+                    success = False
         self.response.write(json.dumps({"success": success}))
             
 
