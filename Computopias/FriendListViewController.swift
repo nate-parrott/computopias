@@ -34,7 +34,10 @@ class FriendListViewController: UITableViewController {
             let unfollow: () -> () = {
                 Data.setFollowing(id, following: false, type: .User)
             }
-            friendsSec.rows.append(BasicTextSection.Row(title: "", action: nil, dim: false, center: false, titleFirebase: Data.firebase.childByAppendingPath("users").childByAppendingPath(id).childByAppendingPath("name"), deleteAction: unfollow))
+            let showFriendProfile = {
+                (UIApplication.sharedApplication().delegate as! AppDelegate).navigateToRoute(Route.Profile(id: id))
+            }
+            friendsSec.rows.append(BasicTextSection.Row(title: "", action: showFriendProfile, dim: false, center: false, titleFirebase: Data.firebase.childByAppendingPath("users").childByAppendingPath(id).childByAppendingPath("name"), deleteAction: unfollow))
         }
         if source._searchingContactsInProgress {
             friendsSec.rows.append(BasicTextSection.Row(title: "⏳ Searching for friends", action: nil, dim: true, center: true, titleFirebase: nil, deleteAction: nil))
