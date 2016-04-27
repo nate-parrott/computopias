@@ -113,6 +113,13 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }),
         Item(title: "Rating", image: nil, callback: { () -> CardItemView! in
             return StarRatingCardItemView()
+        }),
+        Item(title: "Large Text", image: nil, callback: { () -> CardItemView! in
+            /*let l = TextCardItemView()
+            l.staticLabel = false
+            l.size = 2
+            return l*/
+            return LargeTextCardItemView()
         })
         /*Item(title: "Timer", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
             return nil

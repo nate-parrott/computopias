@@ -52,6 +52,7 @@ extension NSAttributedString {
     }
     
     func drawVerticallyCenteredInRect(rect: CGRect) {
+        if length == 0 { return }
         let size = boundingRectWithSize(rect.size, options: [.UsesLineFragmentOrigin], context: nil)
         var d = CGRectMake(0, 0, rect.size.width, size.height)
         d.center = rect.center

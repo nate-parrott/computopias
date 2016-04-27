@@ -38,6 +38,7 @@
 		5F3700F01CCE98A00034CEE9 /* Firebase+Get.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3700EF1CCE98A00034CEE9 /* Firebase+Get.swift */; };
 		5F3701101CCF1BA30034CEE9 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F37010F1CCF1BA30034CEE9 /* NotificationsViewController.swift */; };
 		5F3701141CD024740034CEE9 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3701131CD024740034CEE9 /* SearchViewController.swift */; };
+		5F3701161CD03B0F0034CEE9 /* LargeTextCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3701151CD03B0F0034CEE9 /* LargeTextCardItemView.swift */; };
 		5F508BFE1CB743DC005BF228 /* ActivityFeedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */; };
 		5F508C021CB745D3005BF228 /* CardViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C011CB745D3005BF228 /* CardViewWrapper.swift */; };
 		5F508C061CB75F05005BF228 /* HashtagListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F508C051CB75F05005BF228 /* HashtagListView.swift */; };
@@ -158,6 +159,7 @@
 		5F3700EF1CCE98A00034CEE9 /* Firebase+Get.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Firebase+Get.swift"; sourceTree = "<group>"; };
 		5F37010F1CCF1BA30034CEE9 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		5F3701131CD024740034CEE9 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		5F3701151CD03B0F0034CEE9 /* LargeTextCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeTextCardItemView.swift; sourceTree = "<group>"; };
 		5F508BFD1CB743DC005BF228 /* ActivityFeedSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityFeedSource.swift; sourceTree = "<group>"; };
 		5F508C011CB745D3005BF228 /* CardViewWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewWrapper.swift; sourceTree = "<group>"; };
 		5F508C051CB75F05005BF228 /* HashtagListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagListView.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				5FD360341CA3B5590016D837 /* GivePointsCardItemView.swift */,
 				5FD3604D1CAB7A9A0016D837 /* FlipbookCardItemView.swift */,
 				5FB976C71CB24E3700B92A16 /* ResolvedCardItemView.swift */,
+				5F3701151CD03B0F0034CEE9 /* LargeTextCardItemView.swift */,
 			);
 			name = "Card Items";
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				5F29B4BF1CB73E830060FFD7 /* ElasticReuseQueue.m in Sources */,
 				5F29B4C21CB73E830060FFD7 /* EVInterpolation.m in Sources */,
 				5F70981C1CA0EDF600B499BC /* AppDelegate.swift in Sources */,
+				5F3701161CD03B0F0034CEE9 /* LargeTextCardItemView.swift in Sources */,
 				5F29B4C31CB73E830060FFD7 /* EVCATransform3DInterpolation.m in Sources */,
 				5F29B4C01CB73E830060FFD7 /* ElasticRelativeLayout.m in Sources */,
 				5F1118851CC9944F007D917F /* ProfileViewController.swift in Sources */,

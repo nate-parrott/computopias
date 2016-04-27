@@ -36,6 +36,12 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
     static let font = UIFont(name: "AvenirNext-Medium", size: 15)!
     static let boldFont = UIFont(name: "AvenirNext-DemiBold", size: 15)!
     
+    var size = 1 {
+        didSet {
+            _updateAppearance()
+        }
+    }
+    
     func setText(text: String) {
         fieldNode.attributedText = NSAttributedString(string: text, attributes: fieldNode.typingAttributes ?? [String: AnyObject]())
     }
@@ -56,6 +62,7 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
     }
     func editableTextNodeDidFinishEditing(editableTextNode: ASEditableTextNode) {
         acceptsTouches = false
+        editableTextNode.textView.contentOffset = CGPointZero
     }
     func editableTextNode(editableTextNode: ASEditableTextNode, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
@@ -66,7 +73,7 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
     }
     
     override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
-        return size
+        return CGSizeMake(size.width, max(size.height, CGFloat(self.size)))
     }
     
     override func tapped() -> Bool {
@@ -98,7 +105,8 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
     }
     
     func _updateAppearance() {
-        let font = backgrounded ? TextCardItemView.font : TextCardItemView.boldFont
+        var font = backgrounded ? TextCardItemView.font : TextCardItemView.boldFont
+        font = font.fontWithSize(font.pointSize * CGFloat(size))
         let para = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         para.alignment = _textAlignment
         setTextAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.blackColor(), NSParagraphStyleAttributeName: para])
@@ -108,7 +116,7 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
     
     override var defaultSize: GridSize {
         get {
-            return CGSizeMake(backgrounded ? -1 : 2, 1)
+            return CGSizeMake(backgrounded || size > 1 ? -1 : 2, CGFloat(size))
         }
     }
     
@@ -132,6 +140,7 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
         j["text"] = fieldNode.attributedText?.string ?? ""
         j["staticLabel"] = staticLabel
         j["backgrounded"] = backgrounded
+        j["size"] = size
         return j
     }
     
@@ -140,6 +149,7 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
         setText(json["text"] as? String ?? "")
         staticLabel = json["staticLabel"] as? Bool ?? false
         backgrounded = json["backgrounded"] as? Bool ?? !staticLabel
+        size = json["size"] as? Int ?? 1
     }
     
     override var alignment: (x: CardItemView.Alignment, y: CardItemView.Alignment) {
@@ -149,6 +159,8 @@ class TextCardItemView: CardItemView, ASEditableTextNodeDelegate {
                 _textAlignment = .Center
             case .Trailing:
                 _textAlignment = .Right
+            case .Full where size > 1:
+                _textAlignment = .Center
             default: _textAlignment = .Left
             }
         }
@@ -174,3 +186,4 @@ extension UITextView {
         }
     }
 }
+
