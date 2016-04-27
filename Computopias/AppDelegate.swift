@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import QuadratTouch
 import Batch
 
 @UIApplicationMain
@@ -15,13 +14,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        Batch.startWithAPIKey("DEV571EFB103BD2CD4462B18AE8C44") // dev
+        //Batch.startWithAPIKey("571EFB103A6A8E349B6E0F9F23D8AC") // live
+        
         Phony.initWithAppKey("YL8BDC2SGY8FC3A", secret: "UTL284BKZOHS04KJ9D6XKXO8NV11GQFGB96VZO8NDHWALTOC45TBD4EDH3M0")
         
         srandom(UInt32(time(nil)))
         
         Appearance.setup()
-        
-        setupFoursquare()
         
         hideNavBarBackground()
         
@@ -34,15 +34,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         }
         
-        Batch.startWithAPIKey("DEV571EFB103BD2CD4462B18AE8C44") // dev
-        // Batch.startWithAPIKey("571EFB103A6A8E349B6E0F9F23D8AC") // live
         // Register for push notifications
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.loginCompleted), name: Data.LoginDidCompleteNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.registerForNotificationsIfLoggedIn), name: Data.LoginDidCompleteNotification, object: nil)
+        registerForNotificationsIfLoggedIn()
         
         return true
     }
     
-    func loginCompleted() {
+    func registerForNotificationsIfLoggedIn() {
         if let id = Data.getUID() {
             BatchPush.registerForRemoteNotifications()
             let e = BatchUser.editor()
@@ -64,13 +63,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         nav.navigationBar.translucent = true
     }
     
-    func setupFoursquare() {
+    /*func setupFoursquare() {
         let client = Client(clientID:       "BPQYG4XQC3DPLXNN2GGIKL1JTTAA5JBQ10N4LCC5SZWLDE1Q",
                             clientSecret:   "A2RSQ2G2OHBS4OTCI0YVTQMDTQEJUFGVF1MSYAGB5LTZ5WN5",
                             redirectURL:    "testapp123://foursquare")
         let configuration = Configuration(client:client)
         Session.setupSharedSessionWithConfiguration(configuration)
-    }
+    }*/
     
     var _window: CMWindow?
     var window: UIWindow? {
