@@ -67,7 +67,24 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
     var source: ActivityFeedSource?
     var models: [ActivityFeedSource.Model] = [] {
         didSet {
-            tableView.reloadData()
+            if oldValue.count > 0 && models.count > 0 {
+                tableView.beginUpdates()
+                let diff = Diff.Compute(models, oldSeq: oldValue)
+                let indexPaths: [Int] -> [NSIndexPath] = {
+                    (indices: [Int]) in
+                    return indices.map({NSIndexPath(forRow: $0, inSection: 0)})
+                }
+                for action in Diff.OrderActionsDeletionsFirst(diff) {
+                    switch action {
+                    case .Delete(let indices): tableView.deleteRowsAtIndexPaths(indexPaths(indices), withRowAnimation: .Automatic)
+                    case .Insert(let indices): tableView.insertRowsAtIndexPaths(indexPaths(indices), withRowAnimation: .Automatic)
+                    case .Reload(let indices): tableView.reloadRowsAtIndexPaths(indexPaths(indices), withRowAnimation: .Automatic)
+                    }
+                }
+                tableView.endUpdates()
+            } else {
+                tableView.reloadData()
+            }
         }
     }
     var _modelsSub: Subscription?

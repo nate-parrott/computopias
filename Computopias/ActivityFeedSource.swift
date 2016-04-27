@@ -168,7 +168,7 @@ class ActivityFeedSource: NSObject {
     var cardsByID = [String: [String: AnyObject]]()
     
     // MARK: Group lists
-    class Model {
+    class Model: Equatable {
         var title: String!
         var subtitle: String!
         var route: Route!
@@ -213,4 +213,8 @@ class ActivityFeedSource: NSObject {
             groupsListModels.val = hashtags.map({ hashtagInfo[$0]!.toModel() })
         }
     }
+}
+
+func ==(lhs: ActivityFeedSource.Model, rhs: ActivityFeedSource.Model) -> Bool {
+    return lhs.title == rhs.title && lhs.subtitle == rhs.subtitle && lhs.route.url == rhs.route.url && lhs.cardID == rhs.cardID
 }
