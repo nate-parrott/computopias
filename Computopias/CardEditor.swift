@@ -66,55 +66,55 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
     
     let items: [Item] = [
-        Item(title: "Label", image: UIImage(named: "label"), callback: { () -> CardItemView! in
+        Item(title: "Label", image: UIImage(named: "EdLabel"), callback: { () -> CardItemView! in
             let l = TextCardItemView()
             l.staticLabel = false
             return l
         }),
-        Item(title: "Text", image: UIImage(named: "editable_text"), callback: { () -> CardItemView! in
+        Item(title: "Caption", image: UIImage(named: "EdCaption"), callback: { () -> CardItemView! in
             let l = TextCardItemView()
             l.staticLabel = false
             l.backgrounded = true
             return l
         }),
-        Item(title: "Image", image: UIImage(named: "image"), callback: { () -> CardItemView! in
+        Item(title: "Image", image: UIImage(named: "EdPhoto"), callback: { () -> CardItemView! in
             let m = ImageCardItemView()
             return m
+        }),
+        Item(title: "Scribble", image: UIImage(named: "EdScribble"), callback: { () -> CardItemView! in
+            return DrawingCardItemView()
         }),
         /*Item(title: "Profile", image: UIImage(named: "profile"), callback: { () -> CardItemView! in
             return ProfileCardItemView()
         }),*/
-        Item(title: "Button", image: UIImage(named: "link"), callback: { () -> CardItemView! in
-            return ButtonCardItemView()
-        }),
-        Item(title: "Counter", image: UIImage(named: "vote"), callback: { () -> CardItemView! in
-            return CounterCardItemView()
-        }),
-        Item(title: "Likes", image: UIImage(named: "like"), callback: { () -> CardItemView! in
-            return LikeCounterCardItemView()
-        }),
-        Item(title: "Sound", image: UIImage(named: "audio"), callback: { () -> CardItemView! in
-            return SoundCardItemView()
-        }),
-        Item(title: "Location", image: UIImage(named: "location"), callback: { () -> CardItemView! in
-            return MapCardItemView()
-        }),
-        Item(title: "Comment", image: UIImage(named: "comment"), callback: { () -> CardItemView! in
+        Item(title: "Comments", image: UIImage(named: "EdComments"), callback: { () -> CardItemView! in
             return CommentsCardItemView()
         }),
-        Item(title: "MessageMe", image: UIImage(named: "sms"), callback: { () -> CardItemView! in
+        Item(title: "Likes", image: UIImage(named: "EdLike"), callback: { () -> CardItemView! in
+            return LikeCounterCardItemView()
+        }),
+        Item(title: "Counter", image: UIImage(named: "EdCounter"), callback: { () -> CardItemView! in
+            return CounterCardItemView()
+        }),
+        Item(title: "Recording", image: UIImage(named: "EdSound"), callback: { () -> CardItemView! in
+            return SoundCardItemView()
+        }),
+        Item(title: "Button", image: UIImage(named: "EdLink"), callback: { () -> CardItemView! in
+            return ButtonCardItemView()
+        }),
+        Item(title: "Location", image: UIImage(named: "EdLocation"), callback: { () -> CardItemView! in
+            return MapCardItemView()
+        }),
+        /*Item(title: "MessageMe", image: UIImage(named: "sms"), callback: { () -> CardItemView! in
             return MessageMeCardItemView()
-        }),
-        Item(title: "Drawing", image: UIImage(named: "drawing"), callback: { () -> CardItemView! in
-            return DrawingCardItemView()
-        }),
-        Item(title: "Random", image: nil, callback: { () -> CardItemView! in
+        }),*/
+        Item(title: "Random", image: UIImage(named: "EdRandom"), callback: { () -> CardItemView! in
             return RandomContentCardItemView()
         }),
-        Item(title: "Rating", image: nil, callback: { () -> CardItemView! in
+        Item(title: "Rating", image: UIImage(named: "EdRating"), callback: { () -> CardItemView! in
             return StarRatingCardItemView()
         }),
-        Item(title: "Large Text", image: nil, callback: { () -> CardItemView! in
+        Item(title: "Title", image: UIImage(named: "EdTitle"), callback: { () -> CardItemView! in
             /*let l = TextCardItemView()
             l.staticLabel = false
             l.size = 2
@@ -135,14 +135,8 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CardEditorItemCell
-        if let image = items[indexPath.item].image {
-            cell.label.text = ""
-            cell.imageView.image = image.imageWithRenderingMode(.AlwaysTemplate)
-        } else {
-            cell.imageView.image = nil
-            cell.label.text = items[indexPath.item].title
-        }
-        cell.label.backgroundColor = Appearance.colors[indexPath.item % Appearance.colors.count]
+        cell.imageView.image = items[indexPath.item].image
+        cell.label.text = items[indexPath.item].title
         return cell
     }
     
@@ -234,15 +228,15 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        let padding = (collectionView.bounds.size.height - flowLayout.itemSize.height * 2) / 3
+        let padding = (collectionView.bounds.size.height - flowLayout.itemSize.height) / 2
         flowLayout.minimumLineSpacing = padding
         flowLayout.minimumInteritemSpacing = padding
         
-        let nCols = Int(ceil(Float(items.count) / 2.0))
+        /*let nCols = Int(ceil(Float(items.count) / 2.0))
         let contentWidth = CGFloat(nCols + 1) * padding + CGFloat(nCols) * flowLayout.itemSize.width
-        let leftPadding = padding + max(0, (collectionView.bounds.size.width - contentWidth)/2)
+        let leftPadding = padding + max(0, (collectionView.bounds.size.width - contentWidth)/2)*/
         
-        collectionView.contentInset = UIEdgeInsetsMake(padding, leftPadding, padding, padding)
+        collectionView.contentInset = UIEdgeInsetsMake(padding, padding, padding, padding)
         
         cardView.frame = cardViewContainer.bounds
     }
@@ -252,11 +246,5 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
 class CardEditorItemCell: UICollectionViewCell {
     @IBOutlet var label: UILabel!
     @IBOutlet var imageView: UIImageView!
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        label.layer.cornerRadius = label.bounds.size.height/2
-        label.clipsToBounds = true
-    }
 }
 
