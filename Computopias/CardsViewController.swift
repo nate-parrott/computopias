@@ -71,7 +71,7 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
         func populateCell(cell: UICollectionViewCell) {}
     }
     class CardItem: Item {
-        init?(dict: [String: AnyObject], vc: NavigableViewController) {
+        init?(dict: [String: AnyObject], vc: CardsViewController) {
             if let cardID = dict["cardID"] as? String,
                 let poster = dict["poster"] as? [String: AnyObject],
                 let posterName = poster["name"] as? String,
@@ -81,10 +81,18 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
                 if Data.userIsBlocked(posterId) { return nil }
                 
                 let dateString = NSDateFormatter.localizedStringFromDate(NSDate(timeIntervalSince1970: date), dateStyle: .ShortStyle, timeStyle: .ShortStyle)
-                caption = NSAttributedString.smallBoldText(posterName + " ›") + NSAttributedString.smallText(" on " + dateString)
-                captionAction = {
-                    [weak vc] in
-                    vc?.navigate(Route.Profile(id: posterId))
+                if (vc as? ProfileViewController) != nil {
+                    caption = NSAttributedString.smallText("Posted in ") + NSAttributedString.smallBoldText("#\(hashtag) ›") + NSAttributedString.smallText(" on " + dateString)
+                    captionAction = {
+                        [weak vc] in
+                        vc?.navigate(Route.Hashtag(name: hashtag))
+                    }
+                } else {
+                    caption = NSAttributedString.smallBoldText(posterName + " ›") + NSAttributedString.smallText(" on " + dateString)
+                    captionAction = {
+                        [weak vc] in
+                        vc?.navigate(Route.Profile(id: posterId))
+                    }
                 }
                 self.cardID = cardID
                 self.hashtag = hashtag
