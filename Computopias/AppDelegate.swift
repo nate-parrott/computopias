@@ -137,6 +137,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    var _networkActivityCounter = 0
+    func incrementNetworkActivityCounter(i: Int) {
+        _networkActivityCounter += i
+        let shouldBeVisible = (_networkActivityCounter > 0)
+        if shouldBeVisible != UIApplication.sharedApplication().networkActivityIndicatorVisible {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = shouldBeVisible
+        }
+    }
 
     /*
     - (UIWindow *)window {

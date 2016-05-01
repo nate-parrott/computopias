@@ -89,6 +89,8 @@
 		5FCB7B7C1CC89FB9008E8AFF /* HashtagCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B7B1CC89FB9008E8AFF /* HashtagCardsViewController.swift */; };
 		5FCB7B7F1CC8B375008E8AFF /* SingleCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B7E1CC8B375008E8AFF /* SingleCardViewController.swift */; };
 		5FCB7B811CC8B7D7008E8AFF /* GroupNamePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B801CC8B7D7008E8AFF /* GroupNamePickerViewController.swift */; };
+		5FD070FA1CD6843000499D6E /* AFImageSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD070F81CD6843000499D6E /* AFImageSearchResultsViewController.m */; };
+		5FD070FB1CD6843000499D6E /* ImageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD070F91CD6843000499D6E /* ImageSearchViewController.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
 		5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */; };
 		5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602C1CA331E60016D837 /* MapCardItemView.swift */; };
@@ -217,6 +219,9 @@
 		5FCB7B7B1CC89FB9008E8AFF /* HashtagCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashtagCardsViewController.swift; sourceTree = "<group>"; };
 		5FCB7B7E1CC8B375008E8AFF /* SingleCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleCardViewController.swift; sourceTree = "<group>"; };
 		5FCB7B801CC8B7D7008E8AFF /* GroupNamePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupNamePickerViewController.swift; sourceTree = "<group>"; };
+		5FD070F71CD6843000499D6E /* AFImageSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageSearchResultsViewController.h; sourceTree = "<group>"; };
+		5FD070F81CD6843000499D6E /* AFImageSearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageSearchResultsViewController.m; sourceTree = "<group>"; };
+		5FD070F91CD6843000499D6E /* ImageSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSearchViewController.swift; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602C1CA331E60016D837 /* MapCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCardItemView.swift; sourceTree = "<group>"; };
@@ -329,6 +334,7 @@
 		5F3700EC1CCE93B20034CEE9 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				5FD070FC1CD6843700499D6E /* Image search */,
 				5F2925DB1CB9056B0096B739 /* ViewBringUpQueue.swift */,
 				5F3435ED1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift */,
 			);
@@ -501,6 +507,16 @@
 				5F97EE8B1CC46E2F00124FA8 /* HashtagViewController.swift */,
 			);
 			name = Old;
+			sourceTree = "<group>";
+		};
+		5FD070FC1CD6843700499D6E /* Image search */ = {
+			isa = PBXGroup;
+			children = (
+				5FD070F71CD6843000499D6E /* AFImageSearchResultsViewController.h */,
+				5FD070F81CD6843000499D6E /* AFImageSearchResultsViewController.m */,
+				5FD070F91CD6843000499D6E /* ImageSearchViewController.swift */,
+			);
+			name = "Image search";
 			sourceTree = "<group>";
 		};
 		F826A03134E2FA1475D7E722 /* Pods */ = {
@@ -703,10 +719,12 @@
 				5FD360531CABB1690016D837 /* NSString+MD5.m in Sources */,
 				5FB2F24F1CA217A2001863C4 /* UIImage+Resize.swift in Sources */,
 				5F3701141CD024740034CEE9 /* SearchViewController.swift in Sources */,
+				5FD070FA1CD6843000499D6E /* AFImageSearchResultsViewController.m in Sources */,
 				5F29B4C81CB73E830060FFD7 /* EVComplexLayout.m in Sources */,
 				5F7098301CA0EEB000B499BC /* CardView.swift in Sources */,
 				5FD3603C1CA4D5550016D837 /* DrawingCardItemView.swift in Sources */,
 				5FD360651CACFD9E0016D837 /* ContactsSync.swift in Sources */,
+				5FD070FB1CD6843000499D6E /* ImageSearchViewController.swift in Sources */,
 				5F3701101CCF1BA30034CEE9 /* NotificationsViewController.swift in Sources */,
 				5F29B4C11CB73E830060FFD7 /* UIGestureRecognizer+Elastic.m in Sources */,
 				5F29B49D1CB73E3F0060FFD7 /* BlockButton.swift in Sources */,

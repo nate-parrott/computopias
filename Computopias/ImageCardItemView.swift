@@ -75,6 +75,9 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .Default, handler: { (_) -> Void in
             self.insertMedia(.Camera)
         }))
+        actionSheet.addAction(UIAlertAction(title: "Image Search", style: .Default, handler: { (_) in
+            self.doImageSearch()
+        }))
         actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Never mind", comment: ""), style: .Cancel, handler: nil))
         presentViewController(actionSheet)
     }
@@ -85,6 +88,17 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         picker.sourceType = source
         picker.delegate = self
         presentViewController(picker)
+    }
+    
+    func doImageSearch() {
+        let searchVC = ImageSearchViewController()
+        searchVC.onImagePicked = {
+            [weak self]
+            image in
+            self?.insertImage(image)
+        }
+        let nav = UINavigationController(rootViewController: searchVC)
+        presentViewController(nav)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
