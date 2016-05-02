@@ -134,5 +134,6 @@ class NotificationsSource: NSObject {
                 notifs.childByAppendingPath(id).childByAppendingPath("read").setValue(true)
             }
         }
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
 }

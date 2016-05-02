@@ -42,9 +42,10 @@ class Push(object):
         self.text = j.get('text', '')
         self.link = j.get('link')
         self.extra = extra if extra else {}
-        if self.link:
-            self.extra['link'] = self.link
         self.recipients = tokens_for_user_id(j.get('recipient'))
+        self.custom = {}
+        if self.link:
+            self.custom['link'] = self.link
 
 class PushService(object):
     def __init__(self, name):
@@ -67,7 +68,7 @@ class ApplePushService(PushService):
                 if '.' in recip:
                     token, service = recip.split('.', 1)
                     if service == self.name:
-                        pl = Payload(alert=push.text, sound='default', badge=1)
+                        pl = Payload(alert=push.text, sound='default', badge=1, custom=push.custom)
                         payloads_and_tokens.append((pl, token))
         if len(payloads_and_tokens):
             prefix = 'dev' if self.is_sandbox() else 'prod'

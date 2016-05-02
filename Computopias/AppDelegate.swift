@@ -71,6 +71,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return false
     }
     
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        if let link = userInfo["link"] as? String, let url = NSURL(string: link) {
+            openURL(url)
+        }
+    }
+    
     static var Shared: AppDelegate {
         get {
             return UIApplication.sharedApplication().delegate as! AppDelegate
@@ -106,11 +112,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
+        return openURL(url)
+    }
+    
+    func openURL(url: NSURL) -> Bool {
         if url.scheme == "bubble" && url.path == "/link_contacts" {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Friends") as! UINavigationController
             let friendsVC = vc.viewControllers.first! as! FriendListViewController
             NPSoftModalPresentationController.presentViewController(vc)
-            delay(1, closure: { 
+            delay(1, closure: {
                 friendsVC.source._doContactsSync()
             })
         } else if url.scheme == "bubble" && url.path == "/no_thanks_dont_link_contacts" {
