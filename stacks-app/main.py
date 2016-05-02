@@ -18,9 +18,8 @@ import webapp2
 import json
 import urllib2
 import urllib
-
-BATCH_REST_KEY = '3a4af5d74cca3752a5f479484be5c75b'
-BATCH_APP_KEY = 'DEV571EFB103BD2CD4462B18AE8C44'
+from apns import APNs, Frame, Payload
+import time
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -28,52 +27,67 @@ class MainHandler(webapp2.RequestHandler):
 
 def tokens_for_user_id(uid):
     url = 'https://computopias.firebaseio.com/push_tokens/' + urllib.quote(uid) + '.json'
+    print url
     d = json.loads(urllib2.urlopen(url).read())
     return d.values() if isinstance(d, dict) else []
 
 class PushHandler(webapp2.RequestHandler):
     def post(self):
-        success = True
         body = json.loads(self.request.body)
-        for push in body['pushes']:            
-            text = push.get('text')
-            recipient = push.get('recipient')
-            link = push.get('link')
-            tokens = tokens_for_user_id(recipient)
-            print tokens
-            print recipient
-            if len(tokens) > 0:
-                payload = {
-                    "group_id": "notification",
-                    "recipients": {
-                        # "custom_ids": [recipient]
-                        "tokens": tokens
-                    },
-                    "message": {
-                        "body": text
-                    },
-                    "custom_payload": "{}"
-                }
-                if link:
-                    payload['deeplink'] = link
-            
-                post_body = json.dumps(payload)
-                print post_body
-                headers = {
-                    "X-Authorization": BATCH_REST_KEY,
-                    "Content-Type": "application/json"
-                }
-                req = urllib2.Request("https://api.batch.com/1.0/{0}/transactional/send".format(BATCH_APP_KEY), post_body, headers)
-                try:
-                    f = urllib2.urlopen(req)
-                    response = f.read()
-                    f.close()
-                except urllib2.HTTPError as e:
-                    print "Error delivering push:", e
-                    print e.read()
-                    success = False
+        success = PushService.send_pushes(map(Push, body['pushes']))
         self.response.write(json.dumps({"success": success}))
-            
+
+class Push(object):
+    def __init__(self, j, extra=None):
+        self.text = j.get('text', '')
+        self.link = j.get('link')
+        self.extra = extra if extra else {}
+        if self.link:
+            self.extra['link'] = self.link
+        self.recipients = tokens_for_user_id(j.get('recipient'))
+
+class PushService(object):
+    def __init__(self, name):
+        self.name = name
+    
+    def send_applicable_pushes(self, pushes):
+        pass
+    
+    @classmethod
+    def send_pushes(cls, pushes):
+        for service in PUSH_SERVICES:
+            service.send_applicable_pushes(pushes)
+        return True
+
+class ApplePushService(PushService):
+    def send_applicable_pushes(self, pushes):
+        payloads_and_tokens = [] # [(payload, token)]
+        for push in pushes:
+            for recip in push.recipients:
+                if '.' in recip:
+                    token, service = recip.split('.', 1)
+                    if service == self.name:
+                        pl = Payload(alert=push.text, sound='default', badge=1)
+                        payloads_and_tokens.append((pl, token))
+        if len(payloads_and_tokens):
+            prefix = 'dev' if self.is_sandbox() else 'prod'
+            apns = APNs(use_sandbox=self.is_sandbox(), cert_file=prefix + '-cert.pem', key_file=prefix + '-key.pem')
+            frame = Frame()
+            identifier = 1
+            expiry = time.time() + 3600
+            priority = 10
+            for payload, token in payloads_and_tokens:
+                frame.add_item(token, payload, identifier, expiry, priority)
+            apns.gateway_server.send_notification_multiple(frame)
+    
+    def is_sandbox(self):
+        return False
+
+class ApplePushSandboxService(ApplePushService):
+    def is_sandbox(self):
+        return True
+
+PUSH_SERVICES = [ApplePushService('apple'), ApplePushSandboxService('apple-sandbox')]
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

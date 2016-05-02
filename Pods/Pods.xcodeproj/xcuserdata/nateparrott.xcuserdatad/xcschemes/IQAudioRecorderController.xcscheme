@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'DB4525BCA254CE09469397D7'
+               BlueprintIdentifier = '85F73AA35A0EA2CF84FE5764'
                BlueprintName = 'IQAudioRecorderController'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'IQAudioRecorderController.framework'>

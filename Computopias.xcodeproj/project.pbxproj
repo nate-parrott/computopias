@@ -91,6 +91,7 @@
 		5FCB7B811CC8B7D7008E8AFF /* GroupNamePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCB7B801CC8B7D7008E8AFF /* GroupNamePickerViewController.swift */; };
 		5FD070FA1CD6843000499D6E /* AFImageSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD070F81CD6843000499D6E /* AFImageSearchResultsViewController.m */; };
 		5FD070FB1CD6843000499D6E /* ImageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD070F91CD6843000499D6E /* ImageSearchViewController.swift */; };
+		5FD070FE1CD6EB6300499D6E /* NSData+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD070FD1CD6EB6300499D6E /* NSData+Hex.swift */; };
 		5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD360281CA319940016D837 /* MessageMeCardItemView.swift */; };
 		5FD3602B1CA320930016D837 /* CountdownCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */; };
 		5FD3602D1CA331E60016D837 /* MapCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3602C1CA331E60016D837 /* MapCardItemView.swift */; };
@@ -222,6 +223,7 @@
 		5FD070F71CD6843000499D6E /* AFImageSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageSearchResultsViewController.h; sourceTree = "<group>"; };
 		5FD070F81CD6843000499D6E /* AFImageSearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageSearchResultsViewController.m; sourceTree = "<group>"; };
 		5FD070F91CD6843000499D6E /* ImageSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSearchViewController.swift; sourceTree = "<group>"; };
+		5FD070FD1CD6EB6300499D6E /* NSData+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+Hex.swift"; sourceTree = "<group>"; };
 		5FD360281CA319940016D837 /* MessageMeCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageMeCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602A1CA320930016D837 /* CountdownCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountdownCardItemView.swift; sourceTree = "<group>"; };
 		5FD3602C1CA331E60016D837 /* MapCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCardItemView.swift; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 				5FB2F25A1CA223C0001863C4 /* Appearance.swift */,
 				5F70983B1CA11C5C00B499BC /* CGMath.swift */,
 				5FB2F24C1CA21774001863C4 /* NetImageView.swift */,
+				5FD070FD1CD6EB6300499D6E /* NSData+Hex.swift */,
 				5F1EE5CC1CBD805F003C1C2B /* LabelNode.swift */,
 				5FB2F24A1CA216B4001863C4 /* Assets.swift */,
 				5FC84B7A1CA2795100E6F5F7 /* Route.swift */,
@@ -715,6 +718,7 @@
 				5FD360401CA72BED0016D837 /* CommentsCardItemView.swift in Sources */,
 				5FD360291CA319940016D837 /* MessageMeCardItemView.swift in Sources */,
 				5F29B4BE1CB73E830060FFD7 /* ElasticValueInput.m in Sources */,
+				5FD070FE1CD6EB6300499D6E /* NSData+Hex.swift in Sources */,
 				5F0D378D1CBE0A180033E83C /* UIView+ParticleEffects.swift in Sources */,
 				5FD360531CABB1690016D837 /* NSString+MD5.m in Sources */,
 				5FB2F24F1CA217A2001863C4 /* UIImage+Resize.swift in Sources */,

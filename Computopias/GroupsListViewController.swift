@@ -35,6 +35,12 @@ class GroupsListViewController: NavigableViewController, UITableViewDataSource, 
         
         actionBarContent = nil
     }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if let s = tableView.indexPathForSelectedRow {
+            tableView.deselectRowAtIndexPath(s, animated: animated)
+        }
+    }
     // MARK: Data
     override func startUpdating() {
         source = ActivityFeedSource()

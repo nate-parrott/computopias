@@ -85,6 +85,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Computopias/AsyncDisplayKit.framework"
+  install_framework "Pods-Computopias/DTFoundation.framework"
   install_framework "Pods-Computopias/Firebase.framework"
   install_framework "Pods-Computopias/IQAudioRecorderController.framework"
   install_framework "Pods-Computopias/JSQMessagesViewController.framework"
@@ -94,9 +95,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Computopias/PINRemoteImage.framework"
   install_framework "Pods-Computopias/QuadratTouch.framework"
   install_framework "Pods-Computopias/SCSiriWaveformView.framework"
+  install_framework "Pods-Computopias/TCMobileProvision.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Computopias/AsyncDisplayKit.framework"
+  install_framework "Pods-Computopias/DTFoundation.framework"
   install_framework "Pods-Computopias/Firebase.framework"
   install_framework "Pods-Computopias/IQAudioRecorderController.framework"
   install_framework "Pods-Computopias/JSQMessagesViewController.framework"
@@ -106,4 +109,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Computopias/PINRemoteImage.framework"
   install_framework "Pods-Computopias/QuadratTouch.framework"
   install_framework "Pods-Computopias/SCSiriWaveformView.framework"
+  install_framework "Pods-Computopias/TCMobileProvision.framework"
 fi

@@ -11,7 +11,7 @@ pod 'JSQMessagesViewController'
 pod 'AsyncDisplayKit'
 pod 'QuadratTouch'
 pod 'LocationPicker'
-pod 'Batch'
+pod 'TCMobileProvision'
 
 end
 

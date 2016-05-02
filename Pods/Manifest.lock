@@ -5,7 +5,9 @@ PODS:
   - AsyncDisplayKit/PINRemoteImage (1.9.7.1):
     - AsyncDisplayKit/ASDealloc2MainObject
     - PINRemoteImage/iOS (>= 2.1.2)
-  - Batch (1.5.3)
+  - DTFoundation/Core (1.7.10)
+  - DTFoundation/DTASN1 (1.7.10):
+    - DTFoundation/Core
   - Firebase (2.5.1)
   - IQAudioRecorderController (1.1.0):
     - SCSiriWaveformView
@@ -20,19 +22,21 @@ PODS:
     - PINRemoteImage/Core
   - QuadratTouch (1.1.1)
   - SCSiriWaveformView (1.0.3)
+  - TCMobileProvision (1.0.0):
+    - DTFoundation/DTASN1 (~> 1.6)
 
 DEPENDENCIES:
   - AsyncDisplayKit
-  - Batch
   - Firebase
   - IQAudioRecorderController
   - JSQMessagesViewController
   - LocationPicker
   - QuadratTouch
+  - TCMobileProvision
 
 SPEC CHECKSUMS:
   AsyncDisplayKit: 2b52f841e384e7326d4f59323b1bf35d00696e17
-  Batch: e8b878faad90083e572812d725da0e6e536490a7
+  DTFoundation: 3b6b1b817d2a7fb02e7eaf2596c922a68145bd43
   Firebase: 3565ea88b830f28f2c77ecc524622bc71a20d085
   IQAudioRecorderController: 3a39f09c589c420b0bad09297b8294af08089f5c
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
@@ -42,5 +46,6 @@ SPEC CHECKSUMS:
   PINRemoteImage: 2ce3f1fcc52f0360a3821f91f1a1bc653c5d2338
   QuadratTouch: 296d83c63a4328f6f40af9fc728fe24f0e3b00d4
   SCSiriWaveformView: b8b2756af42addcd31900c3945f24edafefb5395
+  TCMobileProvision: 2a8962b38821a20fad53b9d7851bbc9ae8c52995
 
 COCOAPODS: 0.39.0

@@ -7,15 +7,12 @@
 //
 
 import UIKit
-import Batch
+import TCMobileProvision
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        //Batch.startWithAPIKey("DEV571EFB103BD2CD4462B18AE8C44") // dev
-        Batch.startWithAPIKey("571EFB103A6A8E349B6E0F9F23D8AC") // live
         
         Phony.initWithAppKey("YL8BDC2SGY8FC3A", secret: "UTL284BKZOHS04KJ9D6XKXO8NV11GQFGB96VZO8NDHWALTOC45TBD4EDH3M0")
         
@@ -41,16 +38,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func registerForNotificationsIfLoggedIn() {
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         if let id = Data.getUID() {
-            BatchPush.registerForRemoteNotifications()
-            let e = BatchUser.editor()
-            e.setIdentifier(id)
-            e.save()
-            if let p = BatchPush.lastKnownPushToken() {
-                Data.firebase.childByAppendingPath("push_tokens").childByAppendingPath(id).childByAutoId().setValue(p)
+            let token = deviceToken.hexString! + "." + (isAPNSandbox() ? "apple-sandbox" : "apple")
+            print("Got push token: \(token)")
+            Data.firebase.childByAppendingPath("push_tokens").childByAppendingPath(id).setValue(["a": token])
+        }
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Failed to register for push: \(error)")
+    }
+    
+    func registerForNotificationsIfLoggedIn() {
+        if Data.getUID() != nil {
+            UIApplication.sharedApplication().registerForRemoteNotifications()
+            let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge , .Sound], categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        }
+    }
+    
+    func isAPNSandbox() -> Bool {
+        if let mobileProvisionURL = NSBundle.mainBundle().URLForResource("embedded", withExtension: "mobileprovision"),
+            let mobileProvisionData = NSData(contentsOfURL: mobileProvisionURL),
+            let mobileProvision = TCMobileProvision(data: mobileProvisionData) {
+            if let entitlements = mobileProvision.dict["Entitlements"],
+                let apsEnvironment = entitlements["aps-environment"] as? String
+                where apsEnvironment == "development" {
+                return true
             }
         }
+        return false
     }
     
     static var Shared: AppDelegate {
