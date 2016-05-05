@@ -29,6 +29,9 @@
     NSString *current_token;
     NSString *current_phone_number;
     BOOL polling;
+    
+    NSString *_replyToPhone;
+    NSString *_replyWithToken;
 }
 
 @property (nonatomic, copy, nullable) void (^handler)(BOOL, NSString* _Nullable, NSString* _Nullable);

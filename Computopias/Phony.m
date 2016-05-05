@@ -38,6 +38,33 @@ static Phony *__sharedPhony = nil;
     return self;
 }
 
+- (void)verifyPhoneNumber:(void (^)(NSString * _Nullable phoneNumber, NSString * _Nullable firebaseToken, NSError * _Nullable error))authHandler {
+    
+    void (^postAuth)(BOOL authenticated, NSString * _Nullable phoneNumber, NSString * _Nullable firebase) = ^(BOOL authenticated, NSString * _Nullable phoneNumber, NSString * _Nullable firebase) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            authHandler(phoneNumber, firebase, nil);
+        });
+    };
+    
+    
+    
+    [self confirmWithCompletion:^(NSString * _Nullable replyTo, NSString * _Nullable text, NSError * _Nullable error) {
+        _replyToPhone = replyTo;
+        _replyWithToken = text;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (replyTo && text && !error) {
+                if ([MFMessageComposeViewController canSendText]) {
+                    [self authenticateWithDefaultTextMessageDialog:replyTo content:text handler:postAuth];
+                } else {
+                    [self authenticateManuallyWithReplyTo:replyTo content:text handler:postAuth];
+                }
+            } else {
+                authHandler(nil, nil, error);
+            }
+        });
+    }];
+}
+
 - (void)confirmWithCompletion:(void (^)(NSString *replyTo, NSString *text, NSError *error))confirmHandler {
     NSString *token = [[self class] generateToken];
     
@@ -129,6 +156,10 @@ static Phony *__sharedPhony = nil;
     }
 }
 
+- (BOOL)authenticateManuallyWithReplyTo:(NSString * _Nonnull)replyTo content:(NSString * _Nonnull)content handler:(void (^ _Nullable)(BOOL authenticated, NSString * _Nullable phoneNumber, NSString * _Nullable firebase))authHandler {
+    
+}
+
 /* Generates a random string */
 - (NSString *)generateRandomString:(int)len {
     NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -145,12 +176,15 @@ static Phony *__sharedPhony = nil;
     if (pollTimer) {
         [pollTimer invalidate];
     }
+    [[controller presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+    
     if (result == MessageComposeResultSent) {
         // start polling the server for updates
         [self performSelector:@selector(beginPolling:) withObject:nil afterDelay:MIN_DELAY];
+    } else if (result == MessageComposeResultCancelled || result == MessageComposeResultFailed) {
+        [self authenticateManuallyWithReplyTo:<#(NSString * _Nonnull)#> content:<#(NSString * _Nonnull)#> handler:<#^(BOOL authenticated, NSString * _Nullable phoneNumber, NSString * _Nullable firebase)authHandler#>]
     }
     
-    [[controller presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)beginPolling:(id)sender {
@@ -216,23 +250,6 @@ static Phony *__sharedPhony = nil;
 - (void)authenticateDoingLiterallyAnythingElse:(void (^ _Nullable)(BOOL authenticated, NSString * _Nullable phoneNumber, NSString * _Nullable firebase))authHandler {
     handler = authHandler;
     [self performSelector:@selector(beginPolling:) withObject:nil afterDelay:MIN_DELAY];
-}
-
-- (void)verifyPhoneNumber:(void (^)(NSString * _Nullable phoneNumber, NSString * _Nullable firebaseToken, NSError * _Nullable error))authHandler {
-    [self confirmWithCompletion:^(NSString * _Nullable replyTo, NSString * _Nullable text, NSError * _Nullable error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (replyTo && text && !error) {
-                // TODO: handle no-SMS-capability case
-                [self authenticateWithDefaultTextMessageDialog:replyTo content:text handler:^(BOOL authenticated, NSString * _Nullable phoneNumber, NSString * _Nullable firebase) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        authHandler(phoneNumber, firebase, nil);
-                    });
-                }];
-            } else {
-                authHandler(nil, nil, error);
-            }
-        });
-    }];
 }
 
 + (NSString *)generateToken {

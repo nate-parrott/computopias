@@ -55,6 +55,7 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
+		<string>sms</string>
 	</array>
 	<key>UIStatusBarHidden</key>
 	<true/>
