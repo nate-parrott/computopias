@@ -60,6 +60,11 @@ class GroupNamePickerViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     enum State {
         case EmptyHashtag
         case SearchingHashtag(tag: String)

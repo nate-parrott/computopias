@@ -40,6 +40,7 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
         let item = modelItems[indexPath.item]
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(item.cellIdentifier, forIndexPath: indexPath)
         item.populateCell(cell)
+        (cell as? CardCell)?.scale = cardScale
         return cell
     }
     
@@ -51,9 +52,12 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
         layout.itemSize = CardCell.Size
         layout.minimumLineSpacing = 15
         let xInset = (view.bounds.size.width - layout.itemSize.width)/2
-        let yInset = (view.bounds.size.height - layout.itemSize.height)/2
-        let extraCellHeightBeyondCard = CardCell.Size.height - CardView.CardSize.height
-        collectionView.contentInset = UIEdgeInsetsMake(yInset - extraCellHeightBeyondCard/2, xInset, yInset + extraCellHeightBeyondCard/2, xInset)
+        let yInset = max(60, (view.bounds.size.height - layout.itemSize.height)/2)
+        // let extraCellHeightBeyondCard = CardCell.Size.height - CardView.CardSize.height
+        
+        let availableHeightForContent = view.bounds.size.height - yInset*2
+        self.cardScale = max(1, CardView.CardSize.height / availableHeightForContent)
+        collectionView.contentInset = UIEdgeInsetsMake(yInset, xInset, yInset, xInset)
         
         // lay out buttons:
         let buttonFrame = CGRectMake(0, view.bounds.size.height - yInset, view.bounds.size.width, yInset)
@@ -63,6 +67,20 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
         // lay out description label:
         let descHeight = descriptionLabel.sizeThatFits(CGSizeMake(view.bounds.size.width-40, collectionView.contentInset.top - topLayoutGuide.length - 4)).height
         descriptionLabel.frame = CGRectMake(20, topLayoutGuide.length + 4, view.bounds.size.width-40, descHeight)
+    }
+    
+    override var underlayNavBar: Bool {
+        get {
+            return true
+        }
+    }
+    
+    var cardScale: CGFloat = 1 {
+        didSet {
+            for cell in collectionView.visibleCells() {
+                (cell as? CardCell)?.scale = cardScale
+            }
+        }
     }
     
     // MARK: Models

@@ -858,6 +858,7 @@
                     <connections>
                         <outlet property="cardViewContainer" destination="BbP-Hw-gFM" id="eFt-7S-9tU"/>
                         <outlet property="collectionView" destination="LeT-qF-jgB" id="RWI-n3-rkD"/>
+                        <outlet property="itemInserterCollectionViewHeight" destination="QEo-pT-ZcI" id="79Q-n2-m5h"/>
                         <outlet property="promptLabel" destination="aBj-PR-FBQ" id="u82-t0-i1Z"/>
                     </connections>
                 </viewController>

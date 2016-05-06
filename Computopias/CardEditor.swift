@@ -24,6 +24,8 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     var onPost: ((CardID: String) -> ())?
     var onPrePost: (() -> ())?
     
+    @IBOutlet var itemInserterCollectionViewHeight: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         cardView = CardView()
@@ -57,6 +59,10 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             collectionView.hidden = false
         }
         promptLabel.text = prompt
+        
+        if UIScreen.mainScreen().bounds.size.height < 500 {
+            itemInserterCollectionViewHeight.constant = 80
+        }
     }
     
     struct Item {

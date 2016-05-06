@@ -32,6 +32,12 @@ class CardCell: UICollectionViewCell {
         }
     }
     
+    var scale: CGFloat = 1 {
+        didSet {
+            self.setNeedsLayout()
+        }
+    }
+    
     static let Size = CGSizeMake(CardView.CardSize.width, CardView.CardSize.height + 30)
     
     let cardView = CardView()
@@ -45,9 +51,11 @@ class CardCell: UICollectionViewCell {
         super.layoutSubviews()
         cardView.bounds = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
         cardView.position = bounds.center
+        cardView.transform = CATransform3DMakeScale(scale, scale, scale)
+        let cardTop = cardView.position.y - cardView.bounds.size.height/2 * scale
         
         let labelHeight = label.sizeThatFits(CGSizeMake(bounds.size.width - 20, 100)).height
-        label.frame = CGRectMake(20, cardView.frame.origin.y - labelHeight - 4, bounds.size.width - 40, labelHeight)
+        label.frame = CGRectMake(20, cardTop - labelHeight - 4, bounds.size.width - 40, labelHeight)
     }
     
     var card: (id: String, hashtag: String?)? {
