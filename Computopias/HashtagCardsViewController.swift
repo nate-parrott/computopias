@@ -26,7 +26,9 @@ class HashtagCardsViewController: CardsViewController {
             [weak self] in
             self?.source?.addPost()
         }
-        buttons = [addPostButton, followButton]
+        if hashtag != "whatisthis" {
+            buttons = [addPostButton, followButton]
+        }
     }
     
     override func startUpdating() {

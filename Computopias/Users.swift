@@ -67,6 +67,11 @@ extension Data {
         let userLocation = self.firebase.childByAppendingPath("users").childByAppendingPath(self.getUID())
         userLocation.childByAppendingPath("phoneHash").setValue(Data.hashPhoneNumber(phone))
         
+        let initialHelloCardJson = "{\"card\":{\"cardID\":\"-KH2fxXiXdWopNNWaxvI\",\"date\":1.462498220247923E9,\"hashtag\":\"whatisthis\",\"negativeDate\":-1.462498220247919E9,\"poster\":{\"name\":\"Nate\",\"uid\":\"+17185947958\"}},\"following\":\"+17185947958\",\"negativeDate\":-1.462498220247988E9,\"type\":\"card\"}"
+        var initialHelloCard: [String: AnyObject] = try! NSJSONSerialization.JSONObjectWithData(initialHelloCardJson.dataUsingEncoding(NSUTF8StringEncoding)!, options: []) as! [String: AnyObject]
+        initialHelloCard["negativeDate"] = -NSDate().timeIntervalSince1970
+        Data.firebase.childByAppendingPath("inboxes").childByAppendingPath(Data.getUID()!).childByAutoId().setValue(initialHelloCard)
+        
         profileFirebase().observeSingleEventOfType(.Value, withBlock: { (let snapshot) in
             if snapshot.value === NSNull() {
                 // initialize the default card:

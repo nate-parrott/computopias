@@ -72,9 +72,11 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
         actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Photo Library", comment: ""), style: .Default, handler: { (_) -> Void in
             self.insertMedia(.PhotoLibrary)
         }))
-        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .Default, handler: { (_) -> Void in
-            self.insertMedia(.Camera)
-        }))
+        if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .Default, handler: { (_) -> Void in
+                self.insertMedia(.Camera)
+            }))
+        }
         actionSheet.addAction(UIAlertAction(title: "Image Search", style: .Default, handler: { (_) in
             self.doImageSearch()
         }))

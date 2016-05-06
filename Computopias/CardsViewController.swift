@@ -52,15 +52,16 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
         layout.itemSize = CardCell.Size
         layout.minimumLineSpacing = 15
         let xInset = (view.bounds.size.width - layout.itemSize.width)/2
-        let yInset = max(60, (view.bounds.size.height - layout.itemSize.height)/2)
+        let topInset = max(70, (view.bounds.size.height - layout.itemSize.height)/2)
+        let bottomInset = max(45, (view.bounds.size.height - layout.itemSize.height)/2)
         // let extraCellHeightBeyondCard = CardCell.Size.height - CardView.CardSize.height
         
-        let availableHeightForContent = view.bounds.size.height - yInset*2
-        self.cardScale = min(1, CardView.CardSize.height / availableHeightForContent)
-        collectionView.contentInset = UIEdgeInsetsMake(yInset, xInset, yInset, xInset)
+        let availableHeightForContent = view.bounds.size.height - bottomInset - topInset
+        self.cardScale = min(1, availableHeightForContent / CardCell.Size.height)
+        collectionView.contentInset = UIEdgeInsetsMake(topInset, xInset, bottomInset, xInset)
         
         // lay out buttons:
-        let buttonFrame = CGRectMake(0, view.bounds.size.height - yInset, view.bounds.size.width, yInset)
+        let buttonFrame = CGRectMake(0, view.bounds.size.height - bottomInset - 8, view.bounds.size.width, bottomInset + 8)
         let paddedButtons = buttons.map({ EVInset($0, UIEdgeInsetsMake(4, 4, 4, 4)) })
         EVComplexLayout(false, buttonFrame, [EVVertical(), EVLayoutAlignCenter(), [EVHorizontal(), EVLayoutAlignCenter()] + paddedButtons])
         
