@@ -56,7 +56,7 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
         // let extraCellHeightBeyondCard = CardCell.Size.height - CardView.CardSize.height
         
         let availableHeightForContent = view.bounds.size.height - yInset*2
-        self.cardScale = max(1, CardView.CardSize.height / availableHeightForContent)
+        self.cardScale = min(1, CardView.CardSize.height / availableHeightForContent)
         collectionView.contentInset = UIEdgeInsetsMake(yInset, xInset, yInset, xInset)
         
         // lay out buttons:
