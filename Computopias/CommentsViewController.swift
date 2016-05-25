@@ -49,6 +49,9 @@ class CommentsViewController: JSQMessagesViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(CommentsViewController.dismiss))
         
         inputToolbar.contentView.leftBarButtonItem = nil
+        
+        collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
+        collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
     }
     
     func dismiss(sender: AnyObject!) {
@@ -62,6 +65,7 @@ class CommentsViewController: JSQMessagesViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         inputToolbar.contentView.textView.becomeFirstResponder()
+        scrollToBottomAnimated(false)
     }
     
     // MARK: Messaging
@@ -114,7 +118,16 @@ class CommentsViewController: JSQMessagesViewController {
         return cell
     }
     
+    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+        let message = messages[indexPath.item]
+        return NSAttributedString(string: message.senderDisplayName)
+    }
+    
     override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
         return nil
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return kJSQMessagesCollectionViewCellLabelHeightDefault
     }
 }
