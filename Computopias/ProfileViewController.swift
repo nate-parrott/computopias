@@ -75,6 +75,8 @@ class ProfileViewController: CardsViewController {
         didSet {
             if let f = isFollowing {
                 followButton.setTitle(f ? "Following" : "Follow", forState: .Normal)
+                buttons = []
+                buttons = [followButton]
             }
         }
     }
