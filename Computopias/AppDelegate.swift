@@ -73,7 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         if let link = userInfo["link"] as? String, let url = NSURL(string: link) {
-            openURL(url)
+            if application.applicationState != .Active {
+                openURL(url)
+            }
         }
     }
     
