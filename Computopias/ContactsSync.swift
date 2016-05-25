@@ -33,35 +33,61 @@ extension Data {
             }
             let fetchReq = CNContactFetchRequest(keysToFetch: [CNContactPhoneNumbersKey])
             do {
-                var pendingSearches = 0
+                var phoneNumbers = [CNPhoneNumber]()
+                let maxPhoneNumbers = 3000
                 try store.enumerateContactsWithFetchRequest(fetchReq, usingBlock: { (contact, _) in
                     for phone in contact.phoneNumbers {
-                        if let val = phone.value as? CNPhoneNumber {
-                            mainThread({
-                                pendingSearches += 1
-                                Data.findUserByPhone(val.stringValue, callback: { (userSnapshotOpt) in
-                                    if let id = userSnapshotOpt?.key {
-                                        Data.setFollowing(id, following: true, type: .User)
-                                    }
-                                    pendingSearches -= 1
-                                    if pendingSearches == 0 {
-                                        callback(true)
-                                    }
-                                })
-                            })
-                            
+                        if let val = phone.value as? CNPhoneNumber where phoneNumbers.count < maxPhoneNumbers {
+                            phoneNumbers.append(val)
                         }
                     }
                 })
-                mainThread({ 
-                    if pendingSearches == 0 {
-                        callback(true)
-                    }
-                })
+                mainThread() {
+                    _contactsSyncWithRemainingContacts(phoneNumbers, callback: callback)
+                }
             } catch _ {
                 callback(false)
             }
         }
+    }
+    
+    static func _contactsSyncWithRemainingContacts(contacts: [CNPhoneNumber], callback: (Bool -> ())) {
+        let batchSize = 10
+        var i = 0
+        var pendingSearches = 0
+        for val in contacts {
+            pendingSearches += 1
+            Data.findUserByPhone(val.stringValue, callback: { (userSnapshotOpt) in
+                if let id = userSnapshotOpt?.key {
+                    Data.setFollowing(id, following: true, type: .User)
+                }
+                pendingSearches -= 1
+                if pendingSearches == 0 {
+                    if batchSize < contacts.count {
+                        _contactsSyncWithRemainingContacts(Array(contacts[batchSize..<contacts.count]), callback: callback)
+                    } else {
+                        callback(true)
+                    }
+                }
+            })
+            
+            i += 1
+            if i >= batchSize { break }
+        }
+        
+        
+        /*mainThread({
+            pendingSearches += 1
+            Data.findUserByPhone(val.stringValue, callback: { (userSnapshotOpt) in
+                if let id = userSnapshotOpt?.key {
+                    Data.setFollowing(id, following: true, type: .User)
+                }
+                pendingSearches -= 1
+                if pendingSearches == 0 {
+                    callback(true)
+                }
+            })
+        })*/
     }
     
     static func shouldPromptToDoContactSync() -> Bool {
