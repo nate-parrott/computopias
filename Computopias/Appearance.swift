@@ -32,4 +32,8 @@ struct Appearance {
     static func setup() {
         // UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).defaultTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
     }
+    
+    static let OverlayViewToolbarBackground = UIColor(white: 0.1, alpha: 0.6)
+    static let OverlayViewToolbarFont = UIFont.boldSystemFontOfSize(16)
+    static let OverlayViewToolbarHeight: CGFloat = 44
 }

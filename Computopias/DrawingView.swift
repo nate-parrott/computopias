@@ -16,10 +16,10 @@ class DrawingView: ASDisplayNode {
         addSubnode(snapshotContainer)
         
         addSubnode(toolbar)
-        toolbar.backgroundColor = UIColor(white: 0.1, alpha: 0.6)
+        toolbar.backgroundColor = Appearance.OverlayViewToolbarBackground
         toolbar.tintColor = UIColor.whiteColor()
         
-        let font = UIFont.boldSystemFontOfSize(16)
+        let font = Appearance.OverlayViewToolbarFont
         let color = UIColor.whiteColor()
         
         toolbar.addSubnode(doneButton)
@@ -62,7 +62,7 @@ class DrawingView: ASDisplayNode {
     
     override func layout() {
         super.layout()
-        toolbar.frame = CGRectMake(0, bounds.size.height-44, bounds.size.width, 44)
+        toolbar.frame = CGRectMake(0, bounds.size.height-Appearance.OverlayViewToolbarHeight, bounds.size.width, Appearance.OverlayViewToolbarHeight)
         let doneSize = doneButton.measure(toolbar.bounds.size)
         let padding = (toolbar.bounds.height - doneSize.height)/2
         doneButton.frame = CGRectMake(toolbar.bounds.size.width-doneSize.width-padding*2, padding, doneSize.width, doneSize.height)

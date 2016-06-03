@@ -19,6 +19,7 @@ class CardView: ASDisplayNode {
     var cardFirebase: Firebase? {
         didSet {
             setNeedsDisplay()
+            taggingView?.cardFirebase = cardFirebase
         }
     }
     var hashtag: String?
@@ -59,6 +60,12 @@ class CardView: ASDisplayNode {
         
         for item in items {
             item.removeFromSupernode()
+        }
+        
+        if let tagsDict = j["tags"] as? [String: [String: AnyObject]] {
+            tags = Array(tagsDict.values)
+        } else {
+            tags = []
         }
         
         let createItems: () -> () = {
@@ -204,6 +211,8 @@ class CardView: ASDisplayNode {
         super.layout()
         itemsNode.frame = bounds
         
+        taggingView?.frame = bounds
+        
         if _auxiliaryViewsLoaded {
             ellipsesButton.frame = CGRectMake(bounds.size.width - gridCellSize.width, bounds.size.height - gridCellSize.height, gridCellSize.width, gridCellSize.height)
             if ellipsesButton.supernode != nil {
@@ -235,6 +244,9 @@ class CardView: ASDisplayNode {
     func _cardActions(sender: UIButton) {
         if cardFirebase == nil { return }
         let actions = UIAlertController(title: "Card Actions", message: nil, preferredStyle: .ActionSheet)
+        actions.addAction(UIAlertAction(title: "Tag Friends", style: .Default, handler: { (_) in
+            self.ensureTaggingView().tagMode = true
+        }))
         if self.canDelete() {
             actions.addAction(UIAlertAction(title: "Delete card", style: .Destructive, handler: { (_) in
                 Data.DeleteCard(self.cardFirebase!.key)
@@ -286,6 +298,7 @@ class CardView: ASDisplayNode {
     func _loadAuxiliaryViewsInBackground() {
         backgroundThread {
             let drawing = self.drawingView // instantiate the lazy prop
+            let tagging = self.taggingView
             let e = self.ellipsesButton
             e.userInteractionEnabled = true
             e.image = UIImage(named: "ellipses")
@@ -325,6 +338,28 @@ class CardView: ASDisplayNode {
                 }
             }
             return nil
+        }
+    }
+    
+    // MARK: Tagging mode
+    var taggingView: TaggingOverlayView?
+    func ensureTaggingView() -> TaggingOverlayView {
+        if taggingView == nil {
+            taggingView = TaggingOverlayView()
+            taggingView?.cardFirebase = cardFirebase
+            addSubnode(taggingView!)
+        }
+        return taggingView!
+    }
+    var tags = [[String: AnyObject]]() {
+        didSet {
+            if tags.count == 0 {
+                if let t = taggingView {
+                    t.tags = []
+                }
+            } else {
+                ensureTaggingView().tags = tags
+            }
         }
     }
     

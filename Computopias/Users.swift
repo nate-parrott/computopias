@@ -123,6 +123,16 @@ extension Data {
         card["items"] = items
         profileFirebase().setValue(card)
     }
+    
+    static func userJsonForUser(uid: String, callback: [String: AnyObject]? -> ()) {
+        Data.firebase.childByAppendingPath("users").childByAppendingPath(uid).childByAppendingPath("name").get { (name) in
+            if let n = name as? String {
+                callback(["uid": uid, "name": name])
+            } else {
+                callback(nil)
+            }
+        }
+    }
 }
 
 extension Firebase {

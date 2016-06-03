@@ -33,6 +33,10 @@ cardJson:
   - width
   - height
   - poster: userJson
+  - tags/x/
+        - x
+        - y
+        - userJson
  
 /counters/<uuid>/<uid>
 

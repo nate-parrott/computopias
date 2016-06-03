@@ -14,7 +14,9 @@ class FriendListViewController: UITableViewController {
     var _sub: Subscription?
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Friends"
+        if title == nil {
+            title = "Friends"
+        }
         _sub = source.onUpdate.subscribe({ [weak self] (let _) in
             self?._update()
         })
@@ -34,10 +36,12 @@ class FriendListViewController: UITableViewController {
             let unfollow: () -> () = {
                 Data.setFollowing(id, following: false, type: .User)
             }
-            let showFriendProfile = {
-                (UIApplication.sharedApplication().delegate as! AppDelegate).navigateToRoute(Route.Profile(id: id))
+            let clickAction: () -> () = {
+                [weak self] in
+                self?.onFriendSelect(id: id)
+                self?.navigationController?.dismissViewControllerAnimated(true, completion: nil)
             }
-            friendsSec.rows.append(BasicTextSection.Row(title: "", action: showFriendProfile, dim: false, center: false, titleFirebase: Data.firebase.childByAppendingPath("users").childByAppendingPath(id).childByAppendingPath("name"), deleteAction: unfollow))
+            friendsSec.rows.append(BasicTextSection.Row(title: "", action: clickAction, dim: false, center: false, titleFirebase: Data.firebase.childByAppendingPath("users").childByAppendingPath(id).childByAppendingPath("name"), deleteAction: unfollow))
         }
         if source._searchingContactsInProgress {
             friendsSec.rows.append(BasicTextSection.Row(title: "⏳ Searching for friends", action: nil, dim: true, center: true, titleFirebase: nil, deleteAction: nil))
@@ -55,6 +59,10 @@ class FriendListViewController: UITableViewController {
     }
     @IBAction func addFriends() {
         source.addFriends()
+    }
+    var onFriendSelect: ((id: String) -> ()) = {
+        (id: String) in
+        (UIApplication.sharedApplication().delegate as! AppDelegate).navigateToRoute(Route.Profile(id: id))
     }
     // MARK: Sections
     class Section {
