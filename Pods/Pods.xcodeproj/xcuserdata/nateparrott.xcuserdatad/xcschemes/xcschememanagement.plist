@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JTSImageViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>LocationPicker.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,6 +77,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0CE5AFBD4D32FCC361F002A2011B72CA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>38B2474207004164BABDA2224ECB3965</key>
 		<dict>
 			<key>primary</key>
@@ -82,17 +92,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>78706B23E3A9BBE648138F27EE9A9A67</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>787F90EE7A798FA89036E7FD103A63FF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>8D387A516C52A3207CF96FCD5C4E2072</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>95DB89A8BFC5FF0BF98458651D0163CD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>996FBB7378E2BCA511AEFF9E54D6532C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -127,12 +142,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F9ED21B19A97CA4B63521FB9FD86A65C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FC9FCB36A46520CDE9DFA21B0852B35C</key>
+		<key>FAE26C46CFBAF39E4C96ABF16B93D9FC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

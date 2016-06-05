@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '5613002697F326F570E595E2'
-               BlueprintName = 'AsyncDisplayKit'
+               BlueprintIdentifier = 'F7E455ABCBB6210C3F354F66'
+               BlueprintName = 'JTSImageViewController'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'AsyncDisplayKit.framework'>
+               BuildableName = 'JTSImageViewController.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

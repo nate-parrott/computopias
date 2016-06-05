@@ -12,6 +12,7 @@ pod 'AsyncDisplayKit'
 pod 'QuadratTouch'
 pod 'LocationPicker'
 pod 'TCMobileProvision'
+pod 'JTSImageViewController'
 
 end
 

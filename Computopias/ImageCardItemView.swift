@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 import AsyncDisplayKit
+import JTSImageViewController
 
 class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -24,11 +25,19 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
     
     override func tapped() -> Bool {
         super.tapped()
-        if editMode && !_uploadInProgress {
-            insertMedia()
+        if editMode {
+            if !_uploadInProgress {
+                insertMedia()
+                return true
+            } else {
+                return false
+            }
+        } else {
+            if let image = imageNode.image {
+                showImageModally(image)
+            }
             return true
         }
-        return false
     }
     
     override func onInsert() {
@@ -136,5 +145,12 @@ class ImageCardItemView: CardItemView, UIImagePickerControllerDelegate, UINaviga
     
     override func constrainedSizeForProposedSize(size: GridSize) -> GridSize {
         return size
+    }
+    
+    func showImageModally(image: UIImage) {
+        let imageInfo = JTSImageInfo()
+        imageInfo.image = image
+        let viewer = JTSImageViewController(imageInfo: imageInfo, mode: .Image, backgroundStyle: .None)
+        viewer.showFromViewController(NPSoftModalPresentationController.getViewControllerForPresentation(), transition: .FromOffscreen)
     }
 }
