@@ -58,10 +58,6 @@ class CardView: ASDisplayNode {
             hashtag = cardHashtag
         }
         
-        for item in items {
-            item.removeFromSupernode()
-        }
-        
         if let tagsDict = j["tags"] as? [String: [String: AnyObject]] {
             tags = Array(tagsDict.values)
         } else {
@@ -72,25 +68,31 @@ class CardView: ASDisplayNode {
             let itemsNode = ASDisplayNode()
             itemsNode.frame = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
             
-            if let items = j["items"] as? [[String: AnyObject]] {
+            let items = j["items"] as? [[String: AnyObject]] ?? [[String: AnyObject]]()
+            if items != self._itemsJson {
+                self._itemsJson = items
                 for item in items {
                     if let itemView = CardItemView.FromJson(item) {
                         itemsNode.addSubnode(itemView)
                     }
                 }
+                
+                mainThread({
+                    self.itemsNode = itemsNode
+                    self.drawingView.item = self.drawingItem
+                })
             }
             
             self._hideIfBlocked()
             
             mainThread({
-                self.itemsNode = itemsNode
-                self.drawingView.item = self.drawingItem
                 if let cb = callback { cb() }
             })
         }
         
         dispatch_async(importJsonQueue, createItems)
     }
+    var _itemsJson = [[String: AnyObject]]()
     
     func presentJson(json: [String: AnyObject]) {
         importJson(json) {
