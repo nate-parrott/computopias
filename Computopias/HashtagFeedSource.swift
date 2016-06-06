@@ -20,6 +20,8 @@ class HashtagFeedSource {
         let q = hashtagFB.childByAppendingPath("cards").queryOrderedByChild("negativeDate").queryLimitedToFirst(50)
         _cardsSub = q.snapshotPusher.subscribe({ [weak self] (let snapshotOpt) in
             if let s = self, let snapshot = snapshotOpt {
+                s.initialLoadCompleted = true
+                
                 var cardIDs = [String]()
                 var cardsByID = [String: [String: AnyObject]]()
                 for card in snapshot.childDictionaries {
@@ -76,6 +78,7 @@ class HashtagFeedSource {
     
     var cardIDs = Observable<[String]>(val: [])
     var cardsByID = [String: [String: AnyObject]]()
+    var initialLoadCompleted = false
     
     var _cardsSub: Subscription?
     

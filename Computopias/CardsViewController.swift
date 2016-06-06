@@ -87,6 +87,7 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
     // MARK: Models
     class Item {
         var cellIdentifier: String! { get { return nil } }
+        var cellReloadIdentifier: String?
         func populateCell(cell: UICollectionViewCell) {}
     }
     class CardItem: Item {
@@ -115,6 +116,9 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
                 }
                 self.cardID = cardID
                 self.hashtag = hashtag
+                
+                super.init()
+                cellReloadIdentifier = "Cell " + cardID
             } else {
                 return nil
             }
@@ -138,8 +142,12 @@ class CardsViewController: NavigableViewController, UICollectionViewDataSource, 
     }
     
     var modelItems = [Item]() {
-        didSet {
-            collectionView.reloadData()
+        didSet (old) {
+            if modelItems.count == old.count && zip(modelItems, old).filter({ $0.cellReloadIdentifier != nil && $0.cellReloadIdentifier == $1.cellReloadIdentifier }).count == modelItems.count {
+                // no need to reload
+            } else {
+                collectionView.reloadData()
+            }
         }
     }
     

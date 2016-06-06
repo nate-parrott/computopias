@@ -17,9 +17,11 @@ class CardView: ASDisplayNode {
     }
     
     var cardFirebase: Firebase? {
-        didSet {
-            setNeedsDisplay()
-            taggingView?.cardFirebase = cardFirebase
+        didSet (old) {
+            if cardFirebase != old {
+                setNeedsDisplay()
+                taggingView?.cardFirebase = cardFirebase
+            }
         }
     }
     var hashtag: String?
