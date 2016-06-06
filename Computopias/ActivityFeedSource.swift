@@ -25,7 +25,7 @@ class ActivityFeedSource: NSObject {
     
     func loginUpdated() {
         if Data.getUID() != nil {
-            let q = Data.firebase.childByAppendingPath("inboxes").childByAppendingPath(Data.getUID()).queryOrderedByKey().queryLimitedToLast(80)
+            let q = Data.firebase.childByAppendingPath("inboxes").childByAppendingPath(Data.getUID()).queryOrderedByKey().queryLimitedToLast(160)
             _inboxSub = q.snapshotPusher.subscribe({ [weak self] (let snapshotOpt) in
                 if let snapshot = snapshotOpt {
                     self?._inboxUpdated(snapshot.childDictionaries)
