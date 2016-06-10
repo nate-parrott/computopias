@@ -73,7 +73,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         if let link = userInfo["link"] as? String, let url = NSURL(string: link) {
-            if application.applicationState != .Active {
+            if application.applicationState == .Active {
+                // the app was open when the notification came in
+                if let aps = userInfo["aps"] as? [String: AnyObject],
+                let alert = aps["alert"] as? String {
+                    let vc = NPSoftModalPresentationController.getViewControllerForPresentation()
+                    vc.showToast(alert, callback: {
+                        self.openURL(url)
+                    })
+                }
+            } else {
+                // the app was launched to open this notification
                 openURL(url)
             }
         }

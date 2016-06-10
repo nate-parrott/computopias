@@ -30,6 +30,7 @@
 		5F29B4C61CB73E830060FFD7 /* EVFakeData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4B61CB73E830060FFD7 /* EVFakeData.m */; };
 		5F29B4C71CB73E830060FFD7 /* EVMotionEffectObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4B81CB73E830060FFD7 /* EVMotionEffectObserver.m */; };
 		5F29B4C81CB73E830060FFD7 /* EVComplexLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F29B4BA1CB73E830060FFD7 /* EVComplexLayout.m */; };
+		5F2C53BC1D051CA5009DD0BB /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2C53BB1D051CA5009DD0BB /* Toast.swift */; };
 		5F3435EC1CB9E193009E5F86 /* ASLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3435EB1CB9E193009E5F86 /* ASLabelNode.swift */; };
 		5F3435EE1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3435ED1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift */; };
 		5F3435F01CBB67BE009E5F86 /* SignaturesCardItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3435EF1CBB67BE009E5F86 /* SignaturesCardItemView.swift */; };
@@ -154,6 +155,7 @@
 		5F29B4B91CB73E830060FFD7 /* EVComplexLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVComplexLayout.h; sourceTree = "<group>"; };
 		5F29B4BA1CB73E830060FFD7 /* EVComplexLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVComplexLayout.m; sourceTree = "<group>"; };
 		5F29B4CA1CB73EAA0060FFD7 /* Elastic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Elastic.h; sourceTree = "<group>"; };
+		5F2C53BB1D051CA5009DD0BB /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		5F3435EB1CB9E193009E5F86 /* ASLabelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ASLabelNode.swift; sourceTree = "<group>"; };
 		5F3435ED1CBB57E9009E5F86 /* ASDisplayNode+Elastic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ASDisplayNode+Elastic.swift"; sourceTree = "<group>"; };
 		5F3435EF1CBB67BE009E5F86 /* SignaturesCardItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignaturesCardItemView.swift; sourceTree = "<group>"; };
@@ -499,6 +501,7 @@
 				5F3435EB1CB9E193009E5F86 /* ASLabelNode.swift */,
 				5F93EE2C1CBB8CCE00FF2E2B /* ArrayRandomChoice.swift */,
 				5F93EE2E1CBB908900FF2E2B /* Nouns.txt */,
+				5F2C53BB1D051CA5009DD0BB /* Toast.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -692,6 +695,7 @@
 				5F97EE881CC46D9900124FA8 /* NavigableViewController.swift in Sources */,
 				5F29B4BB1CB73E830060FFD7 /* UIView+Elastic.m in Sources */,
 				5F0D378E1CBE0A180033E83C /* UIImage+Emoji.swift in Sources */,
+				5F2C53BC1D051CA5009DD0BB /* Toast.swift in Sources */,
 				5FD3604C1CAB7A850016D837 /* RandomContentCardItemView.swift in Sources */,
 				5FB2F2531CA2181C001863C4 /* ImageCardItemView.swift in Sources */,
 				5F29B4BF1CB73E830060FFD7 /* ElasticReuseQueue.m in Sources */,

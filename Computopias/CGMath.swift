@@ -137,4 +137,7 @@ extension CGSize {
     func centeredInsideRect(rect: CGRect) -> CGRect {
         return CGRectMake(rect.origin.x + (rect.size.width - width)/2, rect.origin.y + (rect.size.height - height)/2, width, height)
     }
+    func padded(padding: CGFloat) -> CGSize {
+        return CGSizeMake(width + padding * 2, height + padding * 2)
+    }
 }
