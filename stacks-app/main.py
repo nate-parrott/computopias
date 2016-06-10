@@ -17,6 +17,8 @@
 import webapp2
 import json
 import push
+import uploads
+import site_preview
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -24,5 +26,9 @@ class MainHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/push', push.PushHandler)
+    ('/push', push.PushHandler),
+	('/upload', uploads.UploadHandler),
+	('/raw_upload', uploads.RawUploadHandler),
+    ('/site_preview', site_preview.Handler),
+	('/mirror', uploads.MirrorHandler)
 ], debug=True)
