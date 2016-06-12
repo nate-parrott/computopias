@@ -41,6 +41,10 @@ func +(lhs: CGRect, rhs: CGSize) -> CGRect {
 }
 
 extension CGRect {
+    init(center: CGPoint, size: CGSize) {
+        origin = CGPointMake(center.x - size.width/2, center.y - size.height/2)
+        self.size = size
+    }
     var center: CGPoint {
         get {
             return CGPoint(x: CGRectGetMidX(self), y: CGRectGetMidY(self))

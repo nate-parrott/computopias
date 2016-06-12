@@ -157,6 +157,8 @@ class CardItemView: ASDisplayNode, UIGestureRecognizerDelegate {
             item = StarRatingCardItemView()
         case "largeText":
             item = LargeTextCardItemView()
+        case "link":
+            item = LinkCardItemView()
         default: ()
         }
         item?.importJson(j)

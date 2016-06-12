@@ -105,8 +105,8 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         Item(title: "Recording", image: UIImage(named: "EdSound"), callback: { () -> CardItemView! in
             return SoundCardItemView()
         }),
-        Item(title: "Button", image: UIImage(named: "EdLink"), callback: { () -> CardItemView! in
-            return ButtonCardItemView()
+        Item(title: "Link", image: UIImage(named: "EdLink"), callback: { () -> CardItemView! in
+            return LinkCardItemView()
         }),
         Item(title: "Location", image: UIImage(named: "EdLocation"), callback: { () -> CardItemView! in
             return MapCardItemView()
@@ -126,6 +126,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             l.size = 2
             return l*/
             return LargeTextCardItemView()
+        }),
+        Item(title: "Button", image: UIImage(named: "EdButton"), callback: { () -> CardItemView! in
+            return ButtonCardItemView()
         })
         /*Item(title: "Timer", image: UIImage(named: "timer"), callback: { () -> CardItemView! in
             return nil
