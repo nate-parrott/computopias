@@ -32,6 +32,7 @@ cardJson:
     - more props
   - width
   - height
+  - hashtag
   - poster: userJson
   - tags/x/
         - x

@@ -302,7 +302,6 @@ class CardView: ASDisplayNode {
     func _loadAuxiliaryViewsInBackground() {
         backgroundThread {
             let drawing = self.drawingView // instantiate the lazy prop
-            let tagging = self.taggingView
             let e = self.ellipsesButton
             e.userInteractionEnabled = true
             e.image = UIImage(named: "ellipses")

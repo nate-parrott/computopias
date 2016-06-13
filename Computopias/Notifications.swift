@@ -55,6 +55,11 @@ extension Data {
         let url = Route.Profile(id: getUID()!).url.absoluteString
         sendNotification(Notification(message: message, url: url, recipients: [userID]))
     }
+    static func notifyTag(userID: String, cardID: String, hashtag: String) {
+        let message = "\(userDisplayName) tagged you."
+        let url = Route.Card(hashtag: hashtag, id: cardID).url.absoluteString
+        sendNotification(Notification(message: message, url: url, recipients: [userID]))
+    }
     struct Notification {
         var message: String
         var url: String?

@@ -111,6 +111,9 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         Item(title: "Location", image: UIImage(named: "EdLocation"), callback: { () -> CardItemView! in
             return MapCardItemView()
         }),
+        Item(title: "Tag", image: UIImage(named: "EdTag"), callback: { () -> CardItemView! in
+            return TagFriendsButtonCardItemView()
+        }),
         /*Item(title: "MessageMe", image: UIImage(named: "sms"), callback: { () -> CardItemView! in
             return MessageMeCardItemView()
         }),*/
@@ -224,6 +227,15 @@ class CardEditor: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         }
         
         Data.setFollowing(hashtag, following: true, type: .Hashtag)
+        
+        // add friend tags that were applied during creation, + send notifications:
+        let tagsFirebase = card.childByAppendingPath("tags")
+        for tag in cardView.taggingView?.tags ?? [] {
+            tagsFirebase.childByAutoId().setValue(tag)
+            if let userDict = tag["user"] as? [String: AnyObject], let uid = userDict["uid"] as? String {
+                Data.notifyTag(uid, cardID: card.key, hashtag: hashtag)
+            }
+        }
     }
     
     @IBAction func cancel() {

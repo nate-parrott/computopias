@@ -13,7 +13,7 @@ import Firebase
 class TaggingOverlayView: ASDisplayNode {
     override init() {
         super.init()
-        tagMode = false
+        userInteractionEnabled = false
         opaque = false
         needsDisplayOnBoundsChange = true
     }
@@ -38,8 +38,17 @@ class TaggingOverlayView: ASDisplayNode {
                 (id: String) in
                 Data.userJsonForUser(id, callback: { (let userInfoOpt) in
                     if let userInfo = userInfoOpt {
-                        let dict = ["x": tapPos.x, "y": tapPos.y, "user": userInfo]
-                        self.cardFirebase.childByAppendingPath("tags").childByAutoId().setValue(dict)
+                        let dict: [String: AnyObject] = ["x": tapPos.x, "y": tapPos.y, "user": userInfo]
+                        self.tags.append(dict)
+                        self.cardFirebase?.childByAppendingPath("tags").childByAutoId().setValue(dict)
+                        if let cardFb = self.cardFirebase {
+                            // find the hashtag for this card:
+                            cardFb.childByAppendingPath("hashtag").get({ (let obj) in
+                                if let hashtag = obj as? String {
+                                    Data.notifyTag(id, cardID: cardFb.key, hashtag: hashtag)
+                                }
+                            })
+                        }
                     }
                 })
             }
@@ -48,7 +57,7 @@ class TaggingOverlayView: ASDisplayNode {
     }
     
     // MARK: API
-    var cardFirebase: Firebase!
+    var cardFirebase: Firebase?
     var tags = [[String: AnyObject]]() {
         didSet {
             setNeedsDisplay()
