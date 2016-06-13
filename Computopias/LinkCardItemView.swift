@@ -104,10 +104,15 @@ class LinkCardItemView: CardItemView {
         return j
     }
     
+    override func onInsert() {
+        super.onInsert()
+        pickURL()
+    }
+    
     // MARK: Layout
     override var defaultSize: GridSize {
         get {
-            return GridSize(width: 3, height: 2)
+            return GridSize(width: 4, height: 2)
         }
     }
     
@@ -140,7 +145,8 @@ class LinkCardItemView: CardItemView {
         alert.addAction(UIAlertAction(title: "Make Link", style: .Default, handler: { (_) in
             var urlString = alert.textFields!.first!.text ?? ""
             if urlString != "" {
-                if urlString.rangeOfString("://") == nil {
+                let isHashtag = urlString.rangeOfString("#")?.startIndex == urlString.startIndex
+                if urlString.rangeOfString("://") == nil && !isHashtag {
                     urlString = "http://" + urlString
                 }
                 if NSURL(string: urlString) != nil {
