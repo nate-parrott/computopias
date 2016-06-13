@@ -47,6 +47,8 @@ class CardCell: UICollectionViewCell {
         if let c = captionTapAction { c() }
     }
     
+    let labelHitTestSlop: CGFloat = 10
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         cardView.bounds = CGRectMake(0, 0, CardView.CardSize.width, CardView.CardSize.height)
@@ -56,6 +58,18 @@ class CardCell: UICollectionViewCell {
         
         let labelHeight = label.sizeThatFits(CGSizeMake(bounds.size.width - 20, 100)).height
         label.frame = CGRectMake(20, cardTop - labelHeight - 4, bounds.size.width - 40, labelHeight)
+    }
+    
+    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+        return super.pointInside(point, withEvent: event) || CGRectContainsPoint(CGRectInset(label.frame, -labelHitTestSlop, -labelHitTestSlop), point)
+    }
+    
+    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+        let v = super.hitTest(point, withEvent: event)
+        if v == self && CGRectContainsPoint(CGRectInset(label.frame, -labelHitTestSlop, -labelHitTestSlop), point) {
+            return label
+        }
+        return v
     }
     
     var card: (id: String, hashtag: String?)? {

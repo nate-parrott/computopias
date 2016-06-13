@@ -439,9 +439,9 @@
 		5FB2F2451CA20FB8001863C4 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				5FD360411CA8A5A80016D837 /* CommentsViewController.swift */,
 				5F70982D1CA0EEA600B499BC /* CardEditor.swift */,
 				5F2925D91CB8FC9C0096B739 /* GroupEditor.swift */,
+				5FD360411CA8A5A80016D837 /* CommentsViewController.swift */,
 				5F1EE5CE1CBD89A0003C1C2B /* OnboardingViewController.swift */,
 				5FCB7B801CC8B7D7008E8AFF /* GroupNamePickerViewController.swift */,
 				5F3700E91CCDB8F20034CEE9 /* CheckinViewController.swift */,
