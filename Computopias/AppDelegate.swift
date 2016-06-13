@@ -35,6 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.registerForNotificationsIfLoggedIn), name: Data.LoginDidCompleteNotification, object: nil)
         registerForNotificationsIfLoggedIn()
         
+        
+        if let notif = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject: AnyObject] {
+            self.application(application, didReceiveRemoteNotification: notif)
+        }
+        
         return true
     }
     
