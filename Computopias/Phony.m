@@ -52,47 +52,50 @@ static Phony *__sharedPhony = nil;
         NSString *responseText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"[%@] Got response: %@", request, responseText);
         #endif
-        if (e != nil) {
-            // error parsing response.
-            if (confirmHandler != nil) {
-                confirmHandler(nil, nil, e);
-            }
-            
-            return;
-        }
         
-        if (result == nil && error != nil) {
-            if (confirmHandler != nil) {
-                confirmHandler(nil, nil, error);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (e != nil) {
+                // error parsing response.
+                if (confirmHandler != nil) {
+                    confirmHandler(nil, nil, e);
+                }
+                
+                return;
             }
             
-            return;
-        }
-        
-        if (result == nil) {
-            if (confirmHandler != nil) {
-                confirmHandler(nil, nil, [NSError errorWithDomain:@"com.pushy.phony" code:8 userInfo:@{@"error" : @"Couldn't parse server response."}]);
+            if (result == nil && error != nil) {
+                if (confirmHandler != nil) {
+                    confirmHandler(nil, nil, error);
+                }
+                
+                return;
             }
             
-            return;
-        }
-        
-        if (result[@"success"]) {
-            NSString *replyTo = result[@"replyTo"];
-            NSString *replySecret = result[@"secret"];
-            
-            // set up state for the next phase of authentication.
-            current_token_secret = replySecret;
-            current_token = token;
-            
-            NSString *text = [NSString stringWithFormat:@"%@:%@:%@", applicationKey, token, replySecret];
-            return confirmHandler(replyTo, text, nil);
-        } else {
-            if (confirmHandler != nil) {
-                confirmHandler(nil, nil, [NSError errorWithDomain:@"com.pushy.phony" code:8 userInfo:@{@"error" : result[@"error"]}]);
+            if (result == nil) {
+                if (confirmHandler != nil) {
+                    confirmHandler(nil, nil, [NSError errorWithDomain:@"com.pushy.phony" code:8 userInfo:@{@"error" : @"Couldn't parse server response."}]);
+                }
+                
+                return;
             }
-            return;
-        }
+            
+            if (result[@"success"]) {
+                NSString *replyTo = result[@"replyTo"];
+                NSString *replySecret = result[@"secret"];
+                
+                // set up state for the next phase of authentication.
+                current_token_secret = replySecret;
+                current_token = token;
+                
+                NSString *text = token; // [NSString stringWithFormat:@"%@:%@:%@", applicationKey, token, replySecret];
+                return confirmHandler(replyTo, text, nil);
+            } else {
+                if (confirmHandler != nil) {
+                    confirmHandler(nil, nil, [NSError errorWithDomain:@"com.pushy.phony" code:8 userInfo:@{@"error" : result[@"error"]}]);
+                }
+                return;
+            }
+        });
     }] resume];
     
     
@@ -173,7 +176,9 @@ static Phony *__sharedPhony = nil;
             current_token = nil;
             current_token_secret = nil;
             current_phone_number = nil;
-            handler(NO, nil, nil);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                handler(NO, nil, nil);
+            });
         }
     } else {
         // try a poll
@@ -195,7 +200,9 @@ static Phony *__sharedPhony = nil;
                     [pollTimer invalidate];
                     NSString *firebaseToken = [responseObject objectForKey:@"firebase_token"];
                     if (![firebaseToken isKindOfClass:[NSString class]]) firebaseToken = nil;
-                    handler(YES, [responseObject objectForKey:@"phone_number"], firebaseToken);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        handler(YES, [responseObject objectForKey:@"phone_number"], firebaseToken);
+                    });
                 }
             }
             #ifdef PUSHY_DEBUG
@@ -222,7 +229,6 @@ static Phony *__sharedPhony = nil;
     [self confirmWithCompletion:^(NSString * _Nullable replyTo, NSString * _Nullable text, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (replyTo && text && !error) {
-                // TODO: handle no-SMS-capability case
                 [self authenticateWithDefaultTextMessageDialog:replyTo content:text handler:^(BOOL authenticated, NSString * _Nullable phoneNumber, NSString * _Nullable firebase) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         authHandler(phoneNumber, firebase, nil);

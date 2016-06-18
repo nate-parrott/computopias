@@ -31,12 +31,39 @@ class OnboardingViewController: UIViewController, UITextFieldDelegate {
             }))
             presentViewController(prompt, animated: true, completion: nil)
         } else {
-            Phony.sharedPhony().verifyPhoneNumber { (let phoneNumberOpt, let firebaseTokenOpt, let errorOpt) in
-                if let phone = phoneNumberOpt, let firebaseToken = firebaseTokenOpt {
-                    self.phoneState = .Success(number: phone, firebaseToken: firebaseToken)
-                } else {
-                    self.phoneState = .Error(err: errorOpt)
+            if Phony.sharedPhony().canAuthenticateWithDefaultTextMessageDialog() {
+                Phony.sharedPhony().verifyPhoneNumber { (let phoneNumberOpt, let firebaseTokenOpt, let errorOpt) in
+                    if let phone = phoneNumberOpt, let firebaseToken = firebaseTokenOpt {
+                        self.phoneState = .Success(number: phone, firebaseToken: firebaseToken)
+                    } else {
+                        self.phoneState = .Error(err: errorOpt)
+                    }
                 }
+            } else {
+                let alert = UIAlertController(title: "Verify your phone number", message: "Loading…", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (_) in
+                    self.phoneState = .None
+                }))
+                let doneAction = UIAlertAction(title: "Done", style: .Default, handler: { (_) in
+                    Phony.sharedPhony().authenticateDoingLiterallyAnythingElse({ (success, phoneNumberOpt, firebaseTokenOpt) in
+                        if let phone = phoneNumberOpt, let firebaseToken = firebaseTokenOpt where success {
+                            self.phoneState = .Success(number: phone, firebaseToken: firebaseToken)
+                        } else {
+                            self.phoneState = .Error(err: nil)
+                        }
+                    })
+                })
+                doneAction.enabled = false
+                alert.addAction(doneAction)
+                presentViewController(alert, animated: true, completion: nil)
+                Phony.sharedPhony().confirmWithCompletion({ (phoneNumberOpt, codeOpt, errorOpt) in
+                    if let phone = phoneNumberOpt, let code = codeOpt {
+                        alert.message = "Send a text message with the password \(code) to \(phone), then tap Done."
+                        doneAction.enabled = true
+                    } else {
+                        self.phoneState = .Error(err: errorOpt)
+                    }
+                })
             }
         }
     }

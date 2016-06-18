@@ -13,7 +13,7 @@ extension Data {
     static let LoginDidCompleteNotification = "LoginDidCompleteNotification"
     
     #if arch(i386) || arch(x86_64)
-    static let ALLOW_FAKE_LOGIN = true
+    static let ALLOW_FAKE_LOGIN = false // true
     #else
     static let ALLOW_FAKE_LOGIN = false
     #endif
